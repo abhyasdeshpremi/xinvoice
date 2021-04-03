@@ -4,9 +4,8 @@
 
 <!-- bootstrap & fontawesome -->
 		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.min.css">
-		  <link rel="stylesheet" href="<?php echo base_url();?>assets/font-awesome/4.2.0/css/font-awesome.min.css">
-		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/theme.min.css" class="theme-stylesheet" id="theme-style">
-		  <link rel="stylesheet" href="<?php echo base_url();?>assets/fonts/fonts.googleapis.com.css">
+		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/fontawesome.min.css">
+		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.min.css" class="theme-stylesheet" id="theme-style">
 <!-- page specific plugin styles -->
 
 <!---- navbar start -->
@@ -103,8 +102,3 @@ Copyright © js-tutorials.com. All rights reserved.
 <!-- basic scripts -->
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
-<script src="<?php echo base_url();?>assets/js/theme.min.js"></script>
-
- 	<!-- Placed at the end of the document so the pages load faster -->
-	<script>window.jQuery || document.write('<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.min.js"></script>')</script>
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
