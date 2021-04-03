@@ -1,10 +1,11 @@
-<title>Test CI Application - <?php echo $title;?></title>
+<title>Xinvoice - <?php echo $title;?></title>
 
 <meta name="description" content="overview & stats">
 
 <!-- bootstrap & fontawesome -->
 		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.min.css">
 		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/fontawesome.min.css">
+		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
 		  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.min.css" class="theme-stylesheet" id="theme-style">
 <!-- page specific plugin styles -->
 
@@ -21,6 +22,7 @@
             </button>
             <a class="navbar-brand" href="#">Project name</a>
           </div>
+		  <?php if($menu){ ?>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">Home</a></li>
@@ -45,6 +47,7 @@
               <li><a href="../navbar-fixed-top/">Fixed top</a></li>
             </ul>
           </div><!--/.nav-collapse -->
+		<?php } ?>
         </div><!--/.container-fluid -->
       </nav>
 <!---- nav bar list -->
@@ -72,31 +75,6 @@
 
 <!-- /.main-content -->
 
-
-
-<div class="footer">
-
-
-<div class="footer-inner">
-
-
-<div class="footer-content">
-<span class="bigger-120">
-Copyright © js-tutorials.com. All rights reserved.
-</span>
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-</a>
 <!-- /.main-container -->
 
 <!-- basic scripts -->
