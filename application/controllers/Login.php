@@ -17,9 +17,13 @@ class Login extends CI_Controller {
             'password' => $password
         );
         $queryResult = $this->Login_model->login($email, $password);
-        print_r($data);
+
+        if($this->session->userdata('isUserLoggedIn') === TRUE){ 
+            redirect('/home');
+        }
         if($queryResult['login']){
             $this->session->set_userdata('email', $email);
+            $this->session->set_userdata('isUserLoggedIn', TRUE);
             $this->session->set_userdata('username', $queryResult['result'][0]->username);
             $this->session->set_userdata('firstname', $queryResult['result'][0]->first_name);
             $this->session->set_userdata('lastname', $queryResult['result'][0]->last_name);
@@ -30,7 +34,16 @@ class Login extends CI_Controller {
             $this->template->set('title', 'Login');
             $this->template->load('login_layout', 'contents' , 'login', $data);
         }
-        
-        
 	}
+
+    public function logout(){
+        $this->session->unset_userdata('email');
+        $this->session->unset_userdata('isUserLoggedIn');
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('firstname');
+        $this->session->unset_userdata('lastname');
+        $this->session->unset_userdata('firmcode');
+        $this->session->unset_userdata('role');
+        redirect('/login');
+    }
 }

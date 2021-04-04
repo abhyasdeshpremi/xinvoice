@@ -31,13 +31,12 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url()?>" >
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">X Invoice <sup>2</sup></div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
@@ -155,7 +154,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix"
                     aria-expanded="true" aria-controls="collapseSix">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-list fa-cog"></i>
                     <span>Items</span>
                 </a>
                 <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -171,7 +170,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
                     aria-expanded="true" aria-controls="collapseSeven">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-users fa-cog"></i>
                     <span>Users</span>
                 </a>
                 <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -183,6 +182,23 @@
                 </div>
             </li>
 
+			<!-- Nav Item - Pages Collapse Menu -->
+			<?php if($this->session->userdata('role') == 'superadmin') { ?>
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEleven"
+						aria-expanded="true" aria-controls="collapseEleven">
+						<i class="fas fa-building"></i>
+						<span>Firms</span>
+					</a>
+					<div id="collapseEleven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Firm Components:</h6>
+							<a class="collapse-item" href="buttons.html">Firm List</a>
+							<a class="collapse-item" href="cards.html">New Firm</a>
+						</div>
+					</div>
+				</li>
+			<?php } ?>
 			<!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -472,6 +488,10 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
+								<a class="dropdown-item" href="<?php echo base_url('/firm'); ?>">
+                                    <i class="fas fa-building fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Firm
+                                </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
@@ -497,7 +517,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                    <h1 class="h3 mb-4 text-gray-800"><?php echo $title; ?></h1>
 					<?php echo $contents;?>
                 </div>
                 <!-- /.container-fluid -->
@@ -540,7 +560,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="<?php echo base_url('/logout')?>">Logout</a>
                 </div>
             </div>
         </div>
