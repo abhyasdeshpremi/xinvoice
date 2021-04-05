@@ -193,8 +193,8 @@
 					<div id="collapseEleven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<h6 class="collapse-header">Firm Components:</h6>
-							<a class="collapse-item" href="buttons.html">Firm List</a>
-							<a class="collapse-item" href="cards.html">New Firm</a>
+							<a class="collapse-item" href="<?php echo base_url('/firmdetails'); ?>">Firm List</a>
+							<a class="collapse-item" href="<?php echo base_url('/createfirm'); ?>">New Firm</a>
 						</div>
 					</div>
 				</li>
