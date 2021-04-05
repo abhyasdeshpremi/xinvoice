@@ -1,53 +1,41 @@
- <!-- Outer Row -->
- <div class="row justify-content-center">
-
-<div class="col-xl-10 col-lg-12 col-md-9">
-
-    <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                <div class="col-lg-6">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Welcome Back! <php echo $query; ?></h1>
-                        </div>
-                        <form class="user" action="" method="POST" id="login">
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user"
-                                    id="email" name="email" aria-describedby="emailHelp"
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        <!-- Basic login form-->
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header justify-content-center"><h3 class="font-weight-light my-4">Login</h3></div>
+            <div class="card-body">
+                <!-- Login form-->
+                <form class="user" action="" method="POST" id="login">
+                    <!-- Form Group (email address)-->
+                    <div class="form-group">
+                        <label class="small mb-1" for="inputEmailAddress">Email</label>
+                        <!-- <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter email address" /> -->
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
                                     placeholder="Enter Email Address..." value="<?php echo isset($email)? $email : ''; ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control form-control-user"
-                                    id="password" name="password" placeholder="Password" required>
-                            </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck">
-                                    <label class="custom-control-label" for="customCheck">Remember
-                                        Me</label>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block" value="Login">Login</button>
-                            <!-- <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                Login
-                            </a> -->
-                        </form>
-                        <!-- <hr>
-                        <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div>
-                        <div class="text-center">
-                            <a class="small" href="register.html">Create an Account!</a>
-                        </div> -->
                     </div>
-                </div>
+                    <!-- Form Group (password)-->
+                    <div class="form-group">
+                        <label class="small mb-1" for="inputPassword">Password</label>
+                        <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <!-- Form Group (remember password checkbox)-->
+                    <div class="form-group">
+                        <div class="custom-contros670l custom-checkbox">
+                            <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
+                            <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
+                        </div>
+                    </div>
+                    <!-- Form Group (login box)-->
+                    <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                        <a class="small" href="auth-password-basic.html">Forgot Password?</a>
+                        <!-- <a class="btn btn-primary" href="index.html">Login</a> -->
+                        <button type="submit" class="btn btn-primary" value="Login">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <div class="small"><a href="auth-register-basic.html">Need an account? Sign up!</a></div>
             </div>
         </div>
     </div>
-
-</div>
-
 </div>
