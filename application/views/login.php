@@ -18,9 +18,9 @@
                         <label class="small mb-1" for="inputPassword">Password</label>
                         <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
                     </div>
-                    <!-- Form Group (remember password checkbox)-->
-                    <div class="form-group">
-                        <div class="custom-contros670l custom-checkbox">
+                   <!-- Form Group (remember password checkbox)-->
+                   <div class="form-group">
+                        <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
                             <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
                         </div>

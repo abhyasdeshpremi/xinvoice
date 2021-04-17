@@ -329,7 +329,7 @@
                             <div class="collapse" id="collapseDashboardsReport" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                     <a class="nav-link" href="<?php echo base_url('/firmdetails'); ?>">Seller Invoice Report</a>
-                                    <a class="nav-link" href="<?php echo base_url('/createfirm'); ?>">Purchase Invoice Report</a>
+                                    <a class="nav-link" href="<?php echo base_url('/creat'); ?>">Purchase Invoice Report</a>
                                 </nav>
                             </div>
 
