@@ -8,6 +8,7 @@
         <meta name="author" content="" />
         <title>Xinvoice - <?php echo $title;?></title>
         <link href="<?php echo base_url();?>assets/css/styles.css" rel="stylesheet" />
+        <link href="<?php echo base_url();?>assets/css/customStyle.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" crossorigin="anonymous" />
         <link rel="icon" type="image/x-icon" href="<?php echo base_url();?>assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -289,8 +290,8 @@
                             </a>
                             <div class="collapse" id="collapseDashboardsItem" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="dashboard-2.html">Items List</a>
-                                    <a class="nav-link" href="dashboard-3.html">New Item</a>
+                                    <a class="nav-link" href="<?php echo base_url('/itemdetails'); ?>">Items List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createitem'); ?>">New Item</a>
                                 </nav>
                             </div>
 
@@ -302,8 +303,8 @@
                             </a>
                             <div class="collapse" id="collapseDashboardsUser" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="dashboard-2.html">Users List</a>
-                                    <a class="nav-link" href="dashboard-3.html">New user</a>
+                                    <a class="nav-link" href="<?php echo base_url('/userdetails'); ?>">Users List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createuser'); ?>">New user</a>
                                 </nav>
                             </div>
 							
@@ -559,7 +560,15 @@
                     <div class="sidenav-footer">
                         <div class="sidenav-footer-content">
                             <div class="sidenav-footer-subtitle">Logged in as:</div>
-                            <div class="sidenav-footer-title">Valerie Luna</div>
+                            <div class="sidenav-footer-title">
+                                <?php 
+                                if($this->session->userdata('firstname') == '') { 
+                                    echo "Default User";
+                                }else{
+                                    echo $this->session->userdata('firstname'). " ".$this->session->userdata('lastname');
+                                }
+								?>
+                            </div>
                         </div>
                     </div>
                 </nav>
@@ -569,20 +578,16 @@
                     <!-- Main page content-->
                     <div class="container mt-5">
                         <!-- Custom page header alternative example-->
-                        <div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-4">
+                        <div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-1">
                             <div class="mr-4 mb-3 mb-sm-0">
-                                <h1 class="mb-0">Dashboard</h1>
+                                <h1 class="mb-0"><?php echo $title; ?></h1>
                                 <div class="small">
-                                    <span class="font-weight-500 text-primary">Friday</span>
-                                    &middot; September 20, 2020 &middot; 12:16 PM
+                                    <span class="font-weight-500 text-primary"><?php 
+                                    date_default_timezone_set('Asia/Kolkata'); 
+                                    echo date("l"); ?></span>
+                                    &middot; <?php echo date("F d, Y"); ?> &middot; <?php echo date("h:i:s A"); ?>
                                 </div>
                             </div>
-                            <!-- Date range picker example button-->
-                            <button class="btn btn-white p-3" id="reportrange">
-                                <i class="mr-2 text-primary" data-feather="calendar"></i>
-                                <span></span>
-                                <i class="ml-1" data-feather="chevron-down"></i>
-                            </button>
                         </div>
 							<?php echo $contents;?>
                     </div>

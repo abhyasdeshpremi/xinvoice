@@ -22,6 +22,21 @@ class Login_model extends CI_Model {
         }
         return $data;
     }
+
+    public function firm_detail($firm_code){
+        $data = array();
+        $this->db->where('status', 'active');
+        $this->db->where('firm_code', trim($firm_code));
+        $query = $this->db->get('Firms');
+        if($query->num_rows() === 1){
+            $data['flag'] = TRUE;
+            $data['result'] = $query->result();
+        }else{
+            $data['flag'] = FALSE;
+            $data['result'] = array();
+        }
+        return $data;
+    }
 }
 
 ?>
