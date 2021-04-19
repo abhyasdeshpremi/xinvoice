@@ -59,5 +59,7 @@ $route['createitem'] = 'item/createItem';
 $route['itemdetails'] = 'item/itemdetails';
 $route['createuser'] = 'user/createUser';
 $route['userdetails'] = 'user/userdetails';
+$route['purchase'] = 'purchase_invoice/purchaseInvoice';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
