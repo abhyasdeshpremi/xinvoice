@@ -21,7 +21,7 @@
 
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                    <label for="userStatus">Client Type <?php echo count($roleTypes); ?></label>
+                    <label for="userStatus">Client Type</label>
                         <select class="form-control" id="clienttype" name="clienttype" style="text-transform: capitalize;">
                             <?php $count = 0; 
                             foreach($roleTypes as $roleType){ ?>

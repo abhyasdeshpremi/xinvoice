@@ -63,6 +63,8 @@ $route['createclient'] = 'client/createClient';
 $route['clientdetails'] = 'client/clientdetails';
 $route['createcompany'] = 'company/createCompany';
 $route['companydetails'] = 'company/companydetails';
+$route['createinvoice'] = 'invoice/createinvoice';
+$route['invoicedetail'] = 'invoice/invoicedetails';
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 
 $route['404_override'] = '';
