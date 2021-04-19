@@ -320,6 +320,19 @@
                                     <a class="nav-link" href="<?php echo base_url('/createclient'); ?>">New Client</a>
                                 </nav>
                             </div>
+                            
+                            <!-- Sidenav Accordion (Clients)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardscompany" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                Companies
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardscompany" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/companydetails'); ?>">Companies List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createcompany'); ?>">New Company</a>
+                                </nav>
+                            </div>
 
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsFirm" aria-expanded="false" aria-controls="collapseDashboards">
@@ -593,7 +606,7 @@
                         <!-- Custom page header alternative example-->
                         <div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-1">
                             <div class="mr-4 mb-3 mb-sm-0">
-                                <h1 class="mb-0"><?php echo $title; ?></h1>
+                                <h5 class="mb-0"><?php echo $title; ?></h5>
                                 <div class="small">
                                     <span class="font-weight-500 text-primary"><?php 
                                     date_default_timezone_set('Asia/Kolkata'); 

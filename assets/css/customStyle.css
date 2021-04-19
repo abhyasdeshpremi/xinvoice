@@ -4,3 +4,9 @@
 .datatable{
     background-color: white;
 }
+.bottomBorders{
+    border-bottom-style: solid;
+    border-bottom-color: lightgrey;
+    border-bottom-width: 1px;
+    border-bottom-width: 10px ​!important;
+}
