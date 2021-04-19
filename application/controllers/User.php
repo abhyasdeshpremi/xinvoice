@@ -49,7 +49,7 @@ class User extends CI_Controller {
                 $data['errorMessage'] = 'Username must be unique.';
             }
          }
-        $this->template->set('title', 'Create Item');
+        $this->template->set('title', 'Create User');
         $this->template->load('default_layout', 'contents' , 'user/createUser', $data);
     }
 
@@ -57,7 +57,7 @@ class User extends CI_Controller {
         $data = array();
         $firm_result = $this->User_model->user_list();
         $data['data'] = $firm_result['result'];
-        $this->template->set('title', 'Items List');
+        $this->template->set('title', 'Users List');
         $this->template->load('default_layout', 'contents' , 'user/userdetail', $data);
     }
 

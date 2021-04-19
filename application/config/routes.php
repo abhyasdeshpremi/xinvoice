@@ -59,6 +59,8 @@ $route['createitem'] = 'item/createItem';
 $route['itemdetails'] = 'item/itemdetails';
 $route['createuser'] = 'user/createUser';
 $route['userdetails'] = 'user/userdetails';
+$route['createclient'] = 'client/createClient';
+$route['clientdetails'] = 'client/clientdetails';
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 
 $route['404_override'] = '';
