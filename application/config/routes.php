@@ -66,6 +66,7 @@ $route['createcompany'] = 'company/createCompany';
 $route['companydetails'] = 'company/companydetails';
 $route['createinvoice'] = 'invoice/createinvoiceID';
 $route['createinvoice/(:any)'] = 'invoice/createinvoice/$1';
+$route['createinvoicepdf/(:any)'] = 'invoice/createInvoicePDF/$1';
 $route['invoicedetail'] = 'invoice/invoicedetails';
 $route['getinvoicelist'] = 'invoice/getinvoicelist';
 $route['savevoiceheader'] = 'invoice/saveInvoiceHeader';

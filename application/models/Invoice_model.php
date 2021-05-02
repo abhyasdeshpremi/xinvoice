@@ -170,6 +170,7 @@ class Invoice_model extends CI_Model {
                 $data['payment_mode'] = $row->payment_mode;
                 $data['vehicle'] = $row->vehicle;
                 $data['invoice_reference_id'] = $row->previous_invoice_ref_no;
+                $data['created_at'] = $row->created_at;
 
                 $data['fk_client_code'] = $row->fk_client_code;
                 $data['client_name'] = $row->client_name;

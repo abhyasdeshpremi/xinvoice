@@ -80,6 +80,53 @@ class Invoice extends CI_Controller {
         $this->template->load('default_layout', 'contents' , 'invoice/createinvoice', $data);
     }
 
+    public function createInvoicePDF($id = null){
+        $data = array();
+        if(!validationInvoiceID($id)){
+            $data['heading'] = "Invalid Invoice ID";
+            $data['message'] = "Invalid Invoice ID";
+            $this->template->set('title', 'Invalid Invoice ID');
+            $this->template->load('default_layout', 'contents' , 'errors/html/error_404', $data);
+            return false;
+        }
+        $data['clients'] = $this->Invoice_model->client_list();
+        $data['invoiceTypes'] = $this->Invoice_model->invoiceRef_list();
+        $data['invoiceitemsList'] = $this->Invoice_model->invoice_items_list($id);
+        $data['itemsList'] = $this->Invoice_model->items_list();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['method'] = "GET";
+            $data['invoiceid'] = $id;
+            $invoiceDetail = $this->Invoice_model->getinvoiceid($id);
+            $data['invoicepkid'] = $invoiceDetail['pk_invoice_id'];
+            $data['invoicestatus'] = $invoiceDetail['invoicestatus'];
+            $data['invoicetitle'] = $invoiceDetail['invoicetitle'];
+            $data['invoicesubtitle'] = $invoiceDetail['subtitle'];
+            $data['paymentmode'] = $invoiceDetail['payment_mode'];
+            $data['vehicleno'] = $invoiceDetail['vehicle'];
+            $data['invoicerefNumber'] = $invoiceDetail['invoice_reference_id'];
+            $data['created_at'] = $invoiceDetail['created_at'];
+
+            $data['clientcode'] = $invoiceDetail['fk_client_code'];
+            $data['clientname'] = $invoiceDetail['client_name'];
+            $data['gstin'] = $invoiceDetail['gstnumber'];
+            $data['pannumber'] = $invoiceDetail['pannumber'];
+            $data['mobilenumber'] = $invoiceDetail['mobilenumber'];
+
+            $data['clintaddress'] = $invoiceDetail['address'];
+            $data['clientState'] = $invoiceDetail['state'];
+            $data['clientDistrict'] = $invoiceDetail['district'];
+            $data['clientcity'] = $invoiceDetail['city'];
+            $data['clientarea'] = $invoiceDetail['area'];
+            $data['clientpincode'] = $invoiceDetail['pincode'];
+        }
+        // $this->template->set('title', 'Create Invoice PDF');
+        // $this->template->load('default_layout', 'contents' , 'invoice/createinvoicepdf', $data);
+        $this->load->library('pdf');
+        $html = $this->load->view('invoice/createinvoicepdf', $data, true);
+        $this->pdf->createPDF($html, 'mypdf', false, 'A4', 'landscape');
+
+    }
+
     public function saveItemInInvoice(){
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
