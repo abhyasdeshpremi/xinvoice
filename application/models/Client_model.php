@@ -58,6 +58,30 @@ class Client_model extends CI_Model {
         }
         return $data;
     }
+
+    public function client_by_id($unique_code){
+        $data = array();
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('code', $unique_code);
+        $query = $this->db->get('Clients');
+        if($query->num_rows() == 1){
+            foreach ($query->result() as $row)  
+            {  
+                $data['code'] = $row->code;
+                $data['name'] = $row->name;
+                $data['gst_no'] = $row->gst_no;
+                $data['pan_no'] = $row->pan_no;
+                $data['mobile_no'] = $row->mobile_no;
+                $data['address'] = $row->address;
+                $data['city'] = $row->city;
+                $data['district'] = $row->district;
+                $data['state'] = $row->state;
+                $data['area'] = $row->area;
+                $data['pin_code'] = $row->pin_code;
+            }
+        }
+        return $data;
+    }
 }
 
 ?>

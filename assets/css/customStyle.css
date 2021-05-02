@@ -10,3 +10,9 @@
     border-bottom-width: 1px;
     border-bottom-width: 10px ​!important;
 }
+.allBorder {
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+}

@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <i class="ml-1" data-feather="arrow-right"></i>
                 </a>
             </div>
-            <div class="col d-none d-lg-block mt-xxl-n4"><img class="img-fluid px-xl-4 mt-xxl-n5" src="assets/img/illustrations/statistics.svg" /></div>
+            <div class="col d-none d-lg-block mt-xxl-n4"><img class="img-fluid px-xl-4 mt-xxl-n5" src="<?php echo base_url('assets/img/illustrations/statistics.svg'); ?>" /></div>
         </div>
     </div>
 </div>
@@ -96,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Illustration card example-->
         <div class="card mb-4">
             <div class="card-body text-center p-5">
-                <img class="img-fluid mb-5" src="assets/img/illustrations/data-report.svg" />
+                <img class="img-fluid mb-5" src="<?php echo base_url('assets/img/illustrations/data-report.svg'); ?>" />
                 <h4>Report generation</h4>
                 <p class="mb-4">Ready to get started? Let us know now! It's time to start building that dashboard you've been waiting to create!</p>
                 <a class="btn btn-primary p-3" href="#!">Continue</a>

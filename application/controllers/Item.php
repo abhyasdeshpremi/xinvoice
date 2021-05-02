@@ -32,7 +32,15 @@ class Item extends CI_Controller {
             if($uniqueCodeVerify){
                 $createItem = $this->Item_model->create_item($data);
                 if($createItem ){
-                    unset($data);
+                    $data['uniqueItemCode'] = '';
+                    $data['itemName'] = '';
+                    $data['itemsubdescription'] = '';
+                    $data['weightinlitter'] = '';
+                    $data['itemunitcase'] = '';
+                    $data['itemmrp'] = '';
+                    $data['itemcostprice'] = '';
+                    $data['itemopbalanceinquantity'] = '';
+                    $data['itemCompanyCode'] = '';
                     $data['successMessage'] = "Successfully Item Created.";
                 }else{
                     $data['errorMessage'] = 'Unable to save firm information. Please contact your Administrator.';

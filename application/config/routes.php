@@ -61,10 +61,17 @@ $route['createuser'] = 'user/createUser';
 $route['userdetails'] = 'user/userdetails';
 $route['createclient'] = 'client/createClient';
 $route['clientdetails'] = 'client/clientdetails';
+$route['getclientid'] = 'client/getclientID';
 $route['createcompany'] = 'company/createCompany';
 $route['companydetails'] = 'company/companydetails';
-$route['createinvoice'] = 'invoice/createinvoice';
+$route['createinvoice'] = 'invoice/createinvoiceID';
+$route['createinvoice/(:any)'] = 'invoice/createinvoice/$1';
 $route['invoicedetail'] = 'invoice/invoicedetails';
+$route['getinvoicelist'] = 'invoice/getinvoicelist';
+$route['savevoiceheader'] = 'invoice/saveInvoiceHeader';
+$route['getitemcode'] = 'invoice/getItemCode';
+$route['saveitemininvoce'] = 'invoice/saveItemInInvoice';
+
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 
 $route['404_override'] = '';

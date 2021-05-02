@@ -66,4 +66,13 @@ class Client extends CI_Controller {
         $this->template->set('title', 'Clients List');
         $this->template->load('default_layout', 'contents' , 'client/clientdetail', $data);
     }
+
+    public function getclientID(){
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $client_result = $this->Client_model->client_by_id($this->input->post('uniqueCode'));
+            echo json_encode($client_result);
+        }else{
+            echo json_encode(array());
+        }
+    }
 }
