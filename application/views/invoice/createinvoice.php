@@ -36,10 +36,10 @@
                                 <div class="col-md-2 mb-3">
                                     <label for="userStatus">Invoice Type</label>
                                     <select class="form-control" id="invoicetype" name="invoicetype" style="text-transform: capitalize;">
-                                            <option value="">Select Invoice type</option>
+                                            <option value="">Select</option>
                                             <?php $count = 1; 
                                                 foreach($invoiceTypes as $invoice){ ?>
-                                                    <option value="<?php echo $invoice->invoice_reference_id; ?>"><?php echo "Invoice".$count;?></option>
+                                                    <option value="<?php echo $invoice->invoice_reference_id; ?>"><?php echo "Invoice v_".$count;?></option>
                                             <?php $count++; } ?>
                                         </select>
                                 </div>
@@ -54,22 +54,35 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-2 mb-3">
                                     <label for="validationDefault03">Payment mode</label>
                                     <input class="form-control" id="paymentmode" name="paymentmode" type="text" placeholder="Payment mode" value="<?php echo isset($paymentmode)? $paymentmode : ''; ?>" required/>
                                 </div>
 
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-2 mb-3">
                                     <label for="validationDefault03">Vehicle No.</label>
                                     <input class="form-control" id="vehicleno" name="vehicleno" type="text" placeholder="Vehicle No." value="<?php echo isset($vehicleno)? $vehicleno : ''; ?>"/>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">GST IN</label>
+                                    <input class="form-control" id="owninvoicegstin" name="owninvoicegstin" type="text" placeholder="GST IN" value="<?php echo isset($owninvoicegstin)? $owninvoicegstin : ''; ?>" />
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">Mobile No.</label>
+                                    <input class="form-control" id="owninvoicemobileno" name="owninvoicemobileno" type="text" placeholder="Mobile No." value="<?php echo isset($owninvoicemobileno)? $owninvoicemobileno : ''; ?>"/>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="validationDefault03">Invoice Reference Number</label>
                                     <input class="form-control" id="invoicerefNumber" name="invoicerefNumber" type="text" placeholder="Invoice Reference Number" value="<?php echo isset($invoicerefNumber)? $invoicerefNumber : ''; ?>"/>
                                 </div>
                             </div>
-
-                            <!-- <option value="<?php //echo $roleType;?>" <?php //if(isset($clienttype)){ if($clienttype == $roleType){ echo "selected"; }}?>><?php //echo $roleType;?></option> -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="saveinvoice" id="saveinvoice" name="saveinvoice"  />
+                                <label class="form-check-label text-primary" for="saveinvoice">
+                                    Are you want to save above invoice header information?
+                                </label>
+                            </div>
+                           <hr>
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                         <label for="userStatus">To Invoice Client Name</label>
@@ -138,16 +151,30 @@
                     <h5 class="mb-0">
                         <div class="row">
                             <div class="col-md-3 mb-3">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" >
                                 Add Invoice Items 
                                 </button>
                             </div>
-                            <div class="col-md-7 mb-3">
+                            <div class="col-md-4 mb-3">
                             </div>
                             <div class="col-md-2 mb-3">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
                                     Add Item
                                 </button>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary">INVOICE &nbsp;<i data-feather="file-text"></i></button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split pdfdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createinvoicepdf'."/".$invoiceid."/landscape/0"); ?>">Landscape Invoice</a>
+                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createinvoicepdf'."/".$invoiceid)."/portrait/0"; ?>">Portrait Invoice</a>
+                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createinvoicepdf'."/".$invoiceid."/landscape/1"); ?>">Landscape Invoice Download</a>
+                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createinvoicepdf'."/".$invoiceid)."/portrait/1"; ?>">Portrait Invoice Download</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </h5>
@@ -160,7 +187,7 @@
                             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr>
+                                        <tr class="invoicecal">
                                             <th width="60px;">#</th>
                                             <th width="100px;">Item Code</th>
                                             <th>Name</th>
@@ -180,7 +207,7 @@
                                             $mrp_value = $mrp_value + $value->mrp_value;
                                             $bill_value = $bill_value + $value->bill_value;
                                             ?>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $value->fk_item_code; ?></td>
                                                 <td><?php echo $value->fk_item_name; ?></td>
@@ -195,7 +222,8 @@
                                                 </td>
                                             </tr>
                                         <?php $i++; } ?>
-                                            <tr>
+                                            <input type="hidden" id="numberofinvoiceitem" value="<?php echo $i; ?>" />
+                                            <tr class="invoicecal">
                                                 <td colspan="5"></td>
                                                 <td><b><?php echo $mrp_value; ?></b></td>
                                                 <td></td>
@@ -210,32 +238,32 @@
                                                $bill_amount = round($total_cgst_sgst_value, 0);
                                                $round_off = round(($bill_amount - $total_cgst_sgst_value), 2);
                                             ?>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td colspan="4" rowspan="7"></td>
                                                 <td colspan="3">BASIC VALUE RS.</td>
                                                 <td><?php echo $basicValue; ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td colspan="3">CGST 9.00%</td>
                                                 <td><?php echo $cgstValue; ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td colspan="3">TOTAL RS.</td>
                                                 <td><?php echo $total_cgst_value; ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td colspan="3">SGST 9.00%</td>
                                                 <td><?php echo $sgstValue; ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td colspan="3">TOTAL RS.</td>
                                                 <td><?php echo $total_cgst_sgst_value; ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td colspan="3">ROUND OFF</td>
                                                 <td><?php echo $round_off; ?></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="invoicecal">
                                                 <td colspan="3">BILL AMOUNT</td>
                                                 <td><?php echo $bill_amount; ?></td>
                                             </tr>
@@ -256,7 +284,7 @@
 </div>
 
 <!----Add item modal Start----->
-<div class="modal fade" id="addItemInput" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+<div class="modal fade" id="addItemInput" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -267,6 +295,7 @@
       </div>
       <div class="modal-body">
         <form>
+            <span class="" id="successfullyMessage"></span>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Item</button>
@@ -278,6 +307,7 @@
                     </div>
                 </div>
                 <input type="hidden" class="form-control" aria-label="Text input with dropdown button" id="selectitemcode" name="selectitemcode" >
+                <input type="hidden" class="form-control"  id="defineunitcase" name="defineunitcase" value="">
                 <input type="text" class="form-control" aria-label="Text input with dropdown button" id="itemdescription" name="itemdescription" value="" readonly>
             </div>
             <div class="input-group input-group-sm mb-3">
@@ -285,6 +315,12 @@
                     <span class="input-group-text" id="inputGroup-sizing-sm">Quantity</span>
                 </div>
                 <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itemquantity" name="itemquantity" value="">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Case/Unit</span>
+                </div>
+                <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itemcaseunit" name="itemcaseunit" value="" readonly>
             </div>
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
@@ -370,6 +406,8 @@
                     $('#invoicesubtitle').val(data.subtitle);
                     $('#paymentmode').val(data.payment_mode);
                     $('#vehicleno').val(data.vehicle);
+                    $('#owninvoicemobileno').val(data.mobile);
+                    $('#owninvoicegstin').val(data.gstnumber);
                 }
                 });
             }
@@ -406,20 +444,13 @@
                 success: function (data) {
                     $('#selectitemcode').val(data[0].item_code);
                     $('#itemdescription').val(data[0].name);
-                    $('#itemcase').val(data[0].unit_case);
                     $('#itemmrp').val(data[0].cost_price);
+                    $('#defineunitcase').val(data[0].unit_case);
                     invoiceCalculation();
                     // alert(data[0].name);
                 }
             });
         });
-        $('#addItemInput') .modal({backdrop: 'static', keyboard: false})
-        //automatically close while modal open first time patch fix
-        var myModal = $('#addItemInput');
-        clearTimeout(myModal.data('hideInterval'));
-        myModal.data('hideInterval', setTimeout(function(){
-            myModal.modal('hide');
-        }, 1000));
 
         $('#add_item_to_invoice').click(function(){
             
@@ -427,6 +458,7 @@
             var item_name = $("#itemdescription").val();
             var invoice_id = $("#defaultinvoiceID").val();
             var quatity = $("#itemquantity").val();
+            var itemunitcase = $("#itemcaseunit").val();
             var itemmrp = $("#itemmrp").val();
             var itemdiscount = $("#itemdiscount").val();
             var itemdmrpvalue = $("#itemmrpvalue").val();
@@ -434,26 +466,36 @@
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url('/saveitemininvoce'); ?>',
-                data: {invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
+                data: {invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
                 error: function(request, error) {
                     console.log(arguments);
                     alert(" Can't do because: " + error);
                 },
                 success: function (data) {
+                    var data = JSON.parse(data);
                     console.log(data);
                     $("#selectitemcode").val('');
                     $("#itemdescription").val('');
-                    $("#defaultinvoiceID").val('');
                     $("#itemquantity").val('');
                     $("#itemmrp").val('');
                     $("#itemdiscount").val('');
                     $("#itemmrpvalue").val('');
                     $("#itembillValue").val('');
-                    var myModal = $('#addItemInput');
-                    clearTimeout(myModal.data('hideInterval'));
-                    myModal.data('hideInterval', setTimeout(function(){
-                        myModal.modal('hide');
-                    }, 1000));
+                    $("#itemcaseunit").val('');
+                    $("#defineunitcase").val('');
+                    if(data.code){
+                        $("#successfullyMessage").addClass('alert-success');
+                    }else{
+                        $("#successfullyMessage").addClass('alert-danger');
+                    }
+                    $("#successfullyMessage").text(data.message);
+                    $('#successfullyMessage').delay(5000).fadeOut();
+
+                    // var myModal = $('#addItemInput');
+                    // clearTimeout(myModal.data('hideInterval'));
+                    // myModal.data('hideInterval', setTimeout(function(){
+                    //     myModal.modal('hide');
+                    // }, 1000));
                 }
             });
         });
@@ -467,11 +509,27 @@
             var quatity = $("#itemquantity").val();
             var itemmrp = $("#itemmrp").val();
             var itemdiscount = $("#itemdiscount").val();
+            var defineuintcase = $("#defineunitcase").val();
             var mrpvalue = quatity * itemmrp;
             var discountrs = (mrpvalue * itemdiscount) / 100;
             var itembillvalue = mrpvalue - discountrs;
+            var totalunitcasevalue = parseFloat(quatity / defineuintcase).toFixed(2);
+            $('#itemcaseunit').val(totalunitcasevalue);
             $("#itemmrpvalue").val(mrpvalue);
             $("#itembillValue").val(itembillvalue);
+        }
+
+        invoiceCalCulationInfo();
+        function invoiceCalCulationInfo(){
+            var numberofrow = $('#numberofinvoiceitem').val();
+            var pdfdropdown = $(".pdfdropdown");
+            if(numberofrow > 1){
+                $('.invoicecal').show();
+                pdfdropdown.removeAttr("disabled");
+            }else{
+                $('.invoicecal').hide();
+                pdfdropdown.attr("disabled", "disabled");
+            }
         }
     });
 </script>

@@ -52,6 +52,17 @@ class Invoice_model extends CI_Model {
         return $data;
     }
 
+    public function invoice_list(){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Invoices');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
     public function invoiceInitial($invoiceNewID){
         $data = array(
             'unique_invioce_code'=>$invoiceNewID,
@@ -116,6 +127,8 @@ class Invoice_model extends CI_Model {
                 $data['subtitle'] = $row->subtitle;
                 $data['payment_mode'] = $row->payment_mode;
                 $data['vehicle'] = $row->vehicle;
+                $data['mobile'] = $row->mobile;
+                $data['gstnumber'] = $row->gstnumber;
             }
         }
         return $data;
@@ -135,23 +148,18 @@ class Invoice_model extends CI_Model {
     }
 
     public function saveInvoiceRef($data){
-        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-        $this->db->where('fk_username', $this->session->userdata('username'));
-        $this->db->where('title', $data['invoicetitle']);
-        $query = $this->db->get('Invoice_reference');
-        if($query->num_rows() == 0){
-            $dataList = array(
-                'title'=>$data['invoicetitle'],
-                'subtitle'=>$data['invoicesubtitle'],
-                'payment_mode'=>$data['paymentmode'],
-                'vehicle'=>$data['vehicleno'],
-                'fk_firm_code'=>$this->session->userdata('firmcode'),
-                'fk_username'=>$this->session->userdata('username'),
-            );
-            $this->db->insert('Invoice_reference', $dataList);
-            return true;
-        }
-        return false;
+        $dataList = array(
+            'title'=>$data['invoicetitle'],
+            'subtitle'=>$data['invoicesubtitle'],
+            'payment_mode'=>$data['paymentmode'],
+            'vehicle'=>$data['vehicleno'],
+            'mobile'=>$data['invoicemobileno'],
+            'gstnumber'=>$data['invoicegstin'],
+            'fk_firm_code'=>$this->session->userdata('firmcode'),
+            'fk_username'=>$this->session->userdata('username'),
+        );
+        $this->db->insert('Invoice_reference', $dataList);
+        return ($this->db->affected_rows() == 1) ? true : false;
     }
 
     public function getinvoiceid($invoiceid = null){
@@ -169,6 +177,8 @@ class Invoice_model extends CI_Model {
                 $data['subtitle'] = $row->invoice_subtitle;
                 $data['payment_mode'] = $row->payment_mode;
                 $data['vehicle'] = $row->vehicle;
+                $data['invoicegstin'] = $row->invoice_gstin;
+                $data['invoicemobileno'] = $row->invoice_mobileno;
                 $data['invoice_reference_id'] = $row->previous_invoice_ref_no;
                 $data['created_at'] = $row->created_at;
 
@@ -198,6 +208,8 @@ class Invoice_model extends CI_Model {
             $dataList = array(
                 'invoice_title'=>$data['invoicetitle'],
                 'invoice_subtitle'=>$data['invoicesubtitle'],
+                'invoice_mobileno'=>$data['owninvoicemobileno'],
+                'invoice_gstin'=>$data['owninvoicegstin'],
                 'payment_mode'=>$data['paymentmode'],
                 'vehicle'=>$data['vehicleno'],
                 'previous_invoice_ref_no'=>$data['invoicerefNumber'],
@@ -235,6 +247,7 @@ class Invoice_model extends CI_Model {
                 'fk_item_code'=>$data['itemcode'],
                 'fk_item_name'=>$data['itemname'],
                 'quantity'=>$data['quatity'],
+                'case_unit'=>$data['itemunitcase'],
                 'mrp'=>$data['itemmrp'],
                 'mrp_value'=>$data['itemdmrpvalue'],
                 'discount'=>$data['itemdiscount'],
@@ -253,6 +266,7 @@ class Invoice_model extends CI_Model {
                 'fk_item_code'=>$data['itemcode'],
                 'fk_item_name'=>$data['itemname'],
                 'quantity'=>$data['quatity'],
+                'case_unit'=>$data['itemunitcase'],
                 'mrp'=>$data['itemmrp'],
                 'mrp_value'=>$data['itemdmrpvalue'],
                 'discount'=>$data['itemdiscount'],

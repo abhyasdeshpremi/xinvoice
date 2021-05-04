@@ -61,6 +61,8 @@ class Invoice extends CI_Controller {
             $data['invoicesubtitle'] = $invoiceDetail['subtitle'];
             $data['paymentmode'] = $invoiceDetail['payment_mode'];
             $data['vehicleno'] = $invoiceDetail['vehicle'];
+            $data['owninvoicegstin'] = $invoiceDetail['invoicegstin'];
+            $data['owninvoicemobileno'] = $invoiceDetail['invoicemobileno'];
             $data['invoicerefNumber'] = $invoiceDetail['invoice_reference_id'];
 
             $data['clientcode'] = $invoiceDetail['fk_client_code'];
@@ -80,7 +82,7 @@ class Invoice extends CI_Controller {
         $this->template->load('default_layout', 'contents' , 'invoice/createinvoice', $data);
     }
 
-    public function createInvoicePDF($id = null){
+    public function createInvoicePDF($id = null, $mode = "landscape", $download = false){
         $data = array();
         if(!validationInvoiceID($id)){
             $data['heading'] = "Invalid Invoice ID";
@@ -88,6 +90,13 @@ class Invoice extends CI_Controller {
             $this->template->set('title', 'Invalid Invoice ID');
             $this->template->load('default_layout', 'contents' , 'errors/html/error_404', $data);
             return false;
+        }
+        if($mode === "landscape"){
+            $mode = "landscape";
+        }elseif($mode === "portrait"){
+            $mode = "portrait";
+        }else{
+            $mode = "landscape";
         }
         $data['clients'] = $this->Invoice_model->client_list();
         $data['invoiceTypes'] = $this->Invoice_model->invoiceRef_list();
@@ -103,8 +112,11 @@ class Invoice extends CI_Controller {
             $data['invoicesubtitle'] = $invoiceDetail['subtitle'];
             $data['paymentmode'] = $invoiceDetail['payment_mode'];
             $data['vehicleno'] = $invoiceDetail['vehicle'];
+            $data['owninvoicegstin'] = $invoiceDetail['invoicegstin'];
+            $data['owninvoicemobileno'] = $invoiceDetail['invoicemobileno'];
             $data['invoicerefNumber'] = $invoiceDetail['invoice_reference_id'];
             $data['created_at'] = $invoiceDetail['created_at'];
+            $data['mode'] = $mode;
 
             $data['clientcode'] = $invoiceDetail['fk_client_code'];
             $data['clientname'] = $invoiceDetail['client_name'];
@@ -121,9 +133,10 @@ class Invoice extends CI_Controller {
         }
         // $this->template->set('title', 'Create Invoice PDF');
         // $this->template->load('default_layout', 'contents' , 'invoice/createinvoicepdf', $data);
+        //landscape portrait
         $this->load->library('pdf');
         $html = $this->load->view('invoice/createinvoicepdf', $data, true);
-        $this->pdf->createPDF($html, 'mypdf', false, 'A4', 'landscape');
+        $this->pdf->createPDF($html, $invoiceDetail['invoicetitle']."".date('Y-m-d H:i:s'), $download, 'A4', $mode);
 
     }
 
@@ -135,6 +148,7 @@ class Invoice extends CI_Controller {
             $data['itemcode'] = strtoupper($this->input->post('itemcode'));
             $data['itemname'] = strtoupper($this->input->post('itemname'));
             $data['quatity'] = $this->input->post('quatity');
+            $data['itemunitcase'] = $this->input->post('itemunitcase');
             $data['itemmrp'] = $this->input->post('itemmrp');
             $data['itemdiscount'] = $this->input->post('itemdiscount');
             $data['itemdmrpvalue'] = $this->input->post('itemdmrpvalue');
@@ -159,7 +173,7 @@ class Invoice extends CI_Controller {
 
     public function invoicedetails(){
         $data = array();
-        $firm_result = $this->Invoice_model->company_list();
+        $firm_result = $this->Invoice_model->invoice_list();
         $data['data'] = $firm_result['result'];
         $this->template->set('title', 'Invoices List');
         $this->template->load('default_layout', 'contents' , 'invoice/invoicedetail', $data);
@@ -190,6 +204,8 @@ class Invoice extends CI_Controller {
             $data['invoicesubtitle'] = strtoupper($this->input->post('invoicesubtitle'));
             $data['paymentmode'] = $this->input->post('paymentmode');
             $data['vehicleno'] = $this->input->post('vehicleno');
+            $data['owninvoicegstin'] = $this->input->post('owninvoicegstin');
+            $data['owninvoicemobileno'] = $this->input->post('owninvoicemobileno');
             $data['invoicerefNumber'] = $this->input->post('invoicerefNumber');
             $data['clientcode'] = $this->input->post('clientcode');
             $data['clientname'] = $this->input->post('clientname');
@@ -202,11 +218,13 @@ class Invoice extends CI_Controller {
             $data['clientcity'] = $this->input->post('clientcity');
             $data['clientarea'] = $this->input->post('clientarea');
             $data['clientpincode'] = $this->input->post('clientpincode');
-            $this->Invoice_model->saveInvoiceRef($data);
+            if($this->input->post('saveinvoice') === 'saveinvoice'){
+                $this->Invoice_model->saveInvoiceRef($data);
+            }
             $data["message"] = "Update data start";
             $invoice_save_result = $this->Invoice_model->updateInvoice($data);
             if($invoice_save_result){
-                $data["message"] = "Successfully invoice saved! ";
+                $data["message"] = "Successfully invoice saved!";
             }else{
                 $data["message"] = "Unable to save invoice, may be wrong invoice id. Please try again!";
             }
