@@ -291,7 +291,7 @@
                                     <a class="nav-link" href="dashboard-3.html">Seller List</a>
                                 </nav>
                             </div>
-							<a class="nav-link" href="<?php echo base_url('stock ');  ?>">
+							<a class="nav-link" href="<?php echo base_url('getstock');  ?>">
                                 <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
                                 Stock
                             </a>

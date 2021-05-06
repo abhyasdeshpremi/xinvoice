@@ -469,7 +469,10 @@
                 data: {invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
                 error: function(request, error) {
                     console.log(arguments);
-                    alert(" Can't do because: " + error);
+                    $("#successfullyMessage").addClass('alert-danger');
+                    $("#successfullyMessage").text("Something went wrong");
+                    $('#successfullyMessage').fadeIn();
+                    $('#successfullyMessage').delay(4000).fadeOut();
                 },
                 success: function (data) {
                     var data = JSON.parse(data);
@@ -489,7 +492,8 @@
                         $("#successfullyMessage").addClass('alert-danger');
                     }
                     $("#successfullyMessage").text(data.message);
-                    $('#successfullyMessage').delay(5000).fadeOut();
+                    $('#successfullyMessage').fadeIn();
+                    $('#successfullyMessage').delay(4000).fadeOut();
 
                     // var myModal = $('#addItemInput');
                     // clearTimeout(myModal.data('hideInterval'));

@@ -73,6 +73,9 @@ $route['savevoiceheader'] = 'invoice/saveInvoiceHeader';
 $route['getitemcode'] = 'invoice/getItemCode';
 $route['saveitemininvoce'] = 'invoice/saveItemInInvoice';
 
+$route['getstock'] = 'stock/getStock';
+$route['savestock'] = 'stock/saveStock';
+
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 
 $route['404_override'] = '';
