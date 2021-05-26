@@ -59,7 +59,7 @@ if(isset($mode)){
 <table class="table table-bordered" id="dataTable" cellspacing="0" style="font:10px;" width="99%">
     <thead >
         <tr>
-            <th>SNO.</th>
+            <th width="20px;">SNO.</th>
             <th width="140px;">Name</th>
             <th style="text-align:right;">C/S</th>
             <th style="text-align:right;" >QTY</th>
