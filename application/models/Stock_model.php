@@ -37,6 +37,15 @@ class Stock_model extends CI_Model {
             }elseif($data['stocktype'] == 'sell'){
                 $updateStock = (int)$preTotalStockItem - (int)$data['stockunit'];
             }
+
+            if($data['stocktype'] == 'sell'){
+                if((int)$data['stockunit'] > (int)$preTotalStockItem){
+                    $result['code'] = false;
+                    $result['stockid'] = '';
+                    return $result;
+                }
+            }
+
             $dataList = array( 
                 'item_total_count'=> $updateStock,
                 'updated_at'=>date('Y-m-d H:i:s')

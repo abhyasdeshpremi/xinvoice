@@ -1,5 +1,8 @@
 <div class="row">
-    <div class="col-md-10 mb-3">
+    <div class="col-md-9 mb-3">
+    </div>
+    <div class="col-md-1 mb-3">
+        <button type="button" class="btn btn-primary" id="hardRefresh"> Reload</button>
     </div>
     <div class="col-md-2 mb-3">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
@@ -12,20 +15,18 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Stock ID</th>
+                    <th style="width:50px;">Sr.</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Total Stock</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th>Stock ID</th>
+                    <th>Sr.</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Total Stock</th>
-                    <th>Actions</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -35,10 +36,6 @@
                         <td><?php echo $value->item_code; ?></td>
                         <td><?php echo $value->item_name; ?></td>
                         <td><?php echo $value->item_total_count; ?></td>
-                        <td>
-                            <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
-                            <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button>
-                        </td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -110,6 +107,11 @@
 <script>
     
     $(document).ready(function(){
+
+        $("#hardRefresh").click(function () {
+            location.reload(true);
+        });
+
         $('#modalheader').css("background-color", "green");
         $('#modalheader h5').css("color", "white");
         $("#stocktype").change(function(){
@@ -186,12 +188,12 @@
                 success: function (data) {
                     var data = JSON.parse(data);
                     console.log(data);
-                    $("#selectitemcode").val('');
-                    $("#itemdescription").val('');
-                    $("#stocktype").val('');
-                    $("#stockunit").val('');
-                    $("#stockcomment").val('');
                     if(data.code){
+                        $("#selectitemcode").val('');
+                        $("#itemdescription").val('');
+                        $("#stocktype").val('');
+                        $("#stockunit").val('');
+                        $("#stockcomment").val('');
                         $("#successfullyMessage").addClass('alert-success');
                     }else{
                         $("#successfullyMessage").addClass('alert-danger');
@@ -199,14 +201,17 @@
                     $("#successfullyMessage").text(data.message);
                     $('#successfullyMessage').fadeIn();
                     $('#successfullyMessage').delay(4000).fadeOut();
-
-                    // var myModal = $('#addItemInput');
-                    // clearTimeout(myModal.data('hideInterval'));
-                    // myModal.data('hideInterval', setTimeout(function(){
-                    //     myModal.modal('hide');
-                    // }, 1000));
                 }
             });
+        });
+
+        $("#addItemInput").on("hidden.bs.modal", function () {
+            $("#selectitemcode").val('');
+            $("#itemdescription").val('');
+            $("#stocktype").val('');
+            $("#stockunit").val('');
+            $("#stockcomment").val('');
+            $('#modalheader').css("background-color", "green");
         });
 
     });

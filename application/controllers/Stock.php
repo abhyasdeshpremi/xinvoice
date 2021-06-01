@@ -38,7 +38,7 @@ class Stock extends CI_Controller {
             }else{
                 $data['code'] = $invoice_item_save_result['code'];
                 $data['stockid'] = $invoice_item_save_result['stockid'];
-                $data["message"] = "Unable to save Stock item, may be wrong Stock item. Please try again!";
+                $data["message"] = "Unable to save Stock item, may be wrong Stock item OR Input stock grater than available stock. Please try again!";
             }
         }else{
             $data['code'] = false;
