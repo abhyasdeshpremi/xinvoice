@@ -6,12 +6,24 @@
         <?php }elseif(isset($errorMessage)){ ?>
             <div class="alert alert-danger" role="alert"><?php echo isset($errorMessage)? $errorMessage : ''; ?></div>
         <?php } ?>
+        <?php foreach($data as $value){ 
+                $uniqueItemCode = $value->item_code;
+                $itemName =  $value->name;
+                $itemsubdescription = $value->sub_description;
+                $company_code = $value->company_code;
+                $weightinlitter = $value->weight_in_ltr;
+                $itemunitcase = $value->unit_case;
+                $itemcostprice = $value->cost_price;
+                $itemmrp = $value->mrp;
+                $itemopbalanceinquantity = $value->op_balance_in_qty;
+            }
+        ?>
 
-        <form class="createItem" action="" method="POST" id="createItem">
+        <form class="updateItem" action="" method="POST" id="updateItem">
             <div class="form-row">
                 <div class="col-md-2 mb-3">
                     <label for="validationDefault03">Unique Code <span class="requiredClass">*</span></label>
-                    <input class="form-control" id="uniqueItemCode" name="uniqueItemCode" type="text" placeholder="Item Code" style="text-transform:uppercase" value="<?php echo isset($uniqueItemCode)? $uniqueItemCode : ''; ?>" required/>
+                    <input class="form-control" id="uniqueItemCode" name="uniqueItemCode" type="text" placeholder="Item Code" style="text-transform:uppercase" value="<?php echo isset($uniqueItemCode)? $uniqueItemCode : ''; ?>" required readonly />
                 </div>
                 <div class="col-md-5 mb-3">
                     <label for="validationDefault03">Item Name <span class="requiredClass">*</span></label>
@@ -29,7 +41,7 @@
                         <select class="form-control" id="itemCompanyCode" name="itemCompanyCode">
                             <?php $count = 0; 
                             foreach($companiesList as $company){ ?>
-                                <option value="<?php echo $company->company_code;?>" ><?php echo $company->name;?></option>
+                                <option value="<?php echo $company->company_code;?>" <?php if ($company->company_code === $company_code) { echo "selected"; } ?> ><?php echo $company->name;?></option>
                             <?php $count++; } ?>
                         </select>
                 </div>
@@ -59,7 +71,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Create Item</button>
+            <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Update Item</button>
         </form>
     </div>
 </div>

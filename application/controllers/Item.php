@@ -61,5 +61,63 @@ class Item extends CI_Controller {
         $this->template->load('default_layout', 'contents' , 'item/itemdetail', $data);
     }
 
+    public function updateItem($item_id = null){
+        $data = array();
+        $company_result = $this->Item_model->company_list();
+        $data['companiesList'] = $company_result['result'];
+
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['method'] = "GET";
+        } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['method'] = "POST";
+            $data['itemCode'] = $this->input->post('uniqueItemCode');
+            $data['itemName'] = $this->input->post('itemName');
+            $data['itemsubdescription'] = $this->input->post('itemsubdescription');
+            $data['weightinlitter'] = $this->input->post('weightinlitter');
+            $data['itemunitcase'] = $this->input->post('itemunitcase');
+            $data['itemmrp'] = $this->input->post('itemmrp');
+            $data['itemcostprice'] = $this->input->post('itemcostprice');
+            $data['itemopbalanceinquantity'] = $this->input->post('itemopbalanceinquantity');
+            $data['itemCompanyCode'] = $this->input->post('itemCompanyCode');
+            $uniqueCodeVerify = $this->Item_model->unique_item_code_check($this->input->post('uniqueItemCode'));
+            if($uniqueCodeVerify){
+                $createItem = $this->Item_model->update_item($data);
+                if($createItem ){
+                    $data['successMessage'] = "Successfully Item Updated.";
+                }else{
+                    $data['errorMessage'] = 'No change on current value or Something went wrong';
+                }
+            }else{
+                $data['errorMessage'] = 'Unique Code must be unique. Please try again later';
+            }
+         }
+
+        $firm_result = $this->Item_model->update_item_detail($item_id);
+        $data['data'] = $firm_result['result'];
+        $this->template->set('title', 'Items Update');
+        $this->template->load('default_layout', 'contents' , 'item/updateitem', $data);
+    }
+
+    public function deleteItem(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['item_code'] = $this->input->post('item_code');
+            $item_delete_result = $this->Item_model->delete_item($data);
+            if($item_delete_result['code']){
+                $data['code'] = $item_delete_result['code'];
+                $data['itemid'] = $item_delete_result['itemid'];
+                $data["message"] = "Successfully item deleted!";
+            }else{
+                $data['code'] = $item_delete_result['code'];
+                $data['itemid'] = $item_delete_result['itemid'];
+                $data["message"] = "Unable to delete this item. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data['itemid'] = $this->input->post('item_code');
+            $data["message"] = "Unable to serve delete Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
 
 }
