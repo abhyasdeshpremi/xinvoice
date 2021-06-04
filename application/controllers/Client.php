@@ -75,4 +75,67 @@ class Client extends CI_Controller {
             echo json_encode(array());
         }
     }
+
+    public function updateClient($client_id = null){
+        $data = array();
+        $data['roleTypes'] = $this->Client_model->get_enum_values();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['method'] = "GET";
+        } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['method'] = "POST";
+            $data['uniqueCode'] = $this->input->post('uniqueCode');
+            $data['clientName'] = $this->input->post('clientName');
+            $data['clienttype'] = $this->input->post('clienttype');
+            $data['clientMobile'] = $this->input->post('clientMobile');
+            $data['clientgst'] = $this->input->post('clientgst');
+            $data['clientPan'] = $this->input->post('clientPan');
+            $data['clientaadhar'] = $this->input->post('clientaadhar');
+            $data['clientfssai'] = $this->input->post('clientfssai');
+            $data['clientAddress'] = $this->input->post('clientAddress');
+            $data['clientArea'] = $this->input->post('clientArea');
+            $data['clientCity'] = $this->input->post('clientCity');
+            $data['clientdistrict'] = $this->input->post('clientdistrict');
+            $data['clientState'] = $this->input->post('clientState');
+            $data['clientZip'] = $this->input->post('clientZip');
+            $uniqueCodeCheck = $this->Client_model->unique_client_code_check($this->input->post('uniqueCode'));
+            if($uniqueCodeCheck){
+                $saveClient = $this->Client_model->update_client($data);
+                if($saveClient ){
+                    $data['successMessage'] = "Successfully Client Updated.";
+                }else{
+                    $data['errorMessage'] = 'No change on current value or Something went wrong';
+                }
+            }else{
+                $data['errorMessage'] = 'Unique Code must be unique. Please try again later';
+            }
+        }
+
+        $client_result = $this->Client_model->update_client_detail($client_id);
+        $data['data'] = $client_result['result'];
+        $this->template->set('title', 'Client Update');
+        $this->template->load('default_layout', 'contents' , 'client/updateclient', $data);
+    }
+
+    public function deleteClient(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['client_code'] = $this->input->post('client_code');
+            $client_delete_result = $this->Client_model->delete_client($data);
+            if($client_delete_result['code']){
+                $data['code'] = $client_delete_result['code'];
+                $data['clientid'] = $client_delete_result['clientid'];
+                $data["message"] = "Successfully client deleted!";
+            }else{
+                $data['code'] = $client_delete_result['code'];
+                $data['clientid'] = $client_delete_result['clientid'];
+                $data["message"] = "Unable to delete this client. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data['clientid'] = $this->input->post('client_code');
+            $data["message"] = "Unable to serve delete Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
 }

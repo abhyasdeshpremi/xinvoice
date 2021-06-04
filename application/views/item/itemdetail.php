@@ -49,7 +49,6 @@
 <script>
     function deleteItem(itemCode) {
         if(confirm("Are you sure you want to delete this?")){
-
         $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url('/deleteitem'); ?>',
