@@ -30,6 +30,17 @@ class Firm_model extends CI_Model {
         return false;
     }
 
+    public function unique_firm_code_check($unique_code){
+        $this->db->where('firm_code', strtoupper($unique_code));
+        $query = $this->db->get('Firms');
+        if($query->num_rows() === 1){
+            return true;
+        }else{
+            return false;
+        }
+        return false;
+    }
+
     public function create_firm($data){
         $data = array(
             'firm_code'=>strtoupper($data['uniqueCode']),
@@ -50,7 +61,28 @@ class Firm_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
+    public function update_firm($data){
+        $itemdata = array(
+            'name'=>$data['firmName'],
+            'firm_email'=>$data['firmEmail'],
+            'description'=>$data['description'],
+            'address'=>$data['firmAddress'],
+            'area'=>$data['firmArea'],
+            'city'=>$data['firmCity'],
+            'district'=>$data['firmdistrict'],
+            'state'=>$data['firmState'],
+            'pin_code'=>$data['firmZip'],
+            'mobile_number'=>$data['firmMobile'],
+            'updated_at'=>date('Y-m-d H:i:s')
+            
+        ); 
+        $this->db->where('firm_code', strtoupper($data['uniqueCode']));
+        $this->db->update('Firms',$itemdata);
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
     public function firm_list(){
+        $this->db->where('delete_flag', 'NO');
         $query = $this->db->get('Firms');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();
@@ -58,6 +90,37 @@ class Firm_model extends CI_Model {
             $data['result'] = array();
         }
         return $data;
+    }
+
+    public function update_firm_detail($firmCode){
+        $this->db->where('firm_code', $firmCode);
+        $query = $this->db->get('Firms');
+        if($query->num_rows() == 1){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function delete_firm($data){
+        $result = array();
+        $this->db->where('firm_code', $data['firmCode']);
+        $query = $this->db->get('Firms');
+        if($query->num_rows() == 1){
+            $dataList = array(
+                'delete_flag'=> 'YES',
+                'deleted_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('firm_code', $data['firmCode']);
+            $this->db->update('Firms', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['firmCode']  = $data['firmCode'];
+        }else{
+            $result['code']  = false;
+            $result['firmCode']  = $data['firmCode'];
+        }
+        return $result;
     }
 }
 
