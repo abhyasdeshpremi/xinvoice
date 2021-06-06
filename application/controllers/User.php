@@ -18,11 +18,9 @@ class User extends CI_Controller {
          } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['method'] = "POST";
             $data['username'] = $this->input->post('username');
-            $data['email'] = $this->input->post('email');
+            
             $data['firstName'] = $this->input->post('firstName');
             $data['lastName'] = $this->input->post('lastName');
-            $data['mobile'] = $this->input->post('mobile');
-            $data['password'] = $this->input->post('password');
             $data['userRole'] = $this->input->post('userRole');
             $data['userStatus'] = $this->input->post('userStatus');
             $usernameVerify = $this->User_model->unique_username_verify($this->input->post('username'));
@@ -59,6 +57,57 @@ class User extends CI_Controller {
         $data['data'] = $firm_result['result'];
         $this->template->set('title', 'Users List');
         $this->template->load('default_layout', 'contents' , 'user/userdetail', $data);
+    }
+
+    public function updateUser($username = null){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['method'] = "GET";
+        } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['method'] = "POST";
+            $data['username'] = $this->input->post('username');
+            $data['firstName'] = $this->input->post('firstName');
+            $data['lastName'] = $this->input->post('lastName');
+            $data['userRole'] = $this->input->post('userRole');
+            $data['userStatus'] = $this->input->post('userStatus');
+            $usernameCheck = $this->User_model->unique_username_check($this->input->post('username'));
+            if($usernameCheck){
+                $updateUser = $this->User_model->update_user($data);
+                if($updateUser){
+                    $data['successMessage'] = "Successfully User Updated.";
+                }else{
+                    $data['errorMessage'] = 'No change on current value or Something went wrong';
+                }
+            }else{
+                $data['errorMessage'] = 'Unique username must be unique. Please try again later';
+            }
+         }
+        $user_result = $this->User_model->update_user_detail($username);
+        $data['data'] = $user_result['result'];
+         $this->template->set('title', 'Update User');
+         $this->template->load('default_layout', 'contents' , 'user/updateUser', $data);
+    }
+
+    public function deleteUser(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['userName'] = $this->input->post('userName');
+            $item_delete_result = $this->User_model->delete_user($data);
+            if($item_delete_result['code']){
+                $data['code'] = $item_delete_result['code'];
+                $data['username'] = $item_delete_result['username'];
+                $data["message"] = "Successfully user deleted!";
+            }else{
+                $data['code'] = $item_delete_result['code'];
+                $data['username'] = $item_delete_result['username'];
+                $data["message"] = "Unable to delete this user. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data['username'] = $this->input->post('userName');
+            $data["message"] = "Unable to serve delete Request, Please try again!";
+        }
+        echo json_encode($data);
     }
 
 

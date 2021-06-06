@@ -92,8 +92,8 @@ class Item extends CI_Controller {
             }
          }
 
-        $firm_result = $this->Item_model->update_item_detail($item_id);
-        $data['data'] = $firm_result['result'];
+        $item_result = $this->Item_model->update_item_detail($item_id);
+        $data['data'] = $item_result['result'];
         $this->template->set('title', 'Items Update');
         $this->template->load('default_layout', 'contents' , 'item/updateitem', $data);
     }

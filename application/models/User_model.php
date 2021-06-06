@@ -18,6 +18,17 @@ class User_model extends CI_Model {
         return false;
     }
 
+    public function unique_username_check($username){
+        $this->db->where('username', strtoupper($username));
+        $query = $this->db->get('Users');
+        if($query->num_rows() === 1){
+            return true;
+        }else{
+            return false;
+        }
+        return false;
+    }
+
     public function unique_email_verify($email){
         $this->db->where('email', strtoupper($email));
         $query = $this->db->get('Users');
@@ -57,7 +68,22 @@ class User_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
+    public function update_user($data){
+        $itemdata = array(
+            'first_name'=>$data['firstName'],
+            'last_name'=>$data['lastName'],
+            'status'=>$data['userStatus'],
+            'role'=>$data['userRole'],
+            'updated_at'=>date('Y-m-d H:i:s')
+        );
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('username', strtoupper($data['username']));
+        $this->db->update('Users',$itemdata);
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
     public function user_list(){
+        $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where_not_in('email', $this->session->userdata('email'));
         $query = $this->db->get('Users');
@@ -67,6 +93,40 @@ class User_model extends CI_Model {
             $data['result'] = array();
         }
         return $data;
+    }
+
+    public function update_user_detail($username){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('username', $username);
+        $query = $this->db->get('Users');
+        if($query->num_rows() == 1){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function delete_user($username){
+        $result = array();
+        $this->db->where('username', $username['userName']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Users');
+        if($query->num_rows() == 1){
+            $dataList = array(
+                'delete_flag'=> 'YES',
+                'deleted_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('username', $username['userName']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('Users', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['username']  = $username['userName'];
+        }else{
+            $result['code']  = false;
+            $result['username']  = $item['userName'];
+        }
+        return $result;
     }
     
 }
