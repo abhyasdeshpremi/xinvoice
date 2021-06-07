@@ -80,8 +80,10 @@ $route['createinvoicepdf/(:any)/(:any)/(:num)'] = 'invoice/createInvoicePDF/$1/$
 $route['invoicedetail'] = 'invoice/invoicedetails';
 $route['getinvoicelist'] = 'invoice/getinvoicelist';
 $route['savevoiceheader'] = 'invoice/saveInvoiceHeader';
+$route['deleteinvoiceitem'] = 'invoice/deleteInvoiceItem';
 $route['getitemcode'] = 'invoice/getItemCode';
 $route['saveitemininvoce'] = 'invoice/saveItemInInvoice';
+$route['getstockquantity'] = 'invoice/getStockQuantity';
 
 $route['getstock'] = 'stock/getStock';
 $route['savestock'] = 'stock/saveStock';

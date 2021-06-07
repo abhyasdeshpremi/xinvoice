@@ -233,4 +233,45 @@ class Invoice extends CI_Controller {
         }
         echo json_encode($data);
     }
+
+    public function getStockQuantity(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['item_code'] = $this->input->post('item_code');
+            $stock_item_result = $this->Invoice_model->getStockItem($data);
+            if($stock_item_result){
+                $data["code"] = $stock_item_result["code"];
+                $data["quantity"] = $stock_item_result["quantity"];
+                $data["message"] = "Stock is enough. Please continue";
+            }else{
+                $data["code"] = $stock_item_result["code"];
+                $data["quantity"] = $stock_item_result["quantity"];
+                $data["message"] = "Stock in less than your need. Please check available stock";
+            }
+        }
+        echo json_encode($data);
+    }
+
+    public function deleteInvoiceItem(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['itemInvoiceCode'] = $this->input->post('itemInvoiceCode');
+            $invoice_item_delete_result = $this->Invoice_model->delete_invoice_item($data);
+            if($invoice_item_delete_result['code']){
+                $data['code'] = $invoice_item_delete_result['code'];
+                $data['itemInvoiceCode'] = $invoice_item_delete_result['itemInvoiceCode'];
+                $data["message"] = "Successfully invoice item deleted!";
+            }else{
+                $data['code'] = $invoice_item_delete_result['code'];
+                $data['itemInvoiceCode'] = $invoice_item_delete_result['itemInvoiceCode'];
+                $data["message"] = "Unable to delete this invoice item. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data['itemInvoiceCode'] = $this->input->post('itemInvoiceCode');
+            $data["message"] = "Unable to serve delete Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
 }

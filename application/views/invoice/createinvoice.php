@@ -207,7 +207,7 @@
                                             $mrp_value = $mrp_value + $value->mrp_value;
                                             $bill_value = $bill_value + $value->bill_value;
                                             ?>
-                                            <tr class="invoicecal">
+                                            <tr class="invoicecal" id="<?php echo $value->pk_invoice_item_id; ?>">
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $value->fk_item_code; ?></td>
                                                 <td><?php echo $value->fk_item_name; ?></td>
@@ -218,7 +218,7 @@
                                                 <td><?php echo $value->bill_value; ?></td>
                                                 <td>
                                                     <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
-                                                    <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button>
+                                                    <button type="button" onclick='deleteInvoiceItem("<?php echo $value->pk_invoice_item_id;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
                                                 </td>
                                             </tr>
                                         <?php $i++; } ?>
@@ -463,6 +463,13 @@
             var itemdiscount = $("#itemdiscount").val();
             var itemdmrpvalue = $("#itemmrpvalue").val();
             var itembillValue = $("#itembillValue").val();
+            if(quatity <= 1){
+                $("#successfullyMessage").addClass('alert-danger');
+                $("#successfullyMessage").text("Please check your inputs.");
+                $('#successfullyMessage').fadeIn();
+                $('#successfullyMessage').delay(4000).fadeOut();
+                return;
+            }
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url('/saveitemininvoce'); ?>',
@@ -494,18 +501,55 @@
                     $("#successfullyMessage").text(data.message);
                     $('#successfullyMessage').fadeIn();
                     $('#successfullyMessage').delay(4000).fadeOut();
-
-                    // var myModal = $('#addItemInput');
-                    // clearTimeout(myModal.data('hideInterval'));
-                    // myModal.data('hideInterval', setTimeout(function(){
-                    //     myModal.modal('hide');
-                    // }, 1000));
                 }
             });
         });
 
         //Item calculation
-        $("#itemquantity, #itemdiscount").keyup(function(){
+        $("#itemquantity").keyup(function(){
+            var item_code = $("#selectitemcode").val();
+            var quatity = $("#itemquantity").val();
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/getstockquantity'); ?>',
+                data: {item_code: item_code},
+                error: function(request, error) {
+                    console.log(arguments);
+                    $("#itemquantity").val('');
+                    invoiceCalculation();
+                    $("#successfullyMessage").addClass('alert-danger');
+                    $("#successfullyMessage").text("Something went wrong");
+                    $('#successfullyMessage').fadeIn();
+                    $('#successfullyMessage').delay(4000).fadeOut();
+                },
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    console.log(data);
+                    if(data.code){
+                        var stockQuantity = data.quantity;
+                        if(stockQuantity >= quatity){
+                            invoiceCalculation();
+                        }else{
+                            $("#itemquantity").val('');
+                            invoiceCalculation();
+                            $("#successfullyMessage").addClass('alert-danger');
+                            $("#successfullyMessage").text("Stock in less than your need. Please check available stock");
+                            $('#successfullyMessage').fadeIn();
+                            $('#successfullyMessage').delay(4000).fadeOut();
+                        }
+                    }else{
+                        $("#itemquantity").val('');
+                        invoiceCalculation();
+                        $("#successfullyMessage").addClass('alert-danger');
+                        $("#successfullyMessage").text("Stock in less than your need. Please check available stock");
+                        $('#successfullyMessage').fadeIn();
+                        $('#successfullyMessage').delay(4000).fadeOut();
+                    }
+                }
+            });
+        });
+
+        $("#itemdiscount").keyup(function(){
             invoiceCalculation();
         });
 
@@ -536,4 +580,33 @@
             }
         }
     });
+</script>
+<script>
+    function deleteInvoiceItem(itemInvoiceCode) {
+        if(confirm("Are you sure you want to delete this?")){
+        $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/deleteinvoiceitem'); ?>',
+                data: {itemInvoiceCode: itemInvoiceCode},
+                error: function(request, error) {
+                    console.log(arguments);
+                },
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    console.log(data);
+                    if(data.code){
+                        // $('#'+itemCode).remove();
+                        var row = $('#'+itemInvoiceCode);
+                        row.addClass("bg-danger");
+                        row.hide(2000, function(){
+                            this.remove(); 
+                        });
+                        // alert(data.message)
+                    }else{
+                        alert(data.message)
+                    }
+                }
+            });
+        }
+    }
 </script>

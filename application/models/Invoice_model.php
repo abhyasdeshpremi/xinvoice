@@ -87,6 +87,7 @@ class Invoice_model extends CI_Model {
     }
 
     public function invoice_items_list($invoiceID){
+        $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('fk_unique_invioce_code', $invoiceID);
         $query = $this->db->get('invoice_item');
@@ -277,6 +278,52 @@ class Invoice_model extends CI_Model {
             $this->db->insert('invoice_item', $dataList);
             $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
             $result['itemid']  = $this->db->insert_id();
+        }
+        return $result;
+    }
+
+    public function getStockItem($data){
+        $result = array();
+        $this->db->where('item_code', $data['item_code']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Stocks');
+        if($query->num_rows() == 1){
+            $preTotalStockItem = 0;
+            foreach ($query->result() as $row)  
+            {  
+                $result['stockid'] = $row->pk_stock_id;
+                $preTotalStockItem = $row->item_total_count;
+
+            }
+            $result['code']  = true;
+            $result['quantity']  = (int)$preTotalStockItem;
+        }else{
+            $result['stockid'] = 0;
+            $result['code']  = false;
+            $result['quantity']  = 0;
+        }
+
+        return $result;
+    }
+
+    public function delete_invoice_item($invoice_Item){
+        $result = array();
+        $this->db->where('pk_invoice_item_id', $invoice_Item['itemInvoiceCode']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('invoice_item');
+        if($query->num_rows() == 1){
+            $dataList = array(
+                'delete_flag'=> 'YES',
+                'deleted_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('pk_invoice_item_id', $invoice_Item['itemInvoiceCode']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('invoice_item', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['itemInvoiceCode']  = $invoice_Item['itemInvoiceCode'];
+        }else{
+            $result['code']  = false;
+            $result['itemInvoiceCode']  = $invoice_Item['itemInvoiceCode'];
         }
         return $result;
     }
