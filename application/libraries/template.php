@@ -1,5 +1,5 @@
 <?php
-class template {
+class Template {
                 //ci instance
                 private $CI;
                 //template Data
