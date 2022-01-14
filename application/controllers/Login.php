@@ -22,6 +22,7 @@ class Login extends CI_Controller {
             redirect('/home');
         }
         if($queryResult['login']){
+            $this->session->set_userdata('remember_me', $this->input->post('remember_me'));
             $firmResult = $this->Login_model->firm_detail($queryResult['result'][0]->fk_firm_code);
             if($firmResult['flag']){
                 $this->session->set_userdata('email', $email);
