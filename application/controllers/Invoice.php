@@ -48,7 +48,7 @@ class Invoice extends CI_Controller {
             $this->template->load('default_layout', 'contents' , 'errors/html/error_404', $data);
             return false;
         }
-        $data['clients'] = $this->Invoice_model->client_list();
+        $data['clients'] = $this->Invoice_model->client_list_except_supllier();
         $data['invoiceTypes'] = $this->Invoice_model->invoiceRef_list();
         $data['invoiceitemsList'] = $this->Invoice_model->invoice_items_list($id);
         $data['itemsList'] = $this->Invoice_model->items_list();

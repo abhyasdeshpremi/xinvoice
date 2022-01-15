@@ -18,6 +18,30 @@ class Invoice_model extends CI_Model {
         return array();
     }
 
+    public function client_list_except_supllier(){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where_not_in('client_type', 'supplier');
+        $query = $this->db->get('Clients');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+        return array();
+    }
+
+    public function client_list_ONLY_supllier(){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('client_type', 'supplier');
+        $query = $this->db->get('Clients');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+        return array();
+    }
+
     public function unique_company_code_verify($unique_code){
         $this->db->where('company_code', strtoupper($unique_code));
         $query = $this->db->get('Companies');
