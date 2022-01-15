@@ -59,20 +59,22 @@ if(isset($mode)){
 <table class="table table-bordered" id="dataTable" cellspacing="0" style="font:10px;" width="99%">
     <thead >
         <tr>
-            <th width="20px;">SNO.</th>
-            <th width="140px;">Name</th>
+            <th width="8px;">SN</th>
+            <th width="135px;">Name</th>
             <th style="text-align:right;">C/S</th>
             <th style="text-align:right;" >QTY</th>
             <th style="text-align:right;">MRP</th>
             <th style="text-align:right;" width="50px;">MRP VAL</th>
             <th style="text-align:right;">DS%</th>
-            <th width="90px;" style="text-align:right;">Bill Value</th>
+            <th style="text-align:right;">Bas. Val</th>
+            <th width="60px;" style="text-align:right;">Bill Value</th>
         </tr>
     </thead>
     <tbody>
         <?php   $i = 1;
                 $mrp_value = 0;
                 $bill_value = 0;
+                $basicItemsValue = 0;
                 $qty_value = 0;
                 $case_unit_value = 0;
         foreach($invoiceitemsList as $value){
@@ -80,6 +82,8 @@ if(isset($mode)){
             $bill_value = $bill_value + $value->bill_value;
             $qty_value = $qty_value + $value->quantity;
             $case_unit_value = $case_unit_value + $value->case_unit;
+            $basicItemValue = round((($value->bill_value * 100) / 118), 2);
+            $basicItemsValue = $basicItemsValue + $basicItemValue;
             ?>
             <tr>
                 <td><?php echo $i; ?></td>
@@ -89,6 +93,7 @@ if(isset($mode)){
                 <td style="text-align:right;"><?php echo number_format($value->mrp, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp_value, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->discount, 2); ?></td>
+                <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->bill_value, 2); ?></td>
             </tr>
         <?php $i++; } ?>
@@ -99,6 +104,7 @@ if(isset($mode)){
                 <td></td>
                 <td style="text-align:right;"><hr><b><?php echo number_format($mrp_value, 2); ?></b></td>
                 <td></td>
+                <td style="text-align:right;"><hr><b><?php echo number_format($basicItemsValue, 2); ?></b></td>
                 <td style="text-align:right;"><hr><b><?php echo number_format($bill_value, 2); ?></b></td>
             </tr>
             <?php 
@@ -113,7 +119,7 @@ if(isset($mode)){
 
 
             <tr style="border-right-style:none;">
-                <td colspan="4" rowspan="6" ></td>
+                <td colspan="5" rowspan="6" ></td>
                 <td colspan="3">BASIC VALUE RS.</td>
                 <td style="text-align:right;"><?php echo number_format($basicValue, 2); ?></td>
             </tr>
