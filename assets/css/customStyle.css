@@ -16,3 +16,16 @@
     border-right-style: none;
     border-bottom-style: none;
 }
+
+#myInput {
+    box-sizing: border-box;
+    background-image: url('../img/searchicon.png');
+    background-position: 12px 4px;
+    background-repeat: no-repeat;
+    font-size: 12px;
+    padding: 5px 20px 5px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #myInput:focus {outline: 3px solid #ddd;}
