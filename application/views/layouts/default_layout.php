@@ -240,7 +240,7 @@
                             <!-- Sidenav Menu Heading (Core)-->
                             <div class="sidenav-menu-heading">Invoice</div>
                             <!-- Sidenav Accordion (Dashboard)-->
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
+                            <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>
                                 Seller
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -250,7 +250,7 @@
                                     <a class="nav-link" href="dashboard-2.html">Seller Invoice List</a>
                                     <a class="nav-link" href="dashboard-3.html">New Invoice</a>
                                 </nav>
-                            </div>
+                            </div> -->
 
 							<a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardspurchase" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>
@@ -266,7 +266,7 @@
 
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsinvoice" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                                Invoice
+                                Sell
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseDashboardsinvoice" data-parent="#accordionSidenav">
