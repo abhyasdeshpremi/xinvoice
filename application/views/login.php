@@ -21,8 +21,8 @@
                    <!-- Form Group (remember password checkbox)-->
                    <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
-                            <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
+                            <input class="custom-control-input" id="remember_me" name="remember_me" type="checkbox" />
+                            <label class="custom-control-label" for="remember_me">Remember password</label>
                         </div>
                     </div>
                     <!-- Form Group (login box)-->
