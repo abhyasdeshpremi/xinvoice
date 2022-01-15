@@ -463,6 +463,7 @@
             var itemdiscount = $("#itemdiscount").val();
             var itemdmrpvalue = $("#itemmrpvalue").val();
             var itembillValue = $("#itembillValue").val();
+            $("#collapseTwo").addClass("show");
             if(quatity <= 1){
                 $("#successfullyMessage").addClass('alert-danger');
                 $("#successfullyMessage").text("Please check your inputs.");
