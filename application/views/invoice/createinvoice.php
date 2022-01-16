@@ -289,7 +289,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Invoice Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="forceclosegolobal">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -581,6 +581,19 @@
                 pdfdropdown.attr("disabled", "disabled");
             }
         }
+
+        //Model close action
+        $('#forceclose, #forceclosegolobal').click(function(){
+            $("#selectitemcode").val('');
+                    $("#itemdescription").val('');
+                    $("#itemquantity").val('');
+                    $("#itemmrp").val('');
+                    $("#itemdiscount").val('');
+                    $("#itemmrpvalue").val('');
+                    $("#itembillValue").val('');
+                    $("#itemcaseunit").val('');
+                    $("#defineunitcase").val('');
+        });
     });
 </script>
 <script>
