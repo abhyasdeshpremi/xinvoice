@@ -27,5 +27,10 @@
     border: none;
     border-bottom: 1px solid #ddd;
   }
+
+  #deleteItemlistkjsdksdj {
+    box-sizing: border-box;
+    background-image: url('../img/delete.png');
+  }
   
   #myInput:focus {outline: 3px solid #ddd;}

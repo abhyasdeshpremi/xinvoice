@@ -186,87 +186,10 @@
                         <div class="datatable">
                             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr class="invoicecal">
-                                            <th width="60px;">#</th>
-                                            <th width="100px;">Item Code</th>
-                                            <th>Name</th>
-                                            <th width="70px;">QTY</th>
-                                            <th width="70px;">MRP</th>
-                                            <th width="100px;">MRP Value</th>
-                                            <th width="70px;">DS%</th>
-                                            <th width="100px;">Bill Value</th>
-                                            <th width="80px;">Actions</th>
-                                        </tr>
+                                    <thead id="invoicehead">
+                                        
                                     </thead>
-                                    <tbody>
-                                        <?php $i = 1;
-                                              $mrp_value = 0;
-                                              $bill_value = 0;
-                                        foreach($invoiceitemsList as $value){ 
-                                            $mrp_value = $mrp_value + $value->mrp_value;
-                                            $bill_value = $bill_value + $value->bill_value;
-                                            ?>
-                                            <tr class="invoicecal" id="<?php echo $value->pk_invoice_item_id; ?>">
-                                                <td><?php echo $i; ?></td>
-                                                <td><?php echo $value->fk_item_code; ?></td>
-                                                <td><?php echo $value->fk_item_name; ?></td>
-                                                <td><?php echo $value->quantity; ?></td>
-                                                <td><?php echo $value->mrp; ?></td>
-                                                <td><?php echo $value->mrp_value; ?></td>
-                                                <td><?php echo $value->discount; ?></td>
-                                                <td><?php echo $value->bill_value; ?></td>
-                                                <td>
-                                                    <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
-                                                    <button type="button" onclick='deleteInvoiceItem("<?php echo $value->pk_invoice_item_id;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
-                                                </td>
-                                            </tr>
-                                        <?php $i++; } ?>
-                                            <input type="hidden" id="numberofinvoiceitem" value="<?php echo $i; ?>" />
-                                            <tr class="invoicecal">
-                                                <td colspan="5"></td>
-                                                <td><b><?php echo $mrp_value; ?></b></td>
-                                                <td></td>
-                                                <td><b><?php echo $bill_value; ?></b></td>
-                                            </tr>
-                                            <?php 
-                                               $basicValue = round((($bill_value * 100) / 118), 2);
-                                               $cgstValue = round((($basicValue * 9) / 100), 2);
-                                               $total_cgst_value = $basicValue + $cgstValue;
-                                               $sgstValue = $cgstValue;
-                                               $total_cgst_sgst_value = ($total_cgst_value + $sgstValue);
-                                               $bill_amount = round($total_cgst_sgst_value, 0);
-                                               $round_off = round(($bill_amount - $total_cgst_sgst_value), 2);
-                                            ?>
-                                            <tr class="invoicecal">
-                                                <td colspan="4" rowspan="7"></td>
-                                                <td colspan="3">BASIC VALUE RS.</td>
-                                                <td><?php echo $basicValue; ?></td>
-                                            </tr>
-                                            <tr class="invoicecal">
-                                                <td colspan="3">CGST 9.00%</td>
-                                                <td><?php echo $cgstValue; ?></td>
-                                            </tr>
-                                            <tr class="invoicecal">
-                                                <td colspan="3">TOTAL RS.</td>
-                                                <td><?php echo $total_cgst_value; ?></td>
-                                            </tr>
-                                            <tr class="invoicecal">
-                                                <td colspan="3">SGST 9.00%</td>
-                                                <td><?php echo $sgstValue; ?></td>
-                                            </tr>
-                                            <tr class="invoicecal">
-                                                <td colspan="3">TOTAL RS.</td>
-                                                <td><?php echo $total_cgst_sgst_value; ?></td>
-                                            </tr>
-                                            <tr class="invoicecal">
-                                                <td colspan="3">ROUND OFF</td>
-                                                <td><?php echo $round_off; ?></td>
-                                            </tr>
-                                            <tr class="invoicecal">
-                                                <td colspan="3">BILL AMOUNT</td>
-                                                <td><?php echo $bill_amount; ?></td>
-                                            </tr>
+                                    <tbody id="invoiceBody">
                                     </tbody>
                                 </table>
                             </div>
@@ -360,7 +283,8 @@
 <!----Add item modal end----->
 
 <script>
-    
+    var invoiceData = <?php echo json_encode($invoiceitemsList); ?>;
+
     $(document).ready(function(){
         //Client type auto fill
         $("#clientcode").change(function(){
@@ -465,6 +389,17 @@
             var itemdmrpvalue = $("#itemmrpvalue").val();
             var itembillValue = $("#itembillValue").val();
             $("#collapseTwo").addClass("show");
+            for(j=0;j<invoiceData.length; j++) {
+                var invoiceItemCode = invoiceData[j]["fk_item_code"];
+                if (invoiceItemCode === item_code) {
+                    $("#successfullyMessage").addClass('alert-danger');
+                    $("#successfullyMessage").text("Already added this item. Please edit to continue.");
+                    $('#successfullyMessage').fadeIn();
+                    $('#successfullyMessage').delay(4000).fadeOut();
+                    return;
+                }
+            }
+
             if(quatity <= 1){
                 $("#successfullyMessage").addClass('alert-danger');
                 $("#successfullyMessage").text("Please check your inputs.");
@@ -496,6 +431,10 @@
                     $("#itemcaseunit").val('');
                     $("#defineunitcase").val('');
                     if(data.code){
+                        console.log(data.previewData);
+                        // $('#invoiceBody').append(addInvoicerow(data.previewData));
+                        invoiceData.push(data.previewData);
+                        showItemData();
                         $("#successfullyMessage").addClass('alert-success');
                     }else{
                         $("#successfullyMessage").addClass('alert-danger');
@@ -594,6 +533,9 @@
                     $("#itemcaseunit").val('');
                     $("#defineunitcase").val('');
         });
+        $('#invoicehead').append(addHeader());
+        showItemData();
+       
     });
 </script>
 <script>
@@ -608,14 +550,24 @@
                 },
                 success: function (data) {
                     var data = JSON.parse(data);
-                    console.log(data);
                     if(data.code){
-                        // $('#'+itemCode).remove();
+                        var deleteIndex = -1;
+                        for(j=0;j<invoiceData.length; j++) {
+                            var invoiceItemCode = invoiceData[j]["pk_invoice_item_id"];
+                            if (parseInt(invoiceItemCode) === parseInt(itemInvoiceCode)) {
+                                deleteIndex = j;
+                            }
+                        }
+                        invoiceData.splice(deleteIndex, 1);
+
                         var row = $('#'+itemInvoiceCode);
                         row.addClass("bg-danger");
                         row.hide(2000, function(){
                             this.remove(); 
+                            showItemData();
                         });
+                        
+                        
                         // alert(data.message)
                     }else{
                         alert(data.message)
@@ -623,6 +575,97 @@
                 }
             });
         }
+    }
+
+    function showItemData(){
+            console.log(invoiceData);
+            console.log(invoiceData[0]["pk_invoice_item_id"]);
+            console.log(invoiceData.length);
+            $('tbody').empty();
+            var mrp_value = 0;
+            var bill_value = 0;
+            for(i=0;i<invoiceData.length; i++) {
+                $('#invoiceBody').append(addInvoicerow(invoiceData[i]));
+                console.log(invoiceData[i]["pk_invoice_item_id"]);
+                mrp_value = parseInt(mrp_value) + parseInt(invoiceData[i]["mrp_value"]);
+                bill_value = parseInt(bill_value) + parseInt(invoiceData[i]["bill_value"]);
+            }
+            $('#invoiceBody').append(addInvoiceCalculation(bill_value, mrp_value));
+    }
+    function addHeader(){
+        return '<tr class="invoicecal">'
+                    +'<th width="60px;">#</th>'
+                    +'<th width="100px;">Item Code</th>'
+                    +'<th>Name</th>'
+                    +'<th width="70px;">QTY</th>'
+                    +'<th width="70px;">MRP</th>'
+                    +'<th width="100px;">MRP Value</th>'
+                    +'<th width="70px;">DS%</th>'
+                    +'<th width="100px;">Bill Value</th>'
+                    +'<th width="80px;">Actions</th>'
+                +'</tr>';
+    }
+
+    function addInvoicerow(oneRow){
+        return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
+                    +'<td>'+oneRow["pk_invoice_item_id"]+'</td>'
+                    +'<td>'+oneRow["fk_item_code"]+'</td>'
+                    +'<td>'+oneRow["fk_item_name"]+'</td>'
+                    +'<td>'+oneRow["quantity"]+'</td>'
+                    +'<td>'+oneRow["mrp"]+'</td>'
+                    +'<td>'+oneRow["mrp_value"]+'</td>'
+                    +'<td>'+oneRow["discount"]+'</td>'
+                    +'<td>'+oneRow["bill_value"]+'</td>'
+                    +'<td>'
+                        +'<button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>'
+                        +'<button type="button" onclick="deleteInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ></button>'
+                    +'</td>'
+                +'</tr>';
+    }
+
+    function addInvoiceCalculation(bill_value, mrp_value){
+        var basicValue = Math.round(((parseInt(bill_value) * 100) / 118), 2);
+        var cgstValue = Math.round(((parseInt(basicValue) * 9) / 100), 2);
+        var total_cgst_value = parseInt(basicValue) + parseInt(cgstValue);
+        var sgstValue = cgstValue;
+        var total_cgst_sgst_value = (parseInt(total_cgst_value) + parseInt(sgstValue));
+        var bill_amount = Math.round(parseInt(total_cgst_sgst_value), 0);
+        var round_off = Math.round((parseInt(bill_amount) - parseInt(total_cgst_sgst_value)), 2);
+        return  '<tr class="invoicecal">'
+                    +'<td colspan="5"></td>'
+                    +'<td><b>'+mrp_value+'</b></td>'
+                    +'<td></td>'
+                    +'<td><b>'+bill_value+'</b></td>'
+                +'</tr>'
+                +'<tr class="invoicecal">'
+                    +'<td colspan="4" rowspan="7"></td>'
+                    +'<td colspan="3">BASIC VALUE RS.</td>'
+                    +'<td>'+basicValue+'</td>'
+                +'</tr>'
+                +'<tr class="invoicecal">'
+                    +'<td colspan="3">CGST 9.00%</td>'
+                    +'<td>'+cgstValue+'</td>'
+                +'</tr>'
+                +'<tr class="invoicecal">'
+                    +'<td colspan="3">TOTAL RS.</td>'
+                    +'<td>'+total_cgst_value+'</td>'
+                +'</tr>'
+                +'<tr class="invoicecal">'
+                    +'<td colspan="3">SGST 9.00%</td>'
+                    +'<td>'+sgstValue+'</td>'
+                +'</tr>'
+                +'<tr class="invoicecal">'
+                    +'<td colspan="3">TOTAL RS.</td>'
+                    +'<td>'+total_cgst_sgst_value+'</td>'
+                +'</tr>'
+                +'<tr class="invoicecal">'
+                    +'<td colspan="3">ROUND OFF</td>'
+                    +'<td>'+round_off+'</td>'
+                +'</tr>'
+                +'<tr class="invoicecal">'
+                    +'<td colspan="3">BILL AMOUNT</td>'
+                    +'<td>'+bill_amount+'</td>'
+                +'</tr>';
     }
 
     function filterFunction() {
