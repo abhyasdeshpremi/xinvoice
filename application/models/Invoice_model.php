@@ -306,6 +306,35 @@ class Invoice_model extends CI_Model {
         return $result;
     }
 
+    public function updateInvoiceItem($data){
+        $result = array();
+        $this->db->where('pk_invoice_item_id', $data['itemID']);
+        $this->db->where('fk_unique_invioce_code', $data['invoiceID']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('invoice_item');
+        if($query->num_rows() == 1){
+            $dataList = array(
+                'fk_item_code'=>$data['itemcode'],
+                'fk_item_name'=>$data['itemname'],
+                'quantity'=>$data['quatity'],
+                'case_unit'=>$data['itemunitcase'],
+                'mrp'=>$data['itemmrp'],
+                'mrp_value'=>$data['itemdmrpvalue'],
+                'discount'=>$data['itemdiscount'],
+                'bill_value'=>$data['itembillValue'],
+                'updated_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('pk_invoice_item_id', $data['itemID']);
+            $this->db->where('fk_unique_invioce_code', $data['invoiceID']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('invoice_item', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+        } else{
+            $result['code']  = false;
+        }
+        return $result;
+    }
+
     public function getStockItem($data){
         $result = array();
         $this->db->where('item_code', $data['item_code']);

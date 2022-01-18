@@ -232,6 +232,7 @@
                 </div>
                 <input type="hidden" class="form-control" aria-label="Text input with dropdown button" id="selectitemcode" name="selectitemcode" >
                 <input type="hidden" class="form-control"  id="defineunitcase" name="defineunitcase" value="">
+                <input type="hidden" class="form-control"  id="updateItemID" name="updateItemID" value="">
                 <input type="text" class="form-control" aria-label="Text input with dropdown button" id="itemdescription" name="itemdescription" value="" readonly>
             </div>
             <div class="input-group input-group-sm mb-3">
@@ -357,7 +358,6 @@
 
         $('.select-dropdown-item').click(function(){
             var itemCode = $(this).attr("hreflang");
-            // alert("The paragraph was clicked."+itemCode);
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url('/getitemcode'); ?>',
@@ -378,72 +378,151 @@
         });
 
         $('#add_item_to_invoice').click(function(){
-            
-            var item_code = $("#selectitemcode").val();
-            var item_name = $("#itemdescription").val();
-            var invoice_id = $("#defaultinvoiceID").val();
-            var quatity = $("#itemquantity").val();
-            var itemunitcase = $("#itemcaseunit").val();
-            var itemmrp = $("#itemmrp").val();
-            var itemdiscount = $("#itemdiscount").val();
-            var itemdmrpvalue = $("#itemmrpvalue").val();
-            var itembillValue = $("#itembillValue").val();
-            $("#collapseTwo").addClass("show");
-            for(j=0;j<invoiceData.length; j++) {
-                var invoiceItemCode = invoiceData[j]["fk_item_code"];
-                if (invoiceItemCode === item_code) {
+            var modelbutton = $("#add_item_to_invoice").text();
+            if (modelbutton === "Add Item"){
+                var item_code = $("#selectitemcode").val();
+                var item_name = $("#itemdescription").val();
+                var invoice_id = $("#defaultinvoiceID").val();
+                var quatity = $("#itemquantity").val();
+                var itemunitcase = $("#itemcaseunit").val();
+                var itemmrp = $("#itemmrp").val();
+                var itemdiscount = $("#itemdiscount").val();
+                var itemdmrpvalue = $("#itemmrpvalue").val();
+                var itembillValue = $("#itembillValue").val();
+                $("#collapseTwo").addClass("show");
+                for(j=0;j<invoiceData.length; j++) {
+                    var invoiceItemCode = invoiceData[j]["fk_item_code"];
+                    if (invoiceItemCode === item_code) {
+                        $("#successfullyMessage").addClass('alert-danger');
+                        $("#successfullyMessage").text("Already added this item. Please edit to continue.");
+                        $('#successfullyMessage').fadeIn();
+                        $('#successfullyMessage').delay(4000).fadeOut();
+                        return;
+                    }
+                }
+
+                if(quatity <= 1){
                     $("#successfullyMessage").addClass('alert-danger');
-                    $("#successfullyMessage").text("Already added this item. Please edit to continue.");
+                    $("#successfullyMessage").text("Please check your inputs.");
                     $('#successfullyMessage').fadeIn();
                     $('#successfullyMessage').delay(4000).fadeOut();
                     return;
                 }
-            }
-
-            if(quatity <= 1){
-                $("#successfullyMessage").addClass('alert-danger');
-                $("#successfullyMessage").text("Please check your inputs.");
-                $('#successfullyMessage').fadeIn();
-                $('#successfullyMessage').delay(4000).fadeOut();
-                return;
-            }
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url('/saveitemininvoce'); ?>',
-                data: {invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
-                error: function(request, error) {
-                    console.log(arguments);
-                    $("#successfullyMessage").addClass('alert-danger');
-                    $("#successfullyMessage").text("Something went wrong");
-                    $('#successfullyMessage').fadeIn();
-                    $('#successfullyMessage').delay(4000).fadeOut();
-                },
-                success: function (data) {
-                    var data = JSON.parse(data);
-                    console.log(data);
-                    $("#selectitemcode").val('');
-                    $("#itemdescription").val('');
-                    $("#itemquantity").val('');
-                    $("#itemmrp").val('');
-                    $("#itemdiscount").val('');
-                    $("#itemmrpvalue").val('');
-                    $("#itembillValue").val('');
-                    $("#itemcaseunit").val('');
-                    $("#defineunitcase").val('');
-                    if(data.code){
-                        console.log(data.previewData);
-                        // $('#invoiceBody').append(addInvoicerow(data.previewData));
-                        invoiceData.push(data.previewData);
-                        showItemData();
-                        $("#successfullyMessage").addClass('alert-success');
-                    }else{
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url('/saveitemininvoce'); ?>',
+                    data: {invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
+                    error: function(request, error) {
+                        console.log(arguments);
                         $("#successfullyMessage").addClass('alert-danger');
+                        $("#successfullyMessage").text("Something went wrong");
+                        $('#successfullyMessage').fadeIn();
+                        $('#successfullyMessage').delay(4000).fadeOut();
+                    },
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        console.log(data);
+                        $("#selectitemcode").val('');
+                        $("#itemdescription").val('');
+                        $("#itemquantity").val('');
+                        $("#itemmrp").val('');
+                        $("#itemdiscount").val('');
+                        $("#itemmrpvalue").val('');
+                        $("#itembillValue").val('');
+                        $("#itemcaseunit").val('');
+                        $("#defineunitcase").val('');
+                        if(data.code){
+                            console.log(data.previewData);
+                            invoiceData.push(data.previewData);
+                            showItemData();
+                            $("#successfullyMessage").addClass('alert-success');
+                        }else{
+                            $("#successfullyMessage").addClass('alert-danger');
+                        }
+                        $("#successfullyMessage").text(data.message);
+                        $('#successfullyMessage').fadeIn();
+                        $('#successfullyMessage').delay(4000).fadeOut();
                     }
-                    $("#successfullyMessage").text(data.message);
+                });
+            }else if(modelbutton === "Update Item"){
+                var itemID = $("#updateItemID").val();
+                var item_code = $("#selectitemcode").val();
+                var item_name = $("#itemdescription").val();
+                var invoice_id = $("#defaultinvoiceID").val();
+                var quatity = $("#itemquantity").val();
+                var itemunitcase = $("#itemcaseunit").val();
+                var itemmrp = $("#itemmrp").val();
+                var itemdiscount = $("#itemdiscount").val();
+                var itemdmrpvalue = $("#itemmrpvalue").val();
+                var itembillValue = $("#itembillValue").val();
+                $("#collapseTwo").addClass("show");
+                var shouldbeUpdate = false;
+                for(j=0;j<invoiceData.length; j++) {
+                    var invoiceItemCode = invoiceData[j]["fk_item_code"];
+                    if (invoiceItemCode === item_code) {
+                        shouldbeUpdate = true;
+                    }
+                }
+                if(shouldbeUpdate == false){
+                    $("#successfullyMessage").addClass('alert-danger');
+                    $("#successfullyMessage").text("Current selected item unmatched with updated item");
                     $('#successfullyMessage').fadeIn();
                     $('#successfullyMessage').delay(4000).fadeOut();
                 }
-            });
+                if(quatity <= 1){
+                    $("#successfullyMessage").addClass('alert-danger');
+                    $("#successfullyMessage").text("Please check your inputs.");
+                    $('#successfullyMessage').fadeIn();
+                    $('#successfullyMessage').delay(4000).fadeOut();
+                    return;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url('/updateitemininvoce'); ?>',
+                    data: {itemID: itemID, invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
+                    error: function(request, error) {
+                        console.log(arguments);
+                        $("#successfullyMessage").addClass('alert-danger');
+                        $("#successfullyMessage").text("Something went wrong");
+                        $('#successfullyMessage').fadeIn();
+                        $('#successfullyMessage').delay(4000).fadeOut();
+                    },
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        console.log(data);
+                        $("#updateItemID").val('');
+                        $("#selectitemcode").val('');
+                        $("#itemdescription").val('');
+                        $("#itemquantity").val('');
+                        $("#itemmrp").val('');
+                        $("#itemdiscount").val('');
+                        $("#itemmrpvalue").val('');
+                        $("#itembillValue").val('');
+                        $("#itemcaseunit").val('');
+                        $("#defineunitcase").val('');
+                        $("#add_item_to_invoice").text("Add Item");
+                        if(data.code){
+                            console.log(data.previewData);
+                            var updateIndex = -1;
+                            for(j=0;j<invoiceData.length; j++) {
+                                var invoiceItemCode = invoiceData[j]["pk_invoice_item_id"];
+                                if (parseInt(invoiceItemCode) === parseInt(itemID)) {
+                                    updateIndex = j;
+                                }
+                            }
+                            invoiceData[updateIndex] = data.previewData;
+                            showItemData();
+                            $('#addItemInput').modal('hide')
+                            $("#successfullyMessage").addClass('alert-success');
+                        }else{
+                            $("#successfullyMessage").addClass('alert-danger');
+                        }
+                        $("#successfullyMessage").text(data.message);
+                        $('#successfullyMessage').fadeIn();
+                        $('#successfullyMessage').delay(4000).fadeOut();
+                    }
+                });
+            }
         });
 
         //Item calculation
@@ -508,19 +587,6 @@
             $("#itembillValue").val(itembillvalue);
         }
 
-        invoiceCalCulationInfo();
-        function invoiceCalCulationInfo(){
-            var numberofrow = $('#numberofinvoiceitem').val();
-            var pdfdropdown = $(".pdfdropdown");
-            if(numberofrow > 1){
-                $('.invoicecal').show();
-                pdfdropdown.removeAttr("disabled");
-            }else{
-                $('.invoicecal').hide();
-                pdfdropdown.attr("disabled", "disabled");
-            }
-        }
-
         //Model close action
         $('#forceclose, #forceclosegolobal').click(function(){
             $("#selectitemcode").val('');
@@ -577,6 +643,51 @@
         }
     }
 
+    function editInvoiceItem(itemInvoiceCode) {
+        var editIndex = -1;
+        for(j=0;j<invoiceData.length; j++) {
+            var invoiceItemCode = invoiceData[j]["pk_invoice_item_id"];
+            if (parseInt(invoiceItemCode) === parseInt(itemInvoiceCode)) {
+                editIndex = j;
+            }
+        }
+        if (editIndex >= 0){
+            var editPreviewData = invoiceData[editIndex];
+
+            var itemCode = editPreviewData["fk_item_code"];
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/getitemcode'); ?>',
+                dataType  : 'json',
+                data: {itemcode: itemCode},
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function (data) {
+                    $('#selectitemcode').val(data[0].item_code);
+                    $('#itemdescription').val(data[0].name);
+                    $('#itemmrp').val(data[0].cost_price);
+                    $('#defineunitcase').val(data[0].unit_case);
+                }
+            });
+
+            $("#selectitemcode").val(editPreviewData["fk_item_code"]);
+            $("#updateItemID").val(itemInvoiceCode);
+            $("#itemdescription").val(editPreviewData["fk_item_name"]);
+            $("#defaultinvoiceID").val(editPreviewData["fk_unique_invioce_code"]);
+            $("#itemquantity").val(editPreviewData["quantity"]);
+            $("#itemcaseunit").val(editPreviewData["case_unit"]);
+            $("#itemmrp").val(editPreviewData["mrp"]);
+            $("#itemdiscount").val(editPreviewData["discount"]);
+            $("#itemmrpvalue").val(editPreviewData["mrp_value"]);
+            $("#itembillValue").val(editPreviewData["bill_value"]);
+            $("#add_item_to_invoice").text("Update Item");
+        }else{
+            alert("Something went wrong")
+        }
+        
+    }
+
     function showItemData(){
             console.log(invoiceData);
             console.log(invoiceData[0]["pk_invoice_item_id"]);
@@ -584,13 +695,15 @@
             $('tbody').empty();
             var mrp_value = 0;
             var bill_value = 0;
+            var count = 1;
             for(i=0;i<invoiceData.length; i++) {
-                $('#invoiceBody').append(addInvoicerow(invoiceData[i]));
+                $('#invoiceBody').append(addInvoicerow(invoiceData[i], (i + 1) ));
                 console.log(invoiceData[i]["pk_invoice_item_id"]);
                 mrp_value = parseInt(mrp_value) + parseInt(invoiceData[i]["mrp_value"]);
                 bill_value = parseInt(bill_value) + parseInt(invoiceData[i]["bill_value"]);
             }
             $('#invoiceBody').append(addInvoiceCalculation(bill_value, mrp_value));
+            invoiceCalCulationInfo();
     }
     function addHeader(){
         return '<tr class="invoicecal">'
@@ -606,9 +719,9 @@
                 +'</tr>';
     }
 
-    function addInvoicerow(oneRow){
+    function addInvoicerow(oneRow, numberOne){
         return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
-                    +'<td>'+oneRow["pk_invoice_item_id"]+'</td>'
+                    +'<td>'+numberOne+'</td>'
                     +'<td>'+oneRow["fk_item_code"]+'</td>'
                     +'<td>'+oneRow["fk_item_name"]+'</td>'
                     +'<td>'+oneRow["quantity"]+'</td>'
@@ -617,7 +730,7 @@
                     +'<td>'+oneRow["discount"]+'</td>'
                     +'<td>'+oneRow["bill_value"]+'</td>'
                     +'<td>'
-                        +'<button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>'
+                        +'<button type="button" onclick="editInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false"><i data-feather="more-vertical"></i></button>'
                         +'<button type="button" onclick="deleteInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ></button>'
                     +'</td>'
                 +'</tr>';
@@ -681,6 +794,17 @@
             } else {
             a[i].style.display = "none";
             }
+        }
+    }
+    function invoiceCalCulationInfo(){
+        var numberofrow = invoiceData.length;
+        var pdfdropdown = $(".pdfdropdown");
+        if(numberofrow > 1){
+            $('.invoicecal').show();
+            pdfdropdown.removeAttr("disabled");
+        }else{
+            $('.invoicecal').hide();
+            pdfdropdown.attr("disabled", "disabled");
         }
     }
 

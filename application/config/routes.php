@@ -83,6 +83,7 @@ $route['savevoiceheader'] = 'invoice/saveInvoiceHeader';
 $route['deleteinvoiceitem'] = 'invoice/deleteInvoiceItem';
 $route['getitemcode'] = 'invoice/getItemCode';
 $route['saveitemininvoce'] = 'invoice/saveItemInInvoice';
+$route['updateitemininvoce'] = 'invoice/updateItemInInvoice';
 $route['getstockquantity'] = 'invoice/getStockQuantity';
 
 $route['getstock'] = 'stock/getStock';

@@ -158,6 +158,51 @@ class Invoice extends CI_Controller {
             $invoice_item_save_result = $this->Invoice_model->saveInvoiceItem($data);
             if($invoice_item_save_result['code']){
                 $data['code'] = $invoice_item_save_result['code'];
+                $data["message"] = "Successfully invoice item Updated! ";
+                $data["previewData"] = array(
+                                        "pk_invoice_item_id" => $invoice_item_save_result['itemid'], 
+                                        "fk_unique_invioce_code" => $data['invoiceID'], 
+                                        "fk_item_code" => $data['itemcode'], 
+                                        "fk_item_name" => $data['itemname'], 
+                                        "quantity" => $data['quatity'], 
+                                        "case_unit" => $data['itemunitcase'], 
+                                        "mrp" => $data['itemmrp'], 
+                                        "mrp_value" => $data['itemdmrpvalue'], 
+                                        "discount" => $data['itemdiscount'], 
+                                        "bill_value" => $data['itembillValue'], 
+                                        "updated_at" => date('Y-m-d H:i:s'), 
+                                        "fk_firm_code" => $this->session->userdata('firmcode')
+                                        );
+            }else{
+                $data['code'] = $invoice_item_save_result['code'];
+                $data['itemID'] = $invoice_item_save_result['itemID'];
+                $data["message"] = "Unable to update invoice item, may be wrong invoice id. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data["message"] = "Unable to serve GET Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
+    public function updateItemInInvoice(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['itemID'] = $this->input->post('itemID');
+            $data['invoiceID'] = $this->input->post('invoiceid');
+            $data['itemcode'] = strtoupper($this->input->post('itemcode'));
+            $data['itemname'] = strtoupper($this->input->post('itemname'));
+            $data['quatity'] = $this->input->post('quatity');
+            $data['itemunitcase'] = $this->input->post('itemunitcase');
+            $data['itemmrp'] = $this->input->post('itemmrp');
+            $data['itemdiscount'] = $this->input->post('itemdiscount');
+            $data['itemdmrpvalue'] = $this->input->post('itemdmrpvalue');
+            $data['itembillValue'] = $this->input->post('itembillValue');
+            $data["message"] = "";
+            $data["previewData"] = "";
+            $invoice_item_save_result = $this->Invoice_model->saveInvoiceItem($data);
+            if($invoice_item_save_result['code']){
+                $data['code'] = $invoice_item_save_result['code'];
                 $data['itemID'] = $invoice_item_save_result['itemid'];
                 $data["message"] = "Successfully invoice item saved! ";
                 $data["previewData"] = array(

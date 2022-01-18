@@ -78,10 +78,10 @@ if(isset($mode)){
                 $qty_value = 0;
                 $case_unit_value = 0;
         foreach($invoiceitemsList as $value){
-            $mrp_value = $mrp_value + $value->mrp_value;
-            $bill_value = $bill_value + $value->bill_value;
-            $qty_value = $qty_value + $value->quantity;
-            $case_unit_value = $case_unit_value + $value->case_unit;
+            $mrp_value = $mrp_value + (float)$value->mrp_value;
+            $bill_value = $bill_value + (double)$value->bill_value;
+            $qty_value = $qty_value + (int)$value->quantity;
+            $case_unit_value = $case_unit_value + (float)$value->case_unit;
             $basicItemValue = round((($value->bill_value * 100) / 118), 2);
             $basicItemsValue = $basicItemsValue + $basicItemValue;
             ?>
