@@ -807,7 +807,7 @@
     function invoiceCalCulationInfo(){
         var numberofrow = invoiceData.length;
         var pdfdropdown = $(".pdfdropdown");
-        if(numberofrow > 1){
+        if(numberofrow >= 1){
             $('.invoicecal').show();
             pdfdropdown.removeAttr("disabled");
         }else{

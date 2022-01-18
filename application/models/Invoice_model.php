@@ -268,6 +268,13 @@ class Invoice_model extends CI_Model {
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $query = $this->db->get('invoice_item');
         if($query->num_rows() == 1){
+            foreach ($query->result() as $row)  
+            {  
+                $result['itemcode'] = $row->fk_item_code;
+                $result['itemname'] = $row->fk_item_name;
+                $result['oldQuatity'] = $row->quantity;
+            }
+
             $dataList = array(
                 'fk_item_code'=>$data['itemcode'],
                 'fk_item_name'=>$data['itemname'],
@@ -374,6 +381,12 @@ class Invoice_model extends CI_Model {
             $this->db->update('invoice_item', $dataList);
             $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
             $result['itemInvoiceCode']  = $invoice_Item['itemInvoiceCode'];
+            foreach ($query->result() as $row)  
+            {  
+                $result['itemcode'] = $row->fk_item_code;
+                $result['itemname'] = $row->fk_item_name;
+                $result['quatity'] = $row->quantity;
+            }
         }else{
             $result['code']  = false;
             $result['itemInvoiceCode']  = $invoice_Item['itemInvoiceCode'];

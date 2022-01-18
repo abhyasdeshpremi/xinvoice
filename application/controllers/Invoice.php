@@ -9,6 +9,7 @@ class Invoice extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('Invoice_model', '', TRUE);
+        $this->load->model('Stock_model', '', TRUE);
     }
 
     public function checkid(){
@@ -157,6 +158,16 @@ class Invoice extends CI_Controller {
             $data["previewData"] = "";
             $invoice_item_save_result = $this->Invoice_model->saveInvoiceItem($data);
             if($invoice_item_save_result['code']){
+                /***
+                 * Sell:- Adjust item stock when sell item
+                 */
+                $data['item_code'] = $data['itemcode'];
+                $data['item_name'] = $data['itemname'];
+                $data['stocktype'] = "sell";
+                $data['stockunit'] = $data['quatity'];
+                $data['stockcomment'] = "Deducted items stock when invoice generated";
+                $stock_item_save_result = $this->Stock_model->saveStock($data);
+                
                 $data['code'] = $invoice_item_save_result['code'];
                 $data["message"] = "Successfully invoice item Updated! ";
                 $data["previewData"] = array(
@@ -202,6 +213,34 @@ class Invoice extends CI_Controller {
             $data["previewData"] = "";
             $invoice_item_save_result = $this->Invoice_model->saveInvoiceItem($data);
             if($invoice_item_save_result['code']){
+
+                /***
+                 * Buy:- Adjust item stock when delete from invoice item
+                 */
+                $oldQuantity = (int)$invoice_item_save_result['oldQuatity'];
+                $newQuantity = (int)$data['quatity'];
+                $isAction = false;
+                $quantityChange = 0;
+                $actionType = "";
+                if ($oldQuantity < $newQuantity) {
+                    $quantityChange = $newQuantity - $oldQuantity;
+                    $actionType = "sell";
+                    $isAction = true;
+                }else if ($oldQuantity > $newQuantity){
+                    $quantityChange = $oldQuantity - $newQuantity;
+                    $actionType = "buy";
+                    $isAction = true;
+                }
+
+                if ($isAction) {
+                    $data['item_code'] = $invoice_item_save_result['itemcode'];
+                    $data['item_name'] = $invoice_item_save_result['itemname'];
+                    $data['stocktype'] = $actionType;
+                    $data['stockunit'] = $quantityChange;
+                    $data['stockcomment'] = "Deducted items stock when invoice generated";
+                    $stock_item_save_result = $this->Stock_model->saveStock($data);
+                }
+
                 $data['code'] = $invoice_item_save_result['code'];
                 $data['itemID'] = $invoice_item_save_result['itemid'];
                 $data["message"] = "Successfully invoice item saved! ";
@@ -318,6 +357,16 @@ class Invoice extends CI_Controller {
             $data['itemInvoiceCode'] = $this->input->post('itemInvoiceCode');
             $invoice_item_delete_result = $this->Invoice_model->delete_invoice_item($data);
             if($invoice_item_delete_result['code']){
+                /***
+                 * Buy:- Adjust item stock when delete from invoice item
+                 */
+                $data['item_code'] = $invoice_item_delete_result['itemcode'];
+                $data['item_name'] = $invoice_item_delete_result['itemname'];
+                $data['stocktype'] = "buy";
+                $data['stockunit'] = $invoice_item_delete_result['quatity'];
+                $data['stockcomment'] = "Deducted items stock when invoice generated";
+                $stock_item_save_result = $this->Stock_model->saveStock($data);
+
                 $data['code'] = $invoice_item_delete_result['code'];
                 $data['itemInvoiceCode'] = $invoice_item_delete_result['itemInvoiceCode'];
                 $data["message"] = "Successfully invoice item deleted!";
