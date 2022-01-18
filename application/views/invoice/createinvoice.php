@@ -703,8 +703,8 @@
             for(i=0;i<invoiceData.length; i++) {
                 $('#invoiceBody').append(addInvoicerow(invoiceData[i], (i + 1) ));
                 console.log(invoiceData[i]["pk_invoice_item_id"]);
-                mrp_value = parseInt(mrp_value) + parseInt(invoiceData[i]["mrp_value"]);
-                bill_value = parseInt(bill_value) + parseInt(invoiceData[i]["bill_value"]);
+                mrp_value = parseFloat(mrp_value) + parseFloat(invoiceData[i]["mrp_value"]);
+                bill_value = parseFloat(bill_value) + parseFloat(invoiceData[i]["bill_value"]);
             }
             $('#invoiceBody').append(addInvoiceCalculation(bill_value, mrp_value));
             invoiceCalCulationInfo();
@@ -718,12 +718,14 @@
                     +'<th width="70px;">MRP</th>'
                     +'<th width="100px;">MRP Value</th>'
                     +'<th width="70px;">DS%</th>'
+                    +'<th width="100px;">Bas. Val</th>'
                     +'<th width="100px;">Bill Value</th>'
                     +'<th width="80px;">Actions</th>'
                 +'</tr>';
     }
 
     function addInvoicerow(oneRow, numberOne){
+        var basicValue = ((parseFloat(oneRow["bill_value"]) * 100) / 118).toFixed(2);
         return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
                     +'<td>'+numberOne+'</td>'
                     +'<td>'+oneRow["fk_item_code"]+'</td>'
@@ -732,6 +734,7 @@
                     +'<td>'+oneRow["mrp"]+'</td>'
                     +'<td>'+oneRow["mrp_value"]+'</td>'
                     +'<td>'+oneRow["discount"]+'</td>'
+                    +'<td>'+basicValue+'</td>'
                     +'<td>'+oneRow["bill_value"]+'</td>'
                     +'<td>'
                         +'<button type="button" onclick="editInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark editItemButton" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false"><i data-feather="more-vertical"></i></button>&nbsp;&nbsp;'
@@ -741,21 +744,22 @@
     }
 
     function addInvoiceCalculation(bill_value, mrp_value){
-        var basicValue = Math.round(((parseInt(bill_value) * 100) / 118), 2);
-        var cgstValue = Math.round(((parseInt(basicValue) * 9) / 100), 2);
-        var total_cgst_value = parseInt(basicValue) + parseInt(cgstValue);
+        var basicValue = ((parseFloat(bill_value) * 100) / 118).toFixed(2);
+        var cgstValue = ((parseFloat(basicValue) * 9) / 100).toFixed(2);
+        var total_cgst_value = (parseFloat(basicValue) + parseFloat(cgstValue)).toFixed(2);
         var sgstValue = cgstValue;
-        var total_cgst_sgst_value = (parseInt(total_cgst_value) + parseInt(sgstValue));
-        var bill_amount = Math.round(parseInt(total_cgst_sgst_value), 0);
-        var round_off = Math.round((parseInt(bill_amount) - parseInt(total_cgst_sgst_value)), 2);
+        var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
+        var bill_amount = parseFloat(total_cgst_sgst_value).toFixed(2);
+        var round_off = (parseFloat(bill_amount) - parseFloat(total_cgst_sgst_value)).toFixed(2);
         return  '<tr class="invoicecal">'
                     +'<td colspan="5"></td>'
-                    +'<td><b>'+mrp_value+'</b></td>'
+                    +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
                     +'<td></td>'
-                    +'<td><b>'+bill_value+'</b></td>'
+                    +'<td><b>'+basicValue+'</b></td>'
+                    +'<td><b>'+parseFloat(bill_value).toFixed(2)+'</b></td>'
                 +'</tr>'
                 +'<tr class="invoicecal">'
-                    +'<td colspan="4" rowspan="7"></td>'
+                    +'<td colspan="5" rowspan="7"></td>'
                     +'<td colspan="3">BASIC VALUE RS.</td>'
                     +'<td>'+basicValue+'</td>'
                 +'</tr>'
