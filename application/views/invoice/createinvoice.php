@@ -158,7 +158,7 @@
                             <div class="col-md-4 mb-3">
                             </div>
                             <div class="col-md-2 mb-3">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+                                <button type="button" onclick="addInvoiceItem()" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
                                     Add Item
                                 </button>
                             </div>
@@ -643,6 +643,10 @@
         }
     }
 
+    function addInvoiceItem(){
+        $("#add_item_to_invoice").text("Add Item");
+    }
+
     function editInvoiceItem(itemInvoiceCode) {
         var editIndex = -1;
         for(j=0;j<invoiceData.length; j++) {
@@ -730,8 +734,8 @@
                     +'<td>'+oneRow["discount"]+'</td>'
                     +'<td>'+oneRow["bill_value"]+'</td>'
                     +'<td>'
-                        +'<button type="button" onclick="editInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false"><i data-feather="more-vertical"></i></button>'
-                        +'<button type="button" onclick="deleteInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ></button>'
+                        +'<button type="button" onclick="editInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark editItemButton" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false"><i data-feather="more-vertical"></i></button>&nbsp;&nbsp;'
+                        +'<button type="button" onclick="deleteInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark deleteItemlistkjsdksdj" ></button>'
                     +'</td>'
                 +'</tr>';
     }
