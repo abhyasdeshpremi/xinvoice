@@ -86,6 +86,17 @@ $route['saveitemininvoce'] = 'invoice/saveItemInInvoice';
 $route['updateitemininvoce'] = 'invoice/updateItemInInvoice';
 $route['getstockquantity'] = 'invoice/getStockQuantity';
 
+$route['createpurchaseinvoice'] = 'purchase/createinvoiceID';
+$route['createpurchaseinvoice/(:any)'] = 'purchase/createinvoice/$1';
+$route['createpurchaseinvoicepdf/(:any)/(:any)/(:num)'] = 'purchase/createInvoicePDF/$1/$2/$3';
+
+$route['savepurchaseiteminvoice'] = 'purchase/saveItemInInvoice';
+$route['updatepurchaseitemininvoce'] = 'purchase/updateItemInInvoice';
+
+$route['invoicepurchasedetail'] = 'purchase/invoicedetails';
+$route['getPurchaseinvoicelist'] = 'purchase/getinvoicelist';
+$route['deletepurchaseinvoiceitem'] = 'purchase/deleteInvoiceItem';
+
 $route['getstock'] = 'stock/getStock';
 $route['savestock'] = 'stock/saveStock';
 

@@ -76,8 +76,9 @@ class Invoice_model extends CI_Model {
         return $data;
     }
 
-    public function invoice_list(){
+    public function invoice_list($invoice_type = 'sell'){
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('invoice_type', $invoice_type);
         $query = $this->db->get('Invoices');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();
@@ -87,10 +88,11 @@ class Invoice_model extends CI_Model {
         return $data;
     }
 
-    public function invoiceInitial($invoiceNewID){
+    public function invoiceInitial($invoiceNewID, $invoiceType = 'sell'){
         $data = array(
             'unique_invioce_code'=>$invoiceNewID,
             'status'=>'create',
+            'invoice_type'=>$invoiceType,
             'fk_firm_code'=>$this->session->userdata('firmcode'),
             'fk_username'=> $this->session->userdata('username')
         );
@@ -159,10 +161,11 @@ class Invoice_model extends CI_Model {
         return $data;
     }
 
-    public function invoice_id(){
+    public function invoice_id($invoiceType = 'sell'){
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('fk_username', $this->session->userdata('username'));
         $this->db->where('status', 'create');
+        $this->db->where('invoice_type', $invoiceType);
         $query = $this->db->get('Invoices');
         if($query->num_rows() > 0){
             return $query->result();

@@ -261,8 +261,8 @@
                             </a>
                             <div class="collapse" id="collapseDashboardspurchase" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="dashboard-2.html">Purchase Invoice List</a>
-                                    <a class="nav-link" href="dashboard-3.html">New Purchase Invoice</a>
+                                    <a class="nav-link" href="<?php echo base_url('/invoicepurchasedetail'); ?>">Purchase Invoice List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createpurchaseinvoice'); ?>">New Purchase Invoice</a>
                                 </nav>
                             </div>
 
