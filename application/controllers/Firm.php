@@ -14,6 +14,9 @@ class Firm extends CI_Controller {
 
 	public function index()
 	{
+        if($this->session->userdata('role') != "superadmin"){
+            redirect('/login');
+        }
         $queryResult = $this->Firm_model->primary_firm();
 		$data = array();
         $data['data'] = $queryResult['result'];
@@ -22,6 +25,9 @@ class Firm extends CI_Controller {
 	}
 
     public function createfirm(){
+        if($this->session->userdata('role') != "superadmin"){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $data['method'] = "GET";
@@ -56,14 +62,20 @@ class Firm extends CI_Controller {
     }
 
     public function firmdetails(){
+        if($this->session->userdata('role') != "superadmin"){
+            redirect('/login');
+        }
         $data = array();
         $firm_result = $this->Firm_model->firm_list();
         $data['data'] = $firm_result['result'];
-        $this->template->set('title', 'Firms List');
+        $this->template->set('title', 'Firms List'.$this->session->userdata('role'));
         $this->template->load('default_layout', 'contents' , 'firm/firmdetail', $data);
     }
 
     public function updateFirm($firmcode = null){
+        if($this->session->userdata('role') != "superadmin"){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $data['method'] = "GET";
@@ -100,6 +112,9 @@ class Firm extends CI_Controller {
     }
 
     public function deleteFirm(){
+        if($this->session->userdata('role') != "superadmin"){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['firmCode'] = $this->input->post('firmCode');
