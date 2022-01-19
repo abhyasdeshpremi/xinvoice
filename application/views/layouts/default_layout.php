@@ -282,7 +282,7 @@
 							<!-- Sidenav Menu Heading (Account)-->
                             <div class="sidenav-menu-heading">Account</div>
                             <!-- Sidenav Accordion (Dashboard)-->
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsAccount" aria-expanded="false" aria-controls="collapseDashboards">
+                            <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsAccount" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>
                                 Ledger
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -292,7 +292,7 @@
                                     <a class="nav-link" href="dashboard-2.html">Purchase List</a>
                                     <a class="nav-link" href="dashboard-3.html">Seller List</a>
                                 </nav>
-                            </div>
+                            </div> -->
 							<a class="nav-link" href="<?php echo base_url('getstock');  ?>">
                                 <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
                                 Stock
