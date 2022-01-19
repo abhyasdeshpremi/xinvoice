@@ -73,6 +73,7 @@ class Firm_model extends CI_Model {
             'state'=>$data['firmState'],
             'pin_code'=>$data['firmZip'],
             'mobile_number'=>$data['firmMobile'],
+            'status'=>$data['firmstatus'],
             'updated_at'=>date('Y-m-d H:i:s')
             
         ); 

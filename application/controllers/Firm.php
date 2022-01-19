@@ -92,6 +92,7 @@ class Firm extends CI_Controller {
             $data['firmdistrict'] = $this->input->post('firmdistrict');
             $data['firmState'] = $this->input->post('firmState');
             $data['firmZip'] = $this->input->post('firmZip');
+            $data['firmstatus'] = $this->input->post('firmstatus');
             $uniqueCodecheck = $this->Firm_model->unique_firm_code_check($this->input->post('uniqueCode'));
             if($uniqueCodecheck){
                 $updateFirm = $this->Firm_model->update_firm($data);

@@ -85,7 +85,7 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                 <label for="userStatus">Status</label>
-                    <select class="form-control" id="userStatus" name="userStatus">
+                    <select class="form-control" id="firmstatus" name="firmstatus">
                         <option value="pending" <?php if($firmStatus == 'pending'){ echo 'selected'; } ?>>Pending</option>
                         <option value="active" <?php if($firmStatus == 'active'){ echo 'selected'; } ?>>Active</option>
                         <option value="inactive" <?php if($firmStatus == 'inactive'){ echo 'selected'; } ?>>Inactive</option>
