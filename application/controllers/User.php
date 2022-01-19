@@ -9,6 +9,7 @@ class User extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('User_model', '', TRUE);
+        $this->load->model('Firm_model', '', TRUE);
     }
     
     public function createUser(){
@@ -23,12 +24,17 @@ class User extends CI_Controller {
             $data['lastName'] = $this->input->post('lastName');
             $data['userRole'] = $this->input->post('userRole');
             $data['userStatus'] = $this->input->post('userStatus');
+
             $usernameVerify = $this->User_model->unique_username_verify($this->input->post('username'));
             if($usernameVerify){
                 $mobileVerify = $this->User_model->unique_mobile_verify($this->input->post('mobile'));
                 if($mobileVerify){
                     $emailVerify = $this->User_model->unique_email_verify($this->input->post('email'));
                     if($emailVerify){
+                        $data['username'] = $this->input->post('username');
+                        $data['mobile'] = $this->input->post('mobile');
+                        $data['email'] = $this->input->post('email');
+                        $data['password'] = $this->input->post('password');
                         $createUser = $this->User_model->create_user($data);
                         if($createUser ){
                             unset($data);
@@ -65,11 +71,13 @@ class User extends CI_Controller {
             $data['method'] = "GET";
         } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['method'] = "POST";
+            $firmCode = $this->input->post('firmCode');
             $data['username'] = $this->input->post('username');
             $data['firstName'] = $this->input->post('firstName');
             $data['lastName'] = $this->input->post('lastName');
             $data['userRole'] = $this->input->post('userRole');
             $data['userStatus'] = $this->input->post('userStatus');
+            $data['firmCode'] = (empty($firmCode)) ? $this->session->userdata('firmcode') : $firmCode;
             $usernameCheck = $this->User_model->unique_username_check($this->input->post('username'));
             if($usernameCheck){
                 $updateUser = $this->User_model->update_user($data);
@@ -84,6 +92,10 @@ class User extends CI_Controller {
          }
         $user_result = $this->User_model->update_user_detail($username);
         $data['data'] = $user_result['result'];
+        if ($this->session->userdata('role') == "superadmin"){
+            $queryResult = $this->Firm_model->firm_list();
+            $data['firmData'] = $queryResult['result'];
+        }
          $this->template->set('title', 'Update User');
          $this->template->load('default_layout', 'contents' , 'user/updateUser', $data);
     }

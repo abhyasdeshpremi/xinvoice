@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <?php if(isset($successMessage)){ ?>
-            <script>document.getElementById('createFirm').reset();</script>
+            <!-- <script>document.getElementById('createFirm').reset();</script> -->
             <div class="alert alert-success" role="alert"><?php echo isset($successMessage)? $successMessage : ''; ?></div>
         <?php }elseif(isset($errorMessage)){ ?>
             <div class="alert alert-danger" role="alert"><?php echo isset($errorMessage)? $errorMessage : ''; ?></div>
@@ -14,6 +14,7 @@
                 $email = $value->email;
                 $mobile = $value->mobile_number;
                 $userRole = $value->role;
+                $firm_code = $value->fk_firm_code;
                 $userStatus = $value->status;
             }
         ?>
@@ -36,6 +37,15 @@
                     <input class="form-control" id="mobile" name="mobile" type="text" placeholder="Mobile" value="<?php echo isset($mobile)? $mobile : ''; ?>" required readonly/>
                 </div>
                 <div class="col-md-6 mb-3">
+                    <?php if (isset($firmData)) { ?>
+                        <label for="firmCode">Firm permission <?php echo count($firmData); ?></label>
+                        <select class="form-control" id="firmCode" name="firmCode">
+                            <option value="">Select firm</option>
+                            <?php foreach($firmData as $value){ ?>
+                                <option value="<?php echo $value->firm_code; ?>" <?php if($value->firm_code == $firm_code){ echo 'selected'; } ?>><?php echo $value->name; ?></option>
+                            <?php } ?>
+                        </select>
+                    <?php } ?>
                 </div>
             </div>
             

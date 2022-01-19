@@ -349,7 +349,8 @@
                                     <a class="nav-link" href="<?php echo base_url('/createcompany'); ?>">New Company</a>
                                 </nav>
                             </div>
-
+                                    
+                            <?php if ($this->session->userdata('role') == "superadmin"){ ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsFirm" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>
@@ -362,7 +363,7 @@
                                     <a class="nav-link" href="<?php echo base_url('/createfirm'); ?>">New Firm</a>
                                 </nav>
                             </div>
-							
+							<?php } ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsReport" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>

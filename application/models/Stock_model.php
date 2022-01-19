@@ -9,6 +9,7 @@ class Stock_model extends CI_Model {
 
 
     public function stock_list(){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $query = $this->db->get('Stocks');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();

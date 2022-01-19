@@ -69,3 +69,18 @@
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#uniqueCode").keyup(function(){
+                var code_without_space = $("#uniqueCode").val().replace(/ /g, "");
+                var codename_without_special_char = code_without_space.replace(/[^a-zA-Z 0-9]+/g, "");
+                $("#uniqueCode").val(codename_without_special_char);
+        });
+        $('#uniqueCode').keypress(function(e) {
+            if ($(this).val().length >= 20) {
+                return false;
+            }
+            return true;
+        });
+    });
+</script>

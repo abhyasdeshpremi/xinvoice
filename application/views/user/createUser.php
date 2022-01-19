@@ -65,3 +65,18 @@
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#username").keyup(function(){
+                var code_without_space = $("#username").val().replace(/ /g, "");
+                var codename_without_special_char = code_without_space.replace(/[^a-zA-Z 0-9]+/g, "");
+                $("#username").val(codename_without_special_char);
+        });
+        $('#username').keypress(function(e) {
+            if ($(this).val().length >= 20) {
+                return false;
+            }
+            return true;
+        });
+    });
+</script>

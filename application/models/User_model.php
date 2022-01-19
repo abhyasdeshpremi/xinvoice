@@ -69,14 +69,26 @@ class User_model extends CI_Model {
     }
 
     public function update_user($data){
-        $itemdata = array(
-            'first_name'=>$data['firstName'],
-            'last_name'=>$data['lastName'],
-            'status'=>$data['userStatus'],
-            'role'=>$data['userRole'],
-            'updated_at'=>date('Y-m-d H:i:s')
-        );
-        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($this->session->userdata('role') == "superadmin"){
+            $itemdata = array(
+                'first_name'=>$data['firstName'],
+                'last_name'=>$data['lastName'],
+                'status'=>$data['userStatus'],
+                'role'=>$data['userRole'],
+                'fk_firm_code'=>$data['firmCode'],
+                'updated_at'=>date('Y-m-d H:i:s')
+            );
+        }else{
+            $itemdata = array(
+                'first_name'=>$data['firstName'],
+                'last_name'=>$data['lastName'],
+                'status'=>$data['userStatus'],
+                'role'=>$data['userRole'],
+                'updated_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        }
+        
         $this->db->where('username', strtoupper($data['username']));
         $this->db->update('Users',$itemdata);
         return ($this->db->affected_rows() != 1) ? false : true;
@@ -84,7 +96,9 @@ class User_model extends CI_Model {
 
     public function user_list(){
         $this->db->where('delete_flag', 'NO');
-        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($this->session->userdata('role') != "superadmin"){
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        }
         $this->db->where_not_in('email', $this->session->userdata('email'));
         $query = $this->db->get('Users');
         if($query->num_rows() > 0){
@@ -96,7 +110,9 @@ class User_model extends CI_Model {
     }
 
     public function update_user_detail($username){
-        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($this->session->userdata('role') != "superadmin"){
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        }
         $this->db->where('username', $username);
         $query = $this->db->get('Users');
         if($query->num_rows() == 1){
