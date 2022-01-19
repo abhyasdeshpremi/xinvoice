@@ -60,26 +60,26 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationDefault03">Area</label>
-                    <input class="form-control" id="firmArea" name="firmArea" type="text" placeholder="Area" value="<?php echo isset($firmArea)? $firmArea : ''; ?>" />
+                    <input class="form-control uppercase" id="firmArea" name="firmArea" type="text" placeholder="Area" value="<?php echo isset($firmArea)? $firmArea : ''; ?>" />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="validationDefault03">City</label>
-                    <input class="form-control" id="firmCity" name="firmCity" type="text" placeholder="City" value="<?php echo isset($firmCity)? $firmCity : ''; ?>" />
+                    <input class="form-control uppercase" id="firmCity" name="firmCity" type="text" placeholder="City" value="<?php echo isset($firmCity)? $firmCity : ''; ?>" />
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationDefault03">District</label>
-                    <input type="text" class="form-control" id="firmdistrict" name="firmdistrict" placeholder="District" value="<?php echo isset($firmdistrict)? $firmdistrict : ''; ?>" />
+                    <input type="text" class="form-control uppercase" id="firmdistrict" name="firmdistrict" placeholder="District" value="<?php echo isset($firmdistrict)? $firmdistrict : ''; ?>" />
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="validationDefault04">State</label>
-                    <input type="text" class="form-control" id="firmState" name="firmState" placeholder="State" value="<?php echo isset($firmState)? $firmState : ''; ?>" >
+                    <input type="text" class="form-control uppercase" id="firmState" name="firmState" placeholder="State" value="<?php echo isset($firmState)? $firmState : ''; ?>" >
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="validationDefault05">Zip</label>
-                    <input type="text" class="form-control" id="firmZip" name="firmZip" placeholder="Zip" value="<?php echo isset($firmZip)? $firmZip : ''; ?>">
+                    <input type="number" class="form-control" id="firmZip" name="firmZip" placeholder="Zip" value="<?php echo isset($firmZip)? $firmZip : ''; ?>">
                 </div>
             </div>
             <div class="form-row">

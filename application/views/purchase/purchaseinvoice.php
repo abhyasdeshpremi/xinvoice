@@ -117,26 +117,26 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">State</label>
-                                    <input class="form-control" id="clientState" name="clientState" type="text" placeholder="State" value="<?php echo isset($clientState)? $clientState : ''; ?>" required/>
+                                    <input class="form-control uppercase" id="clientState" name="clientState" type="text" placeholder="State" value="<?php echo isset($clientState)? $clientState : ''; ?>" required/>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">District</label>
-                                    <input class="form-control" id="clientDistrict" name="clientDistrict" type="text" placeholder="District" value="<?php echo isset($clientDistrict)? $clientDistrict : ''; ?>" required/>
+                                    <input class="form-control uppercase" id="clientDistrict" name="clientDistrict" type="text" placeholder="District" value="<?php echo isset($clientDistrict)? $clientDistrict : ''; ?>" required/>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">City</label>
-                                    <input class="form-control" id="clientcity" name="clientcity" type="text" placeholder="City" style="text-transform:uppercase" value="<?php echo isset($clientcity)? $clientcity : ''; ?>" required/>
+                                    <input class="form-control uppercase" id="clientcity" name="clientcity" type="text" placeholder="City" style="text-transform:uppercase" value="<?php echo isset($clientcity)? $clientcity : ''; ?>" required/>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">Area</label>
-                                    <input class="form-control" id="clientarea" name="clientarea" type="text" placeholder="Area" value="<?php echo isset($clientarea)? $clientarea : ''; ?>" required/>
+                                    <input class="form-control uppercase" id="clientarea" name="clientarea" type="text" placeholder="Area" value="<?php echo isset($clientarea)? $clientarea : ''; ?>" required/>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">Pin Code</label>
-                                    <input class="form-control" id="clientpincode" name="clientpincode" type="text" placeholder="Pin Code" value="<?php echo isset($clientpincode)? $clientpincode : ''; ?>" />
+                                    <input class="form-control" id="clientpincode" name="clientpincode" type="number" placeholder="Pin Code" value="<?php echo isset($clientpincode)? $clientpincode : ''; ?>" />
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Save invoice</button>

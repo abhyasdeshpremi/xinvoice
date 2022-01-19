@@ -81,26 +81,26 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationDefault03">Area</label>
-                    <input class="form-control" id="clientArea" name="clientArea" type="text" placeholder="Area" value="<?php echo isset($clientArea)? $clientArea : ''; ?>" />
+                    <input class="form-control uppercase" id="clientArea" name="clientArea" type="text" placeholder="Area" value="<?php echo isset($clientArea)? $clientArea : ''; ?>" />
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="validationDefault03">City</label>
-                    <input class="form-control" id="clientCity" name="clientCity" type="text" placeholder="City" value="<?php echo isset($clientCity)? $clientCity : ''; ?>" />
+                    <input class="form-control uppercase" id="clientCity" name="clientCity" type="text" placeholder="City" value="<?php echo isset($clientCity)? $clientCity : ''; ?>" />
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationDefault03">District</label>
-                    <input type="text" class="form-control" id="clientdistrict" name="clientdistrict" placeholder="District" value="<?php echo isset($clientdistrict)? $clientdistrict : ''; ?>" />
+                    <input type="text" class="form-control uppercase" id="clientdistrict" name="clientdistrict" placeholder="District" value="<?php echo isset($clientdistrict)? $clientdistrict : ''; ?>" />
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="validationDefault04">State</label>
-                    <input type="text" class="form-control" id="clientState" name="clientState" placeholder="State" value="<?php echo isset($clientState)? $clientState : ''; ?>" >
+                    <input type="text" class="form-control uppercase" id="clientState" name="clientState" placeholder="State" value="<?php echo isset($clientState)? $clientState : ''; ?>" >
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="validationDefault05">Zip</label>
-                    <input type="text" class="form-control" id="clientZip" name="clientZip" placeholder="Zip" value="<?php echo isset($clientZip)? $clientZip : ''; ?>">
+                    <input type="number" class="form-control" id="clientZip" name="clientZip" placeholder="Zip" value="<?php echo isset($clientZip)? $clientZip : ''; ?>">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Update Client</button>

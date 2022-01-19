@@ -452,5 +452,10 @@
         <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/demo/date-range-picker-demo.js'); ?>"></script>
+        <script>
+            $(".uppercase").keyup(function(){
+                this.value = this.value.toLocaleUpperCase();
+            });
+        </script>
     </body>
 </html>
