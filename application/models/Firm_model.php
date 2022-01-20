@@ -102,6 +102,18 @@ class Firm_model extends CI_Model {
         return $data;
     }
 
+    public function firm_list_only(){
+        $this->db->where('delete_flag', 'NO');
+        $this->db->order_by("name", "ASC");
+        $query = $this->db->get('Firms');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
     public function update_firm_detail($firmCode){
         $this->db->where('firm_code', $firmCode);
         $query = $this->db->get('Firms');

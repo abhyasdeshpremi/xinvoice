@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <?php if (isset($firmData)) { ?>
-                        <label for="firmCode">Firm permission <?php echo count($firmData); ?></label>
+                        <label for="firmCode">Firm permission</label>
                         <select class="form-control" id="firmCode" name="firmCode">
                             <option value="">Select firm</option>
                             <?php foreach($firmData as $value){ ?>

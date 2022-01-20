@@ -98,6 +98,7 @@ $route['getPurchaseinvoicelist'] = 'purchase/getinvoicelist';
 $route['deletepurchaseinvoiceitem'] = 'purchase/deleteInvoiceItem';
 
 $route['getstock(/:num)?'] = 'stock/getStock$1';
+$route['getstocklog(/:num)?'] = 'stock/getstocklog$1';
 $route['savestock'] = 'stock/saveStock';
 
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';

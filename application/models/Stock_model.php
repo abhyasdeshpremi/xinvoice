@@ -2,6 +2,7 @@
 
 class Stock_model extends CI_Model {
     protected $table = 'Stocks';
+    protected $logtable = 'Stocks_Entry';
     function __construct()  
     {  
         parent::__construct();
@@ -27,6 +28,26 @@ class Stock_model extends CI_Model {
         return $data;
     }
     
+    public function get_log_count() {
+        $this->db->select('pk_stock_entry_id');
+        $this->db->from($this->logtable);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        return $this->db->count_all_results();
+    }
+
+    public function stock_log_list($limit, $start){
+        $this->db->limit($limit, $start);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("created_at", "DESC");
+        $query = $this->db->get($this->logtable);
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
     public function saveStock($data){
         $result = array();
         $this->db->where('item_code', $data['item_code']);

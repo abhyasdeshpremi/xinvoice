@@ -25,7 +25,7 @@
 
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="itemCompanyCode">Item's company</label>
+                    <label for="itemCompanyCode">Item's company <a  href="<?php echo base_url('/createcompany'); ?>">Add New Company</a></label>
                         <select class="form-control" id="itemCompanyCode" name="itemCompanyCode">
                             <?php $count = 0; 
                             foreach($companiesList as $company){ ?>

@@ -29,8 +29,31 @@ class Stock extends CI_Controller {
         $data['itemsList'] = $this->Invoice_model->items_list();
         $data['data'] = $firm_result['result'];
         $data['page'] = $page;
+        $this->template->set('buttonName', 'Stock Log List');
+        $this->template->set('buttonLink', base_url('/getstocklog'));
         $this->template->set('title', 'Stock List');
         $this->template->load('default_layout', 'contents' , 'stock/stockdetail', $data);
+    }
+
+    public function getstocklog(){
+        $data = array();
+
+        $config = array();
+        $config["base_url"] = base_url("getstocklog");
+        $config["total_rows"] = $this->Stock_model->get_log_count();
+        $config["per_page"] = PAGE_PER_ITEM;
+        $config["uri_segment"] = 2;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        $stock_log_result = $this->Stock_model->stock_log_list($config["per_page"], $page);
+        $data['data'] = $stock_log_result['result'];
+        $data['page'] = $page;
+        $this->template->set('buttonName', 'Stock List');
+        $this->template->set('buttonLink', base_url('/getstock'));
+        $this->template->set('title', 'Stock Log List');
+        $this->template->load('default_layout', 'contents' , 'stock/stocklogdetail', $data);
     }
 
     public function saveStock(){

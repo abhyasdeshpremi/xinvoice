@@ -109,7 +109,7 @@ class User extends CI_Controller {
         $user_result = $this->User_model->update_user_detail($username);
         $data['data'] = $user_result['result'];
         if ($this->session->userdata('role') == "superadmin"){
-            $queryResult = $this->Firm_model->firm_list();
+            $queryResult = $this->Firm_model->firm_list_only();
             $data['firmData'] = $queryResult['result'];
         }
         $this->template->set('buttonName', 'Users List');

@@ -293,10 +293,23 @@
                                     <a class="nav-link" href="dashboard-3.html">Seller List</a>
                                 </nav>
                             </div> -->
-							<a class="nav-link" href="<?php echo base_url('getstock');  ?>">
+							<!-- <a class="nav-link" href="<?php echo base_url('getstock');  ?>">
                                 <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
                                 Stock
+                            </a> -->
+
+                            <!-- Sidenav Accordion (Items)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsStock" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                Stock
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+                            <div class="collapse" id="collapseDashboardsStock" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/getstock'); ?>">Stock List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/getstocklog'); ?>">Stock log</a>
+                                </nav>
+                            </div>
 
 							<!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsItem" aria-expanded="false" aria-controls="collapseDashboards">
