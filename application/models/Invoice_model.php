@@ -2,10 +2,19 @@
 
 class Invoice_model extends CI_Model {
 
+    protected $table = 'Invoices';
+
     function __construct()  
     {  
         parent::__construct();
     }  
+
+    public function get_count($invoice_type = 'sell') {
+        $this->db->select('pk_invoice_id');
+        $this->db->from($this->table);
+        $this->db->where('invoice_type', $invoice_type);
+        return $this->db->count_all_results();
+    }
 
     public function client_list(){
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
@@ -76,9 +85,11 @@ class Invoice_model extends CI_Model {
         return $data;
     }
 
-    public function invoice_list($invoice_type = 'sell'){
+    public function invoice_list($limit, $start, $invoice_type = 'sell'){
+        $this->db->limit($limit, $start);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('invoice_type', $invoice_type);
+        $this->db->order_by("created_at", "DESC");
         $query = $this->db->get('Invoices');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();

@@ -1,11 +1,19 @@
 <?php
 
 class Client_model extends CI_Model {
-
+    protected $table = 'Clients';
     function __construct()  
     {  
         parent::__construct();
     }  
+
+    public function get_count() {
+        $this->db->select('pk_client_id');
+        $this->db->where('delete_flag', 'NO');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
 
     public function get_enum_values( $table = 'Clients', $field = 'client_type'){
         $type = $this->db->query( "SHOW COLUMNS FROM {$table} WHERE Field = '{$field}'" )->row( 0 )->Type;
@@ -82,9 +90,11 @@ class Client_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function client_list(){
+    public function client_list($limit, $start){
+        $this->db->limit($limit, $start);
         $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("name", "ASC");
         $query = $this->db->get('Clients');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();

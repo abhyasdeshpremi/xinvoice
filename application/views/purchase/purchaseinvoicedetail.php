@@ -45,5 +45,6 @@
                 <?php $i++; }; ?>
             </tbody>
         </table>
+        <div><center><?php echo $links; ?></center></div>
     </div>
 </div>

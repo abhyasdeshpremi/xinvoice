@@ -10,6 +10,7 @@ class Purchase extends CI_Controller {
         }
         $this->load->model('Invoice_model', '', TRUE);
         $this->load->model('Stock_model', '', TRUE);
+        $this->load->library("pagination");
     }
 
     public function checkid(){
@@ -274,7 +275,17 @@ class Purchase extends CI_Controller {
 
     public function invoicedetails(){
         $data = array();
-        $firm_result = $this->Invoice_model->invoice_list("purchase");
+
+        $config = array();
+        $config["base_url"] = base_url("invoicepurchasedetail");
+        $config["total_rows"] = $this->Invoice_model->get_count("purchase");
+        $config["per_page"] = PAGE_PER_ITEM;
+        $config["uri_segment"] = 2;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        $firm_result = $this->Invoice_model->invoice_list($config["per_page"], $page, "purchase");
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New Purchase Invoice');
         $this->template->set('buttonLink', base_url('/createpurchaseinvoice'));

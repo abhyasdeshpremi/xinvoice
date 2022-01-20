@@ -30,16 +30,19 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php foreach($data as $value){ ?>
+                <?php $page = 1;
+                    foreach($data as $value){ ?>
                     <tr>
-                        <td><?php echo $value->pk_stock_id; ?></td>
+                        <td><?php echo $page; ?></td>
                         <td><?php echo $value->item_code; ?></td>
                         <td><?php echo $value->item_name; ?></td>
                         <td><?php echo $value->item_total_count; ?></td>
                     </tr>
-                <?php } ?>
+                <?php $page = $page + 1;
+                    } ?>
             </tbody>
         </table>
+        <div><center><?php echo $links; ?></center></div>
     </div>
 </div>
 

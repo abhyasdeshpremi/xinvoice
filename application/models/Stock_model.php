@@ -1,15 +1,23 @@
 <?php
 
 class Stock_model extends CI_Model {
-
+    protected $table = 'Stocks';
     function __construct()  
     {  
         parent::__construct();
     }  
 
-
-    public function stock_list(){
+    public function get_count() {
+        $this->db->select('item_code');
+        $this->db->from($this->table);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        return $this->db->count_all_results();
+    }
+
+    public function stock_list($limit, $start){
+        $this->db->limit($limit, $start);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("item_name", "ASC");
         $query = $this->db->get('Stocks');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();

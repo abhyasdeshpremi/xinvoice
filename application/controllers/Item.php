@@ -9,6 +9,7 @@ class Item extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('Item_model', '', TRUE);
+        $this->load->library("pagination");
     }
     
     public function createItem(){
@@ -57,7 +58,17 @@ class Item extends CI_Controller {
 
     public function itemdetails(){
         $data = array();
-        $firm_result = $this->Item_model->item_list();
+
+        $config = array();
+        $config["base_url"] = base_url("itemdetails");
+        $config["total_rows"] = $this->Item_model->get_count();
+        $config["per_page"] = PAGE_PER_ITEM;
+        $config["uri_segment"] = 2;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        $firm_result = $this->Item_model->item_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New Item');
         $this->template->set('buttonLink', base_url('/createitem'));

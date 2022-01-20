@@ -10,6 +10,7 @@ class User extends CI_Controller {
         }
         $this->load->model('User_model', '', TRUE);
         $this->load->model('Firm_model', '', TRUE);
+        $this->load->library("pagination");
     }
     
     public function createUser(){
@@ -61,7 +62,17 @@ class User extends CI_Controller {
 
     public function userdetails(){
         $data = array();
-        $firm_result = $this->User_model->user_list();
+
+        $config = array();
+        $config["base_url"] = base_url("userdetails");
+        $config["total_rows"] = $this->User_model->get_count();
+        $config["per_page"] = PAGE_PER_ITEM;
+        $config["uri_segment"] = 2;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        $firm_result = $this->User_model->user_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New User');
         $this->template->set('buttonLink', base_url('/createuser'));

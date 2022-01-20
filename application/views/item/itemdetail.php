@@ -3,6 +3,7 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    <th>Sr.</th>
                     <th>Item Code</th>
                     <th>Name</th>
                     <th>Company Code</th>
@@ -15,6 +16,7 @@
             </thead>
             <tfoot>
                 <tr>
+                    <th>Sr.</th>
                     <th>Item Code</th>
                     <th>Name</th>
                     <th>Company Code</th>
@@ -26,8 +28,10 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php foreach($data as $value){ ?>
+                <?php $page = 1;
+                    foreach($data as $value){ ?>
                     <tr id="<?php echo $value->item_code; ?>">
+                        <td><?php echo $page; ?></td>
                         <td><?php echo $value->item_code; ?></td>
                         <td><?php echo $value->name; ?></td>
                         <td><?php echo $value->company_code; ?></td>
@@ -40,9 +44,10 @@
                             <button type="button" onclick='deleteItem("<?php echo $value->item_code;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php $page = $page + 1; } ?>
             </tbody>
         </table>
+        <div><center><?php echo $links; ?></center></div>
     </div>
 </div>
 

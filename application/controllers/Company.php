@@ -9,6 +9,7 @@ class Company extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('Company_model', '', TRUE);
+        $this->load->library("pagination");
     }
     
     public function createCompany(){
@@ -41,7 +42,17 @@ class Company extends CI_Controller {
 
     public function companydetails(){
         $data = array();
-        $firm_result = $this->Company_model->company_list();
+
+        $config = array();
+        $config["base_url"] = base_url("companydetails");
+        $config["total_rows"] = $this->Company_model->get_count();
+        $config["per_page"] = PAGE_PER_ITEM;
+        $config["uri_segment"] = 2;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        $firm_result = $this->Company_model->company_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New Company');
         $this->template->set('buttonLink', base_url('/createcompany'));

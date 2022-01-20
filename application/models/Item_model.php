@@ -2,10 +2,20 @@
 
 class Item_model extends CI_Model {
 
+    protected $table = 'Items';
+
     function __construct()  
     {  
         parent::__construct();
     }  
+
+    public function get_count() {
+        $this->db->select('pk_item_id');
+        $this->db->from($this->table);
+        $this->db->where('delete_flag', 'NO');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        return $this->db->count_all_results();
+    }
 
     public function unique_item_code_verify($unique_code){
         $this->db->where('item_code', strtoupper($unique_code));
@@ -67,9 +77,11 @@ class Item_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function item_list(){
+    public function item_list($limit, $start){
+        $this->db->limit($limit, $start);
         $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("name", "ASC");
         $query = $this->db->get('Items');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();

@@ -1,11 +1,22 @@
 <?php
 
 class User_model extends CI_Model {
-
+    protected $table = 'Users';
     function __construct()  
     {  
         parent::__construct();
     }  
+
+    public function get_count() {
+        $this->db->select('id');
+        $this->db->where('delete_flag', 'NO');
+        if ($this->session->userdata('role') != "superadmin"){
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        }
+        $this->db->where_not_in('email', $this->session->userdata('email'));
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
 
     public function unique_username_verify($username){
         $this->db->where('username', strtoupper($username));
@@ -94,12 +105,14 @@ class User_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function user_list(){
+    public function user_list($limit, $start){
+        $this->db->limit($limit, $start);
         $this->db->where('delete_flag', 'NO');
         if ($this->session->userdata('role') != "superadmin"){
             $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         }
         $this->db->where_not_in('email', $this->session->userdata('email'));
+        $this->db->order_by("first_name", "ASC");
         $query = $this->db->get('Users');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();

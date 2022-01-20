@@ -9,6 +9,7 @@ class Firm extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('Firm_model', '', TRUE);
+        $this->load->library("pagination");
     }
     
 
@@ -68,7 +69,18 @@ class Firm extends CI_Controller {
             redirect('/login');
         }
         $data = array();
-        $firm_result = $this->Firm_model->firm_list();
+
+        $config = array();
+        $config["base_url"] = base_url("firmdetails");
+        $config["total_rows"] = $this->Firm_model->get_count();
+        $config["per_page"] = PAGE_PER_ITEM;
+        $config["uri_segment"] = 2;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        
+        $firm_result = $this->Firm_model->firm_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New Firm');
         $this->template->set('buttonLink', base_url('/createfirm'));

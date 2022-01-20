@@ -3,6 +3,7 @@
         <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    <th>Sr.</th>
                     <th>Username</th>
                     <th>Name</th>
                     <th>Mobile</th>
@@ -14,6 +15,7 @@
             </thead>
             <tfoot>
                 <tr>
+                    <th>Sr.</th>
                     <th>Username</th>
                     <th>Name</th>
                     <th>Mobile</th>
@@ -24,8 +26,10 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php foreach($data as $value){ ?>
+                <?php $page = 1;
+                    foreach($data as $value){ ?>
                     <tr id="<?php echo $value->username; ?>">
+                        <td><?php echo $page; ?></td>
                         <td><?php echo $value->username; ?></td>
                         <td><?php echo $value->first_name. " ". $value->last_name; ?></td>
                         <td><?php echo $value->mobile_number; ?></td>
@@ -37,9 +41,10 @@
                             <button type="button" onclick='deleteUser("<?php echo $value->username;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php $page = $page + 1; } ?>
             </tbody>
         </table>
+        <div><center><?php echo $links; ?></center></div>
     </div>
 </div>
 

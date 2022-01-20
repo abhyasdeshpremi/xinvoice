@@ -1,11 +1,18 @@
 <?php
 
 class Firm_model extends CI_Model {
-
+    protected $table = 'Firms';
     function __construct()  
     {  
         parent::__construct();
     }  
+
+    public function get_count() {
+        $this->db->select('pk_firm_id');
+        $this->db->where('delete_flag', 'NO');
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
 
     public function primary_firm(){
         $data = array();
@@ -82,8 +89,10 @@ class Firm_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function firm_list(){
+    public function firm_list($limit, $start){
+        $this->db->limit($limit, $start);
         $this->db->where('delete_flag', 'NO');
+        $this->db->order_by("name", "ASC");
         $query = $this->db->get('Firms');
         if($query->num_rows() > 0){
             $data['result'] = $query->result();
