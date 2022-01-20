@@ -747,7 +747,7 @@
         var sgstValue = cgstValue;
         var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
         var bill_amount = parseFloat(bill_value).toFixed(2);
-        var round_off = (parseFloat(bill_amount) - parseFloat(total_cgst_sgst_value)).toFixed(2);
+        var round_off = (parseFloat(bill_value) - parseFloat(total_cgst_sgst_value)).toFixed(2);
         return  '<tr class="invoicecal">'
                     +'<td colspan="5"></td>'
                     +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
