@@ -287,6 +287,7 @@ class Invoice extends CI_Controller {
         $data["links"] = $this->pagination->create_links();
 
         $firm_result = $this->Invoice_model->invoice_list($config["per_page"], $page, 'sell');
+        $data['page'] = $page;
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New Sell Invoice');
         $this->template->set('buttonLink', base_url('/createinvoice'));

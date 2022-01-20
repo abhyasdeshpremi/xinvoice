@@ -82,6 +82,7 @@ class Firm extends CI_Controller {
         
         $firm_result = $this->Firm_model->firm_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
+        $data['page'] = $page;
         $this->template->set('buttonName', 'New Firm');
         $this->template->set('buttonLink', base_url('/createfirm'));
         $this->template->set('title', 'Firms List');

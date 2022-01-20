@@ -30,16 +30,14 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php $page = 1;
-                    foreach($data as $value){ ?>
+                <?php foreach($data as $value){ ?>
                     <tr>
-                        <td><?php echo $page; ?></td>
+                        <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->item_code; ?></td>
                         <td><?php echo $value->item_name; ?></td>
                         <td><?php echo $value->item_total_count; ?></td>
                     </tr>
-                <?php $page = $page + 1;
-                    } ?>
+                <?php $page++; } ?>
             </tbody>
         </table>
         <div><center><?php echo $links; ?></center></div>

@@ -26,10 +26,9 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php $i = 1;
-                    foreach($data as $value){ ?>
+                <?php foreach($data as $value){ ?>
                     <tr>
-                        <td><?php echo $i; ?></td>
+                        <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->client_name; ?></td>
                         <td><?php echo $value->created_at; ?></td>
                         <td><?php echo $value->status; ?></td>
@@ -42,7 +41,7 @@
                             </a>
                         </td>
                     </tr>
-                <?php $i++; }; ?>
+                <?php $page++; }; ?>
             </tbody>
         </table>
         <div><center><?php echo $links; ?></center></div>

@@ -287,6 +287,7 @@ class Purchase extends CI_Controller {
 
         $firm_result = $this->Invoice_model->invoice_list($config["per_page"], $page, "purchase");
         $data['data'] = $firm_result['result'];
+        $data['page'] = $page;
         $this->template->set('buttonName', 'New Purchase Invoice');
         $this->template->set('buttonLink', base_url('/createpurchaseinvoice'));
         $this->template->set('title', 'Purchase Invoices List');

@@ -28,6 +28,7 @@ class Stock extends CI_Controller {
         $firm_result = $this->Stock_model->stock_list($config["per_page"], $page);
         $data['itemsList'] = $this->Invoice_model->items_list();
         $data['data'] = $firm_result['result'];
+        $data['page'] = $page;
         $this->template->set('title', 'Stock List');
         $this->template->load('default_layout', 'contents' , 'stock/stockdetail', $data);
     }

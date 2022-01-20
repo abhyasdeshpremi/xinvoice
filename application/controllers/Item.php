@@ -70,6 +70,7 @@ class Item extends CI_Controller {
 
         $firm_result = $this->Item_model->item_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
+        $data['page'] = $page ;
         $this->template->set('buttonName', 'New Item');
         $this->template->set('buttonLink', base_url('/createitem'));
         $this->template->set('title', 'Items List');

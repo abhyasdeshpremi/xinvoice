@@ -24,10 +24,9 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php $page = 1;
-                    foreach($data as $value){ ?>
+                <?php foreach($data as $value){ ?>
                     <tr id="<?php echo $value->code; ?>">
-                        <td><?php echo $page; ?></td>
+                        <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->code; ?></td>
                         <td><?php echo $value->name; ?></td>
                         <td><?php echo $value->mobile_no; ?></td>
@@ -38,7 +37,7 @@
                             <button type="button" onclick='deleteClient("<?php echo $value->code;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
                         </td>
                     </tr>
-                <?php $page = $page + 1; } ?>
+                <?php $page++; } ?>
             </tbody>
         </table>
         <div><center><?php echo $links; ?></center></div>

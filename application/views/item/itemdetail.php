@@ -28,10 +28,10 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php $page = 1;
+                <?php 
                     foreach($data as $value){ ?>
                     <tr id="<?php echo $value->item_code; ?>">
-                        <td><?php echo $page; ?></td>
+                        <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->item_code; ?></td>
                         <td><?php echo $value->name; ?></td>
                         <td><?php echo $value->company_code; ?></td>

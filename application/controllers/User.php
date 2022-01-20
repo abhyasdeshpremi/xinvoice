@@ -74,6 +74,7 @@ class User extends CI_Controller {
 
         $firm_result = $this->User_model->user_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
+        $data['page'] = $page;
         $this->template->set('buttonName', 'New User');
         $this->template->set('buttonLink', base_url('/createuser'));
         $this->template->set('title', 'Users List');

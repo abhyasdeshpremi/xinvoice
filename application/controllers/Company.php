@@ -54,6 +54,7 @@ class Company extends CI_Controller {
 
         $firm_result = $this->Company_model->company_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
+        $data['page'] = $page;
         $this->template->set('buttonName', 'New Company');
         $this->template->set('buttonLink', base_url('/createcompany'));
         $this->template->set('title', 'Company List');

@@ -79,6 +79,7 @@ class Client extends CI_Controller {
 
         $firm_result = $this->Client_model->client_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
+        $data['page'] = $page;
         $this->template->set('buttonName', 'New Client');
         $this->template->set('buttonLink', base_url('/createclient'));
         $this->template->set('title', 'Clients List');
