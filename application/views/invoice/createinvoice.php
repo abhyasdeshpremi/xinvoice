@@ -85,7 +85,7 @@
                            <hr>
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                        <label for="userStatus">To Invoice Client Name</label>
+                                        <label for="userStatus">To Invoice Client Name &nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url('/createclient'); ?>">Add new Client</a></label>
                                         <select class="form-control" id="clientcode" name="clientcode" style="text-transform: capitalize;">
                                             <option value="">Select Invoice Client Name</option>
                                             <?php $count = 0; 
@@ -693,9 +693,6 @@
     }
 
     function showItemData(){
-            console.log(invoiceData);
-            console.log(invoiceData[0]["pk_invoice_item_id"]);
-            console.log(invoiceData.length);
             $('tbody').empty();
             var mrp_value = 0;
             var bill_value = 0;
