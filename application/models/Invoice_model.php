@@ -11,8 +11,9 @@ class Invoice_model extends CI_Model {
 
     public function get_count($invoice_type = 'sell') {
         $this->db->select('pk_invoice_id');
-        $this->db->from($this->table);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('invoice_type', $invoice_type);
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
