@@ -236,7 +236,7 @@
                                 <span class="badge badge-success-soft text-success ml-auto">2 New!</span>
                             </a>
 							<a class="nav-link" href="<?php echo base_url();  ?>">
-                                <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
+                                <div class="nav-link-icon"><i data-feather="home"></i></div>
                                 Dashboard
                             </a>
                             <!-- Sidenav Menu Heading (Core)-->
@@ -255,7 +255,7 @@
                             </div> -->
 
 							<a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardspurchase" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="file-plus"></i></div>
                                 Purchase
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -267,7 +267,7 @@
                             </div>
 
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsinvoice" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="file-minus"></i></div>
                                 Sell
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -300,7 +300,7 @@
 
                             <!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsStock" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="database"></i></div>
                                 Stock
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -313,7 +313,7 @@
 
 							<!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsItem" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="figma"></i></div>
                                 Items
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -326,7 +326,7 @@
 
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsUser" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="users"></i></div>
                                 Users
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -339,7 +339,7 @@
 							
                             <!-- Sidenav Accordion (Clients)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsClient" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
                                 Clients
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -352,7 +352,7 @@
                             
                             <!-- Sidenav Accordion (Clients)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardscompany" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="life-buoy"></i></div>
                                 Companies
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -379,7 +379,7 @@
 							<?php } ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsReport" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                <div class="nav-link-icon"><i data-feather="file"></i></div>
                                 Reports
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
