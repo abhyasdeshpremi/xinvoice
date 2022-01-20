@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . '/autoload.inc.php');
 class Pdf
 {
     function createPDF($html, $filename='', $download=TRUE, $paper='A4', $orientation='portrait'){
-        $dompdf = new Dompdf\DOMPDF();
+        $dompdf = new Dompdf\Dompdf();
         $dompdf->load_html($html);
         $dompdf->set_paper($paper, $orientation);
         $dompdf->render();
