@@ -31,7 +31,7 @@
                         <td><?php echo $value->item_code; ?></td>
                         <td><?php echo $value->name; ?></td>
                         <td><?php echo $value->company_code; ?></td>
-                        <td><?php echo ($value->weight_in_ltr * 1000); ?></td>
+                        <td><?php echo (((Int)$value->weight_in_ltr) * 1000); ?></td>
                         <td><?php echo $value->unit_case; ?></td>
                         <td><?php echo $value->mrp; ?></td>
                         <td><?php echo $value->cost_price; ?></td>
