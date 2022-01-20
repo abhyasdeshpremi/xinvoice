@@ -57,6 +57,8 @@ class Firm extends CI_Controller {
                 $data['errorMessage'] = 'Unique Code must be unique.';
             }
          }
+        $this->template->set('buttonName', 'Firm List');
+        $this->template->set('buttonLink', base_url('/firmdetails'));
         $this->template->set('title', 'Create Firm');
         $this->template->load('default_layout', 'contents' , 'firm/createfirm', $data);
     }
@@ -70,7 +72,7 @@ class Firm extends CI_Controller {
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New Firm');
         $this->template->set('buttonLink', base_url('/createfirm'));
-        $this->template->set('title', 'Firms List'.$this->session->userdata('role'));
+        $this->template->set('title', 'Firms List');
         $this->template->load('default_layout', 'contents' , 'firm/firmdetail', $data);
     }
 
@@ -110,6 +112,8 @@ class Firm extends CI_Controller {
 
         $firm_result = $this->Firm_model->update_firm_detail($firmcode);
         $data['data'] = $firm_result['result'];
+        $this->template->set('buttonName', 'Firm List');
+        $this->template->set('buttonLink', base_url('/firmdetails'));
         $this->template->set('title', 'Update Firm');
         $this->template->load('default_layout', 'contents' , 'firm/updatefirm', $data);
     }

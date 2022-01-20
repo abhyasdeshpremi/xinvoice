@@ -57,6 +57,8 @@ class Client extends CI_Controller {
                 $data['errorMessage'] = 'Unique Code must be unique.';
             }
          }
+        $this->template->set('buttonName', 'Clients List');
+        $this->template->set('buttonLink', base_url('/clientdetails'));
         $this->template->set('title', 'Create Client');
         $this->template->load('default_layout', 'contents' , 'client/createclient', $data);
     }
@@ -116,6 +118,8 @@ class Client extends CI_Controller {
 
         $client_result = $this->Client_model->update_client_detail($client_id);
         $data['data'] = $client_result['result'];
+        $this->template->set('buttonName', 'Clients List');
+        $this->template->set('buttonLink', base_url('/clientdetails'));
         $this->template->set('title', 'Client Update');
         $this->template->load('default_layout', 'contents' , 'client/updateclient', $data);
     }

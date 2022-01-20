@@ -33,6 +33,8 @@ class Company extends CI_Controller {
                 $data['errorMessage'] = 'Unique Code must be unique.';
             }
          }
+        $this->template->set('buttonName', 'Company List');
+        $this->template->set('buttonLink', base_url('/companydetails'));
         $this->template->set('title', 'Create Company');
         $this->template->load('default_layout', 'contents' , 'company/createcompany', $data);
     }
@@ -71,6 +73,8 @@ class Company extends CI_Controller {
 
         $company_result = $this->Company_model->update_company_detail($companyCode);
         $data['data'] = $company_result['result'];
+        $this->template->set('buttonName', 'Company List');
+        $this->template->set('buttonLink', base_url('/companydetails'));
         $this->template->set('title', 'Update Company');
         $this->template->load('default_layout', 'contents' , 'company/updatecompany', $data);
     }

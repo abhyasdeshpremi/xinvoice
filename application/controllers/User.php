@@ -53,6 +53,8 @@ class User extends CI_Controller {
                 $data['errorMessage'] = 'Username must be unique.';
             }
          }
+        $this->template->set('buttonName', 'Users List');
+        $this->template->set('buttonLink', base_url('/userdetails'));
         $this->template->set('title', 'Create User');
         $this->template->load('default_layout', 'contents' , 'user/createUser', $data);
     }
@@ -98,8 +100,10 @@ class User extends CI_Controller {
             $queryResult = $this->Firm_model->firm_list();
             $data['firmData'] = $queryResult['result'];
         }
-         $this->template->set('title', 'Update User');
-         $this->template->load('default_layout', 'contents' , 'user/updateUser', $data);
+        $this->template->set('buttonName', 'Users List');
+        $this->template->set('buttonLink', base_url('/userdetails'));
+        $this->template->set('title', 'Update User');
+        $this->template->load('default_layout', 'contents' , 'user/updateUser', $data);
     }
 
     public function deleteUser(){

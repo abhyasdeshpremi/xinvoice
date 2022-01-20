@@ -49,6 +49,8 @@ class Item extends CI_Controller {
                 $data['errorMessage'] = 'Unique Code must be unique.';
             }
          }
+        $this->template->set('buttonName', 'Items List');
+        $this->template->set('buttonLink', base_url('/itemdetails'));
         $this->template->set('title', 'Create Item');
         $this->template->load('default_layout', 'contents' , 'item/createitem', $data);
     }
@@ -96,6 +98,8 @@ class Item extends CI_Controller {
 
         $item_result = $this->Item_model->update_item_detail($item_id);
         $data['data'] = $item_result['result'];
+        $this->template->set('buttonName', 'Items List');
+        $this->template->set('buttonLink', base_url('/itemdetails'));
         $this->template->set('title', 'Items Update');
         $this->template->load('default_layout', 'contents' , 'item/updateitem', $data);
     }

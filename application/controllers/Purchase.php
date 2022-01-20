@@ -78,7 +78,9 @@ class Purchase extends CI_Controller {
             $data['clientcity'] = $invoiceDetail['city'];
             $data['clientarea'] = $invoiceDetail['area'];
             $data['clientpincode'] = $invoiceDetail['pincode'];
-         } 
+         }
+        $this->template->set('buttonName', 'Purchase Invoices List');
+        $this->template->set('buttonLink', base_url('/invoicepurchasedetail'));
         $this->template->set('title', 'Create Purchase Invoice');
         $this->template->load('default_layout', 'contents' , 'purchase/purchaseinvoice', $data);
     }

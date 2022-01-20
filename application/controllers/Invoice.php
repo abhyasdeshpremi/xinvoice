@@ -79,6 +79,8 @@ class Invoice extends CI_Controller {
             $data['clientarea'] = $invoiceDetail['area'];
             $data['clientpincode'] = $invoiceDetail['pincode'];
          } 
+        $this->template->set('buttonName', 'Sell Invoices List');
+        $this->template->set('buttonLink', base_url('/invoicedetail'));
         $this->template->set('title', 'Create Sell Invoice');
         $this->template->load('default_layout', 'contents' , 'invoice/createinvoice', $data);
     }
