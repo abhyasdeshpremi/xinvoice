@@ -140,6 +140,7 @@ class Invoice_model extends CI_Model {
         if($itemcode != null){
             $this->db->where('item_code', $itemcode);
         }
+        $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $query = $this->db->get('Items');
         if($query->num_rows() > 0){
