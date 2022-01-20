@@ -17,6 +17,8 @@ class Client extends CI_Controller {
         $queryResult = $this->Client_model->primary_firm();
 		$data = array();
         $data['data'] = $queryResult['result'];
+        $this->template->set('buttonName', 'New Client');
+        $this->template->set('buttonLink', base_url('/createclient'));
         $this->template->set('title', 'Client');
         $this->template->load('default_layout', 'contents' , 'firm/firm', $data);
 	}
@@ -63,6 +65,8 @@ class Client extends CI_Controller {
         $data = array();
         $firm_result = $this->Client_model->client_list();
         $data['data'] = $firm_result['result'];
+        $this->template->set('buttonName', 'New Client');
+        $this->template->set('buttonLink', base_url('/createclient'));
         $this->template->set('title', 'Clients List');
         $this->template->load('default_layout', 'contents' , 'client/clientdetail', $data);
     }

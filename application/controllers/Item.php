@@ -57,6 +57,8 @@ class Item extends CI_Controller {
         $data = array();
         $firm_result = $this->Item_model->item_list();
         $data['data'] = $firm_result['result'];
+        $this->template->set('buttonName', 'New Item');
+        $this->template->set('buttonLink', base_url('/createitem'));
         $this->template->set('title', 'Items List');
         $this->template->load('default_layout', 'contents' , 'item/itemdetail', $data);
     }

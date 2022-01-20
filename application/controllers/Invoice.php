@@ -79,7 +79,7 @@ class Invoice extends CI_Controller {
             $data['clientarea'] = $invoiceDetail['area'];
             $data['clientpincode'] = $invoiceDetail['pincode'];
          } 
-        $this->template->set('title', 'Create Invoice');
+        $this->template->set('title', 'Create Sell Invoice');
         $this->template->load('default_layout', 'contents' , 'invoice/createinvoice', $data);
     }
 
@@ -274,7 +274,9 @@ class Invoice extends CI_Controller {
         $data = array();
         $firm_result = $this->Invoice_model->invoice_list();
         $data['data'] = $firm_result['result'];
-        $this->template->set('title', 'Invoices List');
+        $this->template->set('buttonName', 'New Sell Invoice');
+        $this->template->set('buttonLink', base_url('/createinvoice'));
+        $this->template->set('title', 'Sell Invoices List');
         $this->template->load('default_layout', 'contents' , 'invoice/invoicedetail', $data);
     }
 

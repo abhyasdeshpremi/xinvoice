@@ -274,7 +274,7 @@
                             <div class="collapse" id="collapseDashboardsinvoice" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                     <a class="nav-link" href="<?php echo base_url('/invoicedetail'); ?>">Invoice List</a>
-                                    <a class="nav-link" href="<?php echo base_url('/createinvoice'); ?>">New Invoice</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createinvoice'); ?>">New Sell Invoice</a>
                                 </nav>
                             </div>
 							
@@ -378,7 +378,7 @@
                             </div>
 
                             
-                            <d 
+                            <div> <!--Doubt div--->
                             </div>
                         </div>
                     </div>
@@ -413,6 +413,14 @@
                                     echo date("l"); ?></span>
                                     &middot; <?php echo date("F d, Y"); ?> &middot; <?php echo date("h:i:s A"); ?>
                                 </div>
+                            </div>
+                            <div class="mr-6 mb-3 mb-sm-0">
+
+                            </div>
+                            <div class="mr-2 mb-3 mb-sm-0">
+                                <?php if (isset($buttonName)) {?>
+                                <a class="nav-link btn btn-primary" role="button" href="<?php echo $buttonLink; ?>"><?php echo $buttonName; ?></a>
+                                <?php } ?>
                             </div>
                         </div>
 							<?php echo $contents;?>
