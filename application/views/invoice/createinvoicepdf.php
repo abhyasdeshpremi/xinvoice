@@ -79,7 +79,7 @@ if(isset($mode)){
                 $case_unit_value = 0;
         foreach($invoiceitemsList as $value){
             $mrp_value = $mrp_value + (float)$value->mrp_value;
-            $bill_value = $bill_value + (double)$value->bill_value;
+            $bill_value = $bill_value + round((double)$value->bill_value, 2);
             $qty_value = $qty_value + (int)$value->quantity;
             $case_unit_value = $case_unit_value + (float)$value->case_unit;
             $basicItemValue = round((($value->bill_value * 100) / 118), 2);
@@ -121,7 +121,7 @@ if(isset($mode)){
             <tr style="border-right-style:none;">
                 <td colspan="5" rowspan="6" ></td>
                 <td colspan="3">BASIC VALUE RS.</td>
-                <td style="text-align:right;"><?php echo number_format($basicValue, 2); ?></td>
+                <td style="text-align:right;"><?php echo number_format($basicItemsValue, 2); ?></td>
             </tr>
             <tr>
                 <td colspan="3">CGST 9.00%</td>

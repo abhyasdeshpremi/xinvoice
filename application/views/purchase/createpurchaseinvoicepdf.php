@@ -121,7 +121,7 @@ if(isset($mode)){
             <tr style="border-right-style:none;">
                 <td colspan="5" rowspan="6" ></td>
                 <td colspan="3">BASIC VALUE RS.</td>
-                <td style="text-align:right;"><?php echo number_format($basicValue, 2); ?></td>
+                <td style="text-align:right;"><?php echo number_format($basicItemsValue, 2); ?></td>
             </tr>
             <tr>
                 <td colspan="3">CGST 9.00%</td>
