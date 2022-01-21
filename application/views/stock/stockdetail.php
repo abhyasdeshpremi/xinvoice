@@ -40,7 +40,7 @@
                 <?php $page++; } ?>
             </tbody>
         </table>
-        <div><center><?php echo $links; ?></center></div>
+        <div class="pagelist"><center><?php echo $links; ?></center></div>
     </div>
 </div>
 

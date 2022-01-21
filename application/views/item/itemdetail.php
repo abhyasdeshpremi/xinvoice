@@ -47,7 +47,7 @@
                 <?php $page = $page + 1; } ?>
             </tbody>
         </table>
-        <div><center><?php echo $links; ?></center></div>
+        <div class="pagelist"><center><?php echo $links; ?></center></div>
     </div>
 </div>
 

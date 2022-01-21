@@ -43,3 +43,29 @@
   }
   
   #myInput:focus {outline: 3px solid #ddd;}
+
+  .pagelist center a { 
+    background-color: #36a5f4;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
+  }
+
+  .pagelist center a:link, a:visited, a:hover, a:active  {
+    text-decoration: none; 
+  } 
+
+  .pagelist center strong{
+    background-color: #aac2cb;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
+  }
