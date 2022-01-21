@@ -273,7 +273,7 @@
                             </a>
                             <div class="collapse" id="collapseDashboardsinvoice" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/invoicedetail'); ?>">Invoice List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/invoicedetail'); ?>">Sell Invoice List</a>
                                     <a class="nav-link" href="<?php echo base_url('/createinvoice'); ?>">New Sell Invoice</a>
                                 </nav>
                             </div>

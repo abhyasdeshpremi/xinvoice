@@ -85,7 +85,7 @@
                            <hr>
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                        <label for="userStatus">To Invoice Client Name</label>
+                                        <label for="userStatus">To Invoice Client Name &nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url('/createclient'); ?>">Add new Client</a></label>
                                         <select class="form-control" id="clientcode" name="clientcode" style="text-transform: capitalize;">
                                             <option value="">Select Invoice Client Name</option>
                                             <?php $count = 0; 
@@ -758,8 +758,8 @@
         var total_cgst_value = (parseFloat(basicValue) + parseFloat(cgstValue)).toFixed(2);
         var sgstValue = cgstValue;
         var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
-        var bill_amount = parseFloat(total_cgst_sgst_value).toFixed(2);
-        var round_off = (parseFloat(bill_amount) - parseFloat(total_cgst_sgst_value)).toFixed(2);
+        var bill_amount = parseFloat(bill_value).toFixed(2);
+        var round_off = (parseFloat(bill_value) - parseFloat(total_cgst_sgst_value)).toFixed(2);
         return  '<tr class="invoicecal">'
                     +'<td colspan="5"></td>'
                     +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
