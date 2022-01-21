@@ -253,6 +253,17 @@
                                     <a class="nav-link" href="dashboard-3.html">New Invoice</a>
                                 </nav>
                             </div> -->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsinvoice" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="file-minus"></i></div>
+                                Sell
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsinvoice" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/invoicedetail'); ?>">Sell Invoice List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createinvoice'); ?>">New Sell Invoice</a>
+                                </nav>
+                            </div>
 
 							<a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardspurchase" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="file-plus"></i></div>
@@ -265,38 +276,8 @@
                                     <a class="nav-link" href="<?php echo base_url('/createpurchaseinvoice'); ?>">New Purchase Invoice</a>
                                 </nav>
                             </div>
-
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsinvoice" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="file-minus"></i></div>
-                                Sell
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseDashboardsinvoice" data-parent="#accordionSidenav">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/invoicedetail'); ?>">Sell Invoice List</a>
-                                    <a class="nav-link" href="<?php echo base_url('/createinvoice'); ?>">New Sell Invoice</a>
-                                </nav>
-                            </div>
 							
-							
-							<!-- Sidenav Menu Heading (Account)-->
-                            <div class="sidenav-menu-heading">Account</div>
-                            <!-- Sidenav Accordion (Dashboard)-->
-                            <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsAccount" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                                Ledger
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseDashboardsAccount" data-parent="#accordionSidenav">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="dashboard-2.html">Purchase List</a>
-                                    <a class="nav-link" href="dashboard-3.html">Seller List</a>
-                                </nav>
-                            </div> -->
-							<!-- <a class="nav-link" href="<?php echo base_url('getstock');  ?>">
-                                <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
-                                Stock
-                            </a> -->
+                            <div class="sidenav-menu-heading">Utility</div>
 
                             <!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsStock" aria-expanded="false" aria-controls="collapseDashboards">
@@ -311,7 +292,7 @@
                                 </nav>
                             </div>
 
-							<!-- Sidenav Accordion (Items)-->
+                            <!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsItem" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="figma"></i></div>
                                 Items
@@ -321,19 +302,6 @@
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                     <a class="nav-link" href="<?php echo base_url('/itemdetails'); ?>">Items List</a>
                                     <a class="nav-link" href="<?php echo base_url('/createitem'); ?>">New Item</a>
-                                </nav>
-                            </div>
-
-							<!-- Sidenav Accordion (Users)-->
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsUser" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="users"></i></div>
-                                Users
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseDashboardsUser" data-parent="#accordionSidenav">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/userdetails'); ?>">Users List</a>
-                                    <a class="nav-link" href="<?php echo base_url('/createuser'); ?>">New user</a>
                                 </nav>
                             </div>
 							
@@ -362,6 +330,54 @@
                                     <a class="nav-link" href="<?php echo base_url('/createcompany'); ?>">New Company</a>
                                 </nav>
                             </div>
+
+                            <!-- Sidenav Accordion (Users)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsReport" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="file"></i></div>
+                                Reports
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsReport" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/ledger'); ?>">Ledger</a>
+                                    <a class="nav-link" href="<?php echo base_url('/stock'); ?>">Stock</a>
+                                    <a class="nav-link" href="<?php echo base_url('/sales'); ?>">Sales</a>
+                                </nav>
+                            </div>
+
+							<!-- Sidenav Menu Heading (Account)-->
+                            <div class="sidenav-menu-heading">Account</div>
+                            <!-- Sidenav Accordion (Dashboard)-->
+                            <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsAccount" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                                Ledger
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsAccount" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="dashboard-2.html">Purchase List</a>
+                                    <a class="nav-link" href="dashboard-3.html">Seller List</a>
+                                </nav>
+                            </div> -->
+							<!-- <a class="nav-link" href="<?php echo base_url('getstock');  ?>">
+                                <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
+                                Stock
+                            </a> -->
+
+
+							<!-- Sidenav Accordion (Users)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsUser" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="users"></i></div>
+                                Users
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsUser" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/userdetails'); ?>">Users List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createuser'); ?>">New user</a>
+                                </nav>
+                            </div>
+							
                                     
                             <?php if ($this->session->userdata('role') == "superadmin"){ ?>
 							<!-- Sidenav Accordion (Users)-->
@@ -377,20 +393,6 @@
                                 </nav>
                             </div>
 							<?php } ?>
-							<!-- Sidenav Accordion (Users)-->
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsReport" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="file"></i></div>
-                                Reports
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseDashboardsReport" data-parent="#accordionSidenav">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/ledger'); ?>">Ledger</a>
-                                    <a class="nav-link" href="<?php echo base_url('/stock'); ?>">Stock</a>
-                                    <a class="nav-link" href="<?php echo base_url('/sales'); ?>">Sales</a>
-                                </nav>
-                            </div>
-
                             
                             <div> <!--Doubt div--->
                             </div>
