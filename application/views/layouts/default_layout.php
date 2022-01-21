@@ -28,22 +28,22 @@
             <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle"><i data-feather="menu"></i></button>
             <!-- Navbar Search Input-->
             <!-- * * Note: * * Visible only on and above the md breakpoint-->
-            <form class="form-inline mr-auto d-none d-md-block mr-3">
+            <!-- <form class="form-inline mr-auto d-none d-md-block mr-3">
                 <div class="input-group input-group-joined input-group-solid">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                     <div class="input-group-append">
                         <div class="input-group-text"><i data-feather="search"></i></div>
                     </div>
                 </div>
-            </form>
+            </form> -->
             <!-- Navbar Items-->
             <ul class="navbar-nav align-items-center ml-auto">
                 <!-- Documentation Dropdown-->
                 <li class="nav-item dropdown no-caret d-none d-sm-block mr-3">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownDocs" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!-- <a class="nav-link dropdown-toggle" id="navbarDropdownDocs" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="font-weight-500">Documentation</div>
                         <i class="fas fa-chevron-right dropdown-arrow"></i>
-                    </a>
+                    </a> -->
                     <div class="dropdown-menu dropdown-menu-right py-0 mr-sm-n15 mr-lg-0 o-hidden animated--fade-in-up" aria-labelledby="navbarDropdownDocs">
                         <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro" target="_blank">
                             <div class="icon-stack bg-primary-soft text-primary mr-4"><i data-feather="book"></i></div>
@@ -88,7 +88,7 @@
                 </li>
                 <!-- Alerts Dropdown-->
                 <li class="nav-item dropdown no-caret d-none d-sm-block mr-3 dropdown-notifications">
-                    <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="bell"></i></a>
+                    <!-- <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="bell"></i></a> -->
                     <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
                         <h6 class="dropdown-header dropdown-notifications-header">
                             <i class="mr-2" data-feather="bell"></i>
@@ -131,7 +131,7 @@
                 </li>
                 <!-- Messages Dropdown-->
                 <li class="nav-item dropdown no-caret d-none d-sm-block mr-3 dropdown-notifications">
-                    <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail"></i></a>
+                    <!-- <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail"></i></a> -->
                     <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownMessages">
                         <h6 class="dropdown-header dropdown-notifications-header">
                             <i class="mr-2" data-feather="mail"></i>
