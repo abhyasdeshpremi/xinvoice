@@ -103,5 +103,9 @@ $route['savestock'] = 'stock/saveStock';
 
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 
+$route['ledger'] = 'ledger/getledger';
+$route['stock'] = 'ledger/getstock';
+$route['sales'] = 'ledger/getsaleresister';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
