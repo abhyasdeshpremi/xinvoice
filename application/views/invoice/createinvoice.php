@@ -527,6 +527,8 @@
 
         //Item calculation
         $("#itemquantity").keyup(function(){
+            invoiceCalculation();
+            /*
             var item_code = $("#selectitemcode").val();
             var quatity = $("#itemquantity").val();
             $.ajax({
@@ -567,6 +569,7 @@
                     }
                 }
             });
+            */
         });
 
         $("#itemdiscount").keyup(function(){
