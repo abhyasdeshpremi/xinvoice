@@ -163,6 +163,18 @@ class Client_model extends CI_Model {
         }
         return $result;
     }
+
+    public function clients_list(){
+        $this->db->where('delete_flag', 'NO');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("name", "ASC");
+        $query = $this->db->get('Clients');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+    }
 }
 
 ?>

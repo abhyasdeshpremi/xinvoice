@@ -291,7 +291,7 @@ class Invoice extends CI_Controller {
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'New Sell Invoice');
         $this->template->set('buttonLink', base_url('/createinvoice'));
-        $this->template->set('title', 'Sell Invoices List'.$page);
+        $this->template->set('title', 'Sell Invoices List');
         $this->template->load('default_layout', 'contents' , 'invoice/invoicedetail', $data);
     }
 

@@ -107,5 +107,9 @@ $route['ledger'] = 'ledger/getledger';
 $route['stock'] = 'ledger/getstock';
 $route['sales'] = 'ledger/getsaleresister';
 
+$route['getaccount(/:num)?'] = 'account/getAccount$1';
+$route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';
+$route['saveamount'] = 'account/saveAmount';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

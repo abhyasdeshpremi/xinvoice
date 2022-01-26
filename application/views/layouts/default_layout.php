@@ -15,7 +15,7 @@
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
     </head>
     <body class="nav-fixed">
         <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -292,6 +292,19 @@
                                 </nav>
                             </div>
 
+                            <!-- Account(Items)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsAccount" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="database"></i></div>
+                                Account
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsAccount" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/getaccount'); ?>">Account List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/getaccounthistory'); ?>">Account History</a>
+                                </nav>
+                            </div>
+
                             <!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsItem" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="figma"></i></div>
@@ -476,6 +489,7 @@
         <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/demo/date-range-picker-demo.js'); ?>"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
         <script>
             $(".uppercase").keyup(function(){
                 this.value = this.value.toLocaleUpperCase();
