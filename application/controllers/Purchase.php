@@ -58,6 +58,7 @@ class Purchase extends CI_Controller {
             $data['method'] = "GET";
             $data['invoiceid'] = $id;
             $invoiceDetail = $this->Invoice_model->getinvoiceid($id);
+            $data['pk_invoice_id'] = $invoiceDetail['pk_invoice_id'];
             $data['invoicestatus'] = $invoiceDetail['invoicestatus'];
             $data['invoicetitle'] = $invoiceDetail['invoicetitle'];
             $data['invoicesubtitle'] = $invoiceDetail['subtitle'];

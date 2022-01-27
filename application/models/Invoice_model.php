@@ -382,6 +382,89 @@ class Invoice_model extends CI_Model {
         return $result;
     }
 
+    public function updateInvoiceStatus($data){
+        $result = array();
+        $this->db->where('unique_invioce_code', $data['invoiceid']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Invoices');
+        if($query->num_rows() == 1){
+            if (($data['statuscode'] === "completed") || ($data['statuscode'] === "force_edit")){
+                /*
+                * Get total bill value
+                */
+                $this->db->select_sum('bill_value');
+                $this->db->from('invoice_item');
+                $this->db->where('delete_flag', 'NO');
+                $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $billvaluequery = $this->db->get();
+                $total_bill_value = $billvaluequery->row()->bill_value;
+                $total_bill_value = round($total_bill_value);
+
+                /*
+                * payment value add/sub to account from invoice bill value when invoice status is completed(+) or force_edit(-)
+                */
+                $amountdata = array();
+                foreach ($query->result() as $row)  
+                {  
+                    $amountdata['fk_client_code'] = $row->fk_client_code;
+                    $amountdata['fk_client_name'] = $row->client_name;
+                    $amountdata['payment_mode'] = $row->payment_mode;
+                    $amountdata['lock_bill_amount'] = $row->lock_bill_amount;
+                    $amountdata['invoice_type'] = $row->invoice_type;
+                    $amountdata['pk_invoice_id'] = $row->pk_invoice_id;
+                }
+                $amountdata['payment_date'] = date('Y-m-d H:i:s');
+                
+                if($data['statuscode'] === "completed") {
+                    $amountdata['amount'] = $total_bill_value;
+                    if ($amountdata['invoice_type'] === "sell"){
+                        $amountdata['notes'] = "Amount ".$total_bill_value." debited automatically when invoice status change to completed state. || sell invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['paymenttype'] = "debit";
+                    }else if ($amountdata['invoice_type'] === "purchase"){
+                        $amountdata['notes'] = "Amount ".$total_bill_value." credited automatically when invoice status change to completed state. || purchase invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['paymenttype'] = "credit";
+                    }
+                }else if($data['statuscode'] === "force_edit") {
+                    $amountdata['amount'] = $amountdata['lock_bill_amount'];
+                    if ($amountdata['invoice_type'] === "sell"){
+                        $amountdata['notes'] = "Amount ".$amountdata['lock_bill_amount']." credited automatically when invoice status change to force_edit state. || sell invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['paymenttype'] = "credit";
+                    }else if ($amountdata['invoice_type'] === "purchase"){
+                        $amountdata['notes'] = "Amount ".$amountdata['lock_bill_amount']." debited automatically when invoice status change to force_edit state. || purchase invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['paymenttype'] = "debit";
+                    }
+                }
+                
+                $this->load->model('Account_model', '', TRUE);
+                $account_model_saveAccount = $this->Account_model->saveAccount($amountdata);
+                log_message("info", "payment debit automatically more info.: ");
+
+                $dataList = array(
+                    'status'=> $data['statuscode'],
+                    'lock_bill_amount'=> $total_bill_value,
+                    'lock_bill_amount_date'=>date('Y-m-d H:i:s'),
+                    'updated_at'=>date('Y-m-d H:i:s')
+                );
+            }else{
+                $dataList = array(
+                    'status'=> $data['statuscode'],
+                    'updated_at'=>date('Y-m-d H:i:s')
+                );
+            }
+            $this->db->where('unique_invioce_code', $data['invoiceid']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('Invoices', $dataList);
+
+            $result['code']  = true;
+        }else{
+            $result['code']  = false;
+        }
+
+        return $result;
+    }
+
+
     public function delete_invoice_item($invoice_Item){
         $result = array();
         $this->db->where('pk_invoice_item_id', $invoice_Item['itemInvoiceCode']);

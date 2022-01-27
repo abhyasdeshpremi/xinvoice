@@ -58,6 +58,7 @@ class Invoice extends CI_Controller {
             $data['method'] = "GET";
             $data['invoiceid'] = $id;
             $invoiceDetail = $this->Invoice_model->getinvoiceid($id);
+            $data['pk_invoice_id'] = $invoiceDetail['pk_invoice_id'];
             $data['invoicestatus'] = $invoiceDetail['invoicestatus'];
             $data['invoicetitle'] = $invoiceDetail['invoicetitle'];
             $data['invoicesubtitle'] = $invoiceDetail['subtitle'];
@@ -396,6 +397,23 @@ class Invoice extends CI_Controller {
             $data['code'] = false;
             $data['itemInvoiceCode'] = $this->input->post('itemInvoiceCode');
             $data["message"] = "Unable to serve delete Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
+    function updateInvoiceStatus(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['invoiceid'] = $this->input->post('invoiceid');
+            $data['statuscode'] = $this->input->post('invoiceStatus');
+            $invoice_status_result = $this->Invoice_model->updateInvoiceStatus($data);
+            if($invoice_status_result){
+                $data["code"] = $invoice_status_result["code"];
+                $data["message"] = "Invoice status updated.";
+            }else{
+                $data["code"] = $invoice_status_result["code"];
+                $data["message"] = "Invoice status unable to update.";
+            }
         }
         echo json_encode($data);
     }

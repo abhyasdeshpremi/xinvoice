@@ -69,3 +69,32 @@
     margin: 5px;
     border-radius: 3px;
   }
+
+  .red {
+    background-color: #d53420;
+    color: #ffffff;
+  }
+  .green {
+    background-color: #4da96f;
+    color: #ffffff;
+  }
+  .yellow {
+    background-color: #e8a539;
+    color: #ffffff;
+  }
+
+  .redtext {
+    color: #d53420;
+    background-color: #ffffff;
+    text-transform: capitalize;
+  }
+  .greentext {
+    color: #4da96f;
+    background-color: #ffffff;
+    text-transform: capitalize;
+  }
+  .yellowtext {
+    color: #e8a539;
+    background-color: #ffffff;
+    text-transform: capitalize;
+  }

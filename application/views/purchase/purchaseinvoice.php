@@ -12,11 +12,39 @@
             <div class="card">
 
                 <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Invoice Herder information
-                        </button>
-                    </h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Invoice(#<?php echo $pk_invoice_id; ?>) Herder information
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            
+                        </div>
+                        <div class="col-md-3 mb-3">
+                             
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="btn-group">
+                                <button type="button" class="btn select-dropdown-status-text btn-danger" style="text-transform: capitalize;">
+                                    <?php if(isset($invoicestatus)){ echo $invoicestatus; }?>
+                                </button>
+                                <button type="button" class="btn select-dropdown-status-bottom-indicator btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item select-dropdown-status" id="create" hreflang="create" href="#">Create</a>
+                                    <a class="dropdown-item select-dropdown-status" id="initiated" hreflang="initiated" href="#">Initiated</a>
+                                    <a class="dropdown-item select-dropdown-status" id="pending" hreflang="pending" href="#">Pending</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item select-dropdown-status" id="completed" hreflang="completed" href="#">Completed</a>
+                                    <a class="dropdown-item select-dropdown-status" id="partial_paid" hreflang="partial_paid" href="#">Partial Paid</a>
+                                    <a class="dropdown-item select-dropdown-status" id="paid" hreflang="paid" href="#">Paid</a>
+                                    <a class="dropdown-item select-dropdown-status" id="force_edit" hreflang="force_edit" href="#">Force Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <?php   $showheader = "";
                         $showinvoice = "";
@@ -152,13 +180,13 @@
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" >
-                                Add Invoice Items 
+                                Add Invoice(#<?php echo $pk_invoice_id; ?>) Items 
                                 </button>
                             </div>
                             <div class="col-md-4 mb-3">
                             </div>
                             <div class="col-md-2 mb-3">
-                                <button type="button" onclick="addInvoiceItem()" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+                                <button type="button" onclick="addInvoiceItem()" class="btn btn-primary add-item-button" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
                                     Add Item
                                 </button>
                             </div>
@@ -611,7 +639,117 @@
         });
         $('#invoicehead').append(addHeader());
         showItemData();
-       
+        
+        function setInvoiceStatus(invoiceStatus){
+            console.log(invoiceStatus);
+            var classColor = "red";
+            var buttonColor = "btn-danger";
+            switch(invoiceStatus){
+                case "create":
+                    $(".deleteItemlistkjsdksdj").removeAttr("disabled");
+                    $(".editItemButton").removeAttr("disabled");
+                    $(".add-item-button").removeAttr("disabled");
+                    $("#initiated").removeClass("disabled");
+                    $("#create, #pending, #completed, #partial_paid, #paid, #force_edit").addClass("disabled");
+                    classColor = "red";
+                    buttonColor = "btn-danger";
+                    break;
+                case "initiated":
+                    $(".deleteItemlistkjsdksdj").removeAttr("disabled");
+                    $(".editItemButton").removeAttr("disabled");
+                    $(".add-item-button").removeAttr("disabled");
+                    $("#pending").removeClass("disabled");
+                    $("#initiated, #create, #completed, #force_edit, #partial_paid, #paid").addClass("disabled");
+                    classColor = "red";
+                    buttonColor = "btn-danger";
+                    break;
+                case "pending":
+                    $(".deleteItemlistkjsdksdj").removeAttr("disabled");
+                    $(".editItemButton").removeAttr("disabled");
+                    $(".add-item-button").removeAttr("disabled");
+                    $("#completed").removeClass("disabled");
+                    $("#create, #pending, #initiated, #force_edit, #partial_paid, #paid").addClass("disabled");
+                    classColor = "red";
+                    buttonColor = "btn-danger";
+                    break;
+                case "completed":
+                    $(".deleteItemlistkjsdksdj").attr("disabled", "disabled");
+                    $(".editItemButton").attr("disabled", "disabled");
+                    $(".add-item-button").attr("disabled", "disabled");
+                    $("#create, #initiated, #pending, #completed").addClass("disabled");
+                    $("#force_edit, #partial_paid, #paid").removeClass("disabled");
+                    classColor = "yellow";
+                    buttonColor = "btn-warning";
+                    break;
+                case "partial_paid":
+                    $(".deleteItemlistkjsdksdj").attr("disabled", "disabled");
+                    $(".editItemButton").attr("disabled", "disabled");
+                    $(".add-item-button").attr("disabled", "disabled");
+                    $("#create, #initiated, #pending, #partial_paid, #completed").addClass("disabled");
+                    $("#force_edit, #paid").removeClass("disabled");
+                    classColor = "green";
+                    buttonColor = "btn-success";
+                    break;
+                case "paid":
+                    $(".deleteItemlistkjsdksdj").attr("disabled", "disabled");
+                    $(".editItemButton").attr("disabled", "disabled");
+                    $(".add-item-button").attr("disabled", "disabled");
+                    $("#create, #initiated, #pending, #completed, #partial_paid, #paid, #force_edit").addClass("disabled");
+                    classColor = "green";
+                    buttonColor = "btn-success";
+                    break;
+                case "force_edit":
+                    $(".deleteItemlistkjsdksdj").removeAttr("disabled");
+                    $(".editItemButton").removeAttr("disabled");
+                    $(".add-item-button").removeAttr("disabled");
+                    $("#create, #initiated, #pending, #partial_paid, #paid, #force_edit").addClass("disabled");
+                    $("#completed").removeClass("disabled");
+                    classColor = "red";
+                    buttonColor = "btn-danger";
+                break;   
+            }
+
+            $(".select-dropdown-status").removeClass("red");
+            $(".select-dropdown-status").removeClass("green");
+            $(".select-dropdown-status").removeClass("yellow");
+            $("#"+invoiceStatus).addClass(classColor);
+            $(".select-dropdown-status-text").text(invoiceStatus.replace("_"," "));
+
+            $(".select-dropdown-status-text").removeClass("btn-success");
+            $(".select-dropdown-status-text").removeClass("btn-danger");
+            $(".select-dropdown-status-text").removeClass("btn-warning");
+            $(".select-dropdown-status-text").addClass(buttonColor);
+
+            $(".select-dropdown-status-bottom-indicator").removeClass("btn-success");
+            $(".select-dropdown-status-bottom-indicator").removeClass("btn-danger");
+            $(".select-dropdown-status-bottom-indicator").removeClass("btn-warning");
+            $(".select-dropdown-status-bottom-indicator").addClass(buttonColor);
+            
+        }
+        setInvoiceStatus("<?php echo $invoicestatus; ?>");
+
+
+        $('.select-dropdown-status').click(function(){
+            var invoiceStatus = $(this).attr("hreflang");
+            var invoice_id = $("#defaultinvoiceID").val();
+            console.log(invoiceStatus);
+            
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/updateinvoicestatus'); ?>',
+                dataType  : 'json',
+                data: {invoiceid: invoice_id, invoiceStatus: invoiceStatus },
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code){
+                        setInvoiceStatus(invoiceStatus);
+                    }
+                }
+            });
+        });
     });
 </script>
 <script>

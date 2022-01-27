@@ -31,7 +31,15 @@
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->fk_client_code; ?></td>
                         <td><?php echo $value->fk_client_name; ?></td>
-                        <td><?php echo $value->amount; ?></td>
+                        <td class="<?php 
+                            if ($value->payment_type == "debit"){
+                                echo "redtext";
+                            }else if ($value->payment_type == "credit"){
+                                echo "greentext";
+                            }
+                            ?>" >
+                            <?php echo $value->amount; ?>
+                        </td>
                         <td><?php echo $value->payment_mode; ?></td>
                         <td><?php echo $value->notes; ?></td>
                         <td><?php echo date('d M Y h:i:s A', strtotime($value->payment_date)); ?></td>
