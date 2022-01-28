@@ -16,10 +16,13 @@ class Account_model extends CI_Model {
     }
 
     public function account_list($limit, $start){
+        $this->db->select("Account.pk_account_id, Account.fk_client_code, Account.total_amount, Clients.code, Clients.name, Clients.client_type, Clients.district");
         $this->db->limit($limit, $start);
-        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-        $this->db->order_by("fk_client_name", "ASC");
-        $query = $this->db->get($this->table);
+        $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("Account.fk_client_name", "ASC");
+        $this->db->from($this->table);
+        $this->db->join('Clients', 'Account.fk_client_code = Clients.code');
+        $query = $this->db->get();
         if($query->num_rows() > 0){
             $data['result'] = $query->result();
         }else{
@@ -28,15 +31,21 @@ class Account_model extends CI_Model {
         return $data;
     }
     
-    public function get_log_count() {
+    public function get_log_count($clientcode = NULL) {
         $this->db->select('account_entry_id');
         $this->db->from($this->historytable);
+        if ($clientcode != NULL) {
+            $this->db->where('fk_client_code', $clientcode);
+        }
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         return $this->db->count_all_results();
     }
 
-    public function account_log_list($limit, $start){
+    public function account_log_list($limit, $start, $clientcode = NULL){
         $this->db->limit($limit, $start);
+        if ($clientcode != NULL) {
+            $this->db->where('fk_client_code', $clientcode);
+        }
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->order_by("created_at", "DESC");
         $query = $this->db->get($this->historytable);

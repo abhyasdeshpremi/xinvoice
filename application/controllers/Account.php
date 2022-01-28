@@ -47,12 +47,33 @@ class Account extends CI_Controller {
         $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
         $data["links"] = $this->pagination->create_links();
 
-        $stock_log_result = $this->Account_model->account_log_list($config["per_page"], $page);
-        $data['data'] = $stock_log_result['result'];
+        $account_log_result = $this->Account_model->account_log_list($config["per_page"], $page);
+        $data['data'] = $account_log_result['result'];
         $data['page'] = $page;
         $this->template->set('buttonName', 'Account List');
         $this->template->set('buttonLink', base_url('/getaccount'));
         $this->template->set('title', 'Account History List');
+        $this->template->load('default_layout', 'contents' , 'account/accountHistoy', $data);
+    }
+
+    public function getClientAccountHistory(){
+        $data = array();
+        $clientCode = $this->uri->segment(2);
+        $config = array();
+        $config["base_url"] = base_url("getclientaccounthistory/".$clientCode);
+        $config["total_rows"] = $this->Account_model->get_log_count($clientCode );
+        $config["per_page"] = PAGE_PER_ITEM;
+        $config["uri_segment"] = 3;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        $account_log_result = $this->Account_model->account_log_list($config["per_page"], $page, $clientCode);
+        $data['data'] = $account_log_result['result'];
+        $data['page'] = $page;
+        $this->template->set('buttonName', 'Account List');
+        $this->template->set('buttonLink', base_url('/getaccount'));
+        $this->template->set('title', 'Account('.$clientCode.') History List');
         $this->template->load('default_layout', 'contents' , 'account/accountHistoy', $data);
     }
 

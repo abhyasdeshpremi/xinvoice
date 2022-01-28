@@ -1,15 +1,3 @@
-<div class="row">
-    <div class="col-md-9 mb-3">
-    </div>
-    <div class="col-md-1 mb-3">
-        <button type="button" class="btn btn-primary" id="hardRefreshAccount"> <i data-feather="refresh-cw"></i></button>
-    </div>
-    <div class="col-md-2 mb-3">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
-            Account Entry
-        </button>
-    </div>
-</div>
 <div class="datatable">
     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -18,6 +6,8 @@
                     <th style="width:50px;">Sr.</th>
                     <th>Client Code</th>
                     <th>Client Name</th>
+                    <th>Client Type</th>
+                    <th>District</th>
                     <th>Total Amount</th>
                 </tr>
             </thead>
@@ -26,6 +16,8 @@
                     <th>Sr.</th>
                     <th>Client Code</th>
                     <th>Client Name</th>
+                    <th>Client Type</th>
+                    <th>District</th>
                     <th>Total Amount</th>
                 </tr>
             </tfoot>
@@ -34,8 +26,14 @@
                     <tr>
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->fk_client_code; ?></td>
-                        <td><?php echo $value->fk_client_name; ?></td>
-                        <td><?php echo $value->total_amount; ?></td>
+                        <td><?php echo $value->name; ?></td>
+                        <td><div class="badge badge-primary badge-pill"><?php echo $value->client_type; ?></div></td>
+                        <td><?php echo $value->district; ?></td>
+                        <td>
+                            <a href="<?php echo base_url('/getclientaccounthistory'.'/'.$value->fk_client_code); ?>">
+                                <?php echo $value->total_amount; ?>
+                            </a>
+                        </td>
                     </tr>
                 <?php $page++; } ?>
             </tbody>
@@ -43,7 +41,18 @@
         <div class="pagelist"><center><?php echo $links; ?></center></div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-md-10 mb-3">
+    </div>
+    <div class="col-md-1 mb-3">
+        <button type="button" class="btn btn-primary" id="hardRefreshAccount"> <i data-feather="refresh-cw"></i></button>
+    </div>
+    <div class="col-md-1 mb-3">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+        ₹+
+        </button>
+    </div>
+</div>
 
 
 <!----Add item modal Start----->

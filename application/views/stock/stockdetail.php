@@ -1,15 +1,3 @@
-<div class="row">
-    <div class="col-md-9 mb-3">
-    </div>
-    <div class="col-md-1 mb-3">
-        <button type="button" class="btn btn-primary" id="hardRefresh"> <i data-feather="refresh-cw"></i></button>
-    </div>
-    <div class="col-md-2 mb-3">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
-            Stock Adjustment
-        </button>
-    </div>
-</div>
 <div class="datatable">
     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -43,7 +31,19 @@
         <div class="pagelist"><center><?php echo $links; ?></center></div>
     </div>
 </div>
-
+&nbsp;
+<div class="row">
+    <div class="col-md-9 mb-3">
+    </div>
+    <div class="col-md-1 mb-3">
+        <button type="button" class="btn btn-primary" id="hardRefresh"> <i data-feather="refresh-cw"></i></button>
+    </div>
+    <div class="col-md-2 mb-3">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+            Stock Adjustment
+        </button>
+    </div>
+</div>
 
 
 <!----Add item modal Start----->

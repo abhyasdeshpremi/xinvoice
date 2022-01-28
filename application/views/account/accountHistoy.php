@@ -28,7 +28,7 @@
             <tbody>
                 <?php foreach($data as $value){ ?>
                     <tr>
-                        <td><?php echo ($page + 1); ?></td>
+                        <td><?php echo ((int)$page + 1); ?></td>
                         <td><?php echo $value->fk_client_code; ?></td>
                         <td><?php echo $value->fk_client_name; ?></td>
                         <td class="<?php 
