@@ -194,8 +194,8 @@ class Invoice_model extends CI_Model {
             'subtitle'=>$data['invoicesubtitle'],
             'payment_mode'=>$data['paymentmode'],
             'vehicle'=>$data['vehicleno'],
-            'mobile'=>$data['invoicemobileno'],
-            'gstnumber'=>$data['invoicegstin'],
+            'mobile'=>$data['owninvoicemobileno'],
+            'gstnumber'=>$data['owninvoicegstin'],
             'fk_firm_code'=>$this->session->userdata('firmcode'),
             'fk_username'=>$this->session->userdata('username'),
         );

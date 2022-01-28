@@ -371,12 +371,37 @@
 
         //form header value check
         $('#purchaseinvoice').on('submit', function (e) {
-            e.preventDefault();
+            var invoice_id = $("#defaultinvoiceID").val();
+            var invoicetitle = $('#invoicetitle').val();
+            var invoicesubtitle = $('#invoicesubtitle').val();
+            var paymentmode = $('#paymentmode').val();
+            var vehicleno = $('#vehicleno').val();
+            var owninvoicegstin = $('#owninvoicegstin').val();
+            var owninvoicemobileno = $('#owninvoicemobileno').val();
+            var invoicerefNumber = $('#invoicerefNumber').val();
+            var clientcode = $('#clientcode').val();
+            var clientname = $('#clientname').val();
+            var gstin = $('#gstin').val();
+            var pannumber = $('#pannumber').val();
+            var mobilenumber = $('#mobilenumber').val();
+
+            var clintaddress = $('#clintaddress').val();
+            var clientState = $('#clientState').val();
+            var clientDistrict = $('#clientDistrict').val();
+            var clientcity = $('#clientcity').val();
+            var clientarea = $('#clientarea').val();
+            var clientpincode = $('#clientpincode').val();
+            var saveinvoice = $('#saveinvoice').val();
+
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url('/savevoiceheader'); ?>',
                 dataType  : 'json',
-                data: $('#purchaseinvoice').serialize(),
+                data: { defaultinvoiceID: invoice_id, invoicetitle: invoicetitle, invoicesubtitle: invoicesubtitle, paymentmode: paymentmode,
+                    vehicleno: vehicleno, owninvoicegstin: owninvoicegstin, owninvoicemobileno: owninvoicemobileno, invoicerefNumber: invoicerefNumber,
+                    clientcode:  clientcode, clientname: clientname, gstin: gstin, pannumber: pannumber, mobilenumber: mobilenumber,
+                    clintaddress: clintaddress, clientState: clientState, clientDistrict: clientDistrict, clientcity: clientcity, 
+                    clientarea: clientarea, clientpincode: clientpincode, saveinvoice: saveinvoice},
                 error: function() {
                     alert('Something is wrong');
                 },
