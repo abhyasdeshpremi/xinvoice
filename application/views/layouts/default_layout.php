@@ -352,8 +352,8 @@
                             </a>
                             <div class="collapse" id="collapseDashboardsReport" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/ledger'); ?>">Ledger</a>
                                     <a class="nav-link" href="<?php echo base_url('/stock'); ?>">Stock</a>
+                                    <a class="nav-link" href="<?php echo base_url('/ledger'); ?>">Ledger</a>
                                     <a class="nav-link" href="<?php echo base_url('/sales'); ?>">Sales</a>
                                 </nav>
                             </div>
