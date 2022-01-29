@@ -29,7 +29,7 @@
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                         <a class="small" href="auth-password-basic.html">Forgot Password?</a>
                         <!-- <a class="btn btn-primary" href="index.html">Login</a> -->
-                        <button type="submit" class="btn btn-primary" value="Login">Login</button>
+                        <button type="submit" class="btn btn-warning" value="Login">Login</button>
                     </div>
                 </form>
             </div>

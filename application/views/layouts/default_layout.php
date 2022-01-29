@@ -9,7 +9,7 @@
         <title>Xinvoice - <?php echo $title;?></title>
         <link href="<?php echo base_url();?>assets/css/styles.css" rel="stylesheet" />
         <link href="<?php echo base_url();?>assets/css/customStyle.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" crossorigin="anonymous" />
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
         <link rel="icon" type="image/x-icon" href="<?php echo base_url();?>assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -18,12 +18,12 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
     </head>
     <body class="nav-fixed">
-        <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
+        <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light brand-background" id="sidenavAccordion">
             <!-- Navbar Brand-->
             <!-- * * Tip * * You can use text or an image for your navbar brand.-->
             <!-- * * * * * * When using an image, we recommend the SVG format.-->
             <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-            <a class="navbar-brand" href="<?php echo base_url()?>" >X Invoice <sup>2</sup></a>
+            <a class="navbar-brand text-white" href="<?php echo base_url()?>" >Zero Store</a>
             <!-- Sidenav Toggle Button-->
             <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle"><i data-feather="menu"></i></button>
             <!-- Navbar Search Input-->
@@ -448,7 +448,7 @@
                             </div>
                             <div class="mr-2 mb-3 mb-sm-0">
                                 <?php if (isset($buttonName)) {?>
-                                <a class="nav-link btn btn-primary" role="button" href="<?php echo $buttonLink; ?>"><?php echo $buttonName; ?></a>
+                                <a class="nav-link btn btn-warning" role="button" href="<?php echo $buttonLink; ?>"><?php echo $buttonName; ?></a>
                                 <?php } ?>
                             </div>
                         </div>
@@ -487,7 +487,7 @@
         <script src="<?php echo base_url();?>assets/demo/chart-bar-demo.js"></script>
         <script src="<?php echo base_url();?>assets/demo/chart-pie-demo.js"></script> -->
         <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/demo/date-range-picker-demo.js'); ?>"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
         <script>

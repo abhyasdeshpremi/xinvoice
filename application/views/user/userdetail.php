@@ -36,8 +36,8 @@
                         <td><?php echo $value->role; ?></td>
                         <td><div class="badge badge-primary badge-pill"><?php echo $value->status; ?></div></td>
                         <td>
-                            <a  href="<?php echo base_url("/updateuser/$value->username")?>"><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="arrow-right"></i></button></a>
-                            <button type="button" onclick='deleteUser("<?php echo $value->username;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
+                            <a  href="<?php echo base_url("/updateuser/$value->username")?>"><button class="btn btn-datatable btn-icon mr-2"><i data-feather="arrow-right"></i></button></a>
+                            <button type="button" onclick='deleteUser("<?php echo $value->username;?>")' class="btn btn-datatable btn-icon" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
                         </td>
                     </tr>
                 <?php $page++; } ?>

@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Create User</button>
+            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Create User</button>
         </form>
     </div>
 </div>

@@ -33,8 +33,8 @@
                         <td><?php echo $value->address; ?></td>
                         <td><div class="badge badge-primary badge-pill"><?php echo $value->client_type; ?></div></td>
                         <td>
-                            <a  href="<?php echo base_url("/updateclient/$value->code")?>"><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="arrow-right"></i></button></a>
-                            <button type="button" onclick='deleteClient("<?php echo $value->code;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
+                            <a  href="<?php echo base_url("/updateclient/$value->code")?>"><button class="btn btn-datatable btn-icon mr-2"><i data-feather="arrow-right"></i></button></a>
+                            <button type="button" onclick='deleteClient("<?php echo $value->code;?>")' class="btn btn-datatable btn-icon" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
                         </td>
                     </tr>
                 <?php $page++; } ?>

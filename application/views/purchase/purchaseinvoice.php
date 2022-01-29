@@ -910,8 +910,8 @@
                     +'<td>'+basicValue+'</td>'
                     +'<td>'+parseFloat(oneRow["bill_value"]).toFixed(2)+'</td>'
                     +'<td>'
-                        +'<button type="button" onclick="editInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark editItemButton" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false"><i data-feather="more-vertical"></i></button>&nbsp;&nbsp;'
-                        +'<button type="button" onclick="deleteInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon btn-transparent-dark deleteItemlistkjsdksdj" ></button>'
+                        +'<button type="button" onclick="editInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon editItemButton" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false"><i data-feather="more-vertical"></i></button>&nbsp;&nbsp;'
+                        +'<button type="button" onclick="deleteInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon deleteItemlistkjsdksdj" ></button>'
                     +'</td>'
                 +'</tr>';
     }

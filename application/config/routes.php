@@ -107,6 +107,7 @@ $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 $route['ledger'] = 'ledger/getledger';
 $route['stock'] = 'ledger/getstock';
 $route['sales'] = 'ledger/getsaleresister';
+$route['stockreport'] = 'ledger/stockReport';
 
 $route['getaccount(/:num)?'] = 'account/getAccount$1';
 $route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';

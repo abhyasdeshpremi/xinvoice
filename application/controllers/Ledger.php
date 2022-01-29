@@ -34,4 +34,28 @@ class Ledger extends CI_Controller {
         $this->template->load('default_layout', 'contents' , 'ledger/saleresisterreport', $data);
     }
 
+    public function stockReport(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['start_date'] = $this->input->post('start_date');
+            $data['end_date'] = $this->input->post('end_date');
+            $data["message"] = "";
+            $stock_result = $this->Ledger_model->stock_list();
+            if($stock_result['code']){
+                $data['code'] = $stock_result['code'];
+                $data['data'] = $stock_result['result'];
+                $data["message"] = "Successfully stock added!";
+            }else{
+                $data['code'] = $stock_result['code'];
+                $data['data'] = [];
+                $data["message"] = "Unable to save Stock item, may be wrong Stock item OR Input stock grater than available stock. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data['data'] = [];
+            $data["message"] = "Unable to serve GET Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
 }

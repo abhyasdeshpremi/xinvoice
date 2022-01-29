@@ -36,10 +36,10 @@
     <div class="col-md-9 mb-3">
     </div>
     <div class="col-md-1 mb-3">
-        <button type="button" class="btn btn-primary" id="hardRefresh"> <i data-feather="refresh-cw"></i></button>
+        <button type="button" class="btn btn-warning" id="hardRefresh"> <i data-feather="refresh-cw"></i></button>
     </div>
     <div class="col-md-2 mb-3">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
             Stock Adjustment
         </button>
     </div>

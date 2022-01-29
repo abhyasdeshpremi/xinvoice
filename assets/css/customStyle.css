@@ -45,7 +45,7 @@
   #myInput:focus {outline: 3px solid #ddd;}
 
   .pagelist center a { 
-    background-color: #36a5f4;
+    background-color: #eec064;
     color: white;
     padding: 5px 10px;
     text-align: center;
@@ -97,4 +97,12 @@
     color: #e8a539;
     background-color: #ffffff;
     text-transform: capitalize;
+  }
+
+  .brand-color{
+    color: #eec064 !important;
+  }
+
+  .brand-background{
+    background-color: #eec064 !important;
   }

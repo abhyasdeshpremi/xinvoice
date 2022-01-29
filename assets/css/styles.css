@@ -9614,7 +9614,8 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #0061f2 !important;
+  background-color: #eec064 !important; 
+  /* background-color: #0061f2 !important; */
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -18144,7 +18145,7 @@ body {
   color: #fff;
   background-color: transparent;
   border-color: transparent;
-  color: rgba(33, 40, 50, 0.5) !important;
+  color: rgba(255, 255, 255, 1.0) !important;
 }
 .btn-transparent-dark:hover {
   color: #fff;

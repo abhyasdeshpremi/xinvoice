@@ -40,8 +40,8 @@
                         <td><?php echo $value->mrp; ?></td>
                         <td><?php echo $value->cost_price; ?></td>
                         <td>
-                            <a  href="<?php echo base_url("/updateitem/$value->item_code")?>"><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="arrow-right"></i></button></a>
-                            <button type="button" onclick='deleteItem("<?php echo $value->item_code;?>")' class="btn btn-datatable btn-icon btn-transparent-dark" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
+                            <a  href="<?php echo base_url("/updateitem/$value->item_code")?>"><button class="btn btn-datatable btn-icon mr-2"><i data-feather="arrow-right"></i></button></a>
+                            <button type="button" onclick='deleteItem("<?php echo $value->item_code;?>")' class="btn btn-datatable btn-icon" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
                         </td>
                     </tr>
                 <?php $page = $page + 1; } ?>

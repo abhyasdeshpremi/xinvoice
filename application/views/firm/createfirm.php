@@ -65,7 +65,7 @@
                     <input type="number" class="form-control" id="firmZip" name="firmZip" placeholder="Zip" value="<?php echo isset($firmZip)? $firmZip : ''; ?>">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Create Firm</button>
+            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Create Firm</button>
         </form>
     </div>
 </div>

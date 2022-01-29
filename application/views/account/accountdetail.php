@@ -45,10 +45,10 @@
     <div class="col-md-10 mb-3">
     </div>
     <div class="col-md-1 mb-3">
-        <button type="button" class="btn btn-primary" id="hardRefreshAccount"> <i data-feather="refresh-cw"></i></button>
+        <button type="button" class="btn btn-warning" id="hardRefreshAccount"> <i data-feather="refresh-cw"></i></button>
     </div>
     <div class="col-md-1 mb-3">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addAccountInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
         ₹+
         </button>
     </div>

@@ -41,7 +41,7 @@
                         <td><?php echo $value->area; ?></td>
                         <td><?php echo $value->pk_invoice_id; ?></td>
                         <td>
-                            <a class="btn btn-datatable btn-icon btn-transparent-dark dropdown-item" href="<?php echo base_url('/createinvoice'."/".$value->unique_invioce_code.""); ?>">
+                            <a class="btn btn-datatable btn-icon dropdown-item" href="<?php echo base_url('/createinvoice'."/".$value->unique_invioce_code.""); ?>">
                                 <i data-feather="arrow-right"></i>
                             </a>
                         </td>
