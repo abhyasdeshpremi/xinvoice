@@ -437,7 +437,7 @@
                             <div class="mr-4 mb-3 mb-sm-0">
                                 <h5 class="mb-0"><?php echo $title; ?></h5>
                                 <div class="small">
-                                    <span class="font-weight-500 text-primary"><?php 
+                                    <span class="font-weight-500 text-warning"><?php 
                                     date_default_timezone_set('Asia/Kolkata'); 
                                     echo date("l"); ?></span>
                                     &middot; <?php echo date("F d, Y"); ?> &middot; <?php echo date("h:i:s A"); ?>

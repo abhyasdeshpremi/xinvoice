@@ -103,7 +103,7 @@
                     <input type="number" class="form-control" id="clientZip" name="clientZip" placeholder="Zip" value="<?php echo isset($clientZip)? $clientZip : ''; ?>">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Update Client</button>
+            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Update Client</button>
         </form>
     </div>
 </div>

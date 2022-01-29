@@ -167,7 +167,7 @@
                                     <input class="form-control" id="clientpincode" name="clientpincode" type="number" placeholder="Pin Code" value="<?php echo isset($clientpincode)? $clientpincode : ''; ?>" />
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Save invoice</button>
+                            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Save invoice</button>
                         </form>
                     </div>
                 </div>
@@ -186,14 +186,14 @@
                             <div class="col-md-4 mb-3">
                             </div>
                             <div class="col-md-2 mb-3">
-                                <button type="button" onclick="addInvoiceItem()" class="btn btn-primary add-item-button" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+                                <button type="button" onclick="addInvoiceItem()" class="btn btn-warning add-item-button" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
                                     Add Item
                                 </button>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">INVOICE &nbsp;<i data-feather="file-text"></i></button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split pdfdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                    <button type="button" class="btn btn-warning">INVOICE &nbsp;<i data-feather="file-text"></i></button>
+                                    <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split pdfdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
@@ -251,7 +251,7 @@
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Item</button>
                     <div id="myDropdown" class="dropdown-menu">
-                            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" autocomplete="off">
                             <?php $count = 1; 
                                 foreach($itemsList as $item){ ?>
                                     <a class="dropdown-item small select-dropdown-item" hreflang="<?php echo $item->item_code; ?>"><?php echo $item->name." <span style='font-size:50%;'>🍦 (".$item->item_code.") &copy; ".$item->company_code." ₹(".$item->mrp.")</span>";?></a>
@@ -303,7 +303,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="forceclose">Close</button>
-        <button type="button" class="btn btn-primary" id="add_item_to_invoice">Add Item</button>
+        <button type="button" class="btn btn-warning" id="add_item_to_invoice">Add Item</button>
       </div>
     </div>
   </div>

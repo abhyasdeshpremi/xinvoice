@@ -28,7 +28,7 @@
                 <label for="exampleFormControlTextarea1">Company Description</label>
                 <textarea class="form-control" id="description" name="description" rows="3"><?php echo isset($description)? $description : ''; ?></textarea>
             </div>
-            <button type="submit" class="btn btn-primary mr-2 my-1" type="button">Update Company</button>
+            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Update Company</button>
         </form>
     </div>
 </div>

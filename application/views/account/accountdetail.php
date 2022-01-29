@@ -122,7 +122,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="forceclose">Close</button>
-        <button type="button" class="btn btn-primary" id="submit_payment">Submit</button>
+        <button type="button" class="btn btn-warning" id="submit_payment">Submit</button>
       </div>
     </div>
   </div>

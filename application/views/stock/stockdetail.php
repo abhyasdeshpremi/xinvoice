@@ -97,7 +97,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="forceclose">Close</button>
-        <button type="button" class="btn btn-primary" id="add_number_of_item_to_stock">Add Stock</button>
+        <button type="button" class="btn btn-warning" id="add_number_of_item_to_stock">Add Stock</button>
       </div>
     </div>
   </div>
