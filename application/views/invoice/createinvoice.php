@@ -66,12 +66,12 @@
                                 <div class="col-md-2 mb-3">
                                     <label for="userStatus">Invoice Type</label>
                                     <select class="form-control" id="invoicetype" name="invoicetype" style="text-transform: capitalize;">
-                                            <option value="">Select</option>
-                                            <?php $count = 1; 
-                                                foreach($invoiceTypes as $invoice){ ?>
-                                                    <option value="<?php echo $invoice->invoice_reference_id; ?>"><?php echo "Invoice v_".$count;?></option>
-                                            <?php $count++; } ?>
-                                        </select>
+                                        <option value="">Select</option>
+                                        <?php $count = 1; 
+                                            foreach($invoiceTypes as $invoice){ ?>
+                                                <option value="<?php echo $invoice->invoice_reference_id; ?>"><?php echo "Invoice v_".$count;?></option>
+                                        <?php $count++; } ?>
+                                    </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="validationDefault03">Invoice Title <span class="requiredClass">*</span></label>
@@ -86,7 +86,10 @@
                             <div class="form-row">
                                 <div class="col-md-2 mb-3">
                                     <label for="validationDefault03">Payment mode</label>
-                                    <input class="form-control" id="paymentmode" name="paymentmode" type="text" placeholder="Payment mode" value="<?php echo isset($paymentmode)? $paymentmode : ''; ?>" required/>
+                                    <select class="form-control" id="paymentmode" name="paymentmode" style="text-transform: capitalize;">
+                                        <option value="CASE" <?php if($paymentmode == "CASE") { echo 'selected="selected"'; }?>>CASH</option>
+                                        <option value="CREDIT" <?php if($paymentmode == "CREDIT") { echo 'selected="selected"'; }?>>CREDIT</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-2 mb-3">

@@ -28,15 +28,21 @@ class Stock_model extends CI_Model {
         return $data;
     }
     
-    public function get_log_count() {
+    public function get_log_count($itemcode = NULL) {
         $this->db->select('pk_stock_entry_id');
         $this->db->from($this->logtable);
+        if ($itemcode != NULL) {
+            $this->db->where('item_code', $itemcode);
+        }
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         return $this->db->count_all_results();
     }
 
-    public function stock_log_list($limit, $start){
+    public function stock_log_list($limit, $start, $itemcode = NULL){
         $this->db->limit($limit, $start);
+        if ($itemcode != NULL) {
+            $this->db->where('item_code', $itemcode);
+        }
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->order_by("created_at", "DESC");
         $query = $this->db->get($this->logtable);

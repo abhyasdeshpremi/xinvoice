@@ -23,7 +23,11 @@
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->item_code; ?></td>
                         <td><?php echo $value->item_name; ?></td>
-                        <td><?php echo $value->item_total_count; ?></td>
+                        <td>
+                            <a href="<?php echo base_url('/getitemstocklog'.'/'.$value->item_code); ?>">
+                                <?php echo $value->item_total_count; ?>
+                            </a>
+                        </td>
                     </tr>
                 <?php $page++; } ?>
             </tbody>

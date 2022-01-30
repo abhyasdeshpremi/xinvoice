@@ -61,7 +61,7 @@ class Account extends CI_Controller {
         $clientCode = $this->uri->segment(2);
         $config = array();
         $config["base_url"] = base_url("getclientaccounthistory/".$clientCode);
-        $config["total_rows"] = $this->Account_model->get_log_count($clientCode );
+        $config["total_rows"] = $this->Account_model->get_log_count($clientCode);
         $config["per_page"] = PAGE_PER_ITEM;
         $config["uri_segment"] = 3;
         $this->pagination->initialize($config);

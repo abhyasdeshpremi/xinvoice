@@ -100,14 +100,24 @@ $route['deletepurchaseinvoiceitem'] = 'purchase/deleteInvoiceItem';
 
 $route['getstock(/:num)?'] = 'stock/getStock$1';
 $route['getstocklog(/:num)?'] = 'stock/getstocklog$1';
+$route['getitemstocklog/:any(/:num)?'] = 'stock/getItemStocklog$1$2';
 $route['savestock'] = 'stock/saveStock';
+
+
 
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 
-$route['ledger'] = 'ledger/getledger';
+$route['ledger'] = 'ledger/getClient';
 $route['stock'] = 'ledger/getstock';
 $route['sales'] = 'ledger/getsaleresister';
 $route['stockreport'] = 'ledger/stockReport';
+$route['downloadpdf/:any/:any'] = 'ledger/getPDF/$1/$2';
+
+$route['clientreport'] = 'ledger/clientReport';
+$route['downloadclientpdf/:any/:any'] = 'ledger/getClinetPDF/$1/$2';
+
+$route['salereport'] = 'ledger/saleReport';
+$route['downloadsalepdf/:any/:any'] = 'ledger/getSalePDF/$1/$2';
 
 $route['getaccount(/:num)?'] = 'account/getAccount$1';
 $route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';
