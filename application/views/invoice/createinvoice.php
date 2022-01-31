@@ -992,8 +992,8 @@
     $(window).on('beforeunload', function(){
         var invoiceStatus = ['completed', 'partial_paid', 'paid'];
         if (!invoiceStatus.find((str) => str === globalInvoiceStatus)){
-            var c=confirm();
-            if(c){
+            var confirm=alert();
+            if(confirm){
                 return true;
             } else
             return false;
