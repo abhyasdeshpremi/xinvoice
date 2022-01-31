@@ -45,7 +45,7 @@ $(function() {
 
     var start = moment(); // moment().subtract(29, 'days');
     var end = moment();
-    var base_url = "<?php echo base_url('/downloadclientpdf'); ?>";
+    var base_url = "<?php echo base_url('/downloadsalepdf'); ?>";
     $('#daterange').daterangepicker({
         locale: { cancelLabel: 'Clear' }  
     });

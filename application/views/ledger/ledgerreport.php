@@ -27,10 +27,10 @@
         <div class="datatable">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <table class="table table-bordered" id="StockResultTable" width="80%" cellspacing="0">
-                    <thead id="stockreporthead">
+                    <thead id="ledgerreporthead">
                         
                     </thead>
-                    <tbody id="stockreportBody">
+                    <tbody id="ledgerreportBody">
                     </tbody>
                 </table>
             </div>
@@ -43,7 +43,7 @@
 <script type="text/javascript">
 $(function() {
 
-    var start = moment(); // moment().subtract(29, 'days');
+    var start = moment().subtract(1, 'year').startOf('year');//moment(); // moment().subtract(29, 'days');
     var end = moment();
     var base_url = "<?php echo base_url('/downloadclientpdf'); ?>";
     $('#daterange').daterangepicker({
@@ -59,7 +59,8 @@ $(function() {
            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
            'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+           'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
         },
         alwaysShowCalendars: false,
         startDate: start,
@@ -78,8 +79,8 @@ $(function() {
     });
     
     $("#applySearch").click(function(){
-        $('#stockreporthead').html('');
-        $('#stockreportBody').html('');
+        $('#ledgerreporthead').html('');
+        $('#ledgerreportBody').html('');
         $.ajax({
             type: 'POST',
             url: '<?php echo base_url('/clientreport'); ?>',
@@ -90,47 +91,53 @@ $(function() {
             },
             success: function (data) {
                 if (data.code){
-                    $('#stockreporthead').append(addHeader());
+                    $('#ledgerreporthead').append(addHeader());
                     console.log(data);
                     var result = data.result;
-                    var total_opening_amount = 0.0;
-                    var total_credit_count_value = 0.0;
-                    var total_debit_count_value = 0.0;
-                    var total_amount_value = 0.0;
-                    var tmpDistrict = result[0]["district"];
+
+                    var total_basic_value_amount = 0.0;
+                    var total_cgst_amount = 0.0;
+                    var total_sgst_amount = 0.0;
+                    var total_round_off_amount = 0.0;
+                    var total_lock_bill_amount = 0.0;
+
+                    var tmpBillDate = result[0]["bill_date"];
                     for(i=0;i<result.length; i++) {
                         var oneRow = result[i];
-                        var debit_count_value = parseFloat(oneRow["debit_count_value"]);
-                        var credit_count_value = parseFloat(oneRow["credit_count_value"]);
-                        var total_amount = parseFloat(oneRow["total_amount"]);
-                        var opening_amount = (total_amount + debit_count_value - credit_count_value);
+                        var basic_value_amount = parseFloat(oneRow["basic_value_amount"]);
+                        var cgst_amount = parseFloat(oneRow["cgst_amount"]);
+                        var sgst_amount = parseFloat(oneRow["sgst_amount"]);
+                        var round_off_amount = parseFloat(oneRow["round_off_amount"]);
+                        var lock_bill_amount = parseFloat(oneRow["lock_bill_amount"]);
+                        var currentBillDate = oneRow["bill_date"];
 
-                        var currentDistrict = oneRow["district"];
-                        if (tmpDistrict == currentDistrict){
-                            $('#stockreportBody').append(addInvoicerow(oneRow, opening_amount, (i + 1)) );
+                        if (tmpBillDate == currentBillDate){
+                            $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
                         }else{
-                            $('#stockreportBody').append(addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value));
-                            $('#stockreportBody').append(addInvoicerow(oneRow, opening_amount, (i + 1)) );
-                            total_opening_amount = 0.0;
-                            total_credit_count_value = 0.0;
-                            total_debit_count_value = 0.0;
-                            total_amount_value = 0.0;
-                            tmpDistrict = currentDistrict;
+                            $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount));
+                            $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
+                            total_basic_value_amount = 0.0;
+                            total_cgst_amount = 0.0;
+                            total_sgst_amount = 0.0;
+                            total_round_off_amount = 0.0;
+                            total_lock_bill_amount = 0.0;
+                            tmpBillDate = currentBillDate;
                         }
+                         
+                        total_basic_value_amount = parseFloat(total_basic_value_amount) + parseFloat(basic_value_amount);
+                        total_cgst_amount = parseFloat(total_cgst_amount) + parseFloat(cgst_amount);
+                        total_sgst_amount = parseFloat(total_sgst_amount) + parseFloat(sgst_amount);
+                        total_round_off_amount = parseFloat(total_round_off_amount) + parseFloat(round_off_amount);
+                        total_lock_bill_amount = parseFloat(total_lock_bill_amount) + parseFloat(lock_bill_amount);
 
-                        total_opening_amount = parseFloat(total_opening_amount) + parseFloat(opening_amount);
-                        total_credit_count_value = parseFloat(total_credit_count_value) + parseFloat(credit_count_value);
-                        total_debit_count_value = parseFloat(total_debit_count_value) + parseFloat(debit_count_value);
-                        total_amount_value = parseFloat(total_amount_value) + parseFloat(total_amount);
-                        
-                        
                     }
-                    $('#stockreportBody').append(addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value));
+                    $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount));
+                    // $('#ledgerreportBody').append(addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value));
                     var printurl = base_url + "/" +start.format('YYYY-MM-DD')+"/"+end.format('YYYY-MM-DD');
                     $("#printStockReport").attr("href", printurl);
                     console.log(printurl);
                 }else{
-                    $('#stockreportBody').html("<h1>"+data.message+"</h1>");
+                    $('#ledgerreportBody').html("<center><h1>"+data.message+"</h1></center>");
                 }
             }
         });
@@ -140,41 +147,49 @@ $(function() {
     function addHeader(){
         return '<tr class="invoicecal">'
                     +'<th width="60px;">#</th>'
-                    +'<th width="100px;">Client Code</th>'
-                    +'<th>NAME</th>'
-                    +'<th>DISTRICT</th>'
-                    +'<th width="100px;">OP. BALANCE</th>'
-                    +'<th width="100px;">TOTAL CR.</th>'
-                    +'<th width="100px;">TOTAL DR.</th>'
-                    +'<th width="70px;">CL. BALANCE</th>'
+                    +'<th width="100px;">DATE</th>'
+                    +'<th>INVNo.</th>'
+                    +'<th>PARTY NAME</th>'
+                    +'<th>GSTIN</th>'
+                    +'<th>MODE</th>'
+                    +'<th>BASIC</th>'
+                    +'<th>CGST</th>'
+                    +'<th>SGST</th>'
+                    +'<th>R.OFF</th>'
+                    +'<th width="70px;">NET AMOUNT</th>'
                 +'</tr>';
     }
 
-    function addInvoicerow(oneRow, opening_amount, countNumber){
-        
-        return '<tr class="invoicecal" id="'+oneRow["fk_client_code"]+'">'
+    function addInvoicerow(oneRow, countNumber){
+        var s = "00000" + oneRow["pk_invoice_id"];
+
+        return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
                     +'<td>'+countNumber+'</td>'
-                    +'<td>'+oneRow["fk_client_code"]+'</td>'
-                    +'<td>'+oneRow["fk_client_name"]+'</td>'
-                    +'<td>'+oneRow["district"]+'</td>'
-                    +'<td>'+opening_amount+'</td>'
-                    +'<td>'+oneRow["credit_count_value"]+'</td>'
-                    +'<td>'+oneRow["debit_count_value"]+'</td>'
-                    +'<td>'+oneRow["total_amount"]+'</td>'
+                    +'<td>'+oneRow["bill_date"]+'</td>'
+                    +'<td>'+s.substr(s.length-5)+ '/'+ oneRow["invoice_bill_date"] +'</td>'
+                    +'<td>'+oneRow["client_name"]+'</td>'
+                    +'<td>'+oneRow["gstnumber"]+'</td>'
+                    +'<td>'+oneRow["payment_mode"]+'</td>'
+                    +'<td>'+oneRow["basic_value_amount"]+'</td>'
+                    +'<td>'+oneRow["cgst_amount"]+'</td>'
+                    +'<td>'+oneRow["sgst_amount"]+'</td>'
+                    +'<td>'+oneRow["round_off_amount"]+'</td>'
+                    +'<td>'+oneRow["lock_bill_amount"]+'</td>'
                 +'</tr>';
     }
 
-    function addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value){
+    function addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount){
         return '<tr class="invoicecal" >'
-                    +'<td colspan="3"></td>'
+                    +'<td colspan="5"></td>'
                     +'<td><b>TOTAL</b></td>'
-                    +'<td><b>'+total_opening_amount+'</b></td>'
-                    +'<td><b>'+total_credit_count_value+'</b></td>'
-                    +'<td><b>'+total_debit_count_value+'</b></td>'
-                    +'<td><b>'+total_amount_value+'</b></td>'
+                    +'<td><b>'+total_basic_value_amount+'</b></td>'
+                    +'<td><b>'+total_cgst_amount+'</b></td>'
+                    +'<td><b>'+total_sgst_amount+'</b></td>'
+                    +'<td><b>'+total_round_off_amount+'</b></td>'
+                    +'<td><b>'+total_lock_bill_amount+'</b></td>'
                 +'</tr>'
                 +'<tr class="invoicecal" >'
-                    +'<td colspan="8">&nbsp;</td>'
+                    +'<td colspan="11">&nbsp;</td>'
                 +'</tr>';
     }
 

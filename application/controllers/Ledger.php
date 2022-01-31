@@ -98,11 +98,11 @@ class Ledger extends CI_Controller {
                 if($client_result['code']){
                     $data['code'] = $client_result['code'];
                     $data['result'] = $client_result['result'];
-                    $data["message"] = "Successfully get stock!";
+                    $data["message"] = "Successfully get sale report!";
                 }else{
                     $data['code'] = $client_result['code'];
                     $data['result'] = [];
-                    $data["message"] = "Unable to fetch Stock. Please try again!";
+                    $data["message"] = "No sale report according to search string";
                 }
             }else{
                 $data['code'] = false;
@@ -170,5 +170,24 @@ class Ledger extends CI_Controller {
             }
         }
         echo json_encode($data);
+    }
+
+    function getSalePDF(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['start_date'] = $this->uri->segment(2);;
+            $data['end_date'] = $this->uri->segment(3);;
+            $client_result = $this->Ledger_model->sale_list($data);
+            if($client_result['code']){
+                $data['code'] = $client_result['code'];
+                $data['result'] = $client_result['result'];
+                $data["message"] = "Successfully get stock!";
+                $data['title'] = "Saytem Enterprice";
+                // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
+                $this->load->library('pdf');
+                $html = $this->load->view('ledger/saleresisterreportpdf', $data, true);
+                $this->pdf->createPDF($html, "Sale Report ".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
+            }
+        }
     }
 }
