@@ -318,7 +318,7 @@
 
 <script>
     var invoiceData = <?php echo json_encode($invoiceitemsList); ?>;
-
+    var globalInvoiceStatus = "<?php echo $invoicestatus; ?>";
     $(document).ready(function(){
         //Client type auto fill
         $("#clientcode").change(function(){
@@ -768,6 +768,7 @@
                 success: function (data) {
                     console.log(data);
                     if (data.code){
+                        globalInvoiceStatus = invoiceStatus;
                         setInvoiceStatus(invoiceStatus);
                     }
                 }
@@ -986,4 +987,16 @@
         }
     }
 
+</script>
+<script type="text/javascript">
+    $(window).on('beforeunload', function(){
+        var invoiceStatus = ['completed', 'partial_paid', 'paid'];
+        if (!invoiceStatus.find((str) => str === globalInvoiceStatus)){
+            var c=confirm();
+            if(c){
+                return true;
+            } else
+            return false;
+        }
+    });
 </script>
