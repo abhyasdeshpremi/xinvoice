@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-md-2 mb-3">
                             <div class="btn-group">
-                                <button type="button" class="btn select-dropdown-status-text btn-danger" style="text-transform: capitalize;">
+                                <button type="button" class="btn select-dropdown-status-text btn-danger" style="text-transform: capitalize;" data-toggle="tooltip" title="If invoice infoamtion and add items are done. Please invoice status change to be complete">
                                     <?php if(isset($invoicestatus)){ echo $invoicestatus; }?>
                                 </button>
                                 <button type="button" class="btn select-dropdown-status-bottom-indicator btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
