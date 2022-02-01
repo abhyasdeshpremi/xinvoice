@@ -26,7 +26,7 @@
         </div>
         <div class="datatable">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table class="table table-bordered" id="StockResultTable" width="80%" cellspacing="0">
+                <table class="table table-bordered table-hover" id="StockResultTable" width="80%" cellspacing="0">
                     <thead id="stockreporthead">
                         
                     </thead>
