@@ -1,6 +1,6 @@
 <div class="datatable">
     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>Sr.</th>

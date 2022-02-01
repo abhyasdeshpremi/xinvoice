@@ -26,7 +26,7 @@
         </div>
         <div class="datatable">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table class="table table-bordered" id="StockResultTable" width="80%" cellspacing="0">
+                <table class="table table-bordered table-hover" id="StockResultTable" width="80%" cellspacing="0">
                     <thead id="stockreporthead">
                         
                     </thead>
@@ -59,7 +59,8 @@ $(function() {
            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
            'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+           'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
         },
         alwaysShowCalendars: false,
         startDate: start,
