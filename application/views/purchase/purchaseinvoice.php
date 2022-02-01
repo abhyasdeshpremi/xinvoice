@@ -170,7 +170,7 @@
                                     <input class="form-control" id="clientpincode" name="clientpincode" type="number" placeholder="Pin Code" value="<?php echo isset($clientpincode)? $clientpincode : ''; ?>" />
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Save invoice</button>
+                            <button type="submit" class="btn btn-warning mr-2 my-1 save-item-button" type="button">Save invoice</button>
                         </form>
                     </div>
                 </div>
@@ -676,6 +676,7 @@
                     $(".deleteItemlistkjsdksdj").removeAttr("disabled");
                     $(".editItemButton").removeAttr("disabled");
                     $(".add-item-button").removeAttr("disabled");
+                    $(".save-item-button").removeAttr("disabled");
                     $("#initiated").removeClass("disabled");
                     $("#create, #pending, #completed, #partial_paid, #paid, #force_edit").addClass("disabled");
                     classColor = "red";
@@ -685,6 +686,7 @@
                     $(".deleteItemlistkjsdksdj").removeAttr("disabled");
                     $(".editItemButton").removeAttr("disabled");
                     $(".add-item-button").removeAttr("disabled");
+                    $(".save-item-button").removeAttr("disabled");
                     $("#pending").removeClass("disabled");
                     $("#initiated, #create, #completed, #force_edit, #partial_paid, #paid").addClass("disabled");
                     classColor = "red";
@@ -694,6 +696,7 @@
                     $(".deleteItemlistkjsdksdj").removeAttr("disabled");
                     $(".editItemButton").removeAttr("disabled");
                     $(".add-item-button").removeAttr("disabled");
+                    $(".save-item-button").removeAttr("disabled");
                     $("#completed").removeClass("disabled");
                     $("#create, #pending, #initiated, #force_edit, #partial_paid, #paid").addClass("disabled");
                     classColor = "red";
@@ -703,6 +706,7 @@
                     $(".deleteItemlistkjsdksdj").attr("disabled", "disabled");
                     $(".editItemButton").attr("disabled", "disabled");
                     $(".add-item-button").attr("disabled", "disabled");
+                    $(".save-item-button").attr("disabled", "disabled");
                     $("#create, #initiated, #pending, #completed").addClass("disabled");
                     $("#force_edit, #partial_paid, #paid").removeClass("disabled");
                     classColor = "yellow";
@@ -712,6 +716,7 @@
                     $(".deleteItemlistkjsdksdj").attr("disabled", "disabled");
                     $(".editItemButton").attr("disabled", "disabled");
                     $(".add-item-button").attr("disabled", "disabled");
+                    $(".save-item-button").attr("disabled", "disabled");
                     $("#create, #initiated, #pending, #partial_paid, #completed").addClass("disabled");
                     $("#force_edit, #paid").removeClass("disabled");
                     classColor = "green";
@@ -721,6 +726,7 @@
                     $(".deleteItemlistkjsdksdj").attr("disabled", "disabled");
                     $(".editItemButton").attr("disabled", "disabled");
                     $(".add-item-button").attr("disabled", "disabled");
+                    $(".save-item-button").attr("disabled", "disabled");
                     $("#create, #initiated, #pending, #completed, #partial_paid, #paid, #force_edit").addClass("disabled");
                     classColor = "green";
                     buttonColor = "btn-success";
@@ -729,6 +735,7 @@
                     $(".deleteItemlistkjsdksdj").removeAttr("disabled");
                     $(".editItemButton").removeAttr("disabled");
                     $(".add-item-button").removeAttr("disabled");
+                    $(".save-item-button").removeAttr("disabled");
                     $("#create, #initiated, #pending, #partial_paid, #paid, #force_edit").addClass("disabled");
                     $("#completed").removeClass("disabled");
                     classColor = "red";
