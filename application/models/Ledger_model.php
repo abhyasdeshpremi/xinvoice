@@ -95,6 +95,7 @@ class Ledger_model extends CI_Model {
         // $endDateFormat = date('Y-m-d H:i:s', $endDate);
         $this->db->select('Account.fk_client_code, Account.fk_client_name, Account.total_amount, Clients.district');
         $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where_not_in('Clients.client_type', 'mine');
         $this->db->order_by("Clients.district", "ASC");
         $this->db->from('Account');
         $this->db->join('Clients', 'Account.fk_client_code = Clients.code');

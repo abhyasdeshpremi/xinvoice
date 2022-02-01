@@ -31,6 +31,7 @@ class Invoice_model extends CI_Model {
     public function client_list_except_supllier(){
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where_not_in('client_type', 'supplier');
+        $this->db->where_not_in('client_type', 'mine');
         $query = $this->db->get('Clients');
         if($query->num_rows() > 0){
             return $query->result();
