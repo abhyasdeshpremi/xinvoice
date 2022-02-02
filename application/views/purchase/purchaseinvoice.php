@@ -853,7 +853,7 @@
                 success: function (data) {
                     $('#selectitemcode').val(data[0].item_code);
                     $('#itemdescription').val(data[0].name);
-                    $('#itemmrp').val(data[0].cost_price);
+                    $('#itemmrp').val(data[0].mrp);
                     $('#defineunitcase').val(data[0].unit_case);
                 }
             });
