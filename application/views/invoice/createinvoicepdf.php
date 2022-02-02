@@ -47,7 +47,7 @@ if(isset($mode)){
                 </div>
             </div>
             <div style="width:50%; height: 60px; float:right;"> 
-                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $invoicepkid; ?> / 21-22</span><br>
+                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $invoicerefNumber; ?> / 21-22</span><br>
                     <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $created_at; ?></span><br>
                     <span>PAYMENT MODE &nbsp; &nbsp;: <?php echo $paymentmode; ?></span><br>
                     <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
