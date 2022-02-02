@@ -111,7 +111,7 @@ if(isset($mode)){
                 $basic_value = number_format($basicItemsValue, 2);
                 $basicValue = round((($bill_value * 100) / 118), 2);
                 $cgstValue = round((($basicValue * 9) / 100), 2);
-                $total_cgst_value = (double)$basic_value + $cgstValue;
+                $total_cgst_value = filter_var($basic_value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); + $cgstValue;
                 $sgstValue = $cgstValue;
                 $total_cgst_sgst_value = ($total_cgst_value + $sgstValue);
                 $bill_amount = round($total_cgst_sgst_value, 0);
