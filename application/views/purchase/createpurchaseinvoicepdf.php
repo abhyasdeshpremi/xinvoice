@@ -37,7 +37,7 @@ if(isset($mode)){
     <br>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
         <div style="height:60px; font: 8px;">
-            <div style="width:50%; height: 60px; float:left;"> To,
+            <div style="width:50%; height: 60px; float:left;"> From,
                 <div style="margin-right:10px;">
                     <span><?php echo $clientname; ?></span><br>
                     <span><?php echo $clintaddress; ?></span><br>
