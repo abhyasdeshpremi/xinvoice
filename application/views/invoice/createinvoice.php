@@ -126,7 +126,7 @@
                                                     <option value="<?php echo $client->code; ?>" <?php if($client->code == $clientcode){ echo"selected"; } ?> ><?php echo $client->name;?></option>
                                             <?php $count++; } ?>
                                         </select>
-                                        <input type="hidden" name="clientname" id="clientname" value="" />
+                                        <input type="hidden" name="clientname" id="clientname" value="<?php echo $clientname; ?>" />
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="validationDefault03">GST IN</label>
