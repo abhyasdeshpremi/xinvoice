@@ -930,7 +930,7 @@
     function addInvoiceCalculation(bill_value, mrp_value, basic_value){
         var basicValue = ((parseFloat(bill_value) * 100) / 118).toFixed(2);
         var cgstValue = ((parseFloat(basicValue) * 9) / 100).toFixed(2);
-        var total_cgst_value = (parseFloat(basicValue) + parseFloat(cgstValue)).toFixed(2);
+        var total_cgst_value = (parseFloat(basic_value).toFixed(2) + parseFloat(cgstValue)).toFixed(2);
         var sgstValue = cgstValue;
         var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
         var bill_amount = Math.round(parseFloat(bill_value).toFixed(2));
