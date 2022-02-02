@@ -50,6 +50,7 @@ class Client extends CI_Controller {
                 $createClient = $this->Client_model->create_client($data);
                 if($createClient ){
                     unset($data);
+                    $data['roleTypes'] = $this->Client_model->get_enum_values();
                     $data['successMessage'] = "Successfully Client Created.";
                 }else{
                     $data['errorMessage'] = 'Unable to save Client information. Please contact your Administrator.';
