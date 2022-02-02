@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Invoice(#<?php echo $pk_invoice_id; ?>) Herder information
+                                Invoice(#<?php echo $invoicerefNumber; ?>) Herder information
                             </button>
                         </div>
                         <div class="col-md-3 mb-3">
@@ -183,7 +183,7 @@
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" >
-                                Add Invoice(#<?php echo $pk_invoice_id; ?>) Items 
+                                Add Invoice(#<?php echo $invoicerefNumber; ?>) Items 
                                 </button>
                             </div>
                             <div class="col-md-4 mb-3">

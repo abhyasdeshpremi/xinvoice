@@ -39,7 +39,7 @@
                         <td><?php echo $value->invoice_paid_date; ?></td>
                         <td><?php echo $value->payment_mode; ?></td>
                         <td><?php echo $value->area; ?></td>
-                        <td><?php echo $value->pk_invoice_id; ?></td>
+                        <td><?php echo $value->previous_invoice_ref_no; ?></td>
                         <td>
                             <a class="btn btn-datatable btn-icon dropdown-item" href="<?php echo base_url('/createinvoice'."/".$value->unique_invioce_code.""); ?>">
                                 <i data-feather="arrow-right"></i>
