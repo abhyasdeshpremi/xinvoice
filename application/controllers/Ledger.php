@@ -98,11 +98,11 @@ class Ledger extends CI_Controller {
                 if($client_result['code']){
                     $data['code'] = $client_result['code'];
                     $data['result'] = $client_result['result'];
-                    $data["message"] = "Successfully get client report!";
+                    $data["message"] = "Successfully get Ledger report!";
                 }else{
                     $data['code'] = $client_result['code'];
                     $data['result'] = [];
-                    $data["message"] = "No client report according to search string";
+                    $data["message"] = "No Ledger report according to search string";
                 }
             }else{
                 $data['code'] = false;
