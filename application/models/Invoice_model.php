@@ -102,13 +102,32 @@ class Invoice_model extends CI_Model {
     }
 
     public function invoiceInitial($invoiceNewID, $invoiceType = 'sell'){
-        $data = array(
-            'unique_invioce_code'=>$invoiceNewID,
-            'status'=>'create',
-            'invoice_type'=>$invoiceType,
-            'fk_firm_code'=>$this->session->userdata('firmcode'),
-            'fk_username'=> $this->session->userdata('username')
-        );
+        if ($invoiceType === 'sell'){
+            $previous_invoice_ref_no = 1;
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->where('fk_username', $this->session->userdata('username'));
+            $this->db->where('invoice_type', "sell");
+            $queryForNumber = $this->db->get('Invoices');
+            if($queryForNumber->num_rows() > 0){
+                $previous_invoice_ref_no = $previous_invoice_ref_no + $queryForNumber->num_rows();
+            }
+            $data = array(
+                'unique_invioce_code'=>$invoiceNewID,
+                'status'=>'create',
+                'invoice_type'=>$invoiceType,
+                'previous_invoice_ref_no'=> $previous_invoice_ref_no,
+                'fk_firm_code'=>$this->session->userdata('firmcode'),
+                'fk_username'=> $this->session->userdata('username')
+            );
+        }else{
+            $data = array(
+                'unique_invioce_code'=>$invoiceNewID,
+                'status'=>'create',
+                'invoice_type'=>$invoiceType,
+                'fk_firm_code'=>$this->session->userdata('firmcode'),
+                'fk_username'=> $this->session->userdata('username')
+            );
+        }
         $this->db->insert('Invoices',$data);
         return ($this->db->affected_rows() != 1) ? false : true;
     }
