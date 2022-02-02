@@ -108,9 +108,10 @@ if(isset($mode)){
                 <td style="text-align:right;"><hr><b><?php echo number_format($bill_value, 2); ?></b></td>
             </tr>
             <?php 
+                $basic_value = number_format($basicItemsValue, 2);
                 $basicValue = round((($bill_value * 100) / 118), 2);
                 $cgstValue = round((($basicValue * 9) / 100), 2);
-                $total_cgst_value = $basicValue + $cgstValue;
+                $total_cgst_value = $basic_value + $cgstValue;
                 $sgstValue = $cgstValue;
                 $total_cgst_sgst_value = ($total_cgst_value + $sgstValue);
                 $bill_amount = round($total_cgst_sgst_value, 0);
@@ -121,7 +122,7 @@ if(isset($mode)){
             <tr style="border-right-style:none;">
                 <td colspan="5" rowspan="6" ></td>
                 <td colspan="3">BASIC VALUE RS.</td>
-                <td style="text-align:right;"><?php echo number_format($basicItemsValue, 2); ?></td>
+                <td style="text-align:right;"><?php echo $basic_value; ?></td>
             </tr>
             <tr>
                 <td colspan="3">CGST 9.00%</td>
