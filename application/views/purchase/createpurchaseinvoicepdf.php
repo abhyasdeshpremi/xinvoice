@@ -129,6 +129,10 @@ if(isset($mode)){
                 <td style="text-align:right;"><?php echo number_format($cgstValue, 2); ?></td>
             </tr>
             <tr>
+                <td colspan="3">TOTAL RS.</td>
+                <td style="text-align:right;"><?php echo number_format($total_cgst_value, 2); ?></td>
+            </tr>
+            <tr>
                 <td colspan="3">SGST 9.00%</td>
                 <td style="text-align:right;"><?php echo number_format($sgstValue, 2); ?></td>
             </tr>
