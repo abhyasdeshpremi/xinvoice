@@ -140,7 +140,7 @@ class Purchase extends CI_Controller {
         // $this->template->load('default_layout', 'contents' , 'invoice/createinvoicepdf', $data);
         //landscape portrait
         $this->load->library('pdf');
-        $html = $this->load->view('invoice/createinvoicepdf', $data, true);
+        $html = $this->load->view('purchase/createpurchaseinvoicepdf', $data, true);
         $this->pdf->createPDF($html, $invoiceDetail['invoicetitle']."".date('Y-m-d H:i:s'), $download, 'A4', $mode);
 
     }
