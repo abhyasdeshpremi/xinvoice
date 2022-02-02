@@ -98,11 +98,11 @@ class Ledger extends CI_Controller {
                 if($client_result['code']){
                     $data['code'] = $client_result['code'];
                     $data['result'] = $client_result['result'];
-                    $data["message"] = "Successfully get sale report!";
+                    $data["message"] = "Successfully get client report!";
                 }else{
                     $data['code'] = $client_result['code'];
                     $data['result'] = [];
-                    $data["message"] = "No sale report according to search string";
+                    $data["message"] = "No client report according to search string";
                 }
             }else{
                 $data['code'] = false;
@@ -122,7 +122,7 @@ class Ledger extends CI_Controller {
             if($client_result['code']){
                 $data['code'] = $client_result['code'];
                 $data['result'] = $client_result['result'];
-                $data["message"] = "Successfully get stock!";
+                $data["message"] = "Successfully get client!";
                 $data['title'] = "Saytem Enterprice";
                 // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
                 $this->load->library('pdf');
@@ -157,11 +157,11 @@ class Ledger extends CI_Controller {
                 if($client_result['code']){
                     $data['code'] = $client_result['code'];
                     $data['result'] = $client_result['result'];
-                    $data["message"] = "Successfully get stock!";
+                    $data["message"] = "Successfully get sale!";
                 }else{
                     $data['code'] = $client_result['code'];
                     $data['result'] = [];
-                    $data["message"] = "Unable to fetch Stock. Please try again!";
+                    $data["message"] = "Unable to fetch sale. Please try again!";
                 }
             }else{
                 $data['code'] = false;
