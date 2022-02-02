@@ -456,7 +456,7 @@
                     }
                 }
 
-                if(quatity <= 1){
+                if(quatity < 1){
                     $("#successfullyMessage").addClass('alert-danger');
                     $("#successfullyMessage").text("Please check your inputs.");
                     $('#successfullyMessage').fadeIn();
