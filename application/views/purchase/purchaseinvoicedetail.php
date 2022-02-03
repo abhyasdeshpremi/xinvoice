@@ -11,6 +11,7 @@
                     <th>Mode</th>
                     <th>Area</th>
                     <th>#Inv.</th>
+                    <th>Amount(₹)</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                     <th>Mode</th>
                     <th>Area</th>
                     <th>#Inv.</th>
+                    <th>Amount(₹)</th>
                     <th>Actions</th>
                 </tr>
             </tfoot>
@@ -40,6 +42,7 @@
                         <td><?php echo $value->payment_mode; ?></td>
                         <td><?php echo $value->area; ?></td>
                         <td><?php echo $value->previous_invoice_ref_no; ?></td>
+                        <td><?php echo (($value->status === "completed") || ($value->status === "paid") || ($value->status === "partial_paid") ) ? $value->lock_bill_amount : 0; ?></td>
                         <td>
                             <a class="btn btn-datatable btn-icon dropdown-item" href="<?php echo base_url('/createpurchaseinvoice'."/".$value->unique_invioce_code.""); ?>">
                                 <i data-feather="arrow-right"></i>
