@@ -276,7 +276,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Case/Unit</span>
                 </div>
-                <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itemcaseunit" name="itemcaseunit" value="" readonly>
+                <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itemcaseunit" name="itemcaseunit" value="" >
             </div>
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
@@ -636,6 +636,19 @@
             var mrpvalue = quatity * itemmrp;
             var mrppercentage = parseFloat(((mrpvalue - itembillvalue) * 100) / mrpvalue).toFixed(2)
             $("#itemdiscount").val(mrppercentage);
+        });
+
+        $("#itemcaseunit").keyup(function(){
+            var totalunitcasevalue = $('#itemcaseunit').val();
+            var defineuintcase = $("#defineunitcase").val();
+            var quatity = totalunitcasevalue * defineuintcase;
+            var itemmrp = $("#itemmrp").val();
+            var mrpvalue = quatity * itemmrp;
+            $("#itemquantity").val(quatity);
+            $("#itemmrpvalue").val(mrpvalue);
+            $("#itembillValue").val(mrpvalue);
+            $("#itemdiscount").val(0);
+            
         });
 
         function invoiceCalculation(){
