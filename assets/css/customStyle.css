@@ -106,3 +106,19 @@
   .brand-background{
     background-color: #eec064 !important;
   }
+
+  .cir {
+    width: 50px;
+    height: 50px;
+    /*background: linear-gradient(to right, blue, orange);/*important*/
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;/*no need*/
+    color: white;/*no need*/
+    font-family: Arial;/*no need*/
+    border: 5px solid white;/*no need*/
+    user-select: none;/*no need*/
+    margin-top: 0px;
+  }
