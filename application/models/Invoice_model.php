@@ -105,7 +105,6 @@ class Invoice_model extends CI_Model {
         if ($invoiceType === 'sell'){
             $previous_invoice_ref_no = 1;
             $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-            $this->db->where('fk_username', $this->session->userdata('username'));
             $this->db->where('invoice_type', "sell");
             $queryForNumber = $this->db->get('Invoices');
             if($queryForNumber->num_rows() > 0){
