@@ -22,12 +22,13 @@
             <!-- Navbar Brand-->
             <!-- * * Tip * * You can use text or an image for your navbar brand.-->
             <!-- * * * * * * When using an image, we recommend the SVG format.-->
-            <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
+            <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px Zero Store-logos_white-small.png-->
             <a class="navbar-brand text-white" href="<?php echo base_url()?>" >
-                Zero Store
-                <span style="font-size: 10px;"><?php  echo !(empty($this->session->userdata('firmname'))) ? "(".$this->session->userdata('firmname') .")" : '';
-                ?></span>
+                <div style="float: left;" class="cir">ZS</div>
+                <p style="font-size: 10px; float: left; vertical-align: middle; padding-left: 8px; padding-top: 16px;"><?php  echo !(empty($this->session->userdata('firmname'))) ? $this->session->userdata('firmname') : '';
+                ?></p>
             </a>
+            
             <!-- Sidenav Toggle Button-->
             <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle"><i data-feather="menu"></i></button>
             <!-- Navbar Search Input-->
