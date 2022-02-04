@@ -7,7 +7,7 @@
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
-                    <th>Amount(₹)</th>
+                    <th>Amount(₹) <span class="showTotalAmount"></span></th>
                 </tr>
             </thead>
             <tfoot>
@@ -16,18 +16,20 @@
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
-                    <th>Amount(₹)</th>
+                    <th>Amount(₹) <span class="showTotalAmount"></span></th>
                 </tr>
             </tfoot>
             <tbody>
-                <?php foreach($data as $value){ ?>
+                <?php $viewTotalStockValue = 0.0;
+                foreach($data as $value){ ?>
                     <tr>
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value['item_code']; ?></td>
                         <td><?php echo $value['item_name']; ?></td>
                         <td>
                             <a href="<?php echo base_url('/getitemstocklog'.'/'.$value['item_code']); ?>">
-                                <?php echo $value['item_total_count']; ?> 
+                                <?php $viewTotalStockValue = $viewTotalStockValue + (float)str_replace(',', '', $value['bill_total_bill_value']);
+                                echo $value['item_total_count']; ?> 
                                 <span class="bill_per_item_value"> x <?php echo $value['bill_per_item_value']; ?></span>
                             </a>
                         </td>
@@ -226,7 +228,9 @@
         $(".hideshowperitem").click(function () {
             $(".bill_per_item_value").toggle();
         });
-        $(".bill_per_item_value").toggle();
 
+        $(".bill_per_item_value").toggle();
+        var viewTotalStockValue = <?php echo $viewTotalStockValue; ?>;
+        $(".showTotalAmount").text(viewTotalStockValue);
     });
 </script>
