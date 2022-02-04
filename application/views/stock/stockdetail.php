@@ -6,7 +6,8 @@
                     <th style="width:50px;">Sr.</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
-                    <th>Total Stock</th>
+                    <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
+                    <th>Amount(₹)</th>
                 </tr>
             </thead>
             <tfoot>
@@ -14,20 +15,23 @@
                     <th>Sr.</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
-                    <th>Total Stock</th>
+                    <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
+                    <th>Amount(₹)</th>
                 </tr>
             </tfoot>
             <tbody>
                 <?php foreach($data as $value){ ?>
                     <tr>
                         <td><?php echo ($page + 1); ?></td>
-                        <td><?php echo $value->item_code; ?></td>
-                        <td><?php echo $value->item_name; ?></td>
+                        <td><?php echo $value['item_code']; ?></td>
+                        <td><?php echo $value['item_name']; ?></td>
                         <td>
-                            <a href="<?php echo base_url('/getitemstocklog'.'/'.$value->item_code); ?>">
-                                <?php echo $value->item_total_count; ?>
+                            <a href="<?php echo base_url('/getitemstocklog'.'/'.$value['item_code']); ?>">
+                                <?php echo $value['item_total_count']; ?> 
+                                <span class="bill_per_item_value"> x <?php echo $value['bill_per_item_value']; ?></span>
                             </a>
                         </td>
+                        <td><?php echo $value['bill_total_bill_value']; ?></td>
                     </tr>
                 <?php $page++; } ?>
             </tbody>
@@ -218,6 +222,11 @@
             $("#stockcomment").val('');
             $('#modalheader').css("background-color", "green");
         });
+
+        $(".hideshowperitem").click(function () {
+            $(".bill_per_item_value").toggle();
+        });
+        $(".bill_per_item_value").toggle();
 
     });
 </script>
