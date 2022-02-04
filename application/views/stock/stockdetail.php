@@ -7,18 +7,9 @@
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
-                    <th>Amount(₹) <span class="showTotalAmount"></span></th>
+                    <th>Amount(₹)</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>Sr.</th>
-                    <th>Item Code</th>
-                    <th>Item Name</th>
-                    <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
-                    <th>Amount(₹) <span class="showTotalAmount"></span></th>
-                </tr>
-            </tfoot>
             <tbody>
                 <?php $viewTotalStockValue = 0.0;
                 foreach($data as $value){ ?>
@@ -37,6 +28,20 @@
                     </tr>
                 <?php $page++; } ?>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>Sr.</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
+                    <th>Amount(₹)</th>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td><b>Total(₹)</b></td>
+                    <td><b><?php echo number_format($viewTotalStockValue, 2);?></b></td>
+                </tr>
+            </tfoot>
         </table>
         <div class="pagelist"><center><?php echo $links; ?></center></div>
     </div>
@@ -230,7 +235,5 @@
         });
 
         $(".bill_per_item_value").toggle();
-        var viewTotalStockValue = <?php echo $viewTotalStockValue; ?>;
-        $(".showTotalAmount").text(viewTotalStockValue);
     });
 </script>
