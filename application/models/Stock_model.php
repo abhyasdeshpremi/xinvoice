@@ -21,7 +21,47 @@ class Stock_model extends CI_Model {
         $this->db->order_by("item_name", "ASC");
         $query = $this->db->get('Stocks');
         if($query->num_rows() > 0){
-            $data['result'] = $query->result();
+            foreach ($query->result() as $row)  
+            { 
+                $tempData = array();
+                $tempData["pk_stock_id"] = $row->pk_stock_id;
+                $tempData["item_code"] = $row->item_code;
+                $tempData["item_name"] = $row->item_name;
+                $tempData["item_total_count"] = $row->item_total_count;
+                $tempData["fk_firm_code"] = $row->fk_firm_code;
+                $tempData["created_at"] = $row->created_at;
+                $tempData["updated_at"] = $row->updated_at;
+                $tempData["fk_username"] = $row->fk_username;
+                 
+                /*
+                * Get Bill value of item
+                */
+                $this->db->select('invoice_item.bill_value, invoice_item.quantity');
+                $this->db->where('invoice_item.fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where('invoice_item.fk_item_code', $row->item_code);
+                $this->db->where('Invoices.invoice_type', 'purchase');
+                $this->db->from('invoice_item');
+                $this->db->join('Invoices', 'invoice_item.fk_unique_invioce_code = Invoices.unique_invioce_code');
+                $this->db->order_by("invoice_item.created_at", "DESC");
+                $this->db->order_by("invoice_item.updated_at", "DESC");
+                $this->db->limit(1);
+                $queryBillValue = $this->db->get();
+                $billValue = 1;
+                $itemQuantity = 1;
+                if($queryBillValue->num_rows() > 0){
+                    foreach ($queryBillValue->result() as $billRow)  
+                    {  
+                        $billValue = $billRow->bill_value;
+                        $itemQuantity = $billRow->quantity;
+                    }
+                }
+                $bill_per_item_value = $billValue / $itemQuantity;
+                $tempData["bill_per_item_value"] = number_format($bill_per_item_value, 2);
+                $totalBillValue = $bill_per_item_value * $row->item_total_count;
+                $tempData["bill_total_bill_value"] = number_format($totalBillValue, 2);
+                $data['result'][] = $tempData;
+            }
+
         }else{
             $data['result'] = array();
         }
