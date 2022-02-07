@@ -7,6 +7,7 @@ class Invoice_model extends CI_Model {
     function __construct()  
     {  
         parent::__construct();
+        $this->load->model('Account_model', '', TRUE);
     }  
 
     public function get_count($invoice_type = 'sell') {
@@ -434,7 +435,7 @@ class Invoice_model extends CI_Model {
                     $amountdata['pk_invoice_id'] = $row->pk_invoice_id;
                 }
                 $amountdata['payment_date'] = date('Y-m-d H:i:s');
-                
+                $amountdata['statuscode'] = $data['statuscode'];
                 if($data['statuscode'] === "completed") {
                     $amountdata['amount'] = $total_bill_value;
                     if ($amountdata['invoice_type'] === "sell"){
@@ -453,9 +454,10 @@ class Invoice_model extends CI_Model {
                         $amountdata['notes'] = "Amount ".$amountdata['lock_bill_amount']." debited automatically when invoice status change to force_edit state. || purchase invoice(#".$amountdata['pk_invoice_id'].")";
                         $amountdata['paymenttype'] = "debit";
                     }
+                    $account_entry_id = $this->Account_model->find_id($amountdata);
+                    $deleteAccountEntry = $this->Account_model->delete_account_entry($account_entry_id);
                 }
                 
-                $this->load->model('Account_model', '', TRUE);
                 $account_model_saveAccount = $this->Account_model->saveAccount($amountdata);
                 log_message("info", "payment debit automatically more info.: ");
 
