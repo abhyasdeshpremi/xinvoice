@@ -18,7 +18,16 @@
                         <td><?php echo $value['item_code']; ?></td>
                         <td><?php echo $value['item_name']; ?></td>
                         <td>
-                            <a href="<?php echo base_url('/getitemstocklog'.'/'.$value['item_code']); ?>">
+                            <?php
+                                $item_total_count = $value['item_total_count'];
+                                $classname = '';
+                                if ($item_total_count > 0) {
+                                    $classname = 'class="greentext"';
+                                }else{
+                                    $classname = 'class="redtext"';
+                                }
+                            ?>
+                            <a <?php echo $classname; ?> href="<?php echo base_url('/getitemstocklog'.'/'.$value['item_code']); ?>">
                                 <?php $viewTotalStockValue = $viewTotalStockValue + (float)str_replace(',', '', $value['bill_total_bill_value']);
                                 echo $value['item_total_count']; ?> 
                                 <span class="bill_per_item_value"> x <?php echo $value['bill_per_item_value']; ?></span>

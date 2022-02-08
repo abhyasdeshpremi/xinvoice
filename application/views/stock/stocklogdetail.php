@@ -33,7 +33,7 @@
                         <td><?php echo $value->fk_item_name; ?></td>
                         <td><?php echo $value->quantity; ?></td>
                         <td><?php echo $value->invoice_type; ?></td>
-                        <td><?php echo $value->bill_value; ?></td>
+                        <td><?php echo number_format($value->bill_value, 2); ?></td>
                         <td><?php echo date('d M Y h:i:s A', strtotime($value->created_at)); ?></td>
                         <td><?php echo $value->fk_username; ?></td>
                     </tr>
