@@ -392,7 +392,10 @@
             var clientcity = $('#clientcity').val();
             var clientarea = $('#clientarea').val();
             var clientpincode = $('#clientpincode').val();
-            var saveinvoice = $('#saveinvoice').val();
+            var saveinvoice = "NOTSELECTED";
+            $('input[name="saveinvoice"]:checked').each(function() {
+                saveinvoice = "saveinvoice";
+            });
             $.ajax({
                 type: 'POST',
                 url: '<?php echo base_url('/savevoiceheader'); ?>',
