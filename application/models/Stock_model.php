@@ -3,6 +3,7 @@
 class Stock_model extends CI_Model {
     protected $table = 'Stocks';
     protected $logtable = 'Stocks_Entry';
+    protected $invoiceitemtable = 'invoice_item';
     function __construct()  
     {  
         parent::__construct();
@@ -69,23 +70,28 @@ class Stock_model extends CI_Model {
     }
     
     public function get_log_count($itemcode = NULL) {
-        $this->db->select('pk_stock_entry_id');
-        $this->db->from($this->logtable);
+        $this->db->select('pk_invoice_item_id');
+        $this->db->from($this->invoiceitemtable);
         if ($itemcode != NULL) {
-            $this->db->where('item_code', $itemcode);
+            $this->db->where('fk_item_code', $itemcode);
         }
+        $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         return $this->db->count_all_results();
     }
 
     public function stock_log_list($limit, $start, $itemcode = NULL){
+        $this->db->select('Invoices.invoice_type, fk_unique_invioce_code, fk_item_code, fk_item_name, quantity, bill_value, invoice_item.created_at, invoice_item.fk_username');
         $this->db->limit($limit, $start);
         if ($itemcode != NULL) {
-            $this->db->where('item_code', $itemcode);
+            $this->db->where('invoice_item.fk_item_code', $itemcode);
         }
-        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-        $this->db->order_by("created_at", "DESC");
-        $query = $this->db->get($this->logtable);
+        $this->db->where('invoice_item.delete_flag', 'NO');
+        $this->db->where('invoice_item.fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("invoice_item.created_at", "DESC");
+        $this->db->from($this->invoiceitemtable);
+        $this->db->join('Invoices', 'invoice_item.fk_unique_invioce_code = Invoices.unique_invioce_code');
+        $query = $this->db->get();
         if($query->num_rows() > 0){
             $data['result'] = $query->result();
         }else{

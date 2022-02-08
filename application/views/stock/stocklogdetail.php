@@ -8,7 +8,7 @@
                     <th>Item Name</th>
                     <th>Total Stock</th>
                     <th>Entry Type</th>
-                    <th>Comment</th>
+                    <th>Bill Value(₹)</th>
                     <th>Date&Time</th>
                     <th>By</th>
                 </tr>
@@ -20,7 +20,7 @@
                     <th>Item Name</th>
                     <th>Total Stock</th>
                     <th>Entry Type</th>
-                    <th>Comment</th>
+                    <th>Bill Value(₹)</th>
                     <th>Date&Time</th>
                     <th>By</th>
                 </tr>
@@ -29,11 +29,11 @@
                 <?php foreach($data as $value){ ?>
                     <tr>
                         <td><?php echo ($page + 1); ?></td>
-                        <td><?php echo $value->item_code; ?></td>
-                        <td><?php echo $value->item_name; ?></td>
-                        <td><?php echo $value->item_count; ?></td>
-                        <td><?php echo $value->entry_type; ?></td>
-                        <td><?php echo $value->comment; ?></td>
+                        <td><?php echo $value->fk_item_code; ?></td>
+                        <td><?php echo $value->fk_item_name; ?></td>
+                        <td><?php echo $value->quantity; ?></td>
+                        <td><?php echo $value->invoice_type; ?></td>
+                        <td><?php echo $value->bill_value; ?></td>
                         <td><?php echo date('d M Y h:i:s A', strtotime($value->created_at)); ?></td>
                         <td><?php echo $value->fk_username; ?></td>
                     </tr>
