@@ -28,28 +28,30 @@ class Ledger_model extends CI_Model {
                 /*
                 * Get total sell item count
                 */
-                $this->db->select_sum('item_count');
-                $this->db->from('Stocks_Entry');
-                $this->db->where('item_code', $row->item_code);
-                $this->db->where('entry_type', "sell");
-                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-                $this->db->where("created_at BETWEEN '$startDate' AND '$endDate'");
+                $this->db->select_sum('invoice_item.quantity');
+                $this->db->from('invoice_item');
+                $this->db->join('Invoices', 'invoice_item.fk_unique_invioce_code = Invoices.unique_invioce_code');
+                $this->db->where('Invoices.invoice_type', 'sell');
+                $this->db->where('invoice_item.fk_item_code', $row->item_code);
+                $this->db->where('invoice_item.fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where("invoice_item.created_at BETWEEN '$startDate' AND '$endDate'");
                 $itemSellCountQuery = $this->db->get();
-                $sell_count_value = $itemSellCountQuery->row()->item_count;
+                $sell_count_value = $itemSellCountQuery->row()->quantity;
                 $sell_count_value = round($sell_count_value);
                 $tempData["sell_count_value"] = $sell_count_value;
 
                 /*
                 * Get total purchase item count
                 */
-                $this->db->select_sum('item_count');
-                $this->db->from('Stocks_Entry');
-                $this->db->where('item_code', $row->item_code);
-                $this->db->where('entry_type', "buy");
-                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-                $this->db->where("created_at BETWEEN '$startDate' AND '$endDate'");
+                $this->db->select_sum('invoice_item.quantity');
+                $this->db->from('invoice_item');
+                $this->db->join('Invoices', 'invoice_item.fk_unique_invioce_code = Invoices.unique_invioce_code');
+                $this->db->where('Invoices.invoice_type', 'purchase');
+                $this->db->where('invoice_item.fk_item_code', $row->item_code);
+                $this->db->where('invoice_item.fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where("invoice_item.created_at BETWEEN '$startDate' AND '$endDate'");
                 $itemBuyCountQuery = $this->db->get();
-                $buy_count_value = $itemBuyCountQuery->row()->item_count;
+                $buy_count_value = $itemBuyCountQuery->row()->quantity;
                 $buy_count_value = round($buy_count_value);
                 $tempData["buy_count_value"] = $buy_count_value;
                 
@@ -116,6 +118,7 @@ class Ledger_model extends CI_Model {
                 $this->db->from('Account_Entry');
                 $this->db->where('fk_client_code', $row->fk_client_code);
                 $this->db->where('payment_type', "debit");
+                $this->db->where('delete_flag', "no");
                 $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
                 $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
                 $itemSellCountQuery = $this->db->get();
@@ -130,6 +133,7 @@ class Ledger_model extends CI_Model {
                 $this->db->from('Account_Entry');
                 $this->db->where('fk_client_code', $row->fk_client_code);
                 $this->db->where('payment_type', "credit");
+                $this->db->where('delete_flag', "no");
                 $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
                 $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
                 $itemBuyCountQuery = $this->db->get();
