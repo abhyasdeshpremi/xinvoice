@@ -302,7 +302,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Bill Value</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itembillValue" name="itembillValue" value="" readonly>
+                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itembillValue" name="itembillValue" value="">
             </div> 
         </form>
       </div>
@@ -635,6 +635,15 @@
 
         $("#itemdiscount").keyup(function(){
             invoiceCalculation();
+        });
+
+        $("#itembillValue").keyup(function(){
+            var quatity = $("#itemquantity").val();
+            var itemmrp = $("#itemmrp").val();
+            var itembillvalue = $("#itembillValue").val();
+            var mrpvalue = quatity * itemmrp;
+            var mrppercentage = parseFloat(((mrpvalue - itembillvalue) * 100) / mrpvalue).toFixed(2)
+            $("#itemdiscount").val(mrppercentage);
         });
 
         $("#itemcaseunit").keyup(function(){
