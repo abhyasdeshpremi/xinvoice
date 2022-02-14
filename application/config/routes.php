@@ -108,6 +108,7 @@ $route['savestock'] = 'stock/saveStock';
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 
 $route['ledger'] = 'ledger/getClient';
+$route['invoice'] = 'ledger/getInvoice';
 $route['stock'] = 'ledger/getstock';
 $route['sales'] = 'ledger/getsaleresister';
 $route['stockreport'] = 'ledger/stockReport';
@@ -115,6 +116,12 @@ $route['downloadpdf/:any/:any'] = 'ledger/getPDF/$1/$2';
 
 $route['clientreport'] = 'ledger/clientReport';
 $route['downloadclientpdf/:any/:any'] = 'ledger/getClinetPDF/$1/$2';
+
+$route['invoicereport'] = 'ledger/invoiceReport';
+$route['downloadinvoicepdf/:any/:any'] = 'ledger/getinvoicePDF/$1/$2';
+
+
+
 
 $route['salereport'] = 'ledger/saleReport';
 $route['downloadsalepdf/:any/:any'] = 'ledger/getSalePDF/$1/$2';
