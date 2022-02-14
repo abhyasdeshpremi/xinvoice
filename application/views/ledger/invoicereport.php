@@ -25,8 +25,8 @@
             &nbsp;
         </div>
         <div class="datatable">
-            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4" >
-                <table class="table table-bordered table-hover table-fixed" id="StockResultTable" width="77%" cellspacing="0">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
+                <table class="table table-bordered table-hover table-fixed" id="StockResultTable" width="80%" cellspacing="0">
                     <thead id="ledgerreporthead">
                         
                     </thead>
@@ -83,7 +83,7 @@ $(function() {
         $('#ledgerreportBody').html('');
         $.ajax({
             type: 'POST',
-            url: '<?php echo base_url('/clientreport'); ?>',
+            url: '<?php echo base_url('/invoicereport'); ?>',
             dataType  : 'json',
             data: {start_date: start.format('YYYY-MM-DD'), end_date: end.format('YYYY-MM-DD')},
             error: function() {
@@ -110,12 +110,26 @@ $(function() {
                         var round_off_amount = parseFloat(oneRow["round_off_amount"]);
                         var lock_bill_amount = parseFloat(oneRow["lock_bill_amount"]);
                         var currentBillDate = oneRow["bill_date"];
+                        var invoice_items_list = oneRow["invoice_items_list"];
 
+                        console.log(invoice_items_list);
+                        var invoiceitem;
+                        if (invoice_items_list.length >= 1){
+                                invoiceitem = invoice_items_list[0]
+                        }
                         if (tmpBillDate == currentBillDate){
-                            $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
+                            $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1), invoiceitem));
+                            for(j=1;j<invoice_items_list.length; j++) {
+                                $('#ledgerreportBody').append(addItemrow(invoice_items_list[j]));
+                            }
+                            $('#ledgerreportBody').append(addInvoiceTotalrow(oneRow));
                         }else{
                             $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount));
-                            $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
+                            $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1), invoiceitem));
+                            for(j=1;j<invoice_items_list.length; j++) {
+                                $('#ledgerreportBody').append(addItemrow(invoice_items_list[j]));
+                            }
+                            $('#ledgerreportBody').append(addInvoiceTotalrow(oneRow));
                             total_basic_value_amount = 0.0;
                             total_cgst_amount = 0.0;
                             total_sgst_amount = 0.0;
@@ -152,6 +166,9 @@ $(function() {
                     +'<th>PARTY NAME</th>'
                     +'<th>GSTIN</th>'
                     +'<th>MODE</th>'
+                    +'<th>PRODUCT</th>'
+                    +'<th>QTY.</th>'
+                    +'<th>MRP</th>'
                     +'<th>BASIC</th>'
                     +'<th>CGST</th>'
                     +'<th>SGST</th>'
@@ -160,7 +177,7 @@ $(function() {
                 +'</tr>';
     }
 
-    function addInvoicerow(oneRow, countNumber){
+    function addInvoicerow(oneRow, countNumber, invoiceitem){
         var s = "00000" + oneRow["previous_invoice_ref_no"];
 
         return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
@@ -170,18 +187,22 @@ $(function() {
                     +'<td>'+oneRow["client_name"]+'</td>'
                     +'<td>'+oneRow["gstnumber"]+'</td>'
                     +'<td>'+oneRow["payment_mode"]+'</td>'
-                    +'<td>'+oneRow["basic_value_amount"]+'</td>'
-                    +'<td>'+oneRow["cgst_amount"]+'</td>'
-                    +'<td>'+oneRow["sgst_amount"]+'</td>'
-                    +'<td>'+oneRow["round_off_amount"]+'</td>'
-                    +'<td>'+oneRow["lock_bill_amount"]+'</td>'
+
+                    +'<td>'+invoiceitem["fk_item_name"]+'</td>'
+                    +'<td>'+invoiceitem["quantity"]+'</td>'
+                    +'<td>'+invoiceitem["mrp_value"]+'</td>'
+                    +'<td>'+invoiceitem["bill_value"]+'</td>'
+                    +'<td>'+0+'</td>'
+                    +'<td>'+0+'</td>'
+                    +'<td>'+0+'</td>'
+                    +'<td>'+invoiceitem["bill_value"]+'</td>'
                 +'</tr>';
     }
 
     function addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount){
         return '<tr class="invoicecal" >'
-                    +'<td colspan="5"></td>'
-                    +'<td><b>TOTAL</b></td>'
+                    +'<td colspan="7"></td>'
+                    +'<td colspan="2"><b>DAY TOTAL</b></td>'
                     +'<td><b>'+total_basic_value_amount+'</b></td>'
                     +'<td><b>'+total_cgst_amount.toFixed(2)+'</b></td>'
                     +'<td><b>'+total_sgst_amount.toFixed(2)+'</b></td>'
@@ -190,6 +211,42 @@ $(function() {
                 +'</tr>'
                 +'<tr class="invoicecal" >'
                     +'<td colspan="11">&nbsp;</td>'
+                +'</tr>';
+    }
+
+    function addItemrow(productnRow){
+        return '<tr class="invoicecal" >'
+                    +'<td colspan="5"></td>'
+                    +'<td colspan="2">'+productnRow["fk_item_name"]+'</td>'
+                    +'<td>'+productnRow["quantity"]+'</td>'
+                    +'<td>'+productnRow["mrp_value"]+'</td>'
+                    +'<td>'+productnRow["bill_value"]+'</td>'
+                    +'<td>'+0+'</td>'
+                    +'<td>'+0+'</td>'
+                    +'<td>'+0+'</td>'
+                    +'<td>'+productnRow["bill_value"]+'</td>'
+                    
+                +'</tr>'
+    }
+
+    function addInvoiceTotalrow(oneRow){
+        return '<tr class="invoicecal">'
+                    +'<td></td>'
+                    +'<td></td>'
+                    +'<td></td>'
+                    +'<td></td>'
+                    +'<td></td>'
+                    +'<td></td>'
+
+                    +'<td></td>'
+                    +'<td></td>'
+                    +'<td>Total</td>'
+
+                    +'<td>'+oneRow["basic_value_amount"]+'</td>'
+                    +'<td>'+oneRow["cgst_amount"]+'</td>'
+                    +'<td>'+oneRow["sgst_amount"]+'</td>'
+                    +'<td>'+oneRow["round_off_amount"]+'</td>'
+                    +'<td>'+oneRow["lock_bill_amount"]+'</td>'
                 +'</tr>';
     }
 

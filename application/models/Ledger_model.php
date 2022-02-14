@@ -158,7 +158,7 @@ class Ledger_model extends CI_Model {
         $endDate = $arg['end_date']. " 23:59:59";
         // $endDateFormat = date('Y-m-d H:i:s', $endDate);
         $invoiceStatus = array('completed', 'partial_paid', 'paid');
-        $this->db->select('pk_invoice_id, unique_invioce_code, fk_client_code, client_name, gstnumber, payment_mode, lock_bill_amount, created_at');
+        $this->db->select('pk_invoice_id, unique_invioce_code, previous_invoice_ref_no, fk_client_code, client_name, gstnumber, payment_mode, lock_bill_amount, created_at');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('invoice_type', 'sell');
         $this->db->where_in('status', $invoiceStatus);
@@ -173,6 +173,7 @@ class Ledger_model extends CI_Model {
                 $tempData = array();
                 $tempData["pk_invoice_id"] = $row->pk_invoice_id;
                 $tempData["unique_invioce_code"] = $row->unique_invioce_code;
+                $tempData["previous_invoice_ref_no"] = $row->previous_invoice_ref_no;
 
                 $tempData["fk_client_code"] = $row->fk_client_code;
                 $tempData["client_name"] = $row->client_name;
@@ -199,6 +200,71 @@ class Ledger_model extends CI_Model {
                 $tempData["cgst_amount"] =  $cgstValue;
                 $tempData["sgst_amount"] =  $cgstValue;
                 $tempData["round_off_amount"] =  $round_off;
+                
+                $data['result'][] = $tempData;
+            }
+            $data['code'] = true;
+            // $data['result'] = $query->result();
+        }else{
+            $data['code'] = false;
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function invoice_list($arg){
+        $startDate = $arg['start_date']." 00:00:00";
+        // $startDateFormat = date('Y-m-d H:i:s', $startDate);
+        $endDate = $arg['end_date']. " 23:59:59";
+        // $endDateFormat = date('Y-m-d H:i:s', $endDate);
+        $invoiceStatus = array('completed', 'partial_paid', 'paid');
+        $this->db->select('pk_invoice_id, unique_invioce_code, previous_invoice_ref_no, fk_client_code, client_name, gstnumber, payment_mode, lock_bill_amount, created_at');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('invoice_type', 'sell');
+        $this->db->where_in('status', $invoiceStatus);
+        $this->db->where("created_at BETWEEN '$startDate' AND '$endDate'");
+        $this->db->order_by("created_at", "ASC");
+        $this->db->from('Invoices');
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            
+            foreach ($query->result() as $row)  
+            {  
+                $tempData = array();
+                $tempData["pk_invoice_id"] = $row->pk_invoice_id;
+                $tempData["unique_invioce_code"] = $row->unique_invioce_code;
+                $tempData["previous_invoice_ref_no"] = $row->previous_invoice_ref_no;
+                
+
+                $tempData["fk_client_code"] = $row->fk_client_code;
+                $tempData["client_name"] = $row->client_name;
+                $tempData["gstnumber"] = $row->gstnumber;
+                $tempData["payment_mode"] = $row->payment_mode;
+
+                $tempData["lock_bill_amount"] = $row->lock_bill_amount;
+                $tempData["created_at"] = $row->created_at;
+
+                $date = date_create($row->created_at);
+                $tempData["bill_date"] = date_format($date,"d-M-y");
+                $tempData["invoice_bill_date"] = date_format($date,"m-y");
+
+                $bill_value = (float)$row->lock_bill_amount;
+                $basicValue = round((($bill_value * 100) / 118), 2);
+                $cgstValue = round((($basicValue * 9) / 100), 2);
+                $total_cgst_value = $basicValue + $cgstValue;
+                $total_cgst_sgst_value = ($total_cgst_value + $cgstValue);
+                $bill_amount = round($total_cgst_sgst_value, 0);
+                $round_off = round(($bill_amount - $total_cgst_sgst_value), 2);
+
+                $tempData["basic_value_amount"] =  $basicValue;
+
+                $tempData["cgst_amount"] =  $cgstValue;
+                $tempData["sgst_amount"] =  $cgstValue;
+                $tempData["round_off_amount"] =  $round_off;
+
+                $this->load->model('Invoice_model', '', TRUE);
+
+                $tempData["invoice_items_list"] = $this->Invoice_model->invoice_items_list($tempData["unique_invioce_code"]);
                 
                 $data['result'][] = $tempData;
             }

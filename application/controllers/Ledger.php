@@ -190,4 +190,65 @@ class Ledger extends CI_Controller {
             }
         }
     }
+
+
+    /**
+     * For ledger invoice report
+     */
+
+    public function getInvoice(){
+        $data = array();
+
+        $this->template->set('title', 'Invoice Report');
+        $this->template->load('default_layout', 'contents' , 'ledger/invoicereport', $data);
+    }
+
+    public function invoiceReport(){
+        $data = array();
+        if($this->session->userdata('isUserLoggedIn') != TRUE){ 
+            $data['code'] = false;
+            $data['result'] = [];
+            $data["message"] = "Unable to serve because your session is expire!";
+        }else{
+            if ($this->input->server('REQUEST_METHOD') === 'POST') {
+                $data['start_date'] = $this->input->post('start_date');
+                $data['end_date'] = $this->input->post('end_date');
+                $data["message"] = "";
+                $client_result = $this->Ledger_model->invoice_list($data);
+                if($client_result['code']){
+                    $data['code'] = $client_result['code'];
+                    $data['result'] = $client_result['result'];
+                    $data["message"] = "Successfully get Invoice report!";
+                }else{
+                    $data['code'] = $client_result['code'];
+                    $data['result'] = [];
+                    $data["message"] = "No Invoice report according to search string";
+                }
+            }else{
+                $data['code'] = false;
+                $data['result'] = [];
+                $data["message"] = "Unable to serve GET Request, Please try again!";
+            }
+        }
+        echo json_encode($data);
+    }
+
+    function getInvoicePDF(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['start_date'] = $this->uri->segment(2);;
+            $data['end_date'] = $this->uri->segment(3);;
+            $client_result = $this->Ledger_model->invoice_list($data);
+            if($client_result['code']){
+                $data['code'] = $client_result['code'];
+                $data['result'] = $client_result['result'];
+                $data["message"] = "Successfully get Invoice!";
+                $data['title'] = "Saytem Enterprice";
+                // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
+                $this->load->library('pdf');
+                $html = $this->load->view('ledger/ledgerreportpdf', $data, true);
+                $this->pdf->createPDF($html, "Ledger Report ".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
+            }
+        }
+    }
 }
