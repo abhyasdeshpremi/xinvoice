@@ -11,21 +11,21 @@
             <div class="form-row">
                 <div class="col-md-2 mb-3">
                     <label for="validationDefault03">Unique Code <span class="requiredClass">*</span></label>
-                    <input class="form-control" id="uniqueItemCode" name="uniqueItemCode" type="text" placeholder="Item Code" style="text-transform:uppercase" value="<?php echo isset($uniqueItemCode)? $uniqueItemCode : ''; ?>" required/>
+                    <input class="form-control" id="uniqueItemCode" name="uniqueItemCode" type="text" placeholder="Product Code" style="text-transform:uppercase" value="<?php echo isset($uniqueItemCode)? $uniqueItemCode : ''; ?>" required/>
                 </div>
                 <div class="col-md-5 mb-3">
-                    <label for="validationDefault03">Item Name <span class="requiredClass">*</span></label>
-                    <input class="form-control" id="itemName" name="itemName" type="text" placeholder="Item Name" value="<?php echo isset($itemName)? $itemName : ''; ?>" required/>
+                    <label for="validationDefault03">Product Name <span class="requiredClass">*</span></label>
+                    <input class="form-control" id="itemName" name="itemName" type="text" placeholder="Product Name" value="<?php echo isset($itemName)? $itemName : ''; ?>" required/>
                 </div>
                 <div class="col-md-5 mb-3">
-                    <label for="validationDefault03">Item Desciption</label>
-                    <input class="form-control" id="itemsubdescription" name="itemsubdescription" type="text" placeholder="Item Sub Name" value="<?php echo isset($itemsubdescription)? $itemsubdescription : ''; ?>" />
+                    <label for="validationDefault03">Product Desciption</label>
+                    <input class="form-control" id="itemsubdescription" name="itemsubdescription" type="text" placeholder="Product Sub Name" value="<?php echo isset($itemsubdescription)? $itemsubdescription : ''; ?>" />
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="itemCompanyCode">Item's company <a  href="<?php echo base_url('/createcompany'); ?>">Add New Company</a></label>
+                    <label for="itemCompanyCode">Product's company <a  href="<?php echo base_url('/createcompany'); ?>">Add New Company</a></label>
                         <select class="form-control" id="itemCompanyCode" name="itemCompanyCode">
                             <?php $count = 0; 
                             foreach($companiesList as $company){ ?>
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Create Item</button>
+            <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Create Product</button>
         </form>
     </div>
 </div>

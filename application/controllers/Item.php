@@ -42,17 +42,17 @@ class Item extends CI_Controller {
                     $data['itemcostprice'] = '';
                     $data['itemopbalanceinquantity'] = '';
                     $data['itemCompanyCode'] = '';
-                    $data['successMessage'] = "Successfully Item Created.";
+                    $data['successMessage'] = "Successfully Product Created.";
                 }else{
-                    $data['errorMessage'] = 'Unable to save firm information. Please contact your Administrator.';
+                    $data['errorMessage'] = 'Unable to save Product information. Please contact your Administrator.';
                 }
             }else{
                 $data['errorMessage'] = 'Unique Code must be unique.';
             }
          }
-        $this->template->set('buttonName', 'Items List');
+        $this->template->set('buttonName', 'Products List');
         $this->template->set('buttonLink', base_url('/itemdetails'));
-        $this->template->set('title', 'Create Item');
+        $this->template->set('title', 'Create Product');
         $this->template->load('default_layout', 'contents' , 'item/createitem', $data);
     }
 
@@ -71,9 +71,9 @@ class Item extends CI_Controller {
         $firm_result = $this->Item_model->item_list($config["per_page"], $page);
         $data['data'] = $firm_result['result'];
         $data['page'] = $page ;
-        $this->template->set('buttonName', 'New Item');
+        $this->template->set('buttonName', 'New Product');
         $this->template->set('buttonLink', base_url('/createitem'));
-        $this->template->set('title', 'Items List');
+        $this->template->set('title', 'Products List');
         $this->template->load('default_layout', 'contents' , 'item/itemdetail', $data);
     }
 
@@ -99,7 +99,7 @@ class Item extends CI_Controller {
             if($uniqueCodeVerify){
                 $createItem = $this->Item_model->update_item($data);
                 if($createItem ){
-                    $data['successMessage'] = "Successfully Item Updated.";
+                    $data['successMessage'] = "Successfully Product Updated.";
                 }else{
                     $data['errorMessage'] = 'No change on current value or Something went wrong';
                 }
@@ -110,9 +110,9 @@ class Item extends CI_Controller {
 
         $item_result = $this->Item_model->update_item_detail($item_id);
         $data['data'] = $item_result['result'];
-        $this->template->set('buttonName', 'Items List');
+        $this->template->set('buttonName', 'Products List');
         $this->template->set('buttonLink', base_url('/itemdetails'));
-        $this->template->set('title', 'Items Update');
+        $this->template->set('title', 'Products Update');
         $this->template->load('default_layout', 'contents' , 'item/updateitem', $data);
     }
 
@@ -124,11 +124,11 @@ class Item extends CI_Controller {
             if($item_delete_result['code']){
                 $data['code'] = $item_delete_result['code'];
                 $data['itemid'] = $item_delete_result['itemid'];
-                $data["message"] = "Successfully item deleted!";
+                $data["message"] = "Successfully Product deleted!";
             }else{
                 $data['code'] = $item_delete_result['code'];
                 $data['itemid'] = $item_delete_result['itemid'];
-                $data["message"] = "Unable to delete this item. Please try again!";
+                $data["message"] = "Unable to delete this Product. Please try again!";
             }
         }else{
             $data['code'] = false;
