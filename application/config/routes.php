@@ -124,5 +124,8 @@ $route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';
 $route['getclientaccounthistory/:any(/:num)?'] = 'account/getClientAccountHistory$1$2';
 $route['saveamount'] = 'account/saveAmount';
 
+$route['account'] = 'profile/Account';
+$route['changepassword'] = 'profile/ChangePassword';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

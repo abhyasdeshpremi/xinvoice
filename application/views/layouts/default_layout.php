@@ -313,13 +313,13 @@
                             <!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsItem" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="figma"></i></div>
-                                Items
+                                Product
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseDashboardsItem" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/itemdetails'); ?>">Items List</a>
-                                    <a class="nav-link" href="<?php echo base_url('/createitem'); ?>">New Item</a>
+                                    <a class="nav-link" href="<?php echo base_url('/itemdetails'); ?>">Product List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createitem'); ?>">New Product</a>
                                 </nav>
                             </div>
 							
@@ -396,6 +396,18 @@
                                 </nav>
                             </div>
 							
+                            <!-- Sidenav Accordion (Users)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsProfile" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="settings"></i></div>
+                                Setting
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsProfile" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/account'); ?>">Account</a>
+                                    <a class="nav-link" href="<?php echo base_url('/changepassword'); ?>">Change Password</a>
+                                </nav>
+                            </div>
                                     
                             <?php if ($this->session->userdata('role') == "superadmin"){ ?>
 							<!-- Sidenav Accordion (Users)-->
