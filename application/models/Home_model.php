@@ -30,6 +30,70 @@ class Home_model extends CI_Model {
             $this->db->update('entries', $this, array('id' => $_POST['id']));
     }
 
+    public function today_sale(){
+        $tempData = array();
+        $startDate = date('y-m-d 00:00:00', strtotime('-6 days'));
+        $endDate = date('y-m-d 23:59:59');
+        $tempData["startDate"] = $startDate;
+        $tempData["endDate"] = $endDate;
+
+        $today = date('y-m-d 00:00:00');
+        $thisWeek = date('y-m-d 00:00:00', strtotime('this week'));
+        $thisMonth = date('y-m-01 00:00:00', strtotime('this month'));
+
+        if (date('m') <= 3) {
+            $thisFYear = (date('Y')-1);
+            $financial_year = (date('Y')-1) . '-' . date('Y');
+        } else {
+            $thisFYear = date('Y');
+            $financial_year = date('Y') . '-' . (date('Y') + 1);
+        }
+        $tempData["financial_year"] = $financial_year;
+
+        $thisSFinancialYear = $thisFYear.'-04-01 00:00:00'; 
+
+        $thisStartFinancial = date($thisSFinancialYear);
+        $thisEndFinancial = date('y-m-d 23:59:59');
+
+        $tempData["thisWeek"] = $thisWeek;
+        $tempData["thisMonth"] = $thisMonth;
+        $tempData["thisStartFinancial"] = $thisStartFinancial;
+        $tempData["thisEndFinancial"] = $thisEndFinancial;
+        $startDate = date('y-m-d 00:00:00', strtotime('-6 days'));
+        $endDate = date('y-m-d 23:59:59');
+
+        
+
+        $tempData["debit_count_value_today"] = $this->amountSumforDuration($today ,$endDate , "debit");
+        $tempData["credit_count_value_today"] = $this->amountSumforDuration($today ,$endDate , "credit");
+        
+
+        $tempData["debit_count_value_week"] = $this->amountSumforDuration($thisWeek, $endDate, "debit");
+        $tempData["credit_count_value_week"] = $this->amountSumforDuration($thisWeek, $endDate, "credit");
+        
+        $tempData["debit_count_value_month"] = $this->amountSumforDuration($thisMonth, $endDate, "debit");
+        $tempData["credit_count_value_month"] = $this->amountSumforDuration($thisMonth , $endDate, "credit");
+
+        $tempData["debit_count_value_year"] = $this->amountSumforDuration($thisStartFinancial, $thisEndFinancial, "debit");
+        $tempData["credit_count_value_year"] = $this->amountSumforDuration($thisStartFinancial , $thisEndFinancial, "credit");
+        
+
+        return $tempData;
+    }
+    public function amountSumforDuration($startDate, $endDate, $payment_type = "credit"){
+        //debit
+        $this->db->select_sum('amount');
+        $this->db->from('Account_Entry');
+        $this->db->where('payment_type', $payment_type);
+        $this->db->where('delete_flag', "no");
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
+        $itemCountQuery = $this->db->get();
+        $count_value = $itemCountQuery->row()->amount;
+        $count_value = round($count_value);
+        return $count_value;
+    }
+
 }
 
 ?>
