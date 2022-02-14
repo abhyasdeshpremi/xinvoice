@@ -18,8 +18,159 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 <div class="row">
+<div class="col-xl-3 col-md-6 mb-4">
+        <!-- Dashboard info widget 1-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-primary mb-1">Sale (Today)</div>
+                        <div class="h5">₹ <?php echo isset($sale["debit_count_value_today"]) ? number_format($sale["debit_count_value_today"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-up"></i>
+                            12%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-dollar-sign fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <!-- Dashboard info widget 4-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-info mb-1">Purchase (Today)</div>
+                        <div class="h5">₹ <?php echo isset($sale["credit_count_value_today"]) ? number_format($sale["credit_count_value_today"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-danger d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-down"></i>
+                            1%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-percentage fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-xl-3 col-md-6 mb-4">
         <!-- Dashboard info widget 1-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-primary mb-1">Sale (This Week)</div>
+                        <div class="h5">₹ <?php echo isset($sale["debit_count_value_week"]) ? number_format($sale["debit_count_value_week"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-up"></i>
+                            12%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-dollar-sign fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <!-- Dashboard info widget 4-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-info mb-1">Purchase (This Week)</div>
+                        <div class="h5">₹ <?php echo isset($sale["credit_count_value_week"]) ? number_format($sale["credit_count_value_week"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-danger d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-down"></i>
+                            1%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-percentage fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <!-- Dashboard info widget 1-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-primary mb-1">Sale (This Monthly)</div>
+                        <div class="h5">₹ <?php echo isset($sale["debit_count_value_month"]) ? number_format($sale["debit_count_value_month"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-up"></i>
+                            12%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-dollar-sign fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <!-- Dashboard info widget 4-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-info mb-1">Purchase (This Monthly)</div>
+                        <div class="h5">₹ <?php echo isset($sale["credit_count_value_month"]) ? number_format($sale["credit_count_value_month"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-danger d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-down"></i>
+                            1%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-percentage fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <!-- Dashboard info widget 1-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-primary mb-1">Sale (This Year)</div>
+                        <div class="h5">₹ <?php echo isset($sale["debit_count_value_year"]) ? number_format($sale["debit_count_value_year"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-success d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-up"></i>
+                            12%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-dollar-sign fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <!-- Dashboard info widget 4-->
+        <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <div class="small font-weight-bold text-info mb-1">Purchase (This Year)</div>
+                        <div class="h5">₹ <?php echo isset($sale["credit_count_value_year"]) ? number_format($sale["credit_count_value_year"], 2) : 0 ; ?></div>
+                        <div class="text-xs font-weight-bold text-danger d-inline-flex align-items-center">
+                            <i class="mr-1" data-feather="trending-down"></i>
+                            1%
+                        </div>
+                    </div>
+                    <div class="ml-2"><i class="fas fa-percentage fa-2x text-gray-200"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -37,7 +188,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 2-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-secondary h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -55,7 +205,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 3-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-success h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -73,7 +222,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 4-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -89,7 +237,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <div class="row">
     <div class="col-lg-4 mb-4">
