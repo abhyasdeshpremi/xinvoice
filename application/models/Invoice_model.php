@@ -104,9 +104,22 @@ class Invoice_model extends CI_Model {
 
     public function invoiceInitial($invoiceNewID, $invoiceType = 'sell'){
         if ($invoiceType === 'sell'){
+
+            if (date('m') <= 3) {
+                $thisFYear = (date('Y')-1);
+            } else {
+                $thisFYear = date('Y');
+            }
+    
+            $thisSFinancialYear = $thisFYear.'-04-01 00:00:00'; 
+    
+            $thisStartFinancial = date($thisSFinancialYear);
+            $thisEndFinancial = date('y-m-d 23:59:59');
+            
             $previous_invoice_ref_no = 1;
             $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
             $this->db->where('invoice_type', "sell");
+            $this->db->where("created_at BETWEEN '$thisStartFinancial' AND '$thisEndFinancial'");
             $queryForNumber = $this->db->get('Invoices');
             if($queryForNumber->num_rows() > 0){
                 $previous_invoice_ref_no = $previous_invoice_ref_no + $queryForNumber->num_rows();
