@@ -25,10 +25,16 @@ if(isset($mode)){
    if($mode === "portrait"){
         $width = "width : 100%;";
    }
-} ?>
+} 
+$globalInvoice_bill_include_tax = $this->session->userdata('bill_include_tax');
+$invoiceTitle = "TAX INVOICE";
+if($globalInvoice_bill_include_tax == 'no'){
+    $invoiceTitle = "RETAIL INVOICE";
+}
+?>
 <body style="<?php echo $width; ?>" >
     <center>
-        <span style="font:12px;">TAX INVOICE</span><br>
+        <span style="font:12px;"><?php echo $invoiceTitle; ?></span><br>
         <span style="font:14px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
         <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br><br>
     </center>
@@ -66,7 +72,7 @@ if(isset($mode)){
             <th style="text-align:right;">MRP</th>
             <th style="text-align:right;" width="50px;">MRP VAL</th>
             <th style="text-align:right;">DS%</th>
-            <th style="text-align:right;">Bas. Val</th>
+            <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <th style="text-align:right;">Bas. Val</th> <?php } ?>
             <th width="60px;" style="text-align:right;">Bill Value</th>
         </tr>
     </thead>
@@ -93,7 +99,7 @@ if(isset($mode)){
                 <td style="text-align:right;"><?php echo number_format($value->mrp, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp_value, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->discount, 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td>
+                <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td> <?php } ?>
                 <td style="text-align:right;"><?php echo number_format($value->bill_value, 2); ?></td>
             </tr>
         <?php $i++; } ?>
@@ -104,7 +110,7 @@ if(isset($mode)){
                 <td></td>
                 <td style="text-align:right;"><hr><b><?php echo number_format($mrp_value, 2); ?></b></td>
                 <td></td>
-                <td style="text-align:right;"><hr><b><?php echo number_format($basicItemsValue, 2); ?></b></td>
+                <?php if($globalInvoice_bill_include_tax == 'yes'){ ?><td style="text-align:right;"><hr><b><?php echo number_format($basicItemsValue, 2); ?></b></td> <?php } ?>
                 <td style="text-align:right;"><hr><b><?php echo number_format($bill_value, 2); ?></b></td>
             </tr>
             <?php 
@@ -118,7 +124,7 @@ if(isset($mode)){
                 $round_off = round(($bill_amount - $total_cgst_sgst_value), 2);
             ?>
 
-
+            <?php if($globalInvoice_bill_include_tax == 'yes'){ ?>
             <tr style="border-right-style:none;">
                 <td colspan="5" rowspan="6" ></td>
                 <td colspan="3">BASIC VALUE RS.</td>
@@ -144,6 +150,8 @@ if(isset($mode)){
                 <td colspan="3"><b>BILL AMOUNT RS.</b></td>
                 <td style="text-align:right;"><b><?php echo number_format($bill_amount, 2); ?></b></td>
             </tr>
+            <?php } ?>
+
     <tbody>
 </table>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">

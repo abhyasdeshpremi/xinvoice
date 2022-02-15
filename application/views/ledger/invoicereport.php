@@ -210,7 +210,7 @@ $(function() {
                     +'<td><b>'+total_lock_bill_amount+'</b></td>'
                 +'</tr>'
                 +'<tr class="invoicecal" >'
-                    +'<td colspan="11">&nbsp;</td>'
+                    +'<td colspan="14">&nbsp;</td>'
                 +'</tr>';
     }
 
@@ -231,15 +231,7 @@ $(function() {
 
     function addInvoiceTotalrow(oneRow){
         return '<tr class="invoicecal">'
-                    +'<td></td>'
-                    +'<td></td>'
-                    +'<td></td>'
-                    +'<td></td>'
-                    +'<td></td>'
-                    +'<td></td>'
-
-                    +'<td></td>'
-                    +'<td></td>'
+                    +'<td colspan="8"></td>'
                     +'<td>Total</td>'
 
                     +'<td>'+oneRow["basic_value_amount"]+'</td>'
