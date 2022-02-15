@@ -78,6 +78,7 @@ class Firm_model extends CI_Model {
             'city'=>$data['firmCity'],
             'district'=>$data['firmdistrict'],
             'state'=>$data['firmState'],
+            'bill_include_tax'=>$data['billIncludeTax'],
             'pin_code'=>$data['firmZip'],
             'mobile_number'=>$data['firmMobile'],
             'status'=>$data['firmstatus'],

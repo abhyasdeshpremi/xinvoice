@@ -10,6 +10,7 @@ class Profile extends CI_Controller {
         }
         $this->load->model('User_model', '', TRUE);
         $this->load->model('Firm_model', '', TRUE);
+        $this->load->model('Profile_model', '', TRUE);
         $this->load->library("pagination");
     }
      
@@ -31,6 +32,11 @@ class Profile extends CI_Controller {
         // $data['page'] = $page;
         // $this->template->set('buttonName', 'New User');
         // $this->template->set('buttonLink', base_url('/createuser'));
+
+        $data = array();
+        $username = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $profile_result = $this->Profile_model->profile($username);
+        $data['data'] = $profile_result['result'];
         $this->template->set('title', 'Account');
         $this->template->load('default_layout', 'contents' , 'settings/profile', $data);
     }
