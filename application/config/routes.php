@@ -131,7 +131,7 @@ $route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';
 $route['getclientaccounthistory/:any(/:num)?'] = 'account/getClientAccountHistory$1$2';
 $route['saveamount'] = 'account/saveAmount';
 
-$route['account'] = 'profile/Account';
+$route['account/:any'] = 'profile/Account/$1';
 $route['changepassword'] = 'profile/ChangePassword';
 
 $route['404_override'] = '';

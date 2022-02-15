@@ -22,6 +22,7 @@
                 $firmState =  $value->state;
                 $firmZip = $value->pin_code;
                 $firmStatus = $value->status;
+                $billIncludeTax = $value->bill_include_tax;
             }
         ?>
         <form class="updateFirm" action="" method="POST" id="updateFirm">
@@ -90,6 +91,13 @@
                         <option value="active" <?php if($firmStatus == 'active'){ echo 'selected'; } ?>>Active</option>
                         <option value="inactive" <?php if($firmStatus == 'inactive'){ echo 'selected'; } ?>>Inactive</option>
                         <option value="warning" <?php if($firmStatus == 'warning'){ echo 'selected'; } ?>>Warning</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                <label for="userStatus">Bill Include Tax</label>
+                    <select class="form-control" id="billIncludeTax" name="billIncludeTax">
+                        <option value="yes" <?php if($billIncludeTax == 'yes'){ echo 'selected'; } ?>>Yes</option>
+                        <option value="no" <?php if($billIncludeTax == 'no'){ echo 'selected'; } ?>>No</option>
                     </select>
                 </div>
             </div>

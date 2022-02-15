@@ -206,7 +206,7 @@
                             </div>
                         </h6>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#!">
+                        <a class="dropdown-item" href="<?php echo base_url('/account'."/".$this->session->userdata('username')); ?>">
                             <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                             Account
                         </a>
@@ -405,11 +405,11 @@
                             </a>
                             <div class="collapse" id="collapseDashboardsProfile" data-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/account'); ?>">Account</a>
+                                    <a class="nav-link" href="<?php echo base_url('/account'."/".$this->session->userdata('username')); ?>">Account</a>
                                     <a class="nav-link" href="<?php echo base_url('/changepassword'); ?>">Change Password</a>
                                 </nav>
                             </div>
-                                    
+                            
                             <?php if ($this->session->userdata('role') == "superadmin"){ ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsFirm" aria-expanded="false" aria-controls="collapseDashboards">
