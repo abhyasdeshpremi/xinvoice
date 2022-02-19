@@ -22,7 +22,7 @@
             <div class="form-row">
                 <div class="col-md-12 mb-3">
                     <label for="validationDefault03">Re-Enter New Password <span class="requiredClass">*</span></label>
-                    <input class="form-control" id="reenternewpassword" name="reenternewpassword" type="password" placeholder="Re-Enter New Password" value="<?php echo isset($firmMobile)? $firmMobile : ''; ?>" required/>
+                    <input class="form-control" id="reenternewpassword" name="reenternewpassword" type="text" placeholder="Re-Enter New Password" value="<?php echo isset($firmMobile)? $firmMobile : ''; ?>" required/>
                 </div> 
             </div>
             <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Change password</button>
@@ -42,5 +42,26 @@
             }
             return true;
         });
+
+        //form header value check
+        $('#changepassword').on('submit', function (e) {
+            var oldpassword = $("#oldpassword").val();
+            var newpassword = $('#newpassword').val();
+            var reenternewpassword = $('#reenternewpassword').val();
+            
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/changedpassword'); ?>',
+                dataType  : 'json',
+                data: { oldpassword: oldpassword, newpassword:  newpassword, reenternewpassword: reenternewpassword},
+                error: function(data) {
+                    console.log(data);
+                },
+                success: function (data) {
+                    alert(data.message);
+                }
+            });
+        });
+
     });
 </script>

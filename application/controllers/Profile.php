@@ -51,4 +51,32 @@ class Profile extends CI_Controller {
         $this->template->load('default_layout', 'contents' , 'settings/changepassword', $data);
     }
 
+    public function ChangedPassword(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            $data['oldpassword'] = $this->input->post('oldpassword');
+            $data['newpassword'] = $this->input->post('newpassword');
+            $data['reenternewpassword'] = $this->input->post('reenternewpassword');
+            if($data['newpassword'] == $data['reenternewpassword']){
+                $changedPassword = $this->Profile_model->changedPassword($data);
+                if($changedPassword['code']){
+                    $data['code'] = $changedPassword['code'];
+                    $data["message"] = "Successfully password changed";
+                }else{
+                    $data['code'] = $changedPassword['code'];
+                    $data["message"] = "old password does not matched. Please try again!";
+                }
+            }else{
+                $data['code'] = false;
+                $data["message"] = "new and re-type password miss-matched.";
+            }   
+        }else{
+            $data['code'] = false;
+            $data["message"] = "Unable to change password., Please try again!";
+        }
+        echo json_encode($data);
+    }
+
+
 }

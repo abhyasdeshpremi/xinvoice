@@ -141,6 +141,7 @@ $route['saveamount'] = 'account/saveAmount';
 
 $route['account/:any'] = 'profile/Account/$1';
 $route['changepassword'] = 'profile/ChangePassword';
+$route['changedpassword'] = 'profile/ChangedPassword';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

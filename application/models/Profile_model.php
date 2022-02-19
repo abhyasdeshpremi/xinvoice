@@ -25,5 +25,30 @@ class Profile_model extends CI_Model {
         }
         return $data;
     }
+
+    public function changedPassword($data){
+        $result = array();
+        $this->db->where('username', $this->session->userdata('username'));
+        $this->db->where('password', md5(trim($data['oldpassword'])));
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('delete_flag', 'NO');
+        $query = $this->db->get('Users');
+        if($query->num_rows() == 1){
+            $userList = array(
+                'password'=> md5(trim($data['newpassword'])),
+                'updated_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('username', $this->session->userdata('username'));
+            $this->db->where('password', md5(trim($data['oldpassword'])));
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->where('delete_flag', 'NO');
+            $this->db->update('Users', $userList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+        }else{
+            $result['code']  = false;
+        }
+        $result['query'] = $this->db->last_query();
+        return $result;
+    }
 }
 ?>
