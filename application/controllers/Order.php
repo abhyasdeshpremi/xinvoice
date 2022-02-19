@@ -260,7 +260,7 @@ class Order extends CI_Controller {
 
 
     public function createOrderPDF($id = null, $mode = "landscape", $download = false){
-        if(access_lavel(3, $this->session->userdata('role'))){
+        if(access_lavel(2, $this->session->userdata('role'))){
             redirect('/login');
         }
         $data = array();
