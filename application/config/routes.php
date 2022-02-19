@@ -103,7 +103,15 @@ $route['getstocklog(/:num)?'] = 'stock/getstocklog$1';
 $route['getitemstocklog/:any(/:num)?'] = 'stock/getItemStocklog$1$2';
 $route['savestock'] = 'stock/saveStock';
 
-
+$route['orders(/:num)?'] = 'order/ordersList$1';
+$route['createorder'] = 'order/createorderID';
+$route['createorder/(:any)'] = 'order/createorder/$1';
+$route['saveorderheader'] = 'order/saveOrderHeader';
+$route['updateorderstatus'] = 'order/updateOrderStatus';
+$route['saveitemorder'] = 'order/saveItemInOrder';
+$route['updateitemorder'] = 'order/updateItemInOrder';
+$route['deleteorderitem'] = 'order/deleteOrderItem';
+$route['createorderpdf/(:any)/(:any)/(:num)'] = 'order/createOrderPDF/$1/$2/$3';
 
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 

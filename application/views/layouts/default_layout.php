@@ -246,18 +246,9 @@
                             </a>
                             <!-- Sidenav Menu Heading (Core)-->
                             <div class="sidenav-menu-heading">Invoice</div>
-                            <!-- Sidenav Accordion (Dashboard)-->
-                            <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                                Seller
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="dashboard-2.html">Seller Invoice List</a>
-                                    <a class="nav-link" href="dashboard-3.html">New Invoice</a>
-                                </nav>
-                            </div> -->
+
+                            <?php if(!(access_lavel(3, $this->session->userdata('role') ))){ ?>
+
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsinvoice" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="file-minus"></i></div>
                                 Sell
@@ -281,7 +272,20 @@
                                     <a class="nav-link" href="<?php echo base_url('/createpurchaseinvoice'); ?>">New Purchase Invoice</a>
                                 </nav>
                             </div>
-							
+							<?php } ?>
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseOrders" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="file-plus"></i></div>
+                                Order
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseOrders" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/orders'); ?>">Order List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createorder'); ?>">New Order</a>
+                                </nav>
+                            </div>
+                            
+                            <?php if(!(access_lavel(3, $this->session->userdata('role') ))){ ?>
                             <div class="sidenav-menu-heading">Utility</div>
 
                             <!-- Sidenav Accordion (Items)-->
@@ -364,26 +368,10 @@
                                 </nav>
                             </div>
 
-							<!-- Sidenav Menu Heading (Account)-->
+                            <?php } ?>
+							
                             <div class="sidenav-menu-heading">Account</div>
-                            <!-- Sidenav Accordion (Dashboard)-->
-                            <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsAccount" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                                Ledger
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseDashboardsAccount" data-parent="#accordionSidenav">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="dashboard-2.html">Purchase List</a>
-                                    <a class="nav-link" href="dashboard-3.html">Seller List</a>
-                                </nav>
-                            </div> -->
-							<!-- <a class="nav-link" href="<?php echo base_url('getstock');  ?>">
-                                <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
-                                Stock
-                            </a> -->
-
-
+                            <?php if(!(access_lavel(3, $this->session->userdata('role') ))){ ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsUser" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="users"></i></div>
@@ -396,7 +384,7 @@
                                     <a class="nav-link" href="<?php echo base_url('/createuser'); ?>">New user</a>
                                 </nav>
                             </div>
-							
+							<?php } ?>
                             <!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsProfile" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="settings"></i></div>
@@ -409,8 +397,7 @@
                                     <a class="nav-link" href="<?php echo base_url('/changepassword'); ?>">Change Password</a>
                                 </nav>
                             </div>
-                            
-                            <?php if ($this->session->userdata('role') == "superadmin"){ ?>
+                            <?php if(!(access_lavel(5, $this->session->userdata('role') ))){ ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsFirm" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>

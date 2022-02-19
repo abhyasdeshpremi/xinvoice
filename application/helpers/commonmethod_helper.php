@@ -107,3 +107,52 @@ function debug_function(){
         $paise = ($decimal > 0) ? "." . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' Paise' : '';
         return ($Rupees ? $Rupees . 'Rupees ' : '') . $paise;
     }
+
+
+    function access_lavel($level, $currentRole){
+        switch($level){
+            case 1:
+                $user_roles_level = ['superadmin','admin','coordinator','order_taker','watcher'];
+                if(in_array($currentRole, $user_roles_level)){
+                    return false;
+                }else{
+                    return true;
+                }
+                break;
+            case 2:
+                $user_roles_level = ['superadmin','admin','coordinator','order_taker'];
+                if(in_array($currentRole, $user_roles_level)){
+                    return false;
+                }else{
+                    return true;
+                }
+                break;
+            case 3:
+                $user_roles_level = ['superadmin','admin','coordinator'];
+                if(in_array($currentRole, $user_roles_level)){
+                    return false;
+                }else{
+                    return true;
+                }
+                break;
+            case 4:
+                $user_roles_level = ['superadmin','admin'];
+                if(in_array($currentRole, $user_roles_level)){
+                    return false;
+                }else{
+                    return true;
+                }
+                break;
+            case 5:
+                $user_roles_level = ['superadmin'];
+                if(in_array($currentRole, $user_roles_level)){
+                    return false;
+                }else{
+                    return true;
+                }
+                break;
+            default:
+                return true;
+                break;
+        }
+    }

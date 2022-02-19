@@ -35,6 +35,19 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('bill_include_tax', $firmResult['result'][0]->bill_include_tax);
                 $this->session->set_userdata('pk_firm_id', $firmResult['result'][0]->pk_firm_id);
                 $this->session->set_userdata('role', $queryResult['result'][0]->role);
+
+
+                $address = isset($firmResult['result'][0]->address) ? $firmResult['result'][0]->address : "";
+                $area = isset($firmResult['result'][0]->area) ? $firmResult['result'][0]->area : "";
+                $city = isset($firmResult['result'][0]->city) ? $firmResult['result'][0]->city : "";
+                $district = isset($firmResult['result'][0]->district) ? $firmResult['result'][0]->district : "";
+                $state = isset($firmResult['result'][0]->state) ? $firmResult['result'][0]->state : "";
+                $pin_code = isset($firmResult['result'][0]->pin_code) ? $firmResult['result'][0]->pin_code : "";
+
+                $full_address = $address." ".$area." ".$city." ".$district." ".$state." ".$pin_code;
+                $this->session->set_userdata('firmaddress', $full_address);
+
+
                 redirect('/home');
             }else{
                 $this->template->set('title', 'Login');

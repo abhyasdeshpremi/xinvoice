@@ -24,6 +24,9 @@ class Invoice extends CI_Controller {
     }
 
     public function createinvoiceID(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $invoice = $this->Invoice_model->invoice_id();
         if(count($invoice) == 0){
            $invoiceNewID = invoiceIDCreation();
@@ -42,6 +45,9 @@ class Invoice extends CI_Controller {
     }
     
     public function createinvoice($id = null){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
         if(!validationInvoiceID($id)){
             $data['heading'] = "Invalid Invoice ID";
@@ -88,6 +94,9 @@ class Invoice extends CI_Controller {
     }
 
     public function createInvoicePDF($id = null, $mode = "landscape", $download = false){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
         if(!validationInvoiceID($id)){
             $data['heading'] = "Invalid Invoice ID";
@@ -146,6 +155,9 @@ class Invoice extends CI_Controller {
     }
 
     public function saveItemInInvoice(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['itemID'] = $this->input->post('itemID');
@@ -201,6 +213,9 @@ class Invoice extends CI_Controller {
     }
 
     public function updateItemInInvoice(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['itemID'] = $this->input->post('itemID');
@@ -275,6 +290,9 @@ class Invoice extends CI_Controller {
     }
 
     public function invoicedetails(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
 
         $config = array();
@@ -304,6 +322,9 @@ class Invoice extends CI_Controller {
     }
 
     public function getinvoicelist(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $invoice_result = $this->Invoice_model->invoiceType_by_id($this->input->post('invoiceRefID'));
             echo json_encode($invoice_result);
@@ -314,6 +335,9 @@ class Invoice extends CI_Controller {
     }
 
     public function saveInvoiceHeader(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['defaultinvoiceID'] = $this->input->post('defaultinvoiceID');
@@ -370,6 +394,9 @@ class Invoice extends CI_Controller {
     }
 
     public function deleteInvoiceItem(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['itemInvoiceCode'] = $this->input->post('itemInvoiceCode');
@@ -402,6 +429,9 @@ class Invoice extends CI_Controller {
     }
 
     function updateInvoiceStatus(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['invoiceid'] = $this->input->post('invoiceid');

@@ -8,6 +8,9 @@ class Profile extends CI_Controller {
         if($this->session->userdata('isUserLoggedIn') != TRUE){ 
             redirect('/login');
         }
+        if(access_lavel(1, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $this->load->model('User_model', '', TRUE);
         $this->load->model('Firm_model', '', TRUE);
         $this->load->model('Profile_model', '', TRUE);

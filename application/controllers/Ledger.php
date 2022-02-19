@@ -5,6 +5,12 @@ class Ledger extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        if($this->session->userdata('isUserLoggedIn') != TRUE){ 
+            redirect('/login');
+        }
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $this->load->model('Ledger_model', '', TRUE);
     }
 

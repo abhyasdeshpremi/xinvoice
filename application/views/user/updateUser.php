@@ -66,6 +66,7 @@
                         <select class="form-control" id="userRole" name="userRole">
                             <option value="admin" <?php if($userRole == 'admin'){ echo 'selected'; } ?>>Admin</option>
                             <option value="coordinator" <?php if($userRole == 'coordinator'){ echo 'selected'; } ?>>Coordinator</option>
+                            <option value="order_taker" <?php if($userRole == 'order_taker'){ echo 'selected'; } ?>>Order Taker</option>
                             <option value="watcher" <?php if($userRole == 'watcher'){ echo 'selected'; } ?>>Watcher</option>
                         </select>
                 </div>

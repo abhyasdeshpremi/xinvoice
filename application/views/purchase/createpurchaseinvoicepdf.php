@@ -17,6 +17,9 @@
            padding-left: 5px;
            padding-right:5px;
         }
+        body {
+        font-family: Helvetica, sans-serif;
+        }
     </style>
 </head>
 <?php 
