@@ -48,6 +48,7 @@
                         <select class="form-control" id="userRole" name="userRole">
                             <option value="admin">Admin</option>
                             <option value="coordinator">Coordinator</option>
+                            <option value="order_taker">Order Taker</option>
                             <option value="watcher">Watcher</option>
                         </select>
                 </div>

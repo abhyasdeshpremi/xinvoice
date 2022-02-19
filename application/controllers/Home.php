@@ -8,6 +8,9 @@ class Home extends CI_Controller {
         if($this->session->userdata('isUserLoggedIn') != TRUE){ 
             redirect('/login');
         }
+        if(access_lavel(1, $this->session->userdata('role'))){
+            redirect('/login');
+        }
 		$this->load->model('Home_model', '', TRUE);
     }
 

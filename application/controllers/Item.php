@@ -8,6 +8,9 @@ class Item extends CI_Controller {
         if($this->session->userdata('isUserLoggedIn') != TRUE){ 
             redirect('/login');
         }
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $this->load->model('Item_model', '', TRUE);
         $this->load->library("pagination");
     }
