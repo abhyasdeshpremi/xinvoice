@@ -96,7 +96,7 @@ if($globalInvoice_bill_include_tax == 'no'){
             $discount_num = number_format( (int)(isset($value->discount) ? $value->discount : 0), 2);
             ?>
             <tr>
-                <td><?php echo $i; ?></td>
+                <td style="text-align:top;"><?php echo $i; ?></td>
                 <td><?php echo $value->fk_item_name; ?></td>
                 <td style="text-align:right;"><?php echo $value->case_unit; ?></td>
                 <td style="text-align:right;"><?php echo $value->quantity; ?></td>
