@@ -38,12 +38,15 @@ if($globalInvoice_bill_include_tax == 'no'){
 <body style="<?php echo $width; ?>" >
     <center>
         <span style="font:12px;"><?php echo $invoiceTitle; ?></span><br>
-        <span style="font:14px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
+        <span style="font:16px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
         <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br><br>
     </center>
-    <span style="font:8px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
-    <span style="font:8px; float:right; margin-right:10px;">MOB.NO.: <?php echo $owninvoicemobileno; ?><br>ORIGINAL FOR RECIPIENT</span>
-    <br>
+    <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
+    <span style="font:10px; float:right; margin-right:10px;">ORIGINAL FOR RECIPIENT</span>
+    <center style="margin-right:0px;">
+        <span style="font:10px; margin-right:0px;">MOB.NO.: <b><?php echo $owninvoicemobileno; ?></b></span>
+    </center>
+   
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
         <div style="height:60px; font: 9px;">
             <div style="width:50%; height: 60px; float:left;"> To,
@@ -172,21 +175,21 @@ if($globalInvoice_bill_include_tax == 'no'){
         </div>
         <div style="width:50%; height: 60px; float:right;">
             <center>
-                <span style="font:12px; margin:20px;">For <?php echo $invoicetitle;?></span><br><br>
+                <span style="font:12px; margin:20px;">For <?php echo $invoicetitle;?></span><br><br><br>
                 <span style="font:12px;">AUTHORIZED SIGNATORY</span>
             </center>
         </div>
     </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-    <div style="margin-top:2px; height: 10px;">
+    <div style="margin-top:10px; height: 10px;">
+        <div style="width:33%; height: 10px; float:left;">
+        RECEIVER'S SIGNATURE
+        </div>
         <div style="width:33%; height: 10px; float:left;">
         IN TIME : 
         </div>
         <div style="width:33%; height: 10px; float:left;">
         OUT TIME : 
-        </div>
-        <div style="width:33%; height: 10px; float:left;">
-        RECEIVER'S SIGNATURE
         </div>
     </div>
 
