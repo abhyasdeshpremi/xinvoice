@@ -93,6 +93,7 @@ if($globalInvoice_bill_include_tax == 'no'){
             $case_unit_value = $case_unit_value + (float)$value->case_unit;
             $basicItemValue = round((($value->bill_value * 100) / 118), 2);
             $basicItemsValue = $basicItemsValue + $basicItemValue;
+            $discount_num = number_format( (int)(isset($value->discount) ? $value->discount : 0), 2);
             ?>
             <tr>
                 <td><?php echo $i; ?></td>
@@ -101,7 +102,7 @@ if($globalInvoice_bill_include_tax == 'no'){
                 <td style="text-align:right;"><?php echo $value->quantity; ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp_value, 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value->discount, 2); ?></td>
+                <td style="text-align:right;"><?php echo $discount_num; ?></td>
                 <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td> <?php } ?>
                 <td style="text-align:right;"><?php echo number_format($value->bill_value, 2); ?></td>
             </tr>
