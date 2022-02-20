@@ -59,12 +59,12 @@ if($globalInvoice_bill_include_tax == 'no'){
                 </div>
             </div>
             <div style="width:50%; height: 60px; float:right;"> 
-                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $invoicerefNumber; ?> / 21-22</span><br>
-                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $created_at; ?></span><br>
-                    <span>PAYMENT MODE &nbsp; &nbsp;: <?php echo $paymentmode; ?></span><br>
-                    <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
-                    <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
-                    <span>MOB NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <?php echo $mobilenumber; ?></span>
+                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <?php echo $invoicerefNumber; ?> / 21-22</span><br>
+                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $created_at; ?></span><br>
+                    <span>PAYMENT MODE &nbsp;&nbsp;: <?php echo $paymentmode; ?></span><br>
+                    <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
+                    <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
+                    <span>MOB NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <?php echo $mobilenumber; ?></span>
             </div>
         </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">

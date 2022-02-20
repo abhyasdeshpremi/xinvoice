@@ -7,11 +7,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
         table, th{
-            border: 1px dotted gray;
+            border: 1px dashed black;
         }
         table, td{
-            border-right-style: dotted;
-            border: 1px gray;
+            border-right-style: dashed;
+            border: 1px black;
         }
         th, td {
            padding-left: 5px;
@@ -36,19 +36,22 @@ if($globalInvoice_bill_include_tax == 'no'){
 }
  ?>
 <body style="<?php echo $width; ?>" >
-    <center>
+<center>
         <span style="font:12px;"><?php echo $invoiceTitle; ?></span><br>
-        <span style="font:14px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
+        <span style="font:16px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
         <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br><br>
     </center>
-    <span style="font:8px; float:left;">GSTIN : <?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></span>
-    <span style="font:8px; float:right; margin-right:10px;">MOB.NO.: <?php echo $owninvoicemobileno; ?><br>ORIGINAL FOR RECIPIENT</span>
-    <br>
+    <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
+    <span style="font:10px; float:right; margin-right:10px;">ORIGINAL FOR RECIPIENT</span>
+    <center style="margin-right:0px;">
+        <span style="font:10px; margin-right:0px;">MOB.NO.: <b><?php echo $owninvoicemobileno; ?></b></span>
+    </center>
+
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-        <div style="height:60px; font: 8px;">
+        <div style="height:60px; font: 9px;">
             <div style="width:50%; height: 60px; float:left;"> From,
                 <div style="margin-right:10px;">
-                    <span><?php echo $clientname; ?></span><br>
+                    <span><b><?php echo $clientname; ?></b></span><br>
                     <span><?php echo $clintaddress; ?></span><br>
                     <span><?php echo $clientcity." ".$clientarea; ?></span><br>
                     <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br>
@@ -56,20 +59,20 @@ if($globalInvoice_bill_include_tax == 'no'){
                 </div>
             </div>
             <div style="width:50%; height: 60px; float:right;"> 
-                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $invoicerefNumber; ?> / 21-22</span><br>
-                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $created_at; ?></span><br>
-                    <span>PAYMENT MODE &nbsp; &nbsp;: <?php echo $paymentmode; ?></span><br>
-                    <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
-                    <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
-                    <span>MOB NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <?php echo $mobilenumber; ?></span>
+                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <?php echo $invoicerefNumber; ?> / 21-22</span><br>
+                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $created_at; ?></span><br>
+                    <span>PAYMENT MODE &nbsp;&nbsp;: <?php echo $paymentmode; ?></span><br>
+                    <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
+                    <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
+                    <span>MOB NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <?php echo $mobilenumber; ?></span>
             </div>
         </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:10px;" width="99%">
+    <table class="table table-bordered" id="dataTable" cellspacing="0" style="font:11px;" width="99%">
     <thead >
         <tr>
             <th width="8px;">SN</th>
-            <th width="135px;">Name</th>
+            <th width="190px;">Name</th>
             <th style="text-align:right;">C/S</th>
             <th style="text-align:right;" >QTY</th>
             <th style="text-align:right;">MRP</th>
@@ -88,7 +91,7 @@ if($globalInvoice_bill_include_tax == 'no'){
                 $case_unit_value = 0;
         foreach($invoiceitemsList as $value){
             $mrp_value = $mrp_value + (float)$value->mrp_value;
-            $bill_value = $bill_value + (double)$value->bill_value;
+            $bill_value = $bill_value + round((double)$value->bill_value, 2);
             $qty_value = $qty_value + (int)$value->quantity;
             $case_unit_value = $case_unit_value + (float)$value->case_unit;
             $basicItemValue = round((($value->bill_value * 100) / 118), 2);
@@ -96,15 +99,15 @@ if($globalInvoice_bill_include_tax == 'no'){
             $discount_num = number_format( (int)(isset($value->discount) ? $value->discount : 0), 2);
             ?>
             <tr>
-                <td><?php echo $i; ?></td>
+                <td style="text-align:initial;"><?php echo $i; ?></td>
                 <td><?php echo $value->fk_item_name; ?></td>
-                <td style="text-align:right;"><?php echo $value->case_unit; ?></td>
+                <td style="text-align:right;"><b><?php echo $value->case_unit; ?></b></td>
                 <td style="text-align:right;"><?php echo $value->quantity; ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp_value, 2); ?></td>
                 <td style="text-align:right;"><?php echo $discount_num; ?></td>
                 <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td> <?php } ?>
-                <td style="text-align:right;"><?php echo number_format($value->bill_value, 2); ?></td>
+                <td style="text-align:right;"><b><?php echo number_format($value->bill_value, 2); ?></b></td>
             </tr>
         <?php $i++; } ?>
             <tr>
@@ -155,37 +158,38 @@ if($globalInvoice_bill_include_tax == 'no'){
                 <td style="text-align:right;"><b><?php echo number_format($bill_amount, 2); ?></b></td>
             </tr>
             <?php } ?>
+
     <tbody>
 </table>
-    <hr style="text-align:left;margin-left:0; margin-right:10px;">
-    <spna style="font:10px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
-    <hr style="text-align:left;margin-left:0; margin-right:10px;">
+    <hr style="text-align:left;margin-left:0; margin-right:12px;">
+    <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
+    <hr style="text-align:left;margin-left:0; margin-right:12px;">
     <spna style="font:10px;">HSN CODE: ICE CREAM (2015) & FROZEN DESSERT (2015) & ICE CANDEY (2015)</span>
     <div style="margin-top:10px; height: 60px;">
         <div style="width:50%; height: 60px; float:left;">
-            <span style="font:8px;">NOTE :-</span><br>
-            <span style="font:6px;">1. GOOD ONCE SOLD WILL NOT BE TAKEN BACK OR EXCHANGED.</span><br>
-            <span style="font:6px;">2. SELLER IS NOT RESPONSIBLE FOR ANY LOSS OR DAMAGE OF GOODS IN TRANSIT.</span><br>
-            <span style="font:6px;">3. DISPUTE OF ANY CASE WILL BE SUBJECT TO BIHAR SHARIF JURISDICTION.</span><br>
-            <span style="font:6px;">4. THIS IS A COMPUTER GENERATED INVOICE.</span><br>
+            <span style="font:10px;">NOTE :-</span><br>
+            <span style="font:8px;">1. GOOD ONCE SOLD WILL NOT BE TAKEN BACK OR EXCHANGED.</span><br>
+            <span style="font:8px;">2. SELLER IS NOT RESPONSIBLE FOR ANY LOSS OR DAMAGE OF GOODS IN TRANSIT.</span><br>
+            <span style="font:8px;">3. DISPUTE OF ANY CASE WILL BE SUBJECT TO BIHAR SHARIF JURISDICTION.</span><br>
+            <span style="font:8px;">4. THIS IS A COMPUTER GENERATED INVOICE.</span><br>
         </div>
         <div style="width:50%; height: 60px; float:right;">
             <center>
-                <span style="font:12px; margin:20px;">For <?php echo $invoicetitle;?></span><br><br>
+                <span style="font:12px; margin:20px;">For <?php echo $invoicetitle;?></span><br><br><br>
                 <span style="font:12px;">AUTHORIZED SIGNATORY</span>
             </center>
         </div>
     </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-    <div style="margin-top:2px; height: 10px;">
+    <div style="margin-top:10px; height: 10px;">
+        <div style="width:33%; height: 10px; float:left;">
+        RECEIVER'S SIGNATURE
+        </div>
         <div style="width:33%; height: 10px; float:left;">
         IN TIME : 
         </div>
         <div style="width:33%; height: 10px; float:left;">
         OUT TIME : 
-        </div>
-        <div style="width:33%; height: 10px; float:left;">
-        RECEIVER'S SIGNATURE
         </div>
     </div>
 
