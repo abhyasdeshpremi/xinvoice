@@ -65,7 +65,7 @@ if($globalInvoice_bill_include_tax == 'no'){
             </div>
         </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:10px;" width="99%">
+<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:12px;" width="99%">
     <thead >
         <tr>
             <th width="8px;">SN</th>
@@ -93,6 +93,7 @@ if($globalInvoice_bill_include_tax == 'no'){
             $case_unit_value = $case_unit_value + (float)$value->case_unit;
             $basicItemValue = round((($value->bill_value * 100) / 118), 2);
             $basicItemsValue = $basicItemsValue + $basicItemValue;
+            $discount_num = number_format( (int)(isset($value->discount) ? $value->discount : 0), 2);
             ?>
             <tr>
                 <td><?php echo $i; ?></td>
@@ -101,7 +102,7 @@ if($globalInvoice_bill_include_tax == 'no'){
                 <td style="text-align:right;"><?php echo $value->quantity; ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp_value, 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value->discount, 2); ?></td>
+                <td style="text-align:right;"><?php echo $discount_num; ?></td>
                 <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td> <?php } ?>
                 <td style="text-align:right;"><?php echo number_format($value->bill_value, 2); ?></td>
             </tr>
@@ -157,17 +158,17 @@ if($globalInvoice_bill_include_tax == 'no'){
 
     <tbody>
 </table>
-    <hr style="text-align:left;margin-left:0; margin-right:10px;">
-    <spna style="font:10px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
-    <hr style="text-align:left;margin-left:0; margin-right:10px;">
-    <spna style="font:10px;">HSN CODE: ICE CREAM (2015) & FROZEN DESSERT (2015) & ICE CANDEY (2015)</span>
-    <div style="margin-top:10px; height: 60px;">
+    <hr style="text-align:left;margin-left:0; margin-right:12px;">
+    <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
+    <hr style="text-align:left;margin-left:0; margin-right:12px;">
+    <spna style="font:12px;">HSN CODE: ICE CREAM (2015) & FROZEN DESSERT (2015) & ICE CANDEY (2015)</span>
+    <div style="margin-top:12px; height: 70px;">
         <div style="width:50%; height: 60px; float:left;">
-            <span style="font:8px;">NOTE :-</span><br>
-            <span style="font:6px;">1. GOOD ONCE SOLD WILL NOT BE TAKEN BACK OR EXCHANGED.</span><br>
-            <span style="font:6px;">2. SELLER IS NOT RESPONSIBLE FOR ANY LOSS OR DAMAGE OF GOODS IN TRANSIT.</span><br>
-            <span style="font:6px;">3. DISPUTE OF ANY CASE WILL BE SUBJECT TO BIHAR SHARIF JURISDICTION.</span><br>
-            <span style="font:6px;">4. THIS IS A COMPUTER GENERATED INVOICE.</span><br>
+            <span style="font:10px;">NOTE :-</span><br>
+            <span style="font:8px;">1. GOOD ONCE SOLD WILL NOT BE TAKEN BACK OR EXCHANGED.</span><br>
+            <span style="font:8px;">2. SELLER IS NOT RESPONSIBLE FOR ANY LOSS OR DAMAGE OF GOODS IN TRANSIT.</span><br>
+            <span style="font:8px;">3. DISPUTE OF ANY CASE WILL BE SUBJECT TO BIHAR SHARIF JURISDICTION.</span><br>
+            <span style="font:8px;">4. THIS IS A COMPUTER GENERATED INVOICE.</span><br>
         </div>
         <div style="width:50%; height: 60px; float:right;">
             <center>
