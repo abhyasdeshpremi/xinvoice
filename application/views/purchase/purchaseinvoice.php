@@ -200,10 +200,10 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid."/landscape/0"); ?>">Landscape Invoice</a>
-                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid)."/portrait/0"; ?>">Portrait Invoice</a>
-                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid."/landscape/1"); ?>">Landscape Invoice Download</a>
-                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid)."/portrait/1"; ?>">Portrait Invoice Download</a>
+                                        <!-- <a class="dropdown-item" target="_blank" href="<?php //echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid."/landscape/0"); ?>">Landscape Invoice</a> -->
+                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid)."/portrait/0"; ?>">View Invoice</a>
+                                        <!-- <a class="dropdown-item" target="_blank" href="<?php //echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid."/landscape/1"); ?>">Landscape Invoice Download</a> -->
+                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createpurchaseinvoicepdf'."/".$invoiceid)."/portrait/1"; ?>">Download Invoice</a>
                                     </div>
                                 </div>
                             </div>
