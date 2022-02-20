@@ -60,17 +60,17 @@
                         <form class="orderheader" id="orderheader">
                             <input type="hidden" id="defaultorderID" name="defaultorderID" value="<?php echo $unique_order_code; ?>" />
                             
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
+                             <div class="form-row">
+                                <!-- <div class="col-md-6 mb-3"> 
                                         <label for="userStatus">Select Client for order</label>
                                         <select class="form-control" id="clientcode" name="clientcode" style="text-transform: capitalize;">
                                             <option value="">Select Order Client Name</option>
-                                            <?php $count = 0; 
-                                                foreach($clients as $client){ ?>
-                                                    <option value="<?php echo $client->code; ?>" <?php if($client->code == $clientcode){ echo"selected"; } ?> ><?php echo $client->name;?></option>
-                                            <?php $count++; } ?>
+                                            <?php //$count = 0; 
+                                                //foreach($clients as $client){ ?>
+                                                    <option value="<?php //echo $client->code; ?>" <?php //if($client->code == $clientcode){ echo"selected"; } ?> ><?php //echo $client->name;?></option>
+                                            <?php //$count++; } ?>
                                         </select>
-                                </div>
+                                </div> -->
                                 <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">Client's Name</label>
                                     <input class="form-control" id="clientname" name="clientname" type="text" placeholder="Client's Name" value="<?php echo isset($clientname)? $clientname : ''; ?>" />

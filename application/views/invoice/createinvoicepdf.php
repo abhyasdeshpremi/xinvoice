@@ -7,11 +7,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
         table, th{
-            border: 1px dotted gray;
+            border: 1px dashed black;
         }
         table, td{
-            border-right-style: dotted;
-            border: 1px gray;
+            border-right-style: dashed;
+            border: 1px black;
         }
         th, td {
            padding-left: 5px;
@@ -41,14 +41,14 @@ if($globalInvoice_bill_include_tax == 'no'){
         <span style="font:14px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
         <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br><br>
     </center>
-    <span style="font:8px; float:left;">GSTIN : <?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></span>
+    <span style="font:8px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
     <span style="font:8px; float:right; margin-right:10px;">MOB.NO.: <?php echo $owninvoicemobileno; ?><br>ORIGINAL FOR RECIPIENT</span>
     <br>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-        <div style="height:60px; font: 8px;">
+        <div style="height:60px; font: 9px;">
             <div style="width:50%; height: 60px; float:left;"> To,
                 <div style="margin-right:10px;">
-                    <span><?php echo $clientname; ?></span><br>
+                    <span><b><?php echo $clientname; ?></b></span><br>
                     <span><?php echo $clintaddress; ?></span><br>
                     <span><?php echo $clientcity." ".$clientarea; ?></span><br>
                     <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br>
@@ -65,7 +65,7 @@ if($globalInvoice_bill_include_tax == 'no'){
             </div>
         </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:12px;" width="99%">
+<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:11px;" width="99%">
     <thead >
         <tr>
             <th width="8px;">SN</th>
@@ -161,8 +161,8 @@ if($globalInvoice_bill_include_tax == 'no'){
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
     <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
-    <spna style="font:12px;">HSN CODE: ICE CREAM (2015) & FROZEN DESSERT (2015) & ICE CANDEY (2015)</span>
-    <div style="margin-top:12px; height: 70px;">
+    <spna style="font:10px;">HSN CODE: ICE CREAM (2015) & FROZEN DESSERT (2015) & ICE CANDEY (2015)</span>
+    <div style="margin-top:10px; height: 60px;">
         <div style="width:50%; height: 60px; float:left;">
             <span style="font:10px;">NOTE :-</span><br>
             <span style="font:8px;">1. GOOD ONCE SOLD WILL NOT BE TAKEN BACK OR EXCHANGED.</span><br>
