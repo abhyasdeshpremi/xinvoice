@@ -69,7 +69,7 @@ if($globalInvoice_bill_include_tax == 'no'){
     <thead >
         <tr>
             <th width="8px;">SN</th>
-            <th width="135px;">Name</th>
+            <th width="150px;">Name</th>
             <th style="text-align:right;">C/S</th>
             <th style="text-align:right;" >QTY</th>
             <th style="text-align:right;">MRP</th>
@@ -96,7 +96,7 @@ if($globalInvoice_bill_include_tax == 'no'){
             $discount_num = number_format( (int)(isset($value->discount) ? $value->discount : 0), 2);
             ?>
             <tr>
-                <td style="text-align:top;"><?php echo $i; ?></td>
+                <td style="text-align:initial;"><?php echo $i; ?></td>
                 <td><?php echo $value->fk_item_name; ?></td>
                 <td style="text-align:right;"><?php echo $value->case_unit; ?></td>
                 <td style="text-align:right;"><?php echo $value->quantity; ?></td>
