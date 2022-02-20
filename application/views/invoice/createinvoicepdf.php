@@ -98,13 +98,13 @@ if($globalInvoice_bill_include_tax == 'no'){
             <tr>
                 <td style="text-align:initial;"><?php echo $i; ?></td>
                 <td><?php echo $value->fk_item_name; ?></td>
-                <td style="text-align:right;"><?php echo $value->case_unit; ?></td>
+                <td style="text-align:right;"><b><?php echo $value->case_unit; ?></b></td>
                 <td style="text-align:right;"><?php echo $value->quantity; ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp_value, 2); ?></td>
                 <td style="text-align:right;"><?php echo $discount_num; ?></td>
                 <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td> <?php } ?>
-                <td style="text-align:right;"><?php echo number_format($value->bill_value, 2); ?></td>
+                <td style="text-align:right;"><b><?php echo number_format($value->bill_value, 2); ?></b></td>
             </tr>
         <?php $i++; } ?>
             <tr>
