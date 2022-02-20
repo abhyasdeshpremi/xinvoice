@@ -69,7 +69,7 @@ if($globalInvoice_bill_include_tax == 'no'){
     <thead >
         <tr>
             <th width="8px;">SN</th>
-            <th width="150px;">Name</th>
+            <th width="180px;">Name</th>
             <th style="text-align:right;">C/S</th>
             <th style="text-align:right;" >QTY</th>
             <th style="text-align:right;">MRP</th>
