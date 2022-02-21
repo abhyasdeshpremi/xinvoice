@@ -60,7 +60,7 @@ if($globalInvoice_bill_include_tax == 'no'){
             </div>
             <div style="width:50%; height: 60px; float:right;"> 
                     <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <?php echo $invoicerefNumber; ?> / 21-22</span><br>
-                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $created_at; ?></span><br>
+                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo date("d-m-Y H:i", strtotime($created_at)); ?></span><br>
                     <span>PAYMENT MODE &nbsp;&nbsp;: <?php echo $paymentmode; ?></span><br>
                     <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
                     <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
@@ -129,6 +129,8 @@ if($globalInvoice_bill_include_tax == 'no'){
                 $total_cgst_sgst_value = ($total_cgst_value + $sgstValue);
                 $bill_amount = round($total_cgst_sgst_value, 0);
                 $round_off = round(($bill_amount - $total_cgst_sgst_value), 2);
+
+                $savingAmount = number_format(($mrp_value - $bill_amount), 2);
             ?>
 
             <?php if($globalInvoice_bill_include_tax == 'yes'){ ?>
@@ -157,6 +159,11 @@ if($globalInvoice_bill_include_tax == 'no'){
                 <td colspan="3"><b>BILL AMOUNT RS.</b></td>
                 <td style="text-align:right;"><b><?php echo number_format($bill_amount, 2); ?></b></td>
             </tr>
+            <?php } else { ?>
+                <tr style="border-right-style:none;">
+                    <td colspan="6" ></td>
+                    <td colspan="2" style="text-align:right;"><b>TOTAL SAVING: <?php echo $savingAmount; ?></b></td>
+                </tr>
             <?php } ?>
 
     <tbody>
