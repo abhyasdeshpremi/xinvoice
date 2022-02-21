@@ -437,6 +437,8 @@
         });
 
         $('#add_item_to_invoice').click(function(){
+            $("#myInput").val('');
+            removefilterFunction();
             var modelbutton = $("#add_item_to_invoice").text();
             if (modelbutton === "Add Item"){
                 var item_code = $("#selectitemcode").val();
@@ -1047,6 +1049,15 @@
             }
         }
     }
+
+    function removefilterFunction() {
+        var a; 
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            a[i].style.display = ""; 
+        }
+    }
+
     function invoiceCalCulationInfo(){
         var numberofrow = invoiceData.length;
         var pdfdropdown = $(".pdfdropdown");
