@@ -452,19 +452,19 @@ class Invoice_model extends CI_Model {
                 if($data['statuscode'] === "completed") {
                     $amountdata['amount'] = $total_bill_value;
                     if ($amountdata['invoice_type'] === "sell"){
-                        $amountdata['notes'] = "Amount ".$total_bill_value." debited automatically when invoice status change to completed state. || sell invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "sell invoice(#".$amountdata['pk_invoice_id'].")";
                         $amountdata['paymenttype'] = "debit";
                     }else if ($amountdata['invoice_type'] === "purchase"){
-                        $amountdata['notes'] = "Amount ".$total_bill_value." credited automatically when invoice status change to completed state. || purchase invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "purchase invoice(#".$amountdata['pk_invoice_id'].")";
                         $amountdata['paymenttype'] = "credit";
                     }
                 }else if($data['statuscode'] === "force_edit") {
                     $amountdata['amount'] = $amountdata['lock_bill_amount'];
                     if ($amountdata['invoice_type'] === "sell"){
-                        $amountdata['notes'] = "Amount ".$amountdata['lock_bill_amount']." credited automatically when invoice status change to force_edit state. || sell invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "sell invoice(#".$amountdata['pk_invoice_id'].")";
                         $amountdata['paymenttype'] = "credit";
                     }else if ($amountdata['invoice_type'] === "purchase"){
-                        $amountdata['notes'] = "Amount ".$amountdata['lock_bill_amount']." debited automatically when invoice status change to force_edit state. || purchase invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "purchase invoice(#".$amountdata['pk_invoice_id'].")";
                         $amountdata['paymenttype'] = "debit";
                     }
                     $account_entry_id = $this->Account_model->find_id($amountdata);
