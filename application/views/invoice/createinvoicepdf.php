@@ -130,7 +130,11 @@ if($globalInvoice_bill_include_tax == 'no'){
                 $bill_amount = round($total_cgst_sgst_value, 0);
                 $round_off = round(($bill_amount - $total_cgst_sgst_value), 2);
 
-                $savingAmount = number_format(($mrp_value - $bill_amount), 2);
+                
+
+                $bill_amout = round($bill_value);
+                $savingAmount = number_format(($mrp_value - $bill_amout), 2);
+                $round_off_without_gst = ($bill_amout - $bill_value);
             ?>
 
             <?php if($globalInvoice_bill_include_tax == 'yes'){ ?>
@@ -162,7 +166,13 @@ if($globalInvoice_bill_include_tax == 'no'){
             <?php } else { ?>
                 <tr style="border-right-style:none;">
                     <td colspan="6" ></td>
-                    <td colspan="2" style="text-align:right;"><b>TOTAL SAVING: <?php echo $savingAmount; ?></b></td>
+                    <td>ROUND OFF</td>
+                    <td style="text-align:right;"><?php echo $round_off_without_gst; ?></td>
+                </tr>
+                <tr style="border-right-style:none;">
+                    <td colspan="6" > <center><b>TOTAL SAVING: <?php echo $savingAmount; ?></b></center></td>
+                    <td><b>BILL AMOUNT</b></td>
+                    <td style="text-align:right;"><b> <?php echo number_format($bill_amout, 2); ?></b></td>
                 </tr>
             <?php } ?>
 
