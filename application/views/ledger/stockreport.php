@@ -150,7 +150,7 @@ $(function() {
     function addResultrow(total_stock_value){
         return '<tr class="invoicecal" >'
                     +'<td colspan="7"></td>'
-                    +'<td><b>'+total_stock_value+'</b></td>'
+                    +'<td><b>'+total_stock_value.toFixed(2)+'</b></td>'
                 +'</tr>';
     }
 
