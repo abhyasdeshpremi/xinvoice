@@ -1052,6 +1052,7 @@
 
     function removefilterFunction() {
         var a; 
+        div = document.getElementById("myDropdown");
         a = div.getElementsByTagName("a");
         for (i = 0; i < a.length; i++) {
             a[i].style.display = ""; 
