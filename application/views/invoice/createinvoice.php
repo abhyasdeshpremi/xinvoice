@@ -990,6 +990,8 @@
         var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
         var bill_amount = Math.round(parseFloat(bill_value).toFixed(2));
         var round_off = (parseFloat(bill_amount) - parseFloat(total_cgst_sgst_value)).toFixed(2);
+        var round_off_without_gst = (parseFloat(bill_amount) - parseFloat(bill_value)).toFixed(2);
+        var total_saving = parseFloat(mrp_value) - parseFloat(bill_amount);
         if (globalInvoice_bill_include_tax === 'yes'){
             return  '<tr class="invoicecal">'
                         +'<td colspan="5"></td>'
@@ -1029,11 +1031,21 @@
                     +'</tr>';
         }else{
             return  '<tr class="invoicecal">'
-                    +'<td colspan="5"></td>'
-                    +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
-                    +'<td></td>'
-                    +'<td><b>'+parseFloat(bill_value).toFixed(2)+'</b></td>'
-                +'</tr>';
+                        +'<td colspan="5"></td>'
+                        +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
+                        +'<td></td>'
+                        +'<td><b>'+parseFloat(bill_value).toFixed(2)+'</b></td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal">'
+                        +'<td colspan="5"></td>'
+                        +'<td colspan="2">ROUND OFF</td>'
+                        +'<td>'+round_off_without_gst+'</td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal">'
+                        +'<td colspan="5"><center><b>TOTAL SAVING: '+total_saving+'</b></center></td>'
+                        +'<td colspan="2">BILL AMOUNT</td>'
+                        +'<td><b>'+bill_amount+'</b></td>'
+                    +'</tr>';
         }
     }
 
