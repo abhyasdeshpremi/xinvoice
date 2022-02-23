@@ -90,15 +90,18 @@ class Account extends CI_Controller {
             $data['amount'] = $this->input->post('amount');
             $data['notes'] = $this->input->post('notes');
             $data['paymenttype'] = $this->input->post('paymenttype');
+            $data['statuscode'] = '';
             $data["message"] = "";
             $invoice_item_save_result = $this->Account_model->saveAccount($data);
             if($invoice_item_save_result['code']){
                 $data['code'] = $invoice_item_save_result['code'];
                 $data['pk_account_id'] = $invoice_item_save_result['pk_account_id'];
-                $data["message"] = "Successfully payment amount added!";
+                $data['totalAmount'] = $invoice_item_save_result['totalAmount'];
+                $data["message"] = "Successfully payment amount ".$data['paymenttype']."!";
             }else{
                 $data['code'] = $invoice_item_save_result['code'];
                 $data['pk_account_id'] = $invoice_item_save_result['pk_account_id'];
+                $data['totalAmount'] = $invoice_item_save_result['totalAmount'];
                 $data["message"] = "Unable to save amount, may be wrong Client. Please try again!";
             }
         }else{

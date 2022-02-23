@@ -31,7 +31,7 @@
                         <td><?php echo $value->district; ?></td>
                         <td>
                             <a href="<?php echo base_url('/getclientaccounthistory'.'/'.$value->fk_client_code); ?>">
-                                <?php echo $value->total_amount; ?>
+                                <span id="<?php echo $value->fk_client_code; ?>"><?php echo $value->total_amount; ?></span>
                             </a>
                         </td>
                     </tr>
@@ -178,11 +178,13 @@
             var paymentdate = $("#paymentdate").val();
             var paymentamout = $("#paymentamount").val();
             var paymentcomment = $("#paymentcomment").val();
+            $("#submit_payment").attr('disabled','disabled');
             if(client_name.length <= 0){
                 $("#successfullyMessage").addClass('alert-danger');
                 $("#successfullyMessage").text("Please selecr Client");
                 $('#successfullyMessage').fadeIn();
                 $('#successfullyMessage').delay(4000).fadeOut();
+                $("#submit_payment").removeAttr('disabled');
                 return false;
             }
             if(paymentdate.length <= 0){
@@ -190,6 +192,7 @@
                 $("#successfullyMessage").text("Please select payment date");
                 $('#successfullyMessage').fadeIn();
                 $('#successfullyMessage').delay(4000).fadeOut();
+                $("#submit_payment").removeAttr('disabled');
                 return false;
             }
             if(paymentamout.length <= 0){
@@ -197,6 +200,7 @@
                 $("#successfullyMessage").text("Please add payment amount");
                 $('#successfullyMessage').fadeIn();
                 $('#successfullyMessage').delay(4000).fadeOut();
+                $("#submit_payment").removeAttr('disabled');
                 return false;
             }
             if(paymentcomment.length <= 0){
@@ -204,6 +208,7 @@
                 $("#successfullyMessage").text("Please add payment notes");
                 $('#successfullyMessage').fadeIn();
                 $('#successfullyMessage').delay(4000).fadeOut();
+                $("#submit_payment").removeAttr('disabled');
                 return false;
             }
             $.ajax({
@@ -216,6 +221,7 @@
                     $("#successfullyMessage").text("Something went wrong");
                     $('#successfullyMessage').fadeIn();
                     $('#successfullyMessage').delay(4000).fadeOut();
+                    $("#submit_payment").removeAttr('disabled');
                 },
                 success: function (data) {
                     var data = JSON.parse(data);
@@ -226,6 +232,9 @@
                         $("#paymentdate").val('');
                         $("#paymentamount").val('');
                         $("#paymentcomment").val('');
+                        if($('#'+client_code).length){
+                            $('#'+client_code).text(data.totalAmount);
+                        }
                         $("#successfullyMessage").addClass('alert-success');
                     }else{
                         $("#successfullyMessage").addClass('alert-danger');
@@ -233,6 +242,7 @@
                     $("#successfullyMessage").text(data.message);
                     $('#successfullyMessage').fadeIn();
                     $('#successfullyMessage').delay(4000).fadeOut();
+                    $("#submit_payment").removeAttr('disabled');
                 }
             });
         });

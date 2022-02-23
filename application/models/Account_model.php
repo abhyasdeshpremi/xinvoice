@@ -78,7 +78,9 @@ class Account_model extends CI_Model {
             }elseif($data['paymenttype'] == 'debit'){
                 $updateAmount = (int)$preTotalAccountAmount - (int)$data['amount'];
             }
-            
+            $string = 'payment info paymenttype:'. $data['paymenttype'].' preTotalAccountAmount: '.$preTotalAccountAmount.' amount:  '.$data['amount'].' updateAmount: '.$updateAmount.' payment date'.date("Y-m-d H:i:s", strtotime($data['payment_date'])).' payment_date'.$data['payment_date'];
+            log_message("info", $string);
+
             $dataList = array( 
                 'total_amount'=> $updateAmount,
                 'updated_at'=>date('Y-m-d H:i:s')
@@ -88,17 +90,24 @@ class Account_model extends CI_Model {
             $this->db->update($this->table, $dataList);
             $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
             $result['pk_account_id']  = $result['pk_account_id'];
+            $result['totalAmount'] = $updateAmount;
         }else{
+            if($data['paymenttype'] == 'credit'){
+                $amount = (int)$data['amount'];
+            }elseif($data['paymenttype'] == 'debit'){
+                $amount = -(int)$data['amount'];
+            }
             $dataList = array(
                 'fk_client_code'=>$data['fk_client_code'],
                 'fk_client_name'=>$data['fk_client_name'],
-                'total_amount'=> (int)$data['amount'],
+                'total_amount'=> $amount,
                 'fk_username'=>$this->session->userdata('username'),
                 'fk_firm_code'=>$this->session->userdata('firmcode')
             );
             $this->db->insert($this->table, $dataList);
             $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
             $result['pk_account_id']  = $this->db->insert_id();
+            $result['totalAmount'] = $amount;
         }
         if($data['statuscode'] === "force_edit") {
             $account_EntryList = array(
@@ -122,7 +131,7 @@ class Account_model extends CI_Model {
                 'amount'=>(int)$data['amount'],
                 'payment_mode'=>$data['payment_mode'],
                 'payment_type'=>$data['paymenttype'],
-                'payment_date'=>$data['payment_date'],
+                'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'])),
                 'notes'=>$data['notes'],
                 'fk_invoice_id'=>(isset($data['pk_invoice_id'])) ? $data['pk_invoice_id'] : 0,
                 'fk_username'=>$this->session->userdata('username'),
