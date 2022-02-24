@@ -21,13 +21,13 @@
 </head> 
 <?php 
 $globalInvoice_bill_include_tax = $this->session->userdata('bill_include_tax');
-$tax = true;
-$colspan = 5;
-$othercolspan = 8;
+$tax = false;
+$colspan = 4;
+$othercolspan = 5;
 if($globalInvoice_bill_include_tax == 'yes'){
-    $tax = false;
-    $colspan = 4;
-    $othercolspan = 5;
+    $tax = true;
+    $colspan = 5;
+    $othercolspan = 8;
 }
 ?>
 <body style="width : 100%;" >
