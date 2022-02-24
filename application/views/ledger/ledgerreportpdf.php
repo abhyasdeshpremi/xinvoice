@@ -19,6 +19,17 @@
         }
     </style>
 </head> 
+<?php 
+$globalInvoice_bill_include_tax = $this->session->userdata('bill_include_tax');
+$tax = true;
+$colspan = 5;
+$othercolspan = 8;
+if($globalInvoice_bill_include_tax == 'yes'){
+    $tax = false;
+    $colspan = 4;
+    $othercolspan = 5;
+}
+?>
 <body style="width : 100%;" >
     <center>
         <span style="font:12px;">Ledger Report</span><br>
@@ -34,12 +45,12 @@
         <th width="50px;">DATE</th>
         <th>INVNo.</th>
         <th>PARTY NAME</th>
-        <th>GSTIN</th>
+        <?php if($tax){ ?><th>GSTIN</th><?php } ?>
         <th>MODE</th>
-        <th style="text-align:right;">BASIC</th>
-        <th style="text-align:right;">CGST</th>
-        <th style="text-align:right;">SGST</th>
-        <th style="text-align:right;">R.OFF</th>
+        <?php if($tax){ ?><th style="text-align:right;">BASIC</th><?php } ?>
+        <?php if($tax){ ?><th style="text-align:right;">CGST</th><?php } ?>
+        <?php if($tax){ ?><th style="text-align:right;">SGST</th><?php } ?>
+        <?php if($tax){ ?><th style="text-align:right;">R.OFF</th><?php } ?>
         <th style="text-align:right;" width="70px;">NET AMOUNT</th>
     </tr>
 </thead>
@@ -70,39 +81,39 @@
                 <td><?php echo $value["bill_date"]; ?></td>
                 <td><?php echo $value["invoice_bill_date"]."/".$value["invoice_bill_date"]; ?></td>
                 <td><?php echo $value["client_name"]; ?></td>
-                <td><?php echo $value["gstnumber"]; ?></td>
+                <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
                 <td><?php echo $value["payment_mode"]; ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["round_off_amount"], 2); ?></td>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["round_off_amount"], 2); ?></td><?php } ?>
                 <td style="text-align:right;"><?php echo number_format($value["lock_bill_amount"], 2); ?></td>
             </tr>
         <?php 
         }else{ ?>
             <tr>
-                <td colspan="5"></td>
+                <td colspan="<?php echo $colspan; ?>"></td>
                 <td style="text-align:right;"><b>TOTAL</b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_basic_value_amount, 2); ?></b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_cgst_amount, 2); ?></b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_round_off_amount, 2); ?></b></td>
+                <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_basic_value_amount, 2); ?></b></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_cgst_amount, 2); ?></b></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_round_off_amount, 2); ?></b></td><?php } ?>
                 <td style="text-align:right;"><b><?php echo number_format($total_lock_bill_amount, 2); ?></b></td>
             </tr>
             <tr>
-                <td colspan="8">&nbsp;</td>
+                <td colspan="<?php echo $othercolspan; ?>">&nbsp;</td>
             </tr>
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $value["bill_date"]; ?></td>
                 <td><?php echo $value["invoice_bill_date"]."/".$value["invoice_bill_date"]; ?></td>
                 <td><?php echo $value["client_name"]; ?></td>
-                <td><?php echo $value["gstnumber"]; ?></td>
+                <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
                 <td><?php echo $value["payment_mode"]; ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td>
-                <td style="text-align:right;"><?php echo number_format($value["round_off_amount"], 2); ?></td>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td><?php } ?>
+                <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["round_off_amount"], 2); ?></td><?php } ?>
                 <td style="text-align:right;"><?php echo number_format($value["lock_bill_amount"], 2); ?></td>
             </tr>
         <?php
@@ -124,12 +135,12 @@
         
     <?php $i++; } ?>
         <tr>
-            <td colspan="5"></td>
+            <td colspan="<?php echo $colspan; ?>"></td>
             <td style="text-align:right;"><b>TOTAL</b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_basic_value_amount, 2); ?></b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_cgst_amount, 2); ?></b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_round_off_amount, 2); ?></b></td>
+            <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_basic_value_amount, 2); ?></b></td><?php } ?>
+            <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_cgst_amount, 2); ?></b></td><?php } ?>
+            <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td><?php } ?>
+            <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_round_off_amount, 2); ?></b></td><?php } ?>
             <td style="text-align:right;"><b><?php echo number_format($total_lock_bill_amount, 2); ?></b></td>
         </tr>
 <tbody>

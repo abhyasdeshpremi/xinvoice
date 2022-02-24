@@ -42,7 +42,7 @@
 
 <script type="text/javascript">
 $(function() {
-
+    var globalInvoice_bill_include_tax = "<?php echo $this->session->userdata('bill_include_tax'); ?>";
     var start = moment().subtract(1, 'year').startOf('year');//moment(); // moment().subtract(29, 'days');
     var end = moment();
     var base_url = "<?php echo base_url('/downloadclientpdf'); ?>";
@@ -145,52 +145,84 @@ $(function() {
 
     
     function addHeader(){
-        return '<tr class="invoicecal">'
-                    +'<th width="60px;">#</th>'
-                    +'<th width="100px;">DATE</th>'
-                    +'<th>INVNo.</th>'
-                    +'<th>PARTY NAME</th>'
-                    +'<th>GSTIN</th>'
-                    +'<th>MODE</th>'
-                    +'<th>BASIC</th>'
-                    +'<th>CGST</th>'
-                    +'<th>SGST</th>'
-                    +'<th>R.OFF</th>'
-                    +'<th width="70px;">NET AMOUNT</th>'
-                +'</tr>';
+        if (globalInvoice_bill_include_tax === 'yes'){
+            return '<tr class="invoicecal">'
+                        +'<th width="60px;">#</th>'
+                        +'<th width="100px;">DATE</th>'
+                        +'<th>INVNo.</th>'
+                        +'<th>PARTY NAME</th>'
+                        +'<th>GSTIN</th>'
+                        +'<th>MODE</th>'
+                        +'<th>BASIC</th>'
+                        +'<th>CGST</th>'
+                        +'<th>SGST</th>'
+                        +'<th>R.OFF</th>'
+                        +'<th width="70px;">NET AMOUNT</th>'
+                    +'</tr>';
+        }else {
+            return '<tr class="invoicecal">'
+                        +'<th width="60px;">#</th>'
+                        +'<th width="100px;">DATE</th>'
+                        +'<th>INVNo.</th>'
+                        +'<th>PARTY NAME</th>'
+                        +'<th>MODE</th>'
+                        +'<th width="120px;">NET AMOUNT</th>'
+                    +'</tr>';
+        }
     }
 
     function addInvoicerow(oneRow, countNumber){
         var s = "00000" + oneRow["previous_invoice_ref_no"];
-
-        return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
-                    +'<td>'+countNumber+'</td>'
-                    +'<td>'+oneRow["bill_date"]+'</td>'
-                    +'<td>'+s.substr(s.length-5)+ '/'+ oneRow["invoice_bill_date"] +'</td>'
-                    +'<td>'+oneRow["client_name"]+'</td>'
-                    +'<td>'+oneRow["gstnumber"]+'</td>'
-                    +'<td>'+oneRow["payment_mode"]+'</td>'
-                    +'<td>'+oneRow["basic_value_amount"]+'</td>'
-                    +'<td>'+oneRow["cgst_amount"]+'</td>'
-                    +'<td>'+oneRow["sgst_amount"]+'</td>'
-                    +'<td>'+oneRow["round_off_amount"]+'</td>'
-                    +'<td>'+oneRow["lock_bill_amount"]+'</td>'
-                +'</tr>';
+        if (globalInvoice_bill_include_tax === 'yes'){
+            return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
+                        +'<td>'+countNumber+'</td>'
+                        +'<td>'+oneRow["bill_date"]+'</td>'
+                        +'<td>'+s.substr(s.length-5)+ '/'+ oneRow["invoice_bill_date"] +'</td>'
+                        +'<td>'+oneRow["client_name"]+'</td>'
+                        +'<td>'+oneRow["gstnumber"]+'</td>'
+                        +'<td>'+oneRow["payment_mode"]+'</td>'
+                        +'<td>'+oneRow["basic_value_amount"]+'</td>'
+                        +'<td>'+oneRow["cgst_amount"]+'</td>'
+                        +'<td>'+oneRow["sgst_amount"]+'</td>'
+                        +'<td>'+oneRow["round_off_amount"]+'</td>'
+                        +'<td>'+oneRow["lock_bill_amount"]+'</td>'
+                    +'</tr>';
+        }else {
+            return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
+                        +'<td>'+countNumber+'</td>'
+                        +'<td>'+oneRow["bill_date"]+'</td>'
+                        +'<td>'+s.substr(s.length-5)+ '/'+ oneRow["invoice_bill_date"] +'</td>'
+                        +'<td>'+oneRow["client_name"]+'</td>'
+                        +'<td>'+oneRow["payment_mode"]+'</td>'
+                        +'<td>'+oneRow["lock_bill_amount"]+'</td>'
+                    +'</tr>';
+        }
     }
 
     function addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount){
-        return '<tr class="invoicecal" >'
-                    +'<td colspan="5"></td>'
-                    +'<td><b>TOTAL</b></td>'
-                    +'<td><b>'+total_basic_value_amount+'</b></td>'
-                    +'<td><b>'+total_cgst_amount.toFixed(2)+'</b></td>'
-                    +'<td><b>'+total_sgst_amount.toFixed(2)+'</b></td>'
-                    +'<td><b>'+total_round_off_amount+'</b></td>'
-                    +'<td><b>'+total_lock_bill_amount+'</b></td>'
-                +'</tr>'
-                +'<tr class="invoicecal" >'
-                    +'<td colspan="11">&nbsp;</td>'
-                +'</tr>';
+        if (globalInvoice_bill_include_tax === 'yes'){
+            return '<tr class="invoicecal" >'
+                        +'<td colspan="5"></td>'
+                        +'<td><b>TOTAL</b></td>'
+                        +'<td><b>'+total_basic_value_amount+'</b></td>'
+                        +'<td><b>'+total_cgst_amount.toFixed(2)+'</b></td>'
+                        +'<td><b>'+total_sgst_amount.toFixed(2)+'</b></td>'
+                        +'<td><b>'+total_round_off_amount+'</b></td>'
+                        +'<td><b>'+total_lock_bill_amount+'</b></td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal" >'
+                        +'<td colspan="11">&nbsp;</td>'
+                    +'</tr>';
+        }else {
+            return '<tr class="invoicecal" >'
+                        +'<td colspan="4"></td>'
+                        +'<td><b>TOTAL</b></td>'
+                        +'<td><b>'+total_lock_bill_amount+'</b></td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal" >'
+                        +'<td colspan="11">&nbsp;</td>'
+                    +'</tr>';
+        }
     }
 
 });
