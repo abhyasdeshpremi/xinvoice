@@ -134,7 +134,7 @@ if($globalInvoice_bill_include_tax == 'no'){
 
                 $bill_amout = round($bill_value);
                 $savingAmount = number_format(($mrp_value - $bill_amout), 2);
-                $round_off_without_gst = ($bill_amout - $bill_value);
+                $round_off_without_gst = round(($bill_amout - $bill_value), 2);
             ?>
 
             <?php if($globalInvoice_bill_include_tax == 'yes'){ ?>
