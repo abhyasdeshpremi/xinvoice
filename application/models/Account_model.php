@@ -49,7 +49,7 @@ class Account_model extends CI_Model {
         }
         $this->db->where('delete_flag', 'no');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-        $this->db->order_by("created_at", "DESC");
+        $this->db->order_by("payment_date", "DESC");
         $query = $this->db->get($this->historytable);
         if($query->num_rows() > 0){
             $data['result'] = $query->result();
