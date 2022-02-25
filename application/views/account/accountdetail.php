@@ -95,7 +95,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Payment Date</span>
                 </div>
-                <input type="text" class="form-control datepicker" data-date-format="mm/dd/yyyy" aria-label="Small" aria-describedby="inputGroup-sizing-sm" data-provide="datepicker" id="paymentdate" name="paymentdate" value="" required>
+                <input type="text" class="form-control datepicker" data-date-format="dd/mm/yyyy" aria-label="Small" aria-describedby="inputGroup-sizing-sm" data-provide="datepicker" id="paymentdate" name="paymentdate" value="" required>
             </div>
             <div class="input-group input-group mb-3">
                 <div class="input-group-prepend">
@@ -175,7 +175,7 @@
             var client_name = $("#clientdescription").val();
             var paymentmode = $("#paymentmode").val();
             var paymenttype = $("#paymenttype").val();
-            var paymentdate = $("#paymentdate").val();
+            var paymentdate = dateFormateConvert($("#paymentdate").val());
             var paymentamout = $("#paymentamount").val();
             var paymentcomment = $("#paymentcomment").val();
             $("#submit_payment").attr('disabled','disabled');
