@@ -60,6 +60,7 @@ class Account_model extends CI_Model {
     }
 
     public function saveAccount($data){
+        date_default_timezone_set('asia/kolkata');
         $result = array();
         $this->db->where('fk_client_code', $data['fk_client_code']);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
@@ -131,7 +132,7 @@ class Account_model extends CI_Model {
                 'amount'=>(int)$data['amount'],
                 'payment_mode'=>$data['payment_mode'],
                 'payment_type'=>$data['paymenttype'],
-                'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'])),
+                'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'] ." ".date("H:i:s") )),
                 'notes'=>$data['notes'],
                 'fk_invoice_id'=>(isset($data['pk_invoice_id'])) ? $data['pk_invoice_id'] : 0,
                 'fk_username'=>$this->session->userdata('username'),

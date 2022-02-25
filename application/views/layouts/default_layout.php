@@ -499,6 +499,14 @@
             $(".uppercase").keyup(function(){
                 this.value = this.value.toLocaleUpperCase();
             });
+
+            function dateFormateConvert(date){
+                var d=new Date(date.split("/").reverse().join("-"));
+                var dd=d.getDate();
+                var mm=d.getMonth()+1;
+                var yy=d.getFullYear();
+                return mm+"/"+dd+"/"+yy;
+            }
         </script>
     </body>
 </html>
