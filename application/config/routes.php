@@ -51,7 +51,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 $route['login'] = 'login';
+$route['register'] = 'login/register';
 $route['logout'] = 'login/logout';
+$route['checkfirmuniquecode'] = 'login/checkfirmuniquecode';
+$route['checkuseremail'] = 'login/checkuseremail';
+$route['checkusername'] = 'login/checkusername';
+$route['registeruser'] = 'login/registeruser';
 $route['firm'] = 'firm';
 $route['createfirm'] = 'firm/createfirm';
 $route['firmdetails(/:num)?'] = 'firm/firmdetails$1';
@@ -128,9 +133,6 @@ $route['downloadclientpdf/:any/:any'] = 'ledger/getClinetPDF/$1/$2';
 $route['invoicereport'] = 'ledger/invoiceReport';
 $route['downloadinvoicepdf/:any/:any'] = 'ledger/getinvoicePDF/$1/$2';
 
-
-
-
 $route['salereport'] = 'ledger/saleReport';
 $route['downloadsalepdf/:any/:any'] = 'ledger/getSalePDF/$1/$2';
 
@@ -142,6 +144,17 @@ $route['saveamount'] = 'account/saveAmount';
 $route['account/:any'] = 'profile/Account/$1';
 $route['changepassword'] = 'profile/ChangePassword';
 $route['changedpassword'] = 'profile/ChangedPassword';
+
+
+$route['newaccountholder'] = 'piggyBank/NewAccountHolder';
+$route['accountholderlist(/:num)?'] = 'piggyBank/accountHolderList$1';
+$route['updateaccountholder/(:any)'] = 'piggyBank/updateAccountHolder/$1';
+$route['deleteaccountholder'] = 'piggyBank/deleteAccountHolder';
+$route['accountholderbalance(/:num)?'] = 'piggyBank/accountHolderBalance$1';
+$route['savepiggybankamount'] = 'piggyBank/savePiggyBankAmount';
+
+$route['getaccountholderhistory(/:num)?'] = 'piggyBank/getAccountHolderHistory$1';
+$route['getclientaccountholderhistory/:any(/:num)?'] = 'piggyBank/getClientAccountHolderHistory$1$2';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
