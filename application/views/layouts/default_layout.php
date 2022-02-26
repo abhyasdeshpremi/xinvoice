@@ -313,6 +313,19 @@
                                     <a class="nav-link" href="<?php echo base_url('/getaccounthistory'); ?>">Account History</a>
                                 </nav>
                             </div>
+                            
+                            <!-- Sidenav Accordion (Clients)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsClient" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
+                                Clients
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsClient" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/clientdetails'); ?>">Clients List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createclient'); ?>">New Client</a>
+                                </nav>
+                            </div>
 
                             <!-- Sidenav Accordion (Items)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsItem" aria-expanded="false" aria-controls="collapseDashboards">
@@ -327,19 +340,6 @@
                                 </nav>
                             </div>
 							
-                            <!-- Sidenav Accordion (Clients)-->
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsClient" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-                                Clients
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseDashboardsClient" data-parent="#accordionSidenav">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                    <a class="nav-link" href="<?php echo base_url('/clientdetails'); ?>">Clients List</a>
-                                    <a class="nav-link" href="<?php echo base_url('/createclient'); ?>">New Client</a>
-                                </nav>
-                            </div>
-                            
                             <!-- Sidenav Accordion (Clients)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardscompany" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="life-buoy"></i></div>
@@ -397,6 +397,20 @@
                                     <a class="nav-link" href="<?php echo base_url('/changepassword'); ?>">Change Password</a>
                                 </nav>
                             </div>
+
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsPiggy" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="settings"></i></div>
+                                Piggy Bank
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardsPiggy" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/accountholderbalance') ?>">Account Holder Balance</a>
+                                    <a class="nav-link" href="<?php echo base_url('/accountholderlist'); ?>">Account Holder List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/newaccountholder'); ?>">New Account Holder</a>
+                                </nav>
+                            </div>
+
                             <?php if(!(access_lavel(5, $this->session->userdata('role') ))){ ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsFirm" aria-expanded="false" aria-controls="collapseDashboards">
