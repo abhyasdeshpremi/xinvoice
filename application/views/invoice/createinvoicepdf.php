@@ -51,7 +51,7 @@ if($globalInvoice_bill_include_tax == 'no'){
         <div style="height:60px; font: 9px;">
             <div style="width:50%; height: 60px; float:left;"> To,
                 <div style="margin-right:10px;">
-                    <span><b><?php echo $clientname; ?></b></span><br>
+                    <span style="font:10px;"><b><?php echo $clientname; ?></b></span><br>
                     <span><?php echo $clintaddress; ?></span><br>
                     <span><?php echo $clientcity." ".$clientarea; ?></span><br>
                     <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br>
@@ -59,8 +59,8 @@ if($globalInvoice_bill_include_tax == 'no'){
                 </div>
             </div>
             <div style="width:50%; height: 60px; float:right;"> 
-                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <b><?php echo $invoicerefNumber; ?> / 21-22</b></span><br>
-                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <b><?php echo date("d-m-Y H:i", strtotime($created_at)); ?></b></span><br>
+                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <span style="font:10px;"><b><?php echo $invoicerefNumber; ?> / 21-22</b></span></span><br>
+                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <span style="font:10px;"><b><?php echo date("d-m-Y H:i", strtotime($created_at)); ?></b></span></span><br>
                     <span>PAYMENT MODE &nbsp;&nbsp;: <?php echo $paymentmode; ?></span><br>
                     <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
                     <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
