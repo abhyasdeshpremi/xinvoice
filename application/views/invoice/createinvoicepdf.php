@@ -59,8 +59,8 @@ if($globalInvoice_bill_include_tax == 'no'){
                 </div>
             </div>
             <div style="width:50%; height: 60px; float:right;"> 
-                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <?php echo $invoicerefNumber; ?> / 21-22</span><br>
-                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo date("d-m-Y H:i", strtotime($created_at)); ?></span><br>
+                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <b><?php echo $invoicerefNumber; ?> / 21-22</b></span><br>
+                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <b><?php echo date("d-m-Y H:i", strtotime($created_at)); ?></b></span><br>
                     <span>PAYMENT MODE &nbsp;&nbsp;: <?php echo $paymentmode; ?></span><br>
                     <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
                     <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
@@ -169,7 +169,7 @@ if($globalInvoice_bill_include_tax == 'no'){
                     <td>ROUND OFF</td>
                     <td style="text-align:right;"><?php echo $round_off_without_gst; ?></td>
                 </tr>
-                <tr style="border-right-style:none;">
+                <tr style="border-right-style:none; font:13px;">
                     <td colspan="6" > <center><b>TOTAL SAVING: <?php echo $savingAmount; ?></b></center></td>
                     <td><b>BILL AMOUNT</b></td>
                     <td style="text-align:right;"><b> <?php echo number_format($bill_amout, 2); ?></b></td>
