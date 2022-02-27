@@ -276,7 +276,6 @@ class Invoice_model extends CI_Model {
 
         $this->db->where('unique_invioce_code', $data['defaultinvoiceID']);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-        $this->db->where('fk_username', $this->session->userdata('username'));
         $query = $this->db->get('Invoices');
         if($query->num_rows() == 1){
             $dataList = array(
@@ -302,7 +301,6 @@ class Invoice_model extends CI_Model {
             );
             $this->db->where('unique_invioce_code', $data['defaultinvoiceID']);
             $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-            $this->db->where('fk_username', $this->session->userdata('username'));
             $this->db->update('Invoices', $dataList);
             return ($this->db->affected_rows() == 1) ? true : false;
         }else{
