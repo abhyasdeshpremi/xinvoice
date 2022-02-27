@@ -110,6 +110,10 @@ class Account_model extends CI_Model {
             $result['pk_account_id']  = $this->db->insert_id();
             $result['totalAmount'] = $amount;
         }
+        $currentDate = date("Y-m-d H:i:s");
+        if(!empty($data['payment_date'])){
+            $currentDate = date("Y-m-d H:i:s", strtotime($data['payment_date'] ." ".date("H:i:s")));
+        }
         if($data['statuscode'] === "force_edit") {
             $account_EntryList = array(
                 'fk_client_code'=>$data['fk_client_code'],
@@ -117,7 +121,7 @@ class Account_model extends CI_Model {
                 'amount'=>(int)$data['amount'],
                 'payment_mode'=>$data['payment_mode'],
                 'payment_type'=>$data['paymenttype'],
-                'payment_date'=>$data['payment_date'],
+                'payment_date'=>$currentDate,
                 'notes'=>$data['notes'],
                 'fk_invoice_id'=>(isset($data['pk_invoice_id'])) ? $data['pk_invoice_id'] : 0,
                 'delete_flag'=> 'YES',
@@ -126,13 +130,14 @@ class Account_model extends CI_Model {
                 'fk_firm_code'=>$this->session->userdata('firmcode')
             );
         }else{
+            
             $account_EntryList = array(
                 'fk_client_code'=>$data['fk_client_code'],
                 'fk_client_name'=>$data['fk_client_name'],
                 'amount'=>(int)$data['amount'],
                 'payment_mode'=>$data['payment_mode'],
                 'payment_type'=>$data['paymenttype'],
-                'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'] ." ".date("H:i:s") )),
+                'payment_date'=>$currentDate,
                 'notes'=>$data['notes'],
                 'fk_invoice_id'=>(isset($data['pk_invoice_id'])) ? $data['pk_invoice_id'] : 0,
                 'fk_username'=>$this->session->userdata('username'),
