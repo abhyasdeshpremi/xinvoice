@@ -445,7 +445,7 @@ class Invoice_model extends CI_Model {
                     $amountdata['invoice_type'] = $row->invoice_type;
                     $amountdata['pk_invoice_id'] = $row->pk_invoice_id;
                 }
-                $amountdata['payment_date'] = date('Y-m-d H:i:s');
+                $amountdata['payment_date'] = date('d-m-Y');
                 $amountdata['statuscode'] = $data['statuscode'];
                 if($data['statuscode'] === "completed") {
                     $amountdata['amount'] = $total_bill_value;
