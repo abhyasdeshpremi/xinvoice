@@ -37,7 +37,11 @@
                             <?php echo str_replace("_", " ", $value->status); ?>
                         </td>
                         <td><?php echo $value->area; ?></td>
-                        <td><?php echo $value->fk_username; ?></td>
+                        <td>
+                            <a href="<?php echo base_url('/account'.'/'.$value->fk_username); ?>">
+                                <?php echo $value->fk_username; ?>
+                            </a>
+                        </td>
                         <td><?php echo $value->previous_order_ref_no; ?></td>
                         <td><?php echo (($value->status === "completed") || ($value->status === "paid") || ($value->status === "partial_paid") ) ? $value->lock_bill_amount : 0; ?></td>
                         <td>

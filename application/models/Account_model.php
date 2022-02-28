@@ -19,7 +19,7 @@ class Account_model extends CI_Model {
         $this->db->select("Account.pk_account_id, Account.fk_client_code, Account.total_amount, Clients.code, Clients.name, Clients.client_type, Clients.district");
         $this->db->limit($limit, $start);
         $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
-        $this->db->order_by("Account.fk_client_name", "ASC");
+        $this->db->order_by("Account.fk_client_name, Clients.client_type", "ASC");
         $this->db->from($this->table);
         $this->db->join('Clients', 'Account.fk_client_code = Clients.code');
         $query = $this->db->get();

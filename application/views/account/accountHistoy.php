@@ -43,7 +43,11 @@
                         <td><?php echo $value->payment_mode; ?></td>
                         <td><?php echo $value->notes; ?></td>
                         <td><?php echo date('d M Y h:i:s A', strtotime($value->payment_date)); ?></td>
-                        <td><?php echo $value->fk_username; ?></td>
+                        <td>
+                            <a href="<?php echo base_url('/account'.'/'.$value->fk_username); ?>">
+                                <?php echo $value->fk_username; ?>
+                            </a>
+                        </td>
                     </tr>
                 <?php $page++; } ?>
             </tbody>
