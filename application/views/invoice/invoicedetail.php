@@ -34,7 +34,7 @@
                     <tr>
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->client_name; ?></td>
-                        <td><?php echo $value->created_at; ?></td>
+                        <td><?php echo date("d-m-Y H:i", strtotime($value->created_at)); ?></td>
                         <td class="<?php echo ($value->status === "completed") ? "yellowtext" : (( ($value->status === "paid") || ($value->status === "partial_paid"))? "greentext" : "redtext");?>">
                             <?php echo str_replace("_", " ", $value->status); ?>
                         </td>
