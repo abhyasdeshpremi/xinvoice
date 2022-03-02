@@ -60,6 +60,64 @@ class Login extends CI_Controller {
         }
 	}
 
+    public function register(){
+        $data = array(); 
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['method'] = "GET";
+        } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['method'] = "POST";
+        }
+        $this->template->set('title', 'Register');
+        $this->template->load('login_layout', 'contents' , 'register', $data);
+    }
+
+    public function checkfirmuniquecode(){
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $firm_result = $this->Login_model->firmUniqueCode($this->input->post('firmuniquecode'));
+            echo json_encode($firm_result);
+        }
+    }
+
+    public function checkuseremail(){
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $firm_result = $this->Login_model->checkuseremail($this->input->post('firmEmail'));
+            echo json_encode($firm_result);
+        }
+    }
+
+    public function checkusername(){
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $firm_result = $this->Login_model->checkusername($this->input->post('username'));
+            echo json_encode($firm_result);
+        }
+    }
+
+    public function registeruser(){
+        $data = array(); 
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['firstname'] = $this->input->post('firstname');
+            $data['lastname'] = $this->input->post('lastname');
+
+            $data['username'] = $this->input->post('username');
+            $data['password'] = $this->input->post('password');
+            $data['firmuniquecode'] = $this->input->post('firmuniquecode');
+            $data['firmName'] = $this->input->post('firmName');
+            $data['firmMobile'] = $this->input->post('firmMobile');
+            $data['firmEmail'] = $this->input->post('firmEmail');
+
+            $data['firmAddress'] = $this->input->post('firmAddress');
+            $data['firmArea'] = $this->input->post('firmArea');
+            $data['firmCity'] = $this->input->post('firmCity');
+            $data['firmdistrict'] = $this->input->post('firmdistrict');
+            $data['firmState'] = $this->input->post('firmState');
+            $data['firmZip'] = $this->input->post('firmZip');
+
+
+            $register_result = $this->Login_model->registeruser($data);
+            echo json_encode($register_result);
+        }
+    }
+
     public function logout(){
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('isUserLoggedIn');
