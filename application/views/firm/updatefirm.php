@@ -23,6 +23,7 @@
                 $firmZip = $value->pin_code;
                 $firmStatus = $value->status;
                 $billIncludeTax = $value->bill_include_tax;
+                $firmbonus = $value->bonus_percent;
             }
         ?>
         <form class="updateFirm" action="" method="POST" id="updateFirm">
@@ -93,15 +94,24 @@
                         <option value="warning" <?php if($firmStatus == 'warning'){ echo 'selected'; } ?>>Warning</option>
                     </select>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                 <label for="userStatus">Bill Include Tax</label>
                     <select class="form-control" id="billIncludeTax" name="billIncludeTax">
                         <option value="yes" <?php if($billIncludeTax == 'yes'){ echo 'selected'; } ?>>Yes</option>
                         <option value="no" <?php if($billIncludeTax == 'no'){ echo 'selected'; } ?>>No</option>
                     </select>
                 </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault05">Bonus % &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
+                    <input type="number" class="form-control" id="firmbonus" name="firmbonus" placeholder="Bonus %" value="<?php echo isset($firmbonus)? $firmbonus : ''; ?>">
+                </div>
             </div>
             <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Update Firm</button>
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>

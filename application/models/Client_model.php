@@ -137,6 +137,7 @@ class Client_model extends CI_Model {
                 $data['state'] = $row->state;
                 $data['area'] = $row->area;
                 $data['pin_code'] = $row->pin_code;
+                $data['client_type'] = $row->client_type;
             }
         }
         return $data;

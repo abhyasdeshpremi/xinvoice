@@ -8,6 +8,8 @@ class Invoice_model extends CI_Model {
     {  
         parent::__construct();
         $this->load->model('Account_model', '', TRUE);
+        $this->load->model('Piggybank_model', '', TRUE);
+        $this->load->model('Client_model', '', TRUE);
     }  
 
     public function get_count($invoice_type = 'sell') {
@@ -444,6 +446,7 @@ class Invoice_model extends CI_Model {
                     $amountdata['lock_bill_amount'] = $row->lock_bill_amount;
                     $amountdata['invoice_type'] = $row->invoice_type;
                     $amountdata['pk_invoice_id'] = $row->pk_invoice_id;
+                    $amountdata['previous_invoice_ref_no'] = $row->previous_invoice_ref_no;
                 }
                 $amountdata['payment_date'] = date('d-m-Y');
                 $amountdata['statuscode'] = $data['statuscode'];
@@ -471,6 +474,59 @@ class Invoice_model extends CI_Model {
                 
                 $account_model_saveAccount = $this->Account_model->saveAccount($amountdata);
                 log_message("info", "payment debit automatically more info.: ");
+
+                //Bonus deposit to piggy bank for every vendor
+                $bonus_percent = floatval($this->session->userdata('bonus_percent'));
+                if(($bonus_percent > 0) && ($amountdata['invoice_type'] === "sell")){
+                    log_message("info", "bonus percentage " . $bonus_percent);
+                    $clientInfo = $this->Client_model->client_by_id($amountdata['fk_client_code']);
+                    $clientType = $clientInfo['client_type'];
+                    if($clientType === "vendor"){
+                        $this->db->select_sum('mrp_value');
+                        $this->db->from('invoice_item');
+                        $this->db->where('delete_flag', 'NO');
+                        $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+                        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                        $mrpvaluequery = $this->db->get();
+                        $total_mrp_value = $mrpvaluequery->row()->mrp_value;
+                        $total_mrp_value = round($total_mrp_value);
+
+                        $percentage_value = round(($total_mrp_value * $bonus_percent) / 100);
+                        if($percentage_value > 0){
+                            $bonusamountdata = array();
+                            $bonusamountdata['uniqueCode'] = $amountdata['fk_client_code'];
+                            $bonusamountdata['clientName'] = $amountdata['fk_client_name'];
+                            $bonusamountdata['clientMobile'] = $clientInfo['mobile_no'];
+                            $bonusamountdata['accontemail'] = '';
+                            $bonusamountdata['clientAddress'] = $clientInfo['address'] ." ".$clientInfo['area'];
+
+                            $bonusDataUpdateToPiggybank = array();
+                            $bonusDataUpdateToPiggybank['fk_client_code'] = $amountdata['fk_client_code'];
+                            $bonusDataUpdateToPiggybank['fk_client_name'] = $amountdata['fk_client_name'];
+                            $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
+                            $bonusDataUpdateToPiggybank['amount'] = $percentage_value;
+
+                            $bonusDataUpdateToPiggybank['payment_date'] = date('d-m-Y');
+
+                            $bonusDataUpdateToPiggybank['payment_mode'] = 'auto';
+                            
+                            if($data['statuscode'] === "completed") {
+                                $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
+                            }else if($data['statuscode'] === "force_edit") {
+                                $bonusDataUpdateToPiggybank['paymenttype'] = 'debit';
+                            }
+                            $bonusDataUpdateToPiggybank['notes'] = 'auto '.$bonusDataUpdateToPiggybank['paymenttype'].' #('.$amountdata['previous_invoice_ref_no'].') bonus';
+                            $unique_client_code_verify = $this->Piggybank_model->unique_account_holder_code_check($amountdata['fk_client_code']);
+                            if($unique_client_code_verify){
+                                $this->Piggybank_model->saveAccount($bonusDataUpdateToPiggybank);
+                            }else{
+                                $this->Piggybank_model->create_account_holder($bonusamountdata);
+                                $this->Piggybank_model->saveAccount($bonusDataUpdateToPiggybank);
+                            }
+
+                        }
+                    }
+                }
 
                 $dataList = array(
                     'status'=> $data['statuscode'],
