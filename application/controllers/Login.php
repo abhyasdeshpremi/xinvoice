@@ -33,6 +33,7 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('firmcode', $queryResult['result'][0]->fk_firm_code);
                 $this->session->set_userdata('firmname', $firmResult['result'][0]->name);
                 $this->session->set_userdata('bill_include_tax', $firmResult['result'][0]->bill_include_tax);
+                $this->session->set_userdata('bonus_percent', $firmResult['result'][0]->bonus_percent);
                 $this->session->set_userdata('pk_firm_id', $firmResult['result'][0]->pk_firm_id);
                 $this->session->set_userdata('role', $queryResult['result'][0]->role);
 

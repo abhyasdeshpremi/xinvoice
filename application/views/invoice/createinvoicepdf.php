@@ -135,6 +135,16 @@ if($globalInvoice_bill_include_tax == 'no'){
                 $bill_amout = round($bill_value);
                 $savingAmount = number_format(($mrp_value - $bill_amout), 2);
                 $round_off_without_gst = round(($bill_amout - $bill_value), 2);
+                
+                $bonusString = '';
+                if(isset($bonus_percent)){
+                    if($bonus_percent > 0){
+                        $percentage_value = round(($mrp_value * $bonus_percent) / 100);
+                        if($percentage_value > 0){
+                            $bonusString = "BONUS AMOUNT: " .number_format($percentage_value, 2);
+                        }
+                    }
+                }
             ?>
 
             <?php if($globalInvoice_bill_include_tax == 'yes'){ ?>
@@ -170,7 +180,7 @@ if($globalInvoice_bill_include_tax == 'no'){
                     <td style="text-align:right;"><?php echo $round_off_without_gst; ?></td>
                 </tr>
                 <tr style="border-right-style:none; font:13px;">
-                    <td colspan="6" > <center><b>TOTAL SAVING: <?php echo $savingAmount; ?></b></center></td>
+                    <td colspan="6" > <center><b>TOTAL SAVING: <?php echo $savingAmount; ?> &nbsp;&nbsp; <?php echo $bonusString; ?></b></center></td>
                     <td><b>BILL AMOUNT</b></td>
                     <td style="text-align:right;"><b> <?php echo number_format($bill_amout, 2); ?></b></td>
                 </tr>

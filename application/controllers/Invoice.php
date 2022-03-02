@@ -144,6 +144,7 @@ class Invoice extends CI_Controller {
             $data['clientcity'] = $invoiceDetail['city'];
             $data['clientarea'] = $invoiceDetail['area'];
             $data['clientpincode'] = $invoiceDetail['pincode'];
+            $data['bonus_percent'] = floatval($this->session->userdata('bonus_percent'));
         }
         // $this->template->set('title', 'Create Invoice PDF');
         // $this->template->load('default_layout', 'contents' , 'invoice/createinvoicepdf', $data);

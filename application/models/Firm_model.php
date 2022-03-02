@@ -79,6 +79,7 @@ class Firm_model extends CI_Model {
             'district'=>$data['firmdistrict'],
             'state'=>$data['firmState'],
             'bill_include_tax'=>$data['billIncludeTax'],
+            'bonus_percent'=>$data['firmbonus'],
             'pin_code'=>$data['firmZip'],
             'mobile_number'=>$data['firmMobile'],
             'status'=>$data['firmstatus'],
@@ -87,6 +88,7 @@ class Firm_model extends CI_Model {
         ); 
         $this->db->where('firm_code', strtoupper($data['uniqueCode']));
         $this->db->update('Firms',$itemdata);
+        $this->session->set_userdata('bonus_percent', $data['firmbonus']);
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
