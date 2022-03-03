@@ -14,9 +14,9 @@ class Invoice extends CI_Controller {
     }
 
     public function checkid(){
-        $getinvoiceDetails = $this->Invoice_model->invoice_list(100, 0, 'sell');
+        //$getinvoiceDetails = $this->Invoice_model->invoice_list(100, 0, 'sell');
         // print_r($getinvoiceDetails);
-        foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
+        /*foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
             if(($getinvoiceDetail->status === "completed") || ($getinvoiceDetail->status === "partial_paid") || ($getinvoiceDetail->status === "paid")) {
                 $amountdata = array();
                 print($getinvoiceDetail->pk_invoice_id);
@@ -82,7 +82,7 @@ class Invoice extends CI_Controller {
                 }
             }
              
-        }
+        }*/
         /*
         echo "invoice check";
         echo "<br>";
