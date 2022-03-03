@@ -24,15 +24,24 @@
                 $firmStatus = $value->status;
                 $billIncludeTax = $value->bill_include_tax;
                 $firmbonus = $value->bonus_percent;
+                $firmbusiness_type = $value->business_type;
             }
         ?>
         <form class="updateFirm" action="" method="POST" id="updateFirm">
             <div class="form-row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="validationDefault03">Unique Code <span class="requiredClass">*</span></label>
                     <input class="form-control" id="uniqueCode" name="uniqueCode" type="text" placeholder="Firm Code" style="text-transform:uppercase" value="<?php echo isset($uniqueCode)? $uniqueCode : ''; ?>" required readonly/>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
+                <label for="userStatus">Business Type</label>
+                    <select class="form-control" id="business_type" name="business_type">
+                        <?php foreach($business_types as $business_type){ ?>
+                        <option value="<?php echo $business_type->business_code; ?>" <?php if($firmbusiness_type == $business_type->business_code){ echo 'selected'; } ?>><?php echo $business_type->business_name; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
                     <label for="validationDefault03">Name <span class="requiredClass">*</span></label>
                     <input class="form-control" id="firmName" name="firmName" type="text" placeholder="Firm Name" value="<?php echo isset($firmName)? $firmName : ''; ?>" required/>
                 </div>

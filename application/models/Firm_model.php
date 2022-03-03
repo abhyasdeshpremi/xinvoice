@@ -61,6 +61,9 @@ class Firm_model extends CI_Model {
             'state'=>$data['firmState'],
             'pin_code'=>$data['firmZip'],
             'mobile_number'=>$data['firmMobile'],
+            'bill_include_tax'=>$data['billIncludeTax'],
+            'bonus_percent'=>$data['firmbonus'],
+            'business_type'=>$data['business_type'],
             'fk_username'=> $this->session->userdata('username'),
             
         );
@@ -80,6 +83,7 @@ class Firm_model extends CI_Model {
             'state'=>$data['firmState'],
             'bill_include_tax'=>$data['billIncludeTax'],
             'bonus_percent'=>$data['firmbonus'],
+            'business_type'=>$data['business_type'],
             'pin_code'=>$data['firmZip'],
             'mobile_number'=>$data['firmMobile'],
             'status'=>$data['firmstatus'],
@@ -146,6 +150,18 @@ class Firm_model extends CI_Model {
             $result['firmCode']  = $data['firmCode'];
         }
         return $result;
+    }
+
+    public function business_type_list(){
+        $this->db->where('business_status', 'active');
+        $this->db->order_by("business_name", "ASC");
+        $query = $this->db->get('Business_type');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
     }
 }
 
