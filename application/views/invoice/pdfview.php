@@ -1,0 +1,1 @@
+<iframe src="<?php echo base_url($link); ?>" title="invoice pdf" height="700px" width="100%"></iframe>

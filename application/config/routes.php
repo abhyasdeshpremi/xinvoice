@@ -82,6 +82,7 @@ $route['updatecompany/(:any)'] = 'company/updateCompany/$1';
 $route['createinvoice'] = 'invoice/createinvoiceID';
 $route['createinvoice/(:any)'] = 'invoice/createinvoice/$1';
 $route['createinvoicepdf/(:any)/(:any)/(:num)'] = 'invoice/createInvoicePDF/$1/$2/$3';
+$route['viewinvoicepdf/(:any)/(:any)/(:num)'] = 'invoice/viewInvoicePDF/$1/$2/$3';
 $route['invoicedetail(/:num)?'] = 'invoice/invoicedetails$1';
 $route['getinvoicelist'] = 'invoice/getinvoicelist';
 $route['savevoiceheader'] = 'invoice/saveInvoiceHeader';
@@ -95,6 +96,7 @@ $route['updateinvoicestatus'] = 'invoice/updateInvoiceStatus';
 $route['createpurchaseinvoice'] = 'purchase/createinvoiceID';
 $route['createpurchaseinvoice/(:any)'] = 'purchase/createinvoice/$1';
 $route['createpurchaseinvoicepdf/(:any)/(:any)/(:num)'] = 'purchase/createInvoicePDF/$1/$2/$3';
+$route['viewpurchaseinvoicepdf/(:any)/(:any)/(:num)'] = 'purchase/viewInvoicePDF/$1/$2/$3';
 
 $route['savepurchaseiteminvoice'] = 'purchase/saveItemInInvoice';
 $route['updatepurchaseitemininvoce'] = 'purchase/updateItemInInvoice';
