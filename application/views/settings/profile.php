@@ -20,6 +20,10 @@
                 $full_address = $address." ".$area." ".$city." ".$district." ".$state." ".$pin_code;
                 $firm_name = isset($data[0]->name) ? $data[0]->name : "";
                 $bill_include_tax = isset($data[0]->bill_include_tax) ? $data[0]->bill_include_tax : "";
+                $vendor_bonus = isset($data[0]->bonus_percent) ? $data[0]->bonus_percent : "";
+                $business_name = isset($data[0]->business_name) ? $data[0]->business_name : "";
+
+                
             ?>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -133,10 +137,28 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
+                      <h6 class="mb-0">Company Type</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <?php echo $business_name; ?>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
                       <h6 class="mb-0">Bill Include tax</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       <?php echo $bill_include_tax; ?>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Vendor bonus</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <?php echo $vendor_bonus; ?> %
                     </div>
                   </div>
                   <hr>

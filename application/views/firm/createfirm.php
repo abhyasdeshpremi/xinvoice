@@ -65,6 +65,27 @@
                     <input type="number" class="form-control" id="firmZip" name="firmZip" placeholder="Zip" value="<?php echo isset($firmZip)? $firmZip : ''; ?>">
                 </div>
             </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                <label for="userStatus">Business Type</label>
+                    <select class="form-control" id="business_type" name="business_type">
+                        <?php foreach($business_types as $business_type){ ?>
+                        <option value="<?php echo $business_type->business_code; ?>"><?php echo $business_type->business_name; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                <label for="userStatus">Bill Include Tax</label>
+                    <select class="form-control" id="billIncludeTax" name="billIncludeTax">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault05">Bonus % &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
+                    <input type="number" class="form-control" id="firmbonus" name="firmbonus" placeholder="Bonus %" value="<?php echo isset($firmbonus)? $firmbonus : ''; ?>">
+                </div>
+            </div>
             <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Create Firm</button>
         </form>
     </div>

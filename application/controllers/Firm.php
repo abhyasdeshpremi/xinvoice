@@ -45,6 +45,9 @@ class Firm extends CI_Controller {
             $data['firmdistrict'] = $this->input->post('firmdistrict');
             $data['firmState'] = $this->input->post('firmState');
             $data['firmZip'] = $this->input->post('firmZip');
+            $data['business_type'] = $this->input->post('business_type');
+            $data['billIncludeTax'] = $this->input->post('billIncludeTax');
+            $data['firmbonus'] = $this->input->post('firmbonus');
             $uniqueCodeVerify = $this->Firm_model->unique_firm_code_verify($this->input->post('uniqueCode'));
             if($uniqueCodeVerify){
                 $createFirm = $this->Firm_model->create_firm($data);
@@ -58,6 +61,8 @@ class Firm extends CI_Controller {
                 $data['errorMessage'] = 'Unique Code must be unique.';
             }
          }
+        $business_type = $this->Firm_model->business_type_list();
+        $data['business_types'] = $business_type['result'];
         $this->template->set('buttonName', 'Firm List');
         $this->template->set('buttonLink', base_url('/firmdetails'));
         $this->template->set('title', 'Create Firm');
@@ -112,6 +117,7 @@ class Firm extends CI_Controller {
             $data['firmstatus'] = $this->input->post('firmstatus');
             $data['billIncludeTax'] = $this->input->post('billIncludeTax');
             $data['firmbonus'] = $this->input->post('firmbonus');
+            $data['business_type'] = $this->input->post('business_type');
             $uniqueCodecheck = $this->Firm_model->unique_firm_code_check($this->input->post('uniqueCode'));
             if($uniqueCodecheck){
                 $updateFirm = $this->Firm_model->update_firm($data);
@@ -125,6 +131,8 @@ class Firm extends CI_Controller {
             }
          }
 
+        $business_type = $this->Firm_model->business_type_list();
+        $data['business_types'] = $business_type['result'];
         $firm_result = $this->Firm_model->update_firm_detail($firmcode);
         $data['data'] = $firm_result['result'];
         $this->template->set('buttonName', 'Firm List');
