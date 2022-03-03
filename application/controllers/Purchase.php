@@ -148,6 +148,30 @@ class Purchase extends CI_Controller {
 
     }
 
+    public function viewInvoicePDF($id = null, $mode = "landscape", $download = false){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
+        $data = array();
+        if(!validationInvoiceID($id)){
+            $data['heading'] = "Invalid Invoice ID";
+            $data['message'] = "Invalid Invoice ID";
+            $this->template->set('title', 'Invalid Invoice ID');
+            $this->template->load('default_layout', 'contents' , 'errors/html/error_404', $data);
+            return false;
+        }
+        if($mode === "landscape"){
+            $mode = "landscape";
+        }elseif($mode === "portrait"){
+            $mode = "portrait";
+        }else{
+            $mode = "landscape";
+        }
+        $data['link'] = 'createpurchaseinvoicepdf/'.$id.'/'.$mode.'/'.$download;
+        $this->template->set('title', 'View Purchase Invoice PDF');
+        $this->template->load('default_layout', 'contents' , 'invoice/pdfview', $data);
+    }
+
     public function saveItemInInvoice(){
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
