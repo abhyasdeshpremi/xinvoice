@@ -510,6 +510,8 @@
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/demo/date-range-picker-demo.js'); ?>"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+        <script src="https://cdn.rawgit.com/meetselva/attrchange/master/js/attrchange.js"></script>
+        <script src="https://cdn.rawgit.com/meetselva/attrchange/master/js/attrchange_ext.js"></script>
         <script>
             $(".uppercase").keyup(function(){
                 this.value = this.value.toLocaleUpperCase();

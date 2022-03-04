@@ -810,6 +810,18 @@
                 }
             });
         });
+        
+        $("#myDropdown").attrchange({
+            trackValues: true,
+            callback: function(evnt) {
+                if(evnt.attributeName == "class") { 
+                    console.log("input"+evnt.newValue.search(/show/i));
+                    if(evnt.newValue.search(/show/i) == 14) { 
+                        $('#myInput').focus(); 
+                    }
+                }
+            }
+        });
     });
 </script>
 <script>
