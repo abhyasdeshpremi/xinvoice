@@ -395,6 +395,7 @@
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                     <a class="nav-link" href="<?php echo base_url('/account'."/".$this->session->userdata('username')); ?>">Account</a>
                                     <a class="nav-link" href="<?php echo base_url('/changepassword'); ?>">Change Password</a>
+                                    <a class="nav-link" href="<?php echo base_url('/termconditions'); ?>">Term & Conditions</a>
                                 </nav>
                             </div>
 

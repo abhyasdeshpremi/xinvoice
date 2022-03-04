@@ -78,5 +78,42 @@ class Profile extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function TermConditions(){
+        $data = array();
+        $termcondition = $this->Profile_model->gettermcondition();
+        $data['data'] = $termcondition['result'];
+        $this->template->set('title', 'Term & Conditions');
+        $this->template->load('default_layout', 'contents' , 'settings/termconditions', $data);
+    }
+    
+    public function saveTermConditions(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            $data['title'] = $this->input->post('title');
+            $data['line1'] = $this->input->post('line1');
+            $data['line2'] = $this->input->post('line2');
+            $data['line3'] = $this->input->post('line3');
+            $data['line4'] = $this->input->post('line4');
+            $termcondition = $this->Profile_model->termcondition($data);
+            if($termcondition['code']){
+                $this->session->set_userdata('tc_title', $data['title']);
+                $this->session->set_userdata('line1', $data['line1']);
+                $this->session->set_userdata('line2', $data['line2']);
+                $this->session->set_userdata('line3', $data['line3']);
+                $this->session->set_userdata('line4', $data['line4']);
+
+                $data['code'] = $termcondition['code'];
+                $data["message"] = "Successfully save term & condition";
+            }else{
+                $data['code'] = $changedPassword['code'];
+                $data["message"] = "Unable to save term & condition";
+            } 
+        }else{
+            $data['code'] = false;
+            $data["message"] = "Unable to serve, Best of luck";
+        }
+        echo json_encode($data);
+    }
 
 }

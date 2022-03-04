@@ -6,6 +6,7 @@ class Login extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('Login_model', '', TRUE);
+        $this->load->model('Profile_model', '', TRUE);
     }
 
 	public function index()
@@ -36,7 +37,14 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('bonus_percent', $firmResult['result'][0]->bonus_percent);
                 $this->session->set_userdata('pk_firm_id', $firmResult['result'][0]->pk_firm_id);
                 $this->session->set_userdata('role', $queryResult['result'][0]->role);
-
+                $termcondition = $this->Profile_model->gettermcondition();
+                if(count($termcondition['result']) > 0){
+                    $this->session->set_userdata('tc_title', $termcondition['result'][0]->tc_title);
+                    $this->session->set_userdata('line1', $termcondition['result'][0]->line1);
+                    $this->session->set_userdata('line2', $termcondition['result'][0]->line2);
+                    $this->session->set_userdata('line3', $termcondition['result'][0]->line3);
+                    $this->session->set_userdata('line4', $termcondition['result'][0]->line4);
+                }
 
                 $address = isset($firmResult['result'][0]->address) ? $firmResult['result'][0]->address : "";
                 $area = isset($firmResult['result'][0]->area) ? $firmResult['result'][0]->area : "";

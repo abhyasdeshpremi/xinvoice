@@ -51,5 +51,51 @@ class Profile_model extends CI_Model {
         $result['query'] = $this->db->last_query();
         return $result;
     }
+
+    public function gettermcondition(){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('status', 'active');
+        $this->db->from('TermConditions');
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function termcondition($data){
+        $result = array();
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('TermConditions');
+        if($query->num_rows() == 1){
+            $tcList = array(
+                'tc_title'=> $data['title'],
+                'line1'=>$data['line1'],
+                'line2'=>$data['line2'],
+                'line3'=>$data['line3'],
+                'line4'=>$data['line4'],
+                'status'=>'active'
+            );
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('TermConditions', $tcList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+        }else{
+            $tcList = array(
+                'tc_title'=> $data['title'],
+                'line1'=>$data['line1'],
+                'line2'=>$data['line2'],
+                'line3'=>$data['line3'],
+                'line4'=>$data['line4'],
+                'status'=>'active',
+                'fk_firm_code'=>$this->session->userdata('firmcode')
+            );
+            $this->db->insert('TermConditions', $tcList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+        }
+        $result['query'] = $this->db->last_query();
+        return $result;
+    }
 }
 ?>

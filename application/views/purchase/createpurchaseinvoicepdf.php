@@ -164,14 +164,14 @@ if($globalInvoice_bill_include_tax == 'no'){
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
     <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
-    <spna style="font:10px;">HSN CODE: ICE CREAM (2015) & FROZEN DESSERT (2015) & ICE CANDEY (2015)</span>
+    <spna style="font:10px;"><?php echo $this->session->userdata('tc_title'); ?></span>
     <div style="margin-top:10px; height: 60px;">
         <div style="width:50%; height: 60px; float:left;">
-            <span style="font:10px;">NOTE :-</span><br>
-            <span style="font:8px;">1. GOOD ONCE SOLD WILL NOT BE TAKEN BACK OR EXCHANGED.</span><br>
-            <span style="font:8px;">2. SELLER IS NOT RESPONSIBLE FOR ANY LOSS OR DAMAGE OF GOODS IN TRANSIT.</span><br>
-            <span style="font:8px;">3. DISPUTE OF ANY CASE WILL BE SUBJECT TO BIHAR SHARIF JURISDICTION.</span><br>
-            <span style="font:8px;">4. THIS IS A COMPUTER GENERATED INVOICE.</span><br>
+            <span style="font:10px;"><?php echo ($this->session->userdata('line1')) ? 'Term & Conditions :-': ''; ?></span><br>
+            <span style="font:8px;"><?php echo ($this->session->userdata('line1')) ? '1. '.$this->session->userdata('line1') : ''; ?></span><br>
+            <span style="font:8px;"><?php echo ($this->session->userdata('line2')) ? '2. '.$this->session->userdata('line2') : ''; ?></span><br>
+            <span style="font:8px;"><?php echo ($this->session->userdata('line3')) ? '3. '.$this->session->userdata('line3') : ''; ?></span><br>
+            <span style="font:8px;"><?php echo ($this->session->userdata('line4')) ? '4. '.$this->session->userdata('line4') : ''; ?></span><br>
         </div>
         <div style="width:50%; height: 60px; float:right;">
             <center>

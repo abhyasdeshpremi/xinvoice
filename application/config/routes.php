@@ -146,7 +146,8 @@ $route['saveamount'] = 'account/saveAmount';
 $route['account/:any'] = 'profile/Account/$1';
 $route['changepassword'] = 'profile/ChangePassword';
 $route['changedpassword'] = 'profile/ChangedPassword';
-
+$route['termconditions'] = 'profile/TermConditions';
+$route['savetermconditions'] = 'profile/saveTermConditions';
 
 $route['newaccountholder'] = 'piggyBank/NewAccountHolder';
 $route['accountholderlist(/:num)?'] = 'piggyBank/accountHolderList$1';
