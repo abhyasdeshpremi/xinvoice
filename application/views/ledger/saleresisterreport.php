@@ -172,12 +172,11 @@ $(function() {
     }
 
     function addInvoicerow(oneRow, countNumber){
-        var s = "00000" + oneRow["previous_invoice_ref_no"];
         if (globalInvoice_bill_include_tax === 'yes'){
             return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
                         +'<td>'+countNumber+'</td>'
                         +'<td>'+oneRow["bill_date"]+'</td>'
-                        +'<td>'+s.substr(s.length-5)+ '/'+ oneRow["invoice_bill_date"] +'</td>'
+                        +'<td>'+oneRow["previous_invoice_ref_no"]+ '/'+ oneRow["financial_year"] +'</td>'
                         +'<td>'+oneRow["client_name"]+'</td>'
                         +'<td>'+oneRow["gstnumber"]+'</td>'
                         +'<td>'+oneRow["payment_mode"]+'</td>'
@@ -191,7 +190,7 @@ $(function() {
             return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
                         +'<td>'+countNumber+'</td>'
                         +'<td>'+oneRow["bill_date"]+'</td>'
-                        +'<td>'+s.substr(s.length-5)+ '/'+ oneRow["invoice_bill_date"] +'</td>'
+                        +'<td>'+oneRow["previous_invoice_ref_no"]+ '/'+ oneRow["financial_year"] +'</td>'
                         +'<td>'+oneRow["client_name"]+'</td>'
                         +'<td>'+oneRow["payment_mode"]+'</td>'
                         +'<td>'+oneRow["lock_bill_amount"]+'</td>'

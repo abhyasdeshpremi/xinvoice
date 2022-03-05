@@ -69,7 +69,7 @@ class Ledger extends CI_Controller {
                 $data['code'] = $stock_result['code'];
                 $data['result'] = $stock_result['result'];
                 $data["message"] = "Successfully get stock!";
-                $data['title'] = "Saytem Enterprice";
+                $data['title'] = $this->session->userdata('firmname');
                 // $this->template->load('default_layout', 'contents' , 'ledger/stockreportpdf', $data);
                 $this->load->library('pdf');
                 $html = $this->load->view('ledger/stockreportpdf', $data, true);
@@ -129,7 +129,7 @@ class Ledger extends CI_Controller {
                 $data['code'] = $client_result['code'];
                 $data['result'] = $client_result['result'];
                 $data["message"] = "Successfully get client!";
-                $data['title'] = "Saytem Enterprice";
+                $data['title'] = $this->session->userdata('firmname');
                 // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
                 $this->load->library('pdf');
                 $html = $this->load->view('ledger/ledgerreportpdf', $data, true);
@@ -188,7 +188,7 @@ class Ledger extends CI_Controller {
                 $data['code'] = $client_result['code'];
                 $data['result'] = $client_result['result'];
                 $data["message"] = "Successfully get stock!";
-                $data['title'] = "Saytem Enterprice";
+                $data['title'] = $this->session->userdata('firmname');
                 // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
                 $this->load->library('pdf');
                 $html = $this->load->view('ledger/saleresisterreportpdf', $data, true);
@@ -249,7 +249,7 @@ class Ledger extends CI_Controller {
                 $data['code'] = $client_result['code'];
                 $data['result'] = $client_result['result'];
                 $data["message"] = "Successfully get Invoice!";
-                $data['title'] = "Saytem Enterprice";
+                $data['title'] = $this->session->userdata('firmname');
                 // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
                 $this->load->library('pdf');
                 $html = $this->load->view('ledger/ledgerreportpdf', $data, true);

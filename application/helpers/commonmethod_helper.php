@@ -156,3 +156,17 @@ function debug_function(){
                 break;
         }
     }
+
+    function financial_year($dateString){
+        $date = strtotime($dateString);
+        $month = date('m', $date);
+        $year = date('y', $date);
+        if($month < 4){
+            $startfyear = $year - 1;
+            $endfyear = $year;
+        }else{
+            $startfyear = $year;
+            $endfyear = $year + 1;
+        }
+        return $startfyear.'-'.$endfyear;
+    }

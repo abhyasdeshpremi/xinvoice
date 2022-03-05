@@ -95,7 +95,7 @@ class Ledger_model extends CI_Model {
         // $startDateFormat = date('Y-m-d H:i:s', $startDate);
         $endDate = $arg['end_date']. " 23:59:59";
         // $endDateFormat = date('Y-m-d H:i:s', $endDate);
-        $this->db->select('Account.fk_client_code, Account.fk_client_name, Account.total_amount, Clients.district');
+        $this->db->select('Account.fk_client_code, Account.fk_client_name, Clients.client_type, Account.total_amount, Clients.district');
         $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where_not_in('Clients.client_type', 'mine');
         $this->db->order_by("Clients.district", "ASC");
@@ -108,7 +108,8 @@ class Ledger_model extends CI_Model {
             {  
                 $tempData = array();
                 $tempData["fk_client_code"] = $row->fk_client_code;
-                $tempData["fk_client_name"] = $row->fk_client_name;
+                $tempData["fk_client_name"] = strtoupper($row->fk_client_name);
+                $tempData["client_type"] = strtoupper($row->client_type);
                 $tempData["district"] = strtoupper($row->district);
                 $tempData["total_amount"] = $row->total_amount;
                 /*
@@ -186,6 +187,7 @@ class Ledger_model extends CI_Model {
                 $date = date_create($row->created_at);
                 $tempData["bill_date"] = date_format($date,"d-M-y");
                 $tempData["invoice_bill_date"] = date_format($date,"m-y");
+                $tempData["financial_year"] = financial_year($row->created_at);
 
                 $bill_value = (float)$row->lock_bill_amount;
                 $basicValue = round((($bill_value * 100) / 118), 2);
@@ -243,10 +245,11 @@ class Ledger_model extends CI_Model {
 
                 $tempData["lock_bill_amount"] = $row->lock_bill_amount;
                 $tempData["created_at"] = $row->created_at;
-
+                
                 $date = date_create($row->created_at);
                 $tempData["bill_date"] = date_format($date,"d-M-y");
                 $tempData["invoice_bill_date"] = date_format($date,"m-y");
+                $tempData["financial_year"] = financial_year($row->created_at);
 
                 $bill_value = (float)$row->lock_bill_amount;
                 $basicValue = round((($bill_value * 100) / 118), 2);
