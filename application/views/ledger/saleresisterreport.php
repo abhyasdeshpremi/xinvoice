@@ -54,7 +54,7 @@ $(function() {
     var today = year + "-" + month + "-" + day;       
     $("#startDate").attr("value", today);
     $("#endDate").attr("value", today);
-    
+    $("#startDate").focus();
     $("#applySearch").click(function(){
         var startDate = $('#startDate').val();
         var endDate = $('#endDate').val();
