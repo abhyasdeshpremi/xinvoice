@@ -34,7 +34,7 @@
 <thead >
     <tr>
         <th width="8px;">SN</th>
-        <th width="195px;" style="text-align:right;">NAME</th>
+        <th width="195px;" style="text-align:left;">NAME</th>
         <th>TYPE</th>
         <th style="text-align:right;" >DISTRICT</th>
         <th style="text-align:right;">OP. BAL</th>
