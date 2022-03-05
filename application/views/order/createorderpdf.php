@@ -44,7 +44,7 @@ $orderTitletype = "ORDER RECEIPT";
         <?php echo isset($mobilenumber) ? ', Mob.:- '.$mobilenumber : ''; ?> 
         <?php echo isset($clientarea) ? ', Area.:- '.$clientarea : ''; ?> 
         <?php echo isset($clientarea) ? ', Area.:- '.$clientarea : ''; ?>
-        <?php echo isset($orderid) ? ', ORDER NO.:- '.$orderid.'/ 21-22' : ''; ?>
+        <?php echo isset($orderid) ? ', ORDER NO.:- '.$orderid.'/ '.financial_year($created_at) : ''; ?>
         <?php echo isset($created_at) ? ', DATE:- '.$created_at: ''; ?>
     </span> </p>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">

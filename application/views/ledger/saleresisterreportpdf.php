@@ -4,19 +4,22 @@
 <head>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta charset="utf-8">
-    <title>Stock Report</title>
+    <title>Sale Report</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
         table, th{
-            border: 1px dotted gray;
+            border: 1px dashed black;
         }
         table, td{
-            border-right-style: dotted;
-            border: 1px gray;
+            border-right-style: dashed;
+            border: 1px black;
         }
         th, td {
            padding-left: 5px;
            padding-right:5px;
+        }
+        body {
+        font-family: Helvetica, sans-serif;
         }
     </style>
 </head> 
@@ -33,21 +36,21 @@ if($globalInvoice_bill_include_tax == 'yes'){
 ?>
 <body style="width : 100%;" >
     <center>
-        <span style="font:12px;">Sale Report</span><br>
-        <span style="font:14px; font-style:bold;"><?php echo isset($title) ? $title : '';?></span><br>
-        <span style="font:10px;">Date From:-<?php echo $start_date;?> To:- <?php echo $end_date;?></span><br><br>
+        <span style="font:12px; text-transform: uppercase;">Sale Report</span><br>
+        <span style="font:14px; font-style:bold; text-transform: uppercase;"><?php echo isset($title) ? $title : '';?></span><br>
+        <span style="font:10px; text-transform: uppercase;">Date From:- <?php echo date("d-m-Y", strtotime($start_date)); ?> To:- <?php echo date("d-m-Y", strtotime($end_date)); ?></span><br><br>
     <br>  
     </center>
 
-<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:10px;" width="99%">
+<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:11px;" width="99%">
 <thead >
     <tr>
         <th width="10px;">#</th>
-        <th width="50px;">DATE</th>
+        <th width="55px;">DATE</th>
         <th>INVNo.</th>
         <th>PARTY NAME</th>
         <?php if($tax){ ?><th>GSTIN</th><?php } ?>
-        <th>MODE</th>
+        <th style="text-align:left;">MODE</th>
         <?php if($tax){ ?><th style="text-align:right;">BASIC</th><?php } ?>
         <?php if($tax){ ?><th style="text-align:right;">CGST</th><?php } ?>
         <?php if($tax){ ?><th style="text-align:right;">SGST</th><?php } ?>
@@ -80,7 +83,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $value["bill_date"]; ?></td>
-                <td><?php echo $value["invoice_bill_date"]."/".$value["invoice_bill_date"]; ?></td>
+                <td><?php echo $value["previous_invoice_ref_no"]."/".$value["financial_year"]; ?></td>
                 <td><?php echo $value["client_name"]; ?></td>
                 <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
                 <td><?php echo $value["payment_mode"]; ?></td>
@@ -107,7 +110,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $value["bill_date"]; ?></td>
-                <td><?php echo $value["invoice_bill_date"]."/".$value["invoice_bill_date"]; ?></td>
+                <td><?php echo $value["previous_invoice_ref_no"]."/".$value["financial_year"]; ?></td>
                 <td><?php echo $value["client_name"]; ?></td>
                 <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
                 <td><?php echo $value["payment_mode"]; ?></td>

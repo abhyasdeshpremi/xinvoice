@@ -3,41 +3,44 @@
 <head>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta charset="utf-8">
-    <title>Stock Report</title>
+    <title>Ledger Report</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
         table, th{
-            border: 1px dotted gray;
+            border: 1px dashed black;
         }
         table, td{
-            border-right-style: dotted;
-            border: 1px gray;
+            border-right-style: dashed;
+            border: 1px black;
         }
         th, td {
            padding-left: 5px;
            padding-right:5px;
         }
+        body {
+        font-family: Helvetica, sans-serif;
+        }
     </style>
 </head> 
 <body style="width : 100%;" >
     <center>
-        <span style="font:12px;">Ledger Report</span><br>
-        <span style="font:14px; font-style:bold;"><?php echo isset($title) ? $title : '';?></span><br>
-        <span style="font:10px;">Date From:-<?php echo $start_date;?> To:- <?php echo $end_date;?></span><br><br>
+        <span style="font:12px; text-transform: uppercase;">Ledger Report</span><br>
+        <span style="font:14px; font-style:bold; text-transform: uppercase;"><?php echo isset($title) ? $title : '';?></span><br>
+        <span style="font:10px; text-transform: uppercase;">Date From:- <?php echo date("d-m-Y", strtotime($start_date)); ?> To:- <?php echo date("d-m-Y", strtotime($end_date)); ?></span><br><br>
     <br>  
     </center>
 
-<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:10px;" width="99%">
+<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:11px;" width="99%">
 <thead >
     <tr>
         <th width="8px;">SN</th>
-        <th >CLIENT CODE</th>
-        <th width="135px;" style="text-align:right;">NAME</th>
+        <th width="195px;" style="text-align:right;">NAME</th>
+        <th>TYPE</th>
         <th style="text-align:right;" >DISTRICT</th>
-        <th style="text-align:right;">OP. BALANCE</th>
-        <th style="text-align:right;">TOTAL CR.</th>
-        <th style="text-align:right;">TOTAL DR.</th>
-        <th width="90px;" style="text-align:right;">CL. BALANCE</th>
+        <th style="text-align:right;">OP. BAL</th>
+        <th width="55px;" style="text-align:right;">TTL CR.</th>
+        <th width="55px;" style="text-align:right;">TTL DR.</th>
+        <th width="90px;" style="text-align:right;">CL. BAL</th>
     </tr>
 </thead>
 <tbody>
@@ -61,8 +64,8 @@
         if ($tmpDistrict == $currentDistrict){ ?>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php echo $value["fk_client_code"]; ?></td>
                 <td style="text-align:left;"><?php echo $value["fk_client_name"]; ?></td>
+                <td ><?php echo $value["client_type"]; ?></td>
                 <td style="text-align:left;"><?php echo $value["district"]; ?></td>
                 <td style="text-align:right;"><?php echo $opening_amount; ?></td>
                 <td style="text-align:right;"><?php echo $credit_count_value; ?></td>
@@ -84,8 +87,8 @@
             </tr>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php echo $value["fk_client_code"]; ?></td>
                 <td style="text-align:left;"><?php echo $value["fk_client_name"]; ?></td>
+                <td ><?php echo $value["client_type"]; ?></td>
                 <td style="text-align:left;"><?php echo $value["district"]; ?></td>
                 <td style="text-align:right;"><?php echo $opening_amount; ?></td>
                 <td style="text-align:right;"><?php echo $credit_count_value; ?></td>

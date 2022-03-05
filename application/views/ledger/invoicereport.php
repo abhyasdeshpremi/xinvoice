@@ -26,7 +26,7 @@
         </div>
         <div class="datatable">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4" style="overflow-x:auto;">
-                <table class="table table-bordered table-hover table-fixed" id="StockResultTable" width="80%" cellspacing="0">
+                <table class="table table-bordered table-hover table-fixed" id="StockResultTable" width="80%" cellspacing="0" style="font-size:12px;">
                     <thead id="ledgerreporthead">
                         
                     </thead>
@@ -178,12 +178,10 @@ $(function() {
     }
 
     function addInvoicerow(oneRow, countNumber, invoiceitem){
-        var s = "00000" + oneRow["previous_invoice_ref_no"];
-
         return '<tr class="invoicecal" id="'+oneRow["pk_invoice_id"]+'">'
                     +'<td>'+countNumber+'</td>'
                     +'<td>'+oneRow["bill_date"]+'</td>'
-                    +'<td>'+s.substr(s.length-5)+ '/'+ oneRow["invoice_bill_date"] +'</td>'
+                    +'<td>'+oneRow["previous_invoice_ref_no"]+ '/'+ oneRow["financial_year"] +'</td>'
                     +'<td>'+oneRow["client_name"]+'</td>'
                     +'<td>'+oneRow["gstnumber"]+'</td>'
                     +'<td>'+oneRow["payment_mode"]+'</td>'

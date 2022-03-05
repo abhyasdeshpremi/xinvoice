@@ -142,13 +142,13 @@ $(function() {
     function addHeader(){
         return '<tr class="invoicecal">'
                     +'<th width="60px;">#</th>'
-                    +'<th width="100px;">Client Code</th>'
                     +'<th>NAME</th>'
+                    +'<th width="100px;">TYPE</th>'
                     +'<th>DISTRICT</th>'
-                    +'<th width="100px;">OP. BALANCE</th>'
-                    +'<th width="100px;">TOTAL CR.</th>'
-                    +'<th width="100px;">TOTAL DR.</th>'
-                    +'<th width="70px;">CL. BALANCE</th>'
+                    +'<th width="100px;">OP. BAL</th>'
+                    +'<th width="100px;">TTL CR.</th>'
+                    +'<th width="100px;">TTL DR.</th>'
+                    +'<th width="70px;">CL. BAL</th>'
                 +'</tr>';
     }
 
@@ -156,8 +156,8 @@ $(function() {
         
         return '<tr class="invoicecal" id="'+oneRow["fk_client_code"]+'">'
                     +'<td>'+countNumber+'</td>'
-                    +'<td>'+oneRow["fk_client_code"]+'</td>'
                     +'<td>'+oneRow["fk_client_name"]+'</td>'
+                    +'<td>'+oneRow["client_type"]+'</td>'
                     +'<td>'+oneRow["district"]+'</td>'
                     +'<td>'+opening_amount+'</td>'
                     +'<td>'+oneRow["credit_count_value"]+'</td>'
