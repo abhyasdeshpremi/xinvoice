@@ -2,16 +2,16 @@
 <div class="datatable">
     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4 pt-3">
         <div class="row">
-            <div class="col-md-3">
-            
-            </div>
-            <div class="clearfix"></div>
             <div class="col-md-4">
-                    
+                
             </div>
             <div class="clearfix"></div>
-            <div class="col-md-3 col-xs-12">
-                <input type="text" id="daterange" class="form-control">
+            <div class="col-md-3">
+                <input type="date" id="startDate" name="startDate" class="form-control">
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3 col-xs-12"> 
+                <input type="date" id="endDate" name="endDate" class="form-control">
             </div>
             <div class="col-md-1 col-xs-12">
                 <button type="button" class="btn btn-outline-warning" id="applySearch">Search</button>
@@ -44,98 +44,83 @@
 <script type="text/javascript">
 $(function() {
 
-    var start = moment(); // moment().subtract(29, 'days');
-    var end = moment();
     var base_url = "<?php echo base_url('/downloadclientpdf'); ?>";
-    $('#daterange').daterangepicker({
-        locale: { cancelLabel: 'Clear' }  
-    });
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
 
-    $('#daterange').daterangepicker({
-        showDropdowns: true,
-        showWeekNumbers: true,
-        ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-           'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
-        },
-        alwaysShowCalendars: false,
-        startDate: start,
-        endDate: end,
-        opens: "left"
-    }, function(start, end, label) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
-    });
+    var today = year + "-" + month + "-" + day;       
+    $("#startDate").attr("value", today);
+    $("#endDate").attr("value", today);
 
-    $('#daterange').on('apply.daterangepicker', function(ev, picker) {
-        start = picker.startDate;
-        end = picker.endDate;
-        console.log(picker.startDate.format('YYYY-MM-DD'));
-        console.log(picker.endDate.format('YYYY-MM-DD'));
-    });
-    
     $("#applySearch").click(function(){
-        $('#stockreporthead').html('');
-        $('#stockreportBody').html('');
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo base_url('/salereport'); ?>',
-            dataType  : 'json',
-            data: {start_date: start.format('YYYY-MM-DD'), end_date: end.format('YYYY-MM-DD')},
-            error: function() {
-                alert('Something is wrong');
-            },
-            success: function (data) {
-                if (data.code){
-                    $('#stockreporthead').append(addHeader());
-                    console.log(data);
-                    var result = data.result;
-                    var total_opening_amount = 0.0;
-                    var total_credit_count_value = 0.0;
-                    var total_debit_count_value = 0.0;
-                    var total_amount_value = 0.0;
-                    var tmpDistrict = result[0]["district"];
-                    for(i=0;i<result.length; i++) {
-                        var oneRow = result[i];
-                        var debit_count_value = parseFloat(oneRow["debit_count_value"]);
-                        var credit_count_value = parseFloat(oneRow["credit_count_value"]);
-                        var total_amount = parseFloat(oneRow["total_amount"]);
-                        var opening_amount = (total_amount + debit_count_value - credit_count_value);
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+        if((startDate.length > 0) && (endDate.length > 0) ){ 
+            $('#stockreporthead').html('');
+            $('#stockreportBody').html('');
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/salereport'); ?>',
+                dataType  : 'json',
+                data: {start_date: $('#startDate').val(), end_date: $('#endDate').val()},
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function (data) {
+                    if (data.code){
+                        $('#stockreporthead').append(addHeader());
+                        console.log(data);
+                        var result = data.result;
+                        var total_opening_amount = 0.0;
+                        var total_credit_count_value = 0.0;
+                        var total_debit_count_value = 0.0;
+                        var total_amount_value = 0.0;
+                        var tmpDistrict = result[0]["district"];
+                        for(i=0;i<result.length; i++) {
+                            var oneRow = result[i];
+                            var debit_count_value = parseFloat(oneRow["debit_count_value"]);
+                            var credit_count_value = parseFloat(oneRow["credit_count_value"]);
+                            var total_amount = parseFloat(oneRow["total_amount"]);
+                            var opening_amount = (total_amount + debit_count_value - credit_count_value);
 
-                        var currentDistrict = oneRow["district"];
-                        if (tmpDistrict == currentDistrict){
-                            $('#stockreportBody').append(addInvoicerow(oneRow, opening_amount, (i + 1)) );
-                        }else{
-                            $('#stockreportBody').append(addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value));
-                            $('#stockreportBody').append(addInvoicerow(oneRow, opening_amount, (i + 1)) );
-                            total_opening_amount = 0.0;
-                            total_credit_count_value = 0.0;
-                            total_debit_count_value = 0.0;
-                            total_amount_value = 0.0;
-                            tmpDistrict = currentDistrict;
+                            var currentDistrict = oneRow["district"];
+                            if (tmpDistrict == currentDistrict){
+                                $('#stockreportBody').append(addInvoicerow(oneRow, opening_amount, (i + 1)) );
+                            }else{
+                                $('#stockreportBody').append(addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value));
+                                $('#stockreportBody').append(addInvoicerow(oneRow, opening_amount, (i + 1)) );
+                                total_opening_amount = 0.0;
+                                total_credit_count_value = 0.0;
+                                total_debit_count_value = 0.0;
+                                total_amount_value = 0.0;
+                                tmpDistrict = currentDistrict;
+                            }
+
+                            total_opening_amount = parseFloat(total_opening_amount) + parseFloat(opening_amount);
+                            total_credit_count_value = parseFloat(total_credit_count_value) + parseFloat(credit_count_value);
+                            total_debit_count_value = parseFloat(total_debit_count_value) + parseFloat(debit_count_value);
+                            total_amount_value = parseFloat(total_amount_value) + parseFloat(total_amount);
+                            
+                            
                         }
-
-                        total_opening_amount = parseFloat(total_opening_amount) + parseFloat(opening_amount);
-                        total_credit_count_value = parseFloat(total_credit_count_value) + parseFloat(credit_count_value);
-                        total_debit_count_value = parseFloat(total_debit_count_value) + parseFloat(debit_count_value);
-                        total_amount_value = parseFloat(total_amount_value) + parseFloat(total_amount);
-                        
-                        
+                        $('#stockreportBody').append(addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value));
+                        var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val();
+                        $("#printStockReport").attr("href", printurl);
+                        console.log(printurl);
+                    }else{
+                        $('#stockreporthead').html('');
+                        $('#stockreportBody').html("<h1>"+data.message+"</h1>");
                     }
-                    $('#stockreportBody').append(addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value));
-                    var printurl = base_url + "/" +start.format('YYYY-MM-DD')+"/"+end.format('YYYY-MM-DD');
-                    $("#printStockReport").attr("href", printurl);
-                    console.log(printurl);
-                }else{
-                    $('#stockreportBody').html("<h1>"+data.message+"</h1>");
                 }
-            }
-        });
+            });
+        }else{
+            $('#stockreporthead').html('');
+            $('#stockreportBody').html("<center><h1>Please select start and end date.</h1></center>");
+        }
     });
 
     
