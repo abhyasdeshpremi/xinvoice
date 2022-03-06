@@ -95,7 +95,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Payment Date</span>
                 </div>
-                <input type="text" class="form-control datepicker" data-date-format="dd/mm/yyyy" aria-label="Small" aria-describedby="inputGroup-sizing-sm" data-provide="datepicker" id="paymentdate" name="paymentdate" value="" required>
+                <input type="date" class="form-control" aria-label="Small"  id="paymentdate" name="paymentdate" required>
             </div>
             <div class="input-group input-group mb-3">
                 <div class="input-group-prepend">
@@ -133,10 +133,6 @@
 <script>
     
     $(document).ready(function(){
-        $("#datepicker").datepicker({ 
-            autoclose: true, 
-            todayHighlight: true
-        }).datepicker('update', new Date());
         
         $("#hardRefreshAccount").click(function () {
             location.reload(true);
@@ -175,7 +171,7 @@
             var client_name = $("#clientdescription").val();
             var paymentmode = $("#paymentmode").val();
             var paymenttype = $("#paymenttype").val();
-            var paymentdate = dateFormateConvert($("#paymentdate").val());
+            var paymentdate = $("#paymentdate").val();
             var paymentamout = $("#paymentamount").val();
             var paymentcomment = $("#paymentcomment").val();
             $("#submit_payment").attr('disabled','disabled');
