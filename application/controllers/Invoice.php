@@ -544,4 +544,26 @@ class Invoice extends CI_Controller {
         echo json_encode($data);
     }
 
+    function updateInvoiceCreatedDate(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['updateCreated_at'] = $this->input->post('updateCreated_at');
+            $data['invoiceCode'] = $this->input->post('invoiceCode');
+            $invoice_created_result = $this->Invoice_model->updateInvoiceCreatedDate($data);
+            if($invoice_created_result){
+                $data["code"] = $invoice_created_result["code"];
+                $data["updated_at"] = $invoice_created_result["updated_at"];
+                $data["message"] = "Created date updated.";
+            }else{
+                $data["code"] = $invoice_created_result["code"];
+                $data["updated_at"] = $invoice_created_result["updated_at"];
+                $data["message"] = "Created date unable to update.";
+            }
+        }
+        echo json_encode($data);
+    }
+
 }

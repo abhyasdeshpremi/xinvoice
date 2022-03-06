@@ -581,6 +581,33 @@ class Invoice_model extends CI_Model {
         return $result;
     }
 
+    public function updateInvoiceCreatedDate($data){
+        date_default_timezone_set('asia/kolkata');
+        $result = array();
+        $this->db->where('unique_invioce_code', $data['invoiceCode']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Invoices');
+        if($query->num_rows() == 1){
+
+            $currentDate = date("Y-m-d H:i:s");
+            if(!empty($data['updateCreated_at'])){
+                $currentDate = date("Y-m-d H:i:s", strtotime($data['updateCreated_at'] ." ".date("H:i:s")));
+            }
+            $dataList = array(
+                'created_at'=>$currentDate
+            );
+            $this->db->where('unique_invioce_code', $data['invoiceCode']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('Invoices', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['updated_at'] = $currentDate;
+        }else{
+            $result['code']  = false;
+            $result['updated_at'] = $currentDate;
+        }
+        return $result;
+    }
+
 }
 
 ?>
