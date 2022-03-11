@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Xinvoice - <?php echo $title;?></title>
+        <title>irotore - <?php echo $title;?></title>
         <link href="<?php echo base_url();?>assets/css/styles.css" rel="stylesheet" />
         <link href="<?php echo base_url();?>assets/css/customStyle.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />

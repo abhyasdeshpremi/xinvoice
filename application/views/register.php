@@ -8,7 +8,7 @@
         <h2 class="font-weight-light my-4">Register</h2>
     </div>
     <div class="col-lg-12"> 
-        <form method="POST" >
+        <!-- <form method="POST" > -->
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationDefault03">First Name <span class="requiredClass">*</span></label>
@@ -85,7 +85,7 @@
             </div>
                 <button class="btn btn-warning mr-2 my-1" id="register_button" type="button">Registor</button>
                 <div class="small"><a href="<?php echo base_url('/login'); ?>">Have an account? Sign in!</a></div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 <script>
@@ -168,7 +168,12 @@
             });
         });
 
+        $("#firstname, #lastname, #username, #password, #firmuniquecode, #firmName, #firmMobile, #firmEmail, #firmAddress, #firmdistrict, #firmState, #firmZip").focusout(function(){
+            $("#firstname, #lastname, #username, #password, #firmuniquecode, #firmName, #firmMobile, #firmEmail, #firmAddress, #firmdistrict, #firmState, #firmZip").removeClass("borderRed");
+        });
+
         $('#register_button').click(function(e){
+
             var firstname = $("#firstname").val();
             var lastname = $("#lastname").val();
             var username = $("#username").val();
@@ -184,28 +189,66 @@
             var firmdistrict = $("#firmdistrict").val();
             var firmState = $("#firmState").val();
             var firmZip = $("#firmZip").val();
+            $("#firstname, #lastname, #username, #password, #firmuniquecode, #firmName, #firmMobile, #firmEmail, #firmAddress, #firmdistrict, #firmState, #firmZip").removeClass("borderRed");
 
-
-
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url('/registeruser'); ?>',
-                dataType  : 'json',
-                data: {firstname: firstname, lastname: lastname, username: username, password: password,
-                    firmuniquecode: firmuniquecode, firmName: firmName, firmMobile: firmMobile,
-                    firmEmail: firmEmail, firmAddress: firmAddress, firmArea: firmArea, firmCity: firmCity,
-                    firmdistrict: firmdistrict, firmState: firmState, firmZip: firmZip},
-                error: function() {
-                    alert('Something is wrong');
-                },
-                success: function (data) {
-                    console.log(data);
-                    if (data.userinsertFlag){
-                        $('#useralertmessage').text("Please select other username");
-                        $('#useralertmessage').addClass('requiredClass');
+            if(firstname.length < 3){
+                $("#firstname").addClass("borderRed");
+                alert("Please Enter First Name.");
+            }else if(lastname.length < 3){
+                $("#lastname").addClass("borderRed");
+                alert("Please Enter Last Name.");
+            }else if(username.length < 3){
+                $("#username").addClass("borderRed");
+                alert("Please Enter Username.");
+            }else if(password.length < 3){
+                $("#password").addClass("borderRed");
+                alert("Please Enter Password.");
+            }else if(firmuniquecode.length < 3){
+                $("#firmuniquecode").addClass("borderRed");
+                alert("Please Enter Firm short name.");
+            }else if(firmName.length < 3){
+                $("#firmName").addClass("borderRed");
+                alert("Please Enter Firm/Company Name.");
+            }else if(firmMobile.length < 3){
+                $("#firmMobile").addClass("borderRed");
+                alert("Please Enter Mobile number.");
+            }else if(firmEmail.length < 3){
+                $("#firmEmail").addClass("borderRed");
+                alert("Please Enter Email.");
+            }else if(firmAddress.length < 3){
+                $("#firmAddress").addClass("borderRed");
+                alert("Please Enter Firm/Company address.");
+            }else if(firmdistrict.length < 3){
+                $("#firmdistrict").addClass("borderRed");
+                alert("Please Enter District.");
+            }else if(firmState.length < 3){
+                $("#firmState").addClass("borderRed");
+                alert("Please Enter State.");
+            }else if(firmZip.length < 3){
+                $("#firmZip").addClass("borderRed");
+                alert("Please Enter Zip code.");
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url('/registeruser'); ?>',
+                    dataType  : 'json',
+                    data: {firstname: firstname, lastname: lastname, username: username, password: password,
+                        firmuniquecode: firmuniquecode, firmName: firmName, firmMobile: firmMobile,
+                        firmEmail: firmEmail, firmAddress: firmAddress, firmArea: firmArea, firmCity: firmCity,
+                        firmdistrict: firmdistrict, firmState: firmState, firmZip: firmZip},
+                    error: function() {
+                        alert('Something is wrong');
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.userinsertFlag){
+                            $('#useralertmessage').text("Please select other username");
+                            $('#useralertmessage').addClass('requiredClass');
+                        }
                     }
-                }
-            });
+                });
+
+            }
             // e.preventDefault();
         });
 
