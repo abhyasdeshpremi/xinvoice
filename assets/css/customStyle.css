@@ -122,3 +122,7 @@
     user-select: none;/*no need*/
     margin-top: 0px;
   }
+
+  .borderRed{
+    border: 1px solid red !important;
+  }
