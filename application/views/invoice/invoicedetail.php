@@ -154,7 +154,7 @@
             var globalsearch = $('#globalsearch').val();
             if(globalsearch.length > 2){
                 var link = '<?php echo $base_url; ?>';
-                var url = link + "/" +globalsearch +"/1";
+                var url = link + "/" +globalsearch;
                 location.replace(url);
             }
         });
