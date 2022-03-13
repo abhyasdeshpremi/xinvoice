@@ -150,5 +150,20 @@
             }
         });
 
+        $('#globalsearchbutton').click(function(){
+            var globalsearch = $('#globalsearch').val();
+            if(globalsearch.length > 2){
+                var link = '<?php echo $base_url; ?>';
+                var url = link + "/" +globalsearch +"/1";
+                location.replace(url);
+            }
+        });
+
+        $('#globalclearhbutton').click(function(){
+            var link = '<?php echo $base_url; ?>';
+            location.replace(link);
+        });
+        
+
     });
 </script>

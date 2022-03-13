@@ -463,8 +463,25 @@
                                     &middot; <?php echo date("F d, Y"); ?> &middot; <?php echo date("h:i:s A"); ?>
                                 </div>
                             </div>
-                            <div class="mr-6 mb-3 mb-sm-0">
+                            <div class="mr-4 mb-3 mb-sm-0">
 
+                            </div>
+                            <div class="mr-2 mb-3 mb-sm-0">
+                                <?php if (isset($globalsearch)) {?>
+                                <div class="input-group">
+                                    <input class="form-control border-end-0 border rounded-pill" type="text" value="<?php echo isset($globalsearchtext) ? $globalsearchtext : ''; ?>" id="globalsearch">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button" id="globalsearchbutton">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                    <span class="input-group-append">
+                                        <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button" id="globalclearhbutton">
+                                            <i class="fa fa-times-circle"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <?php } ?>
                             </div>
                             <div class="mr-2 mb-3 mb-sm-0">
                                 <?php if (isset($buttonName)) {?>

@@ -390,22 +390,38 @@ class Invoice extends CI_Controller {
             redirect('/login');
         }
         $data = array();
+        $page_seg = 2;
+        $search_seg = 3;
+        $searchurl = '';
+        if (!empty($this->uri->segment(2)) && !empty($this->uri->segment(3)) ) {
+            $page_seg = 3;
+            $search_seg = 2;
+            $searchurl = "/";
+        }
+
+        $globalsearchtext = ($this->uri->segment($search_seg)) ? $this->uri->segment($search_seg) : '';
+        $data["base_url"] = base_url("invoicedetail");
 
         $config = array();
-        $config["base_url"] = base_url("invoicedetail");
-        $config["total_rows"] = $this->Invoice_model->get_count('sell');
+        $config["base_url"] = base_url("invoicedetail".$searchurl."".$globalsearchtext);
+        $config["total_rows"] = $this->Invoice_model->get_count('sell', $globalsearchtext);
         $config["per_page"] = PAGE_PER_ITEM;
-        $config["uri_segment"] = 2;
+        $config["uri_segment"] = $page_seg;
 
         $this->pagination->initialize($config);
-        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $page = ($this->uri->segment($page_seg)) ? $this->uri->segment($page_seg) : 0;
         $data["links"] = $this->pagination->create_links();
 
-        $firm_result = $this->Invoice_model->invoice_list($config["per_page"], $page, 'sell');
-        $data['page'] = $page;
+        $firm_result = $this->Invoice_model->invoice_list($config["per_page"], $page, 'sell', $globalsearchtext);
+        $data['page'] = (int)$page;
         $data['data'] = $firm_result['result'];
+
+        
+
         $this->template->set('buttonName', 'New Sell Invoice');
         $this->template->set('buttonLink', base_url('/createinvoice'));
+        $this->template->set('globalsearch', TRUE);
+        $this->template->set('globalsearchtext', $globalsearchtext);
         $this->template->set('title', 'Sell Invoices List');
         $this->template->load('default_layout', 'contents' , 'invoice/invoicedetail', $data);
     }
