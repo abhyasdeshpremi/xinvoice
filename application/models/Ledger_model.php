@@ -14,6 +14,12 @@ class Ledger_model extends CI_Model {
         // $endDateFormat = date('Y-m-d H:i:s', $endDate);
         $this->db->select('Stocks.item_code, Stocks.item_name, Stocks.item_total_count');
         $this->db->where('Stocks.fk_firm_code', $this->session->userdata('firmcode'));
+        $stocksearch = trim($arg['stocksearch']);
+        if($stocksearch != ''){
+            $this->db->group_start();
+            $this->db->or_like('Stocks.item_name', $stocksearch, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("Stocks.item_name", "ASC");
         $this->db->from('Stocks');
         $query = $this->db->get();
