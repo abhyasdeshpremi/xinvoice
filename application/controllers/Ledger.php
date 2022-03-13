@@ -39,6 +39,7 @@ class Ledger extends CI_Controller {
             if ($this->input->server('REQUEST_METHOD') === 'POST') {
                 $data['start_date'] = $this->input->post('start_date');
                 $data['end_date'] = $this->input->post('end_date');
+                $data['stocksearch'] = urldecode($this->input->post('stocksearch'));
                 $data["message"] = "";
                 $stock_result = $this->Ledger_model->stock_list($data);
                 if($stock_result['code']){
@@ -64,6 +65,7 @@ class Ledger extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $data['start_date'] = $this->uri->segment(2);
             $data['end_date'] = $this->uri->segment(3);
+            $data['stocksearch'] = urldecode($this->uri->segment(4));
             $stock_result = $this->Ledger_model->stock_list($data);
             if($stock_result['code']){
                 $data['code'] = $stock_result['code'];
@@ -99,7 +101,7 @@ class Ledger extends CI_Controller {
             if ($this->input->server('REQUEST_METHOD') === 'POST') {
                 $data['start_date'] = $this->input->post('start_date');
                 $data['end_date'] = $this->input->post('end_date');
-                $data['salesearch'] = $this->input->post('salesearch');
+                $data['salesearch'] = urldecode($this->input->post('salesearch'));
                 $data["message"] = "";
                 $client_result = $this->Ledger_model->client_list($data);
                 if($client_result['code']){
@@ -125,7 +127,7 @@ class Ledger extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $data['start_date'] = $this->uri->segment(2);
             $data['end_date'] = $this->uri->segment(3);
-            $data['ledgerearch'] = $this->uri->segment(4);
+            $data['ledgerearch'] = urldecode($this->uri->segment(4));
             $client_result = $this->Ledger_model->sale_list($data);
             if($client_result['code']){
                 $data['code'] = $client_result['code'];
