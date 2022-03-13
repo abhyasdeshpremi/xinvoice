@@ -184,7 +184,7 @@ class Ledger extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $data['start_date'] = $this->uri->segment(2);
             $data['end_date'] = $this->uri->segment(3);
-            $data['salesearch'] = $this->uri->segment(4);
+            $data['salesearch'] = urldecode($this->uri->segment(4));
             $client_result = $this->Ledger_model->client_list($data);
             if($client_result['code']){
                 $data['code'] = $client_result['code'];
