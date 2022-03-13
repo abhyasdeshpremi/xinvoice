@@ -98,6 +98,14 @@ class Ledger_model extends CI_Model {
         $this->db->select('Account.fk_client_code, Account.fk_client_name, Clients.client_type, Account.total_amount, Clients.district');
         $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where_not_in('Clients.client_type', 'mine');
+        $ledgerearch = trim($arg['ledgerearch']);
+        if($ledgerearch != ''){
+            $this->db->group_start();
+            $this->db->or_like('Account.fk_client_name', $ledgerearch, "both");
+            $this->db->or_like('Clients.client_type', $ledgerearch, "both");
+            $this->db->or_like('Clients.district', $ledgerearch, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("Clients.district", "ASC");
         $this->db->from('Account');
         $this->db->join('Clients', 'Account.fk_client_code = Clients.code');
