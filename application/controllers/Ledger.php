@@ -125,6 +125,7 @@ class Ledger extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $data['start_date'] = $this->uri->segment(2);
             $data['end_date'] = $this->uri->segment(3);
+            $data['ledgerearch'] = $this->uri->segment(4);
             $client_result = $this->Ledger_model->sale_list($data);
             if($client_result['code']){
                 $data['code'] = $client_result['code'];
@@ -159,6 +160,7 @@ class Ledger extends CI_Controller {
             if ($this->input->server('REQUEST_METHOD') === 'POST') {
                 $data['start_date'] = $this->input->post('start_date');
                 $data['end_date'] = $this->input->post('end_date');
+                $data['ledgerearch'] = urldecode($this->input->post('ledgerearch'));
                 $data["message"] = "";
                 $client_result = $this->Ledger_model->sale_list($data);
                 if($client_result['code']){
