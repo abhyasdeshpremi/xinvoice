@@ -1,8 +1,10 @@
 <div class="datatable">
     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4 pt-3">
         <div class="row">
-            <div class="col-md-4">
-                
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control border-end-0 border rounded-pill" type="text" placeholder="search" id="salesearch">
             </div>
             <div class="clearfix"></div>
             <div class="col-md-3">
@@ -58,6 +60,7 @@ $(function() {
     $("#applySearch").click(function(){
         var startDate = $('#startDate').val();
         var endDate = $('#endDate').val();
+        var salesearch = $('#salesearch').val();
         if((startDate.length > 0) && (endDate.length > 0) ){ 
             $('#ledgerreporthead').html('');
             $('#ledgerreportBody').html('');
@@ -65,7 +68,7 @@ $(function() {
                 type: 'POST',
                 url: '<?php echo base_url('/clientreport'); ?>',
                 dataType  : 'json',
-                data: {start_date: $('#startDate').val(), end_date: $('#endDate').val()},
+                data: {start_date: $('#startDate').val(), end_date: $('#endDate').val(), salesearch: salesearch},
                 error: function() {
                     alert('Something is wrong');
                 },
@@ -112,7 +115,7 @@ $(function() {
 
                         }
                         $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount));
-                        var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val();
+                        var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+salesearch;
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
                     }else{
