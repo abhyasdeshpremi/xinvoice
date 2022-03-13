@@ -421,9 +421,7 @@ class Invoice extends CI_Controller {
         $firm_result = $this->Invoice_model->invoice_list($config["per_page"], $page, 'sell', urldecode($globalsearchtext));
         $data['page'] = (int)$page;
         $data['data'] = $firm_result['result'];
-
         
-
         $this->template->set('buttonName', 'New Sell Invoice');
         $this->template->set('buttonLink', base_url('/createinvoice'));
         $this->template->set('globalsearch', TRUE);
