@@ -62,8 +62,8 @@ class Ledger extends CI_Controller {
     function getPDF(){
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
-            $data['start_date'] = $this->uri->segment(2);;
-            $data['end_date'] = $this->uri->segment(3);;
+            $data['start_date'] = $this->uri->segment(2);
+            $data['end_date'] = $this->uri->segment(3);
             $stock_result = $this->Ledger_model->stock_list($data);
             if($stock_result['code']){
                 $data['code'] = $stock_result['code'];
@@ -99,6 +99,7 @@ class Ledger extends CI_Controller {
             if ($this->input->server('REQUEST_METHOD') === 'POST') {
                 $data['start_date'] = $this->input->post('start_date');
                 $data['end_date'] = $this->input->post('end_date');
+                $data['salesearch'] = $this->input->post('salesearch');
                 $data["message"] = "";
                 $client_result = $this->Ledger_model->client_list($data);
                 if($client_result['code']){
@@ -122,8 +123,8 @@ class Ledger extends CI_Controller {
     function getClinetPDF(){
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
-            $data['start_date'] = $this->uri->segment(2);;
-            $data['end_date'] = $this->uri->segment(3);;
+            $data['start_date'] = $this->uri->segment(2);
+            $data['end_date'] = $this->uri->segment(3);
             $client_result = $this->Ledger_model->sale_list($data);
             if($client_result['code']){
                 $data['code'] = $client_result['code'];
@@ -181,8 +182,9 @@ class Ledger extends CI_Controller {
     function getSalePDF(){
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
-            $data['start_date'] = $this->uri->segment(2);;
-            $data['end_date'] = $this->uri->segment(3);;
+            $data['start_date'] = $this->uri->segment(2);
+            $data['end_date'] = $this->uri->segment(3);
+            $data['salesearch'] = $this->uri->segment(4);
             $client_result = $this->Ledger_model->client_list($data);
             if($client_result['code']){
                 $data['code'] = $client_result['code'];

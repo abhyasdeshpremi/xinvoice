@@ -164,6 +164,14 @@ class Ledger_model extends CI_Model {
         $this->db->where('invoice_type', 'sell');
         $this->db->where_in('status', $invoiceStatus);
         $this->db->where("created_at BETWEEN '$startDate' AND '$endDate'");
+        $salesearch = trim($arg['salesearch']);
+        if($salesearch != ''){
+            $this->db->group_start();
+            $this->db->or_like('client_name', $salesearch, "both");
+            $this->db->or_like('gstnumber', $salesearch, "both");
+            $this->db->or_like('payment_mode', $salesearch, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("created_at", "ASC");
         $this->db->from('Invoices');
         $query = $this->db->get();
