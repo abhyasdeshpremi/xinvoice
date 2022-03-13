@@ -12,10 +12,19 @@ class Invoice_model extends CI_Model {
         $this->load->model('Client_model', '', TRUE);
     }  
 
-    public function get_count($invoice_type = 'sell') {
+    public function get_count($invoice_type = 'sell', $globalsearchtext = '') {
         $this->db->select('pk_invoice_id');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('invoice_type', $invoice_type);
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('client_name', $globalsearchtext, "both");
+            $this->db->or_like('district', $globalsearchtext, "both");
+            $this->db->or_like('area', $globalsearchtext, "both");
+            $this->db->or_like('payment_mode', $globalsearchtext, "both");
+            $this->db->or_like('status', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
@@ -90,10 +99,19 @@ class Invoice_model extends CI_Model {
         return $data;
     }
 
-    public function invoice_list($limit, $start, $invoice_type = 'sell'){
+    public function invoice_list($limit, $start, $invoice_type = 'sell', $globalsearchtext = ''){
         $this->db->limit($limit, $start);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('invoice_type', $invoice_type);
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('client_name', $globalsearchtext, "both");
+            $this->db->or_like('district', $globalsearchtext, "both");
+            $this->db->or_like('area', $globalsearchtext, "both");
+            $this->db->or_like('payment_mode', $globalsearchtext, "both");
+            $this->db->or_like('status', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("created_at", "DESC");
         $query = $this->db->get('Invoices');
         if($query->num_rows() > 0){
