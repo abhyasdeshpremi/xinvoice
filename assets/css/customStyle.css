@@ -126,3 +126,8 @@
   .borderRed{
     border: 1px solid red !important;
   }
+  .customSearchborder{
+    border: 1px solid #3f383e1a;
+    border-radius: 23px;
+    background-color: #FFF;
+  }
