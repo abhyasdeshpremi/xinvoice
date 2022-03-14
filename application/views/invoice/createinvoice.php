@@ -207,7 +207,7 @@
                                         <!-- <a class="dropdown-item" target="_blank" href="<?php //echo base_url('/createinvoicepdf'."/".$invoiceid."/landscape/0"); ?>">Landscape Invoice</a> -->
                                         <a class="dropdown-item"  href="<?php echo base_url('/viewinvoicepdf'."/".$invoiceid)."/portrait/0"; ?>">View Invoice</a>
                                         <!-- <a class="dropdown-item" target="_blank" href="<?php //echo base_url('/createinvoicepdf'."/".$invoiceid."/landscape/1"); ?>">Landscape Invoice Download</a> -->
-                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createinvoicepdf'."/".$invoiceid)."/portrait/1"; ?>">Download Invoice</a>
+                                        <a class="dropdown-item" target="_blank" href="<?php echo base_url('/createinvoicepdf'."/".$invoiceid)."/portrait/1"; ?>" download>Download Invoice</a>
                                     </div>
                                 </div>
                             </div>
