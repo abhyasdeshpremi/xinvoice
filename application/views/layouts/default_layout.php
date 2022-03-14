@@ -400,8 +400,8 @@
                             </div>
 
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsPiggy" aria-expanded="false" aria-controls="collapseDashboards">
-                                <div class="nav-link-icon"><i data-feather="settings"></i></div>
-                                Piggy Bank
+                                <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
+                                Expenses
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseDashboardsPiggy" data-parent="#accordionSidenav">
