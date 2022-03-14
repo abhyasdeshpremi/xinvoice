@@ -211,3 +211,12 @@ $(function() {
 
 });
 </script>
+<script>
+var input = document.getElementById("salesearch");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("applySearch").click();
+  }
+});
+</script>
