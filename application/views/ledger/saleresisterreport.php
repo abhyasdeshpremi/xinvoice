@@ -17,7 +17,7 @@
             </div>
             <div class="clearfix"></div>
             <div class="col-md-1 col-xs-12">
-                <a target="_blank" class="btn btn-outline-warning" id="printStockReport" href=""><i data-feather="printer"></i></a>
+                <a target="_blank" class="btn btn-outline-warning" id="printStockReport" href="" download><i data-feather="printer"></i></a>
             </div>
         </div>
         <hr>
@@ -219,4 +219,48 @@ input.addEventListener("keyup", function(event) {
    document.getElementById("applySearch").click();
   }
 });
+var startDate = document.getElementById("startDate");
+startDate.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("applySearch").click();
+  }
+});
+
+var endDate = document.getElementById("endDate");
+endDate.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("applySearch").click();
+  }
+});
 </script>
+<script language="javascript" type="text/javascript" >
+    var isCtrl = false;     
+    document.onkeyup=function()
+    {
+        var e = window.event;
+        if(e.keyCode == 17)
+        {
+            isCtrl=false;
+        }
+    }
+    
+    document.onkeydown=function()
+    {
+        var e = window.event;
+        if(e.keyCode == 17)
+        {
+            isCtrl=true;
+        }
+        if(e.keyCode == 80 && isCtrl == true) // Ctrl + P
+        {
+            var href = document.getElementById("printStockReport").getAttribute("href");
+            if(href.length > 0){
+                document.getElementById("printStockReport").click();
+            }else{
+                alert("Please search first");
+            }
+        }
+    }
+    </script>
