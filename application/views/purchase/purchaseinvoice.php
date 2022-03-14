@@ -19,7 +19,9 @@
                             </button>
                         </div>
                         <div class="col-md-3 mb-3">
-                            
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <?php echo (isset($clientname)) ? $clientname : ''; ?>
+                            </button>
                         </div>
                         <div class="col-md-3 mb-3">
                              
