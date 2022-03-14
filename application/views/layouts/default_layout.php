@@ -468,7 +468,7 @@
                             </div>
                             <div class="mr-2 mb-3 mb-sm-0">
                                 <?php if (isset($globalsearch)) {?>
-                                <div class="input-group">
+                                <div class="input-group customSearchborder">
                                     <input class="form-control border-end-0 border rounded-pill" type="text" value="<?php echo isset($globalsearchtext) ? $globalsearchtext : ''; ?>" id="globalsearch">
                                     <span class="input-group-append">
                                         <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button" id="globalsearchbutton">
