@@ -135,5 +135,112 @@ class Item_model extends CI_Model {
         }
         return $result;
     }
+
+
+    /*****
+     * Product group list Model
+     */
+
+    public function get_group_count() {
+        $this->db->select('gfi_id');
+        $this->db->from("Group_for_item");
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        return $this->db->count_all_results();
+    }
+
+    public function item_group_list($limit, $start){
+        $this->db->limit($limit, $start);
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("name", "ASC");
+        $query = $this->db->get('Group_for_item');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function unique_item_group_code_verify($unique_code){
+        $this->db->where('pk_gfi_unique_code', strtoupper($unique_code));
+        $query = $this->db->get('Group_for_item');
+        if($query->num_rows() === 0){
+            return true;
+        }else{
+            return false;
+        }
+        return false;
+    }
+
+    public function unique_item_group_code_check($unique_code){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('pk_gfi_unique_code', strtoupper($unique_code));
+        $query = $this->db->get('Group_for_item');
+        if($query->num_rows() === 1){
+            return true;
+        }else{
+            return false;
+        }
+        return false;
+    }
+
+    public function create_group_item($data){
+        $data = array(
+            'pk_gfi_unique_code'=>strtoupper($data['uniqueCode']),
+            'name'=>$data['productgroupName'],
+            'description'=>$data['description'],
+            'fk_firm_code'=> $this->session->userdata('firmcode'),
+            'fk_username'=> $this->session->userdata('username')
+        );
+        $this->db->insert('Group_for_item',$data);
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
+    public function delete_product_group($data){
+        $result = array();
+        $this->db->where('pk_gfi_unique_code', $data['productgroupCode']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Group_for_item');
+        if($query->num_rows() == 1){
+            $dataList = array(
+                'delete_flag'=> 'YES'
+            );
+            $this->db->where('pk_gfi_unique_code', $data['productgroupCode']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('Group_for_item', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['productgroupCode']  = $data['productgroupCode'];
+        }else{
+            $result['code']  = false;
+            $result['productgroupCode']  = $data['productgroupCode'];
+        }
+        return $result;
+    }
+
+    public function update_group_of_product_detail($group_of_product_id){
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('pk_gfi_unique_code', $group_of_product_id);
+        $query = $this->db->get('Group_for_item');
+        if($query->num_rows() == 1){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function update_group_of_product($data){
+        $itemdata = array(
+            'name'=>$data['productgroupName'],
+            'description'=>$data['description']
+        );
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('pk_gfi_unique_code', strtoupper($data['uniqueCode']));
+        $this->db->update('Group_for_item',$itemdata);
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
 }
 ?>
