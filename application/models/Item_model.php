@@ -242,5 +242,94 @@ class Item_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
+    public function product_group_list($productgroupcode){
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('fk_gfi_unique_code', $productgroupcode);
+        $query = $this->db->get('Group_of_items');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+        return array();
+    }
+
+
+    public function saveProducttoproductgroup($data){
+        $result = array();
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_item_code', $data['itemcode']);
+        $this->db->where('fk_gfi_unique_code', $data['productgroupcode']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Group_of_items');
+        if($query->num_rows() == 1){
+            foreach ($query->result() as $row)  
+            {  
+                $result['itemcode'] = $row->fk_item_code;
+                $result['itemname'] = $row->fk_item_name;
+                $result['oldQuatity'] = $row->quantity;
+            }
+
+            $dataList = array(
+                'fk_item_name'=>$data['itemname'],
+                'quantity'=>$data['quatity'],
+                'case_unit'=>$data['itemunitcase'],
+                'mrp'=>$data['itemmrp'],
+                'mrp_value'=>$data['itemdmrpvalue'],
+                'discount'=>$data['itemdiscount'],
+                'bill_value'=>$data['itembillValue'],
+                'updated_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('fk_item_code', $data['itemcode']);
+            $this->db->where('fk_gfi_unique_code', $data['productgroupcode']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('Group_of_items', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['itemid']  = $data['itemID'];
+        }else{
+            $dataList = array(
+                'fk_gfi_unique_code'=>$data['productgroupcode'],
+                'fk_item_code'=>$data['itemcode'],
+                'fk_item_name'=>$data['itemname'],
+                'quantity'=>$data['quatity'],
+                'case_unit'=>$data['itemunitcase'],
+                'mrp'=>$data['itemmrp'],
+                'mrp_value'=>$data['itemdmrpvalue'],
+                'discount'=>$data['itemdiscount'],
+                'bill_value'=>$data['itembillValue'],
+                'fk_username'=>$this->session->userdata('username'),
+                'fk_firm_code'=>$this->session->userdata('firmcode')
+            );
+            $this->db->insert('Group_of_items', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['itemid']  = $this->db->insert_id();
+        }
+        return $result;
+    }
+
+    public function delete_group_product($group_Item){
+        $result = array();
+        $this->db->where("goi_id", $group_Item["productgroupCode"]);
+        $this->db->where("fk_firm_code", $this->session->userdata("firmcode"));
+        $query = $this->db->get("Group_of_items");
+        if($query->num_rows() == 1){
+            $dataList = array(
+                'delete_flag'=> 'yes',
+                'deleted_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where("fk_firm_code", $this->session->userdata("firmcode"));
+            $this->db->where("goi_id", $group_Item["productgroupCode"]);
+            $this->db->update("Group_of_items", $dataList);
+            $result["code"]  = ($this->db->affected_rows() == 1) ? true : false;
+            $result["goi_id"]  = $group_Item["productgroupCode"];
+        }else{
+            $result["code"]  = false;
+            $result["goi_id"]  = $group_Item["productgroupCode"];
+        }
+        $result["query"] = $this->db->last_query();
+        return $result;
+    }
+
 }
 ?>

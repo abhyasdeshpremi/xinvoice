@@ -337,7 +337,7 @@
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                     <a class="nav-link" href="<?php echo base_url('/itemdetails'); ?>">Product List</a>
                                     <a class="nav-link" href="<?php echo base_url('/createitem'); ?>">New Product</a>
-                                    <!-- <a class="nav-link" href="<?php //echo base_url('/productgroupdetails'); ?>">Product Group List</a> -->
+                                    <a class="nav-link" href="<?php echo base_url('/productgroupdetails'); ?>">Product Group List</a>
                                 </nav>
                             </div>
 							

@@ -12,6 +12,7 @@ class Item extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('Item_model', '', TRUE);
+        $this->load->model('Invoice_model', '', TRUE);
         $this->load->library("pagination");
     }
     
@@ -261,10 +262,86 @@ class Item extends CI_Controller {
             $data['productgroupName'] =  $value->name;
             $data['description'] = $value->description; 
         }
+        $data['invoiceitemsList'] = $this->Item_model->product_group_list($productgroup);
+        $data['itemsList'] = $this->Invoice_model->items_list();
         $this->template->set('buttonName', 'Product Group List');
         $this->template->set('buttonLink', base_url('/productgroupdetails'));
         $this->template->set('title', 'Add Ptoduct to Product Group ('.$data['productgroupName'].')');
         $this->template->load('default_layout', 'contents' , 'item/addproducttoproductgroup', $data);
+    }
+
+    public function saveproducttoproductgroup(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['itemID'] = $this->input->post('itemID');
+            $data['productgroupcode'] = $this->input->post('productgroupcode');
+            $data['itemcode'] = strtoupper($this->input->post('itemcode'));
+            $data['itemname'] = strtoupper($this->input->post('itemname'));
+            $data['quatity'] = $this->input->post('quatity');
+            $data['itemunitcase'] = $this->input->post('itemunitcase');
+            $data['itemmrp'] = $this->input->post('itemmrp');
+            $data['itemdiscount'] = $this->input->post('itemdiscount');
+            $data['itemdmrpvalue'] = $this->input->post('itemdmrpvalue');
+            $data['itembillValue'] = $this->input->post('itembillValue');
+            $data["message"] = "";
+            $data["previewData"] = "";
+            $invoice_item_save_result = $this->Item_model->saveProducttoproductgroup($data);
+            if($invoice_item_save_result['code']){ 
+                
+                $data['code'] = $invoice_item_save_result['code'];
+                $data["message"] = "Successfully invoice item saved! ";
+                $data["previewData"] = array(
+                                        "goi_id" => $invoice_item_save_result['itemid'], 
+                                        "fk_unique_invioce_code" => $data['productgroupcode'], 
+                                        "fk_item_code" => $data['itemcode'], 
+                                        "fk_item_name" => $data['itemname'], 
+                                        "quantity" => $data['quatity'], 
+                                        "case_unit" => $data['itemunitcase'], 
+                                        "mrp" => $data['itemmrp'], 
+                                        "mrp_value" => $data['itemdmrpvalue'], 
+                                        "discount" => $data['itemdiscount'], 
+                                        "bill_value" => $data['itembillValue'], 
+                                        "updated_at" => date('Y-m-d H:i:s'), 
+                                        "fk_firm_code" => $this->session->userdata('firmcode')
+                                        );
+            }else{
+                $data['code'] = $invoice_item_save_result['code'];
+                $data["message"] = "Unable to update invoice item, may be wrong invoice id. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data["message"] = "Unable to serve GET Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
+    public function deleteproducttoproductgroup(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['productgroupCode'] = $this->input->post('productgroupCode');
+            $invoice_item_delete_result = $this->Item_model->delete_group_product($data);
+            if($invoice_item_delete_result['code']){
+                $data['code'] = $invoice_item_delete_result['code'];
+                $data['itemInvoiceCode'] = $invoice_item_delete_result['goi_id'];
+                $data["message"] = "Successfully invoice item deleted!";
+            }else{
+                $data['code'] = $invoice_item_delete_result['code'];
+                $data['itemInvoiceCode'] = $invoice_item_delete_result['goi_id'];
+                $data["message"] = "Unable to delete this invoice item. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data['itemInvoiceCode'] = $this->input->post('productgroupCode');
+            $data["message"] = "Unable to serve delete Request, Please try again!";
+        }
+        $data['query'] = $invoice_item_delete_result['query'];
+        echo json_encode($data);
     }
 
     
