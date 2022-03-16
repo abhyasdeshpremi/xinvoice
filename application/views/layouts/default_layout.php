@@ -337,7 +337,9 @@
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                     <a class="nav-link" href="<?php echo base_url('/itemdetails'); ?>">Product List</a>
                                     <a class="nav-link" href="<?php echo base_url('/createitem'); ?>">New Product</a>
+                                    <?php if($this->session->userdata('feature_group_for_item')){ ?>
                                     <a class="nav-link" href="<?php echo base_url('/productgroupdetails'); ?>">Product Group List</a>
+                                    <?php } ?>
                                 </nav>
                             </div>
 							
