@@ -116,6 +116,7 @@ class Firm extends CI_Controller {
             $data['firmZip'] = $this->input->post('firmZip');
             $data['firmstatus'] = $this->input->post('firmstatus');
             $data['billIncludeTax'] = $this->input->post('billIncludeTax');
+            $data['feature_group_for_item'] = $this->input->post('feature_group_for_item');
             $data['firmbonus'] = $this->input->post('firmbonus');
             $data['business_type'] = $this->input->post('business_type');
             $uniqueCodecheck = $this->Firm_model->unique_firm_code_check($this->input->post('uniqueCode'));

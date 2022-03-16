@@ -25,6 +25,7 @@
                 $billIncludeTax = $value->bill_include_tax;
                 $firmbonus = $value->bonus_percent;
                 $firmbusiness_type = $value->business_type;
+                $feature_group_for_item = $value->feature_group_for_item;
             }
         ?>
         <form class="updateFirm" action="" method="POST" id="updateFirm">
@@ -94,13 +95,20 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-3 mb-3">
                 <label for="userStatus">Status</label>
                     <select class="form-control" id="firmstatus" name="firmstatus">
                         <option value="pending" <?php if($firmStatus == 'pending'){ echo 'selected'; } ?>>Pending</option>
                         <option value="active" <?php if($firmStatus == 'active'){ echo 'selected'; } ?>>Active</option>
                         <option value="inactive" <?php if($firmStatus == 'inactive'){ echo 'selected'; } ?>>Inactive</option>
                         <option value="warning" <?php if($firmStatus == 'warning'){ echo 'selected'; } ?>>Warning</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                <label for="userStatus">Group of products</label>
+                    <select class="form-control" id="feature_group_for_item" name="feature_group_for_item">
+                        <option value="yes" <?php if($feature_group_for_item == 'yes'){ echo 'selected'; } ?>>Yes</option>
+                        <option value="no" <?php if($feature_group_for_item == 'no'){ echo 'selected'; } ?>>No</option>
                     </select>
                 </div>
                 <div class="col-md-3 mb-3">
