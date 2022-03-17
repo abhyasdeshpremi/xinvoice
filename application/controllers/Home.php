@@ -19,11 +19,13 @@ class Home extends CI_Controller {
 		$data = array();
         $todaySale = $this->Home_model->today_sale();
         $sell_30graph = $this->Home_model->sell_30graph();
+        $cash_30graph = $this->Home_model->cash_30graph();
         // print_r($todaySale);
         // $data['debit_count_value'] = $todaySale[0]['debit_count_value'];
         // $data['credit_count_value'] = $todaySale[0]['credit_count_value'];
         $data['sale'] = $todaySale;
         $data['sell_30graph'] = $sell_30graph['result'];
+        $data['cash_30graph'] = $cash_30graph['result'];
         $this->template->set('title', 'Home');
         $this->template->load('default_layout', 'contents' , 'home', $data);
 	}

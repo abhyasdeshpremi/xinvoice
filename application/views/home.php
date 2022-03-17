@@ -289,4 +289,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
     var sell_30graph = <?php echo json_encode($sell_30graph); ?>;
     sessionStorage.setItem("sell_30graph", JSON.stringify(sell_30graph));
+
+    var cash_30graph = <?php echo json_encode($cash_30graph); ?>;
+    sessionStorage.setItem("cash_30graph", JSON.stringify(cash_30graph));
 </script>
