@@ -98,14 +98,6 @@ class Home_model extends CI_Model {
         $today = date('y-m-d 00:00:00');
         $last30day = date('y-m-d 00:00:00', strtotime('-30 days'));
         $status = array('completed', 'paid', 'partial_paid');
-        // $this->db->select('lock_bill_amount as amount, created_at as date');
-        // $this->db->from('Invoices');
-        // $this->db->where('invoice_type', 'sell');
-        // $this->db->where_in('status', $status);
-        // $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-        // $this->db->where("created_at BETWEEN '$last30day' AND '$today'");
-        // return $this->db->get();
-
         $this->db->select('lock_bill_amount as amount, created_at as date');
         $this->db->where('invoice_type', 'sell');
         $this->db->where_in('status', $status);
