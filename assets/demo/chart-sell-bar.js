@@ -60,8 +60,6 @@ tmp_sell_30graph.sort(compare_dates);
 
 
 var cash_30graph = JSON.parse(sessionStorage.getItem('cash_30graph'));
-console.log("cash before sort");
-console.log(cash_30graph);
 for (i = 0; i < cash_30graph.length; i++) {
     var temp_cash = cash_30graph[i];
     var tempdate = temp_cash["date"];
@@ -83,8 +81,6 @@ cash_30graph.reduce(function (res, value) {
     return res;
 }, {});
 tmp_cash_30graph.sort(compare_dates);
-console.log("cash after sort");
-console.log(tmp_cash_30graph);
 
 var tempLabels = [];
 for (i = 0; i < tmp_sell_30graph.length; i++) {
@@ -98,10 +94,6 @@ for (i = 0; i < tmp_cash_30graph.length; i++) {
 for (i = 0; i < tmp_sell_30graph.length; i++) {
     tempLabels.push(tmp_sell_30graph[i]["date"]);
 }
-
-console.log("start temp label");
-console.log(tempLabels);
-console.log("end temp label");
 
 let uniquelabels = [];
 tempLabels.forEach((c) => {
@@ -118,9 +110,7 @@ compare_dates = function(date1,date2){
      else return 0;
   }
 
-console.log("start unique labels");
-console.log(uniquelabels.sort(compare_dates));
-console.log("end unique labels");
+uniquelabels.sort(compare_dates);
 
 var sellamounts = [];
 var cashamounts = [];
@@ -155,6 +145,7 @@ for (i = 0; i < uniquelabels.length; i++) {
     }
 }
 
+maximum = 15000;
 
 
 // Bar Chart Example
