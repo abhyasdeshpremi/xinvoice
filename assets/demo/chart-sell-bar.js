@@ -57,31 +57,130 @@ compare_dates = function(date1,date2){
      else return 0;
   }
 tmp_sell_30graph.sort(compare_dates);
-var labels = [];
-var amounts = [];
-var maximum = 0;
+
+
+var cash_30graph = JSON.parse(sessionStorage.getItem('cash_30graph'));
+console.log("cash before sort");
+console.log(cash_30graph);
+for (i = 0; i < cash_30graph.length; i++) {
+    var temp_cash = cash_30graph[i];
+    var tempdate = temp_cash["date"];
+    var tempdate = tempdate.split(" ");
+    var tempdate = tempdate[0].split("-");
+    var yyyy = tempdate[0].split("");
+    temp_cash["date"] = tempdate[2]+"/"+tempdate[1]+"/"+yyyy[2]+""+yyyy[3];
+}
+var tmp_cash_30graph = [];
+cash_30graph.reduce(function (res, value) {
+    if (!res[value["date"]]) {
+        res[value["date"]] = {
+            "amount": 0,
+            "date": value["date"]
+        };
+        tmp_cash_30graph.push(res[value["date"]])
+    }
+    res[value["date"]]["amount"] += parseInt(value["amount"])
+    return res;
+}, {});
+tmp_cash_30graph.sort(compare_dates);
+console.log("cash after sort");
+console.log(tmp_cash_30graph);
+
+var tempLabels = [];
 for (i = 0; i < tmp_sell_30graph.length; i++) {
-    labels.push(tmp_sell_30graph[i]["date"]);
-    amounts.push(tmp_sell_30graph[i]["amount"]);
-    if(maximum < tmp_sell_30graph[i]["amount"]){
-        maximum = tmp_sell_30graph[i]["amount"];
+    tempLabels.push(tmp_sell_30graph[i]["date"]);
+}
+
+for (i = 0; i < tmp_cash_30graph.length; i++) {
+    tempLabels.push(tmp_cash_30graph[i]["date"]);
+}
+
+for (i = 0; i < tmp_sell_30graph.length; i++) {
+    tempLabels.push(tmp_sell_30graph[i]["date"]);
+}
+
+console.log("start temp label");
+console.log(tempLabels);
+console.log("end temp label");
+
+let uniquelabels = [];
+tempLabels.forEach((c) => {
+    if (!uniquelabels.includes(c)) {
+        uniquelabels.push(c);
+    }
+});
+
+compare_dates = function(date1,date2){
+    d1= new Date(date1);
+    d2= new Date(date2);
+    if (d1>d2) return 1;
+     else if (d1<d2)  return -1;
+     else return 0;
+  }
+
+console.log("start unique labels");
+console.log(uniquelabels.sort(compare_dates));
+console.log("end unique labels");
+
+var sellamounts = [];
+var cashamounts = [];
+var maximum = 0;
+for (i = 0; i < uniquelabels.length; i++) {
+    var tmpCashAmount = 0;
+    var tmpSellAmount = 0;
+    var uniquelabel = uniquelabels[i];
+ 
+
+    for (j = 0; j < tmp_cash_30graph.length; j++) {
+        var cashLabel = tmp_cash_30graph[j]["date"];
+        if(cashLabel === uniquelabel){
+            tmpCashAmount = tmp_cash_30graph[j]["amount"];
+            break;
+        }
+    }
+    cashamounts.push(tmpCashAmount);
+
+    for (j = 0; j < tmp_sell_30graph.length; j++) {
+        var sellLabel = tmp_sell_30graph[j]["date"];
+        if(sellLabel === uniquelabel){
+            tmpSellAmount = tmp_sell_30graph[j]["amount"];
+            break;
+        }
+    }
+    sellamounts.push(tmpSellAmount);
+    if(tmpSellAmount > tmpCashAmount > maximum){
+        maximum = tmpSellAmount;
+    }else if(tmpCashAmount > tmpSellAmount  > maximum){
+        maximum = tmpCashAmount;
     }
 }
+
+
 
 // Bar Chart Example
 var ctx = document.getElementById("myBarSellChart");
 var myBarChart = new Chart(ctx, {
     type: "bar",
     data: {
-        labels: labels,
-        datasets: [{
-            label: "Revenue",
-            backgroundColor: "rgba(0, 97, 242, 1)",
-            hoverBackgroundColor: "rgba(0, 97, 242, 0.9)",
-            borderColor: "#4e73df",
-            data: amounts,
-            maxBarThickness: 25
-        }]
+        labels: uniquelabels,
+        datasets: [
+            {
+                label: "Sell",
+                backgroundColor: "rgba(0, 97, 242, 1)",
+                hoverBackgroundColor: "rgba(0, 97, 242, 0.9)",
+                borderColor: "#4e73df",
+                data: sellamounts,
+                maxBarThickness: 25
+            },
+            {
+                label: "Cash",
+                backgroundColor: "rgba(0, 163, 0, 1)",
+                hoverBackgroundColor: "rgba(0, 163, 0, 0.9)",
+                borderColor: "#4e73df",
+                data: cashamounts,
+                maxBarThickness: 25
+            }
+        ]
     },
     options: {
         maintainAspectRatio: false,

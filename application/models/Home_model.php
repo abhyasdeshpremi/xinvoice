@@ -96,7 +96,7 @@ class Home_model extends CI_Model {
 
     public function sell_30graph(){
         $today = date('y-m-d 00:00:00');
-        $last30day = date('y-m-d 00:00:00', strtotime('-30 days'));
+        $last30day = date('y-m-d 23:59:59', strtotime('-30 days'));
         $status = array('completed', 'paid', 'partial_paid');
         $this->db->select('lock_bill_amount as amount, created_at as date');
         $this->db->where('invoice_type', 'sell');
@@ -104,6 +104,44 @@ class Home_model extends CI_Model {
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where("created_at BETWEEN '$last30day' AND '$today'");
         $query = $this->db->get('Invoices');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function purchase_30graph(){
+        $today = date('y-m-d 00:00:00');
+        $last30day = date('y-m-d 23:59:59', strtotime('-36 days'));
+        $status = array('completed', 'paid', 'partial_paid');
+        $this->db->select('lock_bill_amount as amount, created_at as date');
+        $this->db->where('invoice_type', 'purchase');
+        $this->db->where_in('status', $status);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where("created_at BETWEEN '$last30day' AND '$today'");
+        $query = $this->db->get('Invoices');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
+
+    public function cash_30graph(){
+        $today = date('y-m-d 00:00:00');
+        $last30day = date('y-m-d 23:59:59', strtotime('-30 days'));
+        $client_type = array('distributer', 'vendor', 'outlet', 'other');
+        $this->db->select('Account_Entry.amount as amount, Account_Entry.payment_date as date');
+        $this->db->where_in('Clients.client_type', $client_type);
+        $this->db->where('Account_Entry.payment_type', 'credit');
+        $this->db->where("Account_Entry.payment_date BETWEEN '$last30day' AND '$today'");
+        $this->db->where('Account_Entry.fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->from('Account_Entry');
+        $this->db->join('Clients', 'Account_Entry.fk_client_code = Clients.code');
+        $query = $this->db->get();
         if($query->num_rows() > 0){
             $data['result'] = $query->result();
         }else{
