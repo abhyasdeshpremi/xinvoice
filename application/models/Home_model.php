@@ -96,7 +96,7 @@ class Home_model extends CI_Model {
 
     public function sell_30graph(){
         $today = date('y-m-d 00:00:00');
-        $last30day = date('y-m-d 00:00:00', strtotime('-330 days'));
+        $last30day = date('y-m-d 00:00:00', strtotime('-7 days'));
         $status = array('completed', 'paid', 'partial_paid');
         // $this->db->select('lock_bill_amount as amount, created_at as date');
         // $this->db->from('Invoices');

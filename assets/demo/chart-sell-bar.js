@@ -29,6 +29,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 var sell_30graph = JSON.parse(sessionStorage.getItem('sell_30graph'));
+console.log("before sorted");
+console.log(sell_30graph);
 for (i = 0; i < sell_30graph.length; i++) {
     var temp_sell = sell_30graph[i];
     var tempdate = temp_sell["date"];
@@ -57,6 +59,8 @@ compare_dates = function(date1,date2){
      else return 0;
   }
 tmp_sell_30graph.sort(compare_dates);
+console.log("after sorted");
+console.log(tmp_sell_30graph);
 var labels = [];
 var amounts = [];
 for (i = 0; i < tmp_sell_30graph.length; i++) {
@@ -65,7 +69,10 @@ for (i = 0; i < tmp_sell_30graph.length; i++) {
 }
 
 let maximum = amounts.sort((a, b) => b - a)[0];
-
+console.log("labels");
+console.log(labels);
+console.log("amount");
+console.log(amounts);
 // Bar Chart Example
 var ctx = document.getElementById("myBarSellChart");
 var myBarChart = new Chart(ctx, {
