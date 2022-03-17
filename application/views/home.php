@@ -286,7 +286,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<?php print_r($sell_30graph); ?>
 <script>
     var sell_30graph = <?php echo json_encode($sell_30graph); ?>;
     sessionStorage.setItem("sell_30graph", JSON.stringify(sell_30graph));
