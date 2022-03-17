@@ -28,8 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 
-<div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 1-->
+<!-- <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -48,7 +47,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 4-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -67,7 +65,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 1-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -86,7 +83,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 4-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -105,7 +101,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 1-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -124,7 +119,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 4-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -143,7 +137,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 1-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -162,7 +155,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <!-- Dashboard info widget 4-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-info h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -180,10 +172,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<?php } ?>
+<?php } ?> -->
 <div class="row">
     <div class="col-lg-4 mb-4">
-        <!-- Illustration card example-->
         <div class="card mb-4">
             <div class="card-body text-center p-5">
                 <img class="img-fluid mb-5" src="<?php echo base_url('assets/img/illustrations/data-report.svg'); ?>" />
