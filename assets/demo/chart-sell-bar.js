@@ -63,12 +63,16 @@ console.log("after sorted");
 console.log(tmp_sell_30graph);
 var labels = [];
 var amounts = [];
+var maximum = 0;
 for (i = 0; i < tmp_sell_30graph.length; i++) {
     labels.push(tmp_sell_30graph[i]["date"]);
     amounts.push(tmp_sell_30graph[i]["amount"]);
+    if(maximum < tmp_sell_30graph[i]["amount"]){
+        maximum = tmp_sell_30graph[i]["amount"];
+    }
 }
 
-let maximum = amounts.sort((a, b) => b - a)[0];
+// let maximum = amounts.sort((a, b) => b - a)[0];
 console.log("labels");
 console.log(labels);
 console.log("amount");
