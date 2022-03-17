@@ -145,7 +145,7 @@ for (i = 0; i < uniquelabels.length; i++) {
     }
 }
 
-maximum = 15000;
+maximum = 30000;
 
 
 // Bar Chart Example
