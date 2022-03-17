@@ -19,6 +19,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <?php if(!(access_lavel(3, $this->session->userdata('role') ))){ ?>
 <div class="row">
+<div class="col-lg-12 mb-4">
+    <div class="card mb-4">
+        <div class="card-header">Sales Reporting</div>
+        <div class="card-body">
+        <div class="chart-area"><canvas id="myBarSellChart" width="100%" height="30"></canvas></div>
+        </div>
+    </div>
+</div>
+
 <div class="col-xl-3 col-md-6 mb-4">
         <!-- Dashboard info widget 1-->
         <div class="card border-top-0 border-bottom-0 border-right-0 border-left-lg border-primary h-100">
@@ -180,7 +189,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <img class="img-fluid mb-5" src="<?php echo base_url('assets/img/illustrations/data-report.svg'); ?>" />
                 <h4>Report generation</h4>
                 <p class="mb-4">Ready to get started? Let us know now! It's time to start building that dashboard you've been waiting to create!</p>
-                <a class="btn btn-primary p-3" href="#!">Continue</a>
+                <a class="btn btn-primary p-3" href="<?php echo base_url('sales'); ?>">Continue</a>
             </div>
         </div>
         <!-- Report summary card example-->
@@ -286,3 +295,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
+<?php print_r($sell_30graph); ?>
+<script>
+    var sell_30graph = <?php echo json_encode($sell_30graph); ?>;
+    sessionStorage.setItem("sell_30graph", JSON.stringify(sell_30graph));
+</script>

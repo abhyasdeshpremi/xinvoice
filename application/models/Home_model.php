@@ -94,6 +94,31 @@ class Home_model extends CI_Model {
         return $count_value;
     }
 
+    public function sell_30graph(){
+        $today = date('y-m-d 00:00:00');
+        $last30day = date('y-m-d 00:00:00', strtotime('-330 days'));
+        $status = array('completed', 'paid', 'partial_paid');
+        // $this->db->select('lock_bill_amount as amount, created_at as date');
+        // $this->db->from('Invoices');
+        // $this->db->where('invoice_type', 'sell');
+        // $this->db->where_in('status', $status);
+        // $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        // $this->db->where("created_at BETWEEN '$last30day' AND '$today'");
+        // return $this->db->get();
+
+        $this->db->select('lock_bill_amount as amount, created_at as date');
+        $this->db->where('invoice_type', 'sell');
+        $this->db->where_in('status', $status);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where("created_at BETWEEN '$last30day' AND '$today'");
+        $query = $this->db->get('Invoices');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
+    }
 }
 
 ?>
