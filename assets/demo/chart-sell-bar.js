@@ -138,14 +138,14 @@ for (i = 0; i < uniquelabels.length; i++) {
         }
     }
     sellamounts.push(tmpSellAmount);
-    if(tmpSellAmount > tmpCashAmount > maximum){
+    if((tmpSellAmount > tmpCashAmount) && (tmpSellAmount > maximum)){
         maximum = tmpSellAmount;
-    }else if(tmpCashAmount > tmpSellAmount  > maximum){
+    }else if((tmpCashAmount > tmpSellAmount) && (tmpCashAmount > maximum)){
         maximum = tmpCashAmount;
     }
 }
 
-maximum = 25000;
+maximum = (maximum + maximum / 10);
 
 
 // Bar Chart Example
