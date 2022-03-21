@@ -29,7 +29,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 var sell_30graph = JSON.parse(sessionStorage.getItem('sell_30graph'));
-if (!Array.isArray(sell_30graph)){
+// if (Array.isArray(sell_30graph)){
     for (i = 0; i < sell_30graph.length; i++) {
         var temp_sell = sell_30graph[i];
         var tempdate = temp_sell["date"];
@@ -151,6 +151,7 @@ if (!Array.isArray(sell_30graph)){
 
     // Bar Chart Example
     var ctx = document.getElementById("myBarSellChart");
+if (ctx != null){
     var myBarChart = new Chart(ctx, {
         type: "bar",
         data: {
