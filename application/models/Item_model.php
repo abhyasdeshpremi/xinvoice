@@ -331,5 +331,19 @@ class Item_model extends CI_Model {
         return $result;
     }
 
+    public function get_group_of_products_list($gfi_unique_code){
+        $this->db->select("*");
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_gfi_unique_code', $gfi_unique_code);
+        $query = $this->db->get('Group_of_items');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        $data['last_query'] = $this->db->last_query();
+        return $data;
+    }
 }
 ?>

@@ -190,7 +190,12 @@
                                 Add Invoice(#<?php echo $invoicerefNumber; ?>) Items 
                                 </button>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-2 mb-3">
+                            </div>
+                            <div class="col-md-2 mb-3">
+                            <button type="button" onclick="addInvoiceItem()" class="btn btn-warning add-item-button" data-toggle="modal" data-target="#addGroupItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
+                                    Add Group Item
+                                </button>
                             </div>
                             <div class="col-md-2 mb-3">
                                 <button type="button" onclick="addInvoiceItem()" class="btn btn-warning add-item-button" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">
@@ -317,6 +322,54 @@
 </div>
 
 <!----Add item modal end----->
+
+
+<!----Add Group item modal Start----->
+<div class="modal fade" id="addGroupItemInput" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Invoice Group Item</h5>
+        <a href="<?php echo base_url('createproductgroup'); ?>"><i data-feather="plus-circle"></i></a>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="forceclosegolobal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <span class="" id="successfullyGroupMessage"></span>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group Item</button>
+                    <div id="myGroupDropdown" class="dropdown-menu">
+                            <input type="text" placeholder="Search.." id="myGroupInput" onkeyup="filterGroupFunction()" autocomplete="off">
+                            <?php $count = 1; 
+                                foreach($itemsGroupList as $item){ ?>
+                                    <a class="dropdown-item small select-group-dropdown-item" hreflang="<?php echo $item->pk_gfi_unique_code; ?>"><?php echo $item->name;?></a>
+                            <?php $count++; } ?>
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" aria-label="Text input with dropdown button" id="selectgroupitemcode" name="selectgroupitemcode" >
+                <input type="text" class="form-control" aria-label="Text input with dropdown button" id="itemedgroupscription" name="itemedgroupscription" value="" readonly>
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Quantity</span>
+                </div>
+                <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="groupitemquantity" name="groupitemquantity" value="">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="forceclose">Close</button>
+        <button type="button" class="btn btn-warning" id="add_group_item_to_invoice">Add Group Item</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!----Add Group item modal end----->
+
 
 <script>
     var invoiceData = <?php echo json_encode($invoiceitemsList); ?>;
@@ -824,6 +877,90 @@
                 }
             }
         });
+
+        /****
+         * group item code
+         */
+
+        $('.select-group-dropdown-item').click(function(){
+            var groupitemcode = $(this).attr("hreflang");
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/getgroupitemcode'); ?>',
+                dataType  : 'json',
+                data: {groupitemcode: groupitemcode},
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function (data) {
+                    $('#selectgroupitemcode').val(data[0].pk_gfi_unique_code);
+                    $('#itemedgroupscription').val(data[0].name);
+                    $('#groupitemquantity').val(1);
+                }
+            });
+        });
+
+        $('#add_group_item_to_invoice').click(function(){
+            $("#myGroupInput").val('');
+            removeGroupfilterFunction(); 
+            var selectgroupitemcode = $("#selectgroupitemcode").val();
+            var invoice_id = $("#defaultinvoiceID").val();
+            var quatity = $("#groupitemquantity").val();
+            $("#collapseTwo").addClass("show"); 
+
+            if(quatity < 1){
+                $("#successfullyGroupMessage").addClass('alert-danger');
+                $("#successfullyGroupMessage").text("Please check your inputs.");
+                $('#successfullyGroupMessage').fadeIn();
+                $('#successfullyGroupMessage').delay(4000).fadeOut();
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/savegroupitemininvoce'); ?>',
+                data: {invoiceid: invoice_id, selectgroupitemcode: selectgroupitemcode, quatity: quatity},
+                error: function(request, error) {
+                    console.log(arguments);
+                    $("#successfullyGroupMessage").addClass('alert-danger');
+                    $("#successfullyGroupMessage").text("Something went wrong");
+                    $('#successfullyGroupMessage').fadeIn();
+                    $('#successfullyGroupMessage').delay(4000).fadeOut();
+                },
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    console.log(data);
+                    $("#selectgroupitemcode").val('');
+                    $("#itemedgroupscription").val('');
+                    $("#groupitemquantity").val('');
+                    if(data.code){
+                        for (i = 0; i < data.previewData.length; ++i) {
+                            console.log(data.previewData[i]);
+                            var shouldbeUpdate = false;
+                            var invoiceDataIndex = -1;
+                            for(j=0;j<invoiceData.length; j++) {
+                                var invoiceItemCode = invoiceData[j]["fk_item_code"];
+                                if (invoiceItemCode === data.previewData[i]["fk_item_code"]) {
+                                    shouldbeUpdate = true;
+                                    invoiceDataIndex = i;
+                                }
+                            }
+                            if(shouldbeUpdate){
+                                invoiceData[invoiceDataIndex] = data.previewData[i];
+                            }else{
+                                invoiceData.push(data.previewData[i]);
+                            }
+                        }
+                        showItemData();
+                        $("#successfullyGroupMessage").addClass('alert-success');
+                    }else{
+                        $("#successfullyGroupMessage").addClass('alert-danger');
+                    }
+                    $("#successfullyGroupMessage").text(data.message);
+                    $('#successfullyGroupMessage').fadeIn();
+                    $('#successfullyGroupMessage').delay(4000).fadeOut();
+                }
+            });
+        });
     });
 </script>
 <script>
@@ -1097,6 +1234,31 @@
         }else{
             $('.invoicecal').hide();
             pdfdropdown.attr("disabled", "disabled");
+        }
+    }
+
+    function filterGroupFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myGroupInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myGroupDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+            } else {
+            a[i].style.display = "none";
+            }
+        }
+    }
+
+    function removeGroupfilterFunction() {
+        var a; 
+        div = document.getElementById("myGroupDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            a[i].style.display = ""; 
         }
     }
 
