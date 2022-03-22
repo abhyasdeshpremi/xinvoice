@@ -342,7 +342,18 @@
                                     <?php } ?>
                                 </nav>
                             </div>
-							
+							<!-- Sidenav Accordion (Clients)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardstags" aria-expanded="false" aria-controls="collapseDashboards">
+                                <div class="nav-link-icon"><i data-feather="life-buoy"></i></div>
+                                Tags
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseDashboardstags" data-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                    <a class="nav-link" href="<?php echo base_url('/tagdetails'); ?>">Tags List</a>
+                                    <a class="nav-link" href="<?php echo base_url('/createtag'); ?>">New Tag</a>
+                                </nav>
+                            </div>
                             <!-- Sidenav Accordion (Clients)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardscompany" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="life-buoy"></i></div>
