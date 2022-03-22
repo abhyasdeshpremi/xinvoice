@@ -205,6 +205,21 @@ class Invoice_model extends CI_Model {
         return array();
     }
 
+    public function items_Group_list($itemgroupcode = null){
+        if($itemgroupcode != null){
+            $this->db->where('pk_gfi_unique_code', $itemgroupcode);
+        }
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Group_for_item');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+        return array();
+    }
+
     public function invoiceType_by_id($invoice_ref_id = null){
         $data = array();
         if($invoice_ref_id != null){
@@ -626,6 +641,95 @@ class Invoice_model extends CI_Model {
         return $result;
     }
 
+    public function saveInvoiceGroupItem($data){
+        $result = array();
+        $this->db->where('fk_item_code', $data['itemcode']);
+        $this->db->where('fk_unique_invioce_code', $data['invoiceID']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('invoice_item');
+        if($query->num_rows() == 1){
+            foreach ($query->result() as $row)  
+            {  
+                $result['itemcode'] = $row->fk_item_code;
+                $result['itemname'] = $row->fk_item_name;
+                $result['oldcase_unit'] = $row->case_unit;
+                $result['oldQuatity'] = $row->quantity;
+                $result['itemid']  = $row->pk_invoice_item_id;
+            }
+            $final_qunatity = intval( intval( intval($data['quatity']) * intval($data['groupquantity']) )  + $result['oldQuatity']);
+            $old_itemunitcase = floatval($result['oldcase_unit']); 
+            $old_quantity = floatval($result['oldQuatity']);
+            $per_unitcase = floatval($old_itemunitcase / $old_quantity);
+            $final_unitcase = floatval( $per_unitcase * $final_qunatity);
+            $final_mrp = $data['itemmrp'];
+            $final_mrpvalue = $final_mrp * $final_qunatity;
+            $final_discount = $data['itemdiscount'];
+            $final_discount_value = ($final_mrpvalue * $final_discount) / 100;
+            $final_bill_value = $final_mrpvalue - $final_discount_value;
+             
+            $dataList = array(
+                'fk_item_code'=>$data['itemcode'],
+                'fk_item_name'=>$data['itemname'],
+                'quantity'=>$final_qunatity,
+                'case_unit'=>$final_unitcase,
+                'mrp'=>$final_mrp,
+                'mrp_value'=>$final_mrpvalue,
+                'discount'=>$final_discount,
+                'bill_value'=>$final_bill_value,
+                'updated_at'=>date('Y-m-d H:i:s')
+            );
+            
+            $this->db->where('fk_item_code', $data['itemcode']);
+            $this->db->where('fk_unique_invioce_code', $data['invoiceID']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('invoice_item', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            
+            $result['quatity'] = $final_qunatity;
+            $result['itemunitcase'] = $final_unitcase;
+            $result['itemmrp'] = $final_mrp;
+            $result['itemdmrpvalue'] = $final_mrpvalue;
+            $result['itemdiscount'] = $final_discount;
+            $result['itembillValue'] = $final_bill_value;
+        }else{
+
+            $final_qunatity = intval( intval($data['quatity']) * intval($data['groupquantity']) );
+            $old_itemunitcase = floatval($data['itemunitcase']); 
+            $old_quantity = floatval($data['quatity']);
+            $per_unitcase = floatval($old_itemunitcase / $old_quantity);
+            $final_unitcase = floatval( $per_unitcase * $final_qunatity);
+            $final_mrp = $data['itemmrp'];
+            $final_mrpvalue = $final_mrp * $final_qunatity;
+            $final_discount = $data['itemdiscount'];
+            $final_discount_value = ($final_mrpvalue * $final_discount) / 100;
+            $final_bill_value = $final_mrpvalue - $final_discount_value;
+
+            $dataList = array(
+                'fk_unique_invioce_code'=>$data['invoiceID'],
+                'fk_item_code'=>$data['itemcode'],
+                'fk_item_name'=>$data['itemname'],
+                'quantity'=>$final_qunatity,
+                'case_unit'=>$final_unitcase,
+                'mrp'=>$final_mrp,
+                'mrp_value'=>$final_mrpvalue,
+                'discount'=>$final_discount,
+                'bill_value'=>$final_bill_value,
+                'fk_username'=>$this->session->userdata('username'),
+                'fk_firm_code'=>$this->session->userdata('firmcode')
+            );
+            $this->db->insert('invoice_item', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['itemid']  = $this->db->insert_id();
+
+            $result['quatity'] = $final_qunatity;
+            $result['itemunitcase'] = $final_unitcase;
+            $result['itemmrp'] = $final_mrp;
+            $result['itemdmrpvalue'] = $final_mrpvalue;
+            $result['itemdiscount'] = $final_discount;
+            $result['itembillValue'] = $final_bill_value;
+        }
+        return $result;
+    }
 }
 
 ?>

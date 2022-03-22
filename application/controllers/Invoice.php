@@ -10,6 +10,7 @@ class Invoice extends CI_Controller {
         }
         $this->load->model('Invoice_model', '', TRUE);
         $this->load->model('Stock_model', '', TRUE);
+        $this->load->model('Item_model', '', TRUE);
         $this->load->library("pagination");
     }
 
@@ -131,6 +132,7 @@ class Invoice extends CI_Controller {
         $data['invoiceTypes'] = $this->Invoice_model->invoiceRef_list();
         $data['invoiceitemsList'] = $this->Invoice_model->invoice_items_list($id);
         $data['itemsList'] = $this->Invoice_model->items_list();
+        $data['itemsGroupList'] = $this->Invoice_model->items_Group_list();
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $data['method'] = "GET";
             $data['invoiceid'] = $id;
@@ -437,6 +439,13 @@ class Invoice extends CI_Controller {
         }
     }
 
+    public function getGroupItemCode(){
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $item_group_result = $this->Invoice_model->items_Group_list($this->input->post('groupitemcode'));
+            echo json_encode($item_group_result);
+        }
+    }
+
     public function getinvoicelist(){
         if(access_lavel(3, $this->session->userdata('role'))){
             redirect('/login');
@@ -582,6 +591,69 @@ class Invoice extends CI_Controller {
                 $data["updated_at"] = $invoice_created_result["updated_at"];
                 $data["message"] = "Created date unable to update.";
             }
+        }
+        echo json_encode($data);
+    }
+
+    public function saveGroupItemInInvoice(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['invoiceID'] = $this->input->post('invoiceid');
+            $data['selectgroupitemcode'] = strtoupper($this->input->post('selectgroupitemcode'));
+            $data['quatity'] = $this->input->post('quatity');
+            $getAllGroupItems = $this->Item_model->get_group_of_products_list($data["selectgroupitemcode"]);
+            if(count($getAllGroupItems["result"]) > 0){
+                $tmpdata = array();
+                foreach($getAllGroupItems["result"] as $getAllGroupItem){
+                    $tmpdata['itemID'] = '';
+                    $tmpdata['invoiceID'] =  $data['invoiceID'];
+                    $tmpdata['itemcode'] = strtoupper($getAllGroupItem->fk_item_code);
+                    $tmpdata['itemname'] = strtoupper($getAllGroupItem->fk_item_name);
+                    $tmpdata['quatity'] = $getAllGroupItem->quantity;
+                    $tmpdata['groupquantity'] = $data['quatity'];
+                    $tmpdata['itemunitcase'] = $getAllGroupItem->case_unit;
+                    $tmpdata['itemmrp'] = $getAllGroupItem->mrp;
+                    $tmpdata['itemdiscount'] = $getAllGroupItem->discount;
+                    $tmpdata['itemdmrpvalue'] = $getAllGroupItem->mrp_value;
+                    $tmpdata['itembillValue'] = $getAllGroupItem->bill_value;
+                    $invoice_item_save_result = $this->Invoice_model->saveInvoiceGroupItem($tmpdata);
+                    if($invoice_item_save_result['code']){
+                        $tmpdata['item_code'] = $tmpdata['itemcode'];
+                        $tmpdata['item_name'] = $tmpdata['itemname'];
+                        $tmpdata['stocktype'] = "sell";
+                        $tmpdata['stockunit'] = intval( intval($tmpdata['quatity']) * intval($tmpdata['groupquantity']) );
+                        $tmpdata['stockcomment'] = "Deducted items stock when invoice generated";
+                        $stock_item_save_result = $this->Stock_model->saveStock($tmpdata);
+                        $data['code'] = $invoice_item_save_result['code'];
+                        $data["previewData"][] = array(
+                                                    "pk_invoice_item_id" => $invoice_item_save_result['itemid'], 
+                                                    "fk_unique_invioce_code" => $tmpdata['invoiceID'], 
+                                                    "fk_item_code" => $tmpdata['itemcode'], 
+                                                    "fk_item_name" => $tmpdata['itemname'], 
+                                                    "quantity" => $invoice_item_save_result['quatity'], 
+                                                    "case_unit" => $invoice_item_save_result['itemunitcase'], 
+                                                    "mrp" => $invoice_item_save_result['itemmrp'], 
+                                                    "mrp_value" => $invoice_item_save_result['itemdmrpvalue'], 
+                                                    "discount" => $invoice_item_save_result['itemdiscount'], 
+                                                    "bill_value" => $invoice_item_save_result['itembillValue'], 
+                                                    "updated_at" => date('Y-m-d H:i:s'), 
+                                                    "fk_firm_code" => $this->session->userdata('firmcode')
+                                                    );
+                    }
+                }
+                $data["message"] = "Successfully invoice item group Updated! ";
+            }else{
+                $data['code'] = false;
+                $data['result'] = $getAllGroupItems["result"];
+                $data['last_query'] = $getAllGroupItems["last_query"];
+                $data["message"] = "Group has not been any product. Please check group of items.";
+            }
+        }else{
+            $data['code'] = false;
+            $data["message"] = "Unable to serve GET Request, Please try again!";
         }
         echo json_encode($data);
     }
