@@ -174,6 +174,9 @@ $route['createtag'] = 'tags/createTag';
 $route['tagdetails(/:num)?'] = 'tags/tagdetails$1';
 $route['deletetag'] = 'tags/deleteTag';
 $route['updatetag/(:any)'] = 'tags/updateTag/$1';
+$route['assigntotag/(:any)'] = 'tags/assigntoTag/$1';
+$route['assigntagtoproduct'] = 'tags/assignTagtoProduct';
+$route['deleteassignitem'] = 'tags/deleteassignitem';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

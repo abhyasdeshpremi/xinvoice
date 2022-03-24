@@ -345,7 +345,7 @@
 							<!-- Sidenav Accordion (Clients)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardstags" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="life-buoy"></i></div>
-                                Tags
+                                Tags/Box
                                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseDashboardstags" data-parent="#accordionSidenav">
