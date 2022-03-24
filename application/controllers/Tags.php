@@ -12,6 +12,7 @@ class Tags extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('Company_model', '', TRUE);
+        $this->load->model('Invoice_model', '', TRUE);
         $this->load->model('Tags_model', '', TRUE);
         $this->load->library("pagination");
     }
@@ -118,4 +119,83 @@ class Tags extends CI_Controller {
         }
         echo json_encode($data);
     }
+
+    // Tag was assigned product
+    public function assigntoTag($tagCode = null){
+        $data = array(); 
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['method'] = "GET";
+        } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['method'] = "POST";
+        }
+        $tag_result = $this->Tags_model->update_tag_detail($tagCode);
+        $data['data'] = $tag_result['result'];
+        foreach($tag_result['result'] as $value){ 
+            $data['uniqueCode'] = $value->tag_code;
+            $data['tagName'] =  $value->tag_name;
+            $data['tagColor'] =  $value->tag_color;
+            $data['description'] = $value->description; 
+        }
+
+        $assigneditemsList = $this->Tags_model->assigned_tag_detail($tagCode, array('product'));
+        $data['assigneditemsList'] = $assigneditemsList["result"];
+        $data['itemsList'] = $this->Invoice_model->items_list();
+        $this->template->set('buttonName', 'Tag List');
+        $this->template->set('buttonLink', base_url('/tagdetails'));
+        $this->template->set('title', 'Assign Tag'.$tagCode);
+        $this->template->load('default_layout', 'contents' , 'tags/assigntotag', $data);
+    }
+
+    public function assignTagtoProduct(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['itemcode'] = $this->input->post('itemcode');
+            $data['globaltagcode'] = $this->input->post('globaltagcode');
+            $data['tag_type'] = 'product';
+            $tag_assign_result = $this->Tags_model->assign_tag($data);
+            if($tag_assign_result['code']){
+                $data['code'] = $tag_assign_result['code'];
+                $data['tags_assign_id'] = $tag_assign_result['tags_assign_id'];
+                $data["message"] = "Successfully assigned!";
+                $data["previewData"] = array(
+                    "tags_assign_id" => $tag_assign_result['tags_assign_id'], 
+                    "assign_tag_to_code" => $data['itemcode'],
+                    "itemname" => $this->input->post('item_name'), 
+                    "tag_color" => $this->input->post('tagColor'),
+                    "fk_tag_code" => $data['globaltagcode'], 
+                    "tag_name" => $this->input->post('tagName')
+                    );
+            }else{
+                $data['code'] = $tag_assign_result['code'];
+                $data['tags_assign_id'] = $tag_assign_result['tags_assign_id'];
+                $data["message"] = "Unable to assign this product. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data['tags_assign_id'] = 0;
+            $data["message"] = "Unable to serve assign Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
+    public function deleteassignitem(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['assigneditemid'] = $this->input->post('assigneditemid');
+            $tag_delete_result = $this->Tags_model->delete_assigntag($data['assigneditemid']);
+            if($tag_delete_result['code']){
+                $data['code'] = $tag_delete_result['code'];
+                $data["message"] = "Successfully assigned item deleted!";
+            }else{
+                $data['code'] = $tag_delete_result['code'];
+                $data["message"] = "Unable to delete assigned item. Please try again!";
+            }
+        }else{
+            $data['code'] = false;
+            $data["message"] = "Unable to serve delete Request, Please try again!";
+        }
+        echo json_encode($data);
+    }
+
+
 }

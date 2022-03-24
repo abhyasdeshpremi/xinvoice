@@ -6,6 +6,7 @@
                     <th style="width:50px;">Sr.</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
+                    <th>Box</th>
                     <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
                     <th>Amount(₹)</th>
                 </tr>
@@ -17,6 +18,17 @@
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value['item_code']; ?></td>
                         <td><?php echo $value['item_name']; ?></td>
+                        <td>
+                            <?php foreach($itemstag as $tmpvalue){ 
+                                $itemcode = $tmpvalue->assign_tag_to_code; 
+                                if($itemcode == $value['item_code']){                                
+                                    ?>
+                            <div id=<?php echo $tmpvalue->tags_assign_id; ?> class="badge  badge-pill pl-4 p-0" style="background-color:<?php echo $tmpvalue->tag_color; ?>; color:#FFF;">
+                                <?php echo $tmpvalue->tag_name;?>
+                                <button type="button" onclick="deleteInvoiceItem(<?php echo $tmpvalue->tags_assign_id; ?>)" class="btn btn-datatable btn-icon deleteItemlistkjsdksdj" ></button>'
+                            </div>
+                            <?php } } ?>
+                        </td>
                         <td>
                             <?php
                                 $item_total_count = $value['item_total_count'];
@@ -42,6 +54,7 @@
                     <th>Sr.</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
+                    <th>Box</th>
                     <th>Total Stock  <span class="hideshowperitem"><i class="fas fa-eye"></i></span></th>
                     <th>Amount(₹)</th>
                 </tr>
@@ -245,4 +258,30 @@
 
         $(".bill_per_item_value").toggle();
     });
+</script>
+<script>
+    function deleteInvoiceItem(assigneditemid) {
+        if(confirm("Are you sure you want to delete this?")){
+        $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('/deleteassignitem'); ?>',
+                data: {assigneditemid: assigneditemid},
+                error: function(request, error) {
+                    console.log(arguments);
+                },
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    if(data.code){ 
+                        var row = $('#'+assigneditemid);
+                        row.addClass("bg-danger");
+                        row.hide(2000, function(){
+                            this.remove();
+                        });
+                    }else{
+                        alert(data.message)
+                    }
+                }
+            });
+        }
+    }
 </script>

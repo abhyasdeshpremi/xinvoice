@@ -8,7 +8,7 @@
                     <th>Name</th>
                     <th>Desciption</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th width="110px;">Actions</th>
                 </tr>
             </thead>
             <tfoot>
@@ -30,8 +30,9 @@
                         <td><?php echo $value->description; ?></td>
                         <td><div class="badge badge-primary badge-pill"><?php echo $value->status; ?></div></td>
                         <td>
-                            <a  href="<?php echo base_url("/updatetag/$value->tag_code")?>"><button class="btn btn-datatable btn-icon mr-2"><i data-feather="arrow-right"></i></button></a>
+                            <a  href="<?php echo base_url("/updatetag/$value->tag_code")?>"><button class="btn btn-datatable btn-icon mr-2"><i data-feather="edit"></i></button></a>
                             <button type="button" onclick='deleteTag("<?php echo $value->tag_code;?>")' class="btn btn-datatable btn-icon" id="deleteItemlistkjsdksdj" ><i data-feather="trash-2"></i></button>
+                            <a  href="<?php echo base_url("/assigntotag/$value->tag_code")?>"><button class="btn btn-datatable btn-icon mr-2"><i data-feather="arrow-right"></i></button></a>
                         </td>
                     </tr>
                 <?php $page++; } ?>

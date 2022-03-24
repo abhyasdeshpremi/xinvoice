@@ -13,6 +13,7 @@ class Stock extends CI_Controller {
         }
         $this->load->model('Stock_model', '', TRUE);
         $this->load->model('Invoice_model', '', TRUE);
+        $this->load->model('Tags_model', '', TRUE);
         $this->load->library("pagination");
     }
     
@@ -29,6 +30,8 @@ class Stock extends CI_Controller {
         $data["links"] = $this->pagination->create_links();
 
         $firm_result = $this->Stock_model->stock_list($config["per_page"], $page);
+        $itemstag = $this->Tags_model->assigned_tag_detail('', array('product'));
+        $data['itemstag'] = $itemstag["result"];
         $data['itemsList'] = $this->Invoice_model->items_list();
         $data['data'] = $firm_result['result'];
         $data['page'] = $page;
