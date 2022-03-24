@@ -95,8 +95,8 @@ class Home_model extends CI_Model {
     }
 
     public function sell_30graph(){
-        $today = date('y-m-d 00:00:00');
-        $last30day = date('y-m-d 23:59:59', strtotime('-30 days'));
+        $today = date('y-m-d 23:59:59');
+        $last30day = date('y-m-d 00:00:00', strtotime('-30 days'));
         $status = array('completed', 'paid', 'partial_paid');
         $this->db->select('lock_bill_amount as amount, created_at as date');
         $this->db->where('invoice_type', 'sell');
@@ -113,8 +113,8 @@ class Home_model extends CI_Model {
     }
 
     public function purchase_30graph(){
-        $today = date('y-m-d 00:00:00');
-        $last30day = date('y-m-d 23:59:59', strtotime('-36 days'));
+        $today = date('y-m-d 23:59:59');
+        $last30day = date('y-m-d 00:00:00', strtotime('-36 days'));
         $status = array('completed', 'paid', 'partial_paid');
         $this->db->select('lock_bill_amount as amount, created_at as date');
         $this->db->where('invoice_type', 'purchase');
@@ -131,8 +131,8 @@ class Home_model extends CI_Model {
     }
 
     public function cash_30graph(){
-        $today = date('y-m-d 00:00:00');
-        $last30day = date('y-m-d 23:59:59', strtotime('-30 days'));
+        $today = date('y-m-d 23:59:59');
+        $last30day = date('y-m-d 00:00:00', strtotime('-30 days'));
         $client_type = array('distributer', 'vendor', 'outlet', 'other');
         $this->db->select('Account_Entry.amount as amount, Account_Entry.payment_date as date');
         $this->db->where_in('Clients.client_type', $client_type);
