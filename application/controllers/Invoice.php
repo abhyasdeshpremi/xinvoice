@@ -166,7 +166,7 @@ class Invoice extends CI_Controller {
         $this->template->load('default_layout', 'contents' , 'invoice/createinvoice', $data);
     }
 
-    public function createInvoicePDF($id = null, $mode = "landscape", $download = false){
+    public function createInvoicePDF($id = null, $mode = "landscape", $download = false, $paper_size = "A4"){
         if(access_lavel(3, $this->session->userdata('role'))){
             redirect('/login');
         }
@@ -204,6 +204,7 @@ class Invoice extends CI_Controller {
             $data['invoicerefNumber'] = $invoiceDetail['invoice_reference_id'];
             $data['created_at'] = $invoiceDetail['created_at'];
             $data['mode'] = $mode;
+            $data['paper_size'] = $paper_size;
 
             $data['clientcode'] = $invoiceDetail['fk_client_code'];
             $data['clientname'] = $invoiceDetail['client_name'];
@@ -228,7 +229,7 @@ class Invoice extends CI_Controller {
 
     }
 
-    public function viewInvoicePDF($id = null, $mode = "landscape", $download = false){
+    public function viewInvoicePDF($id = null, $mode = "landscape", $download = false, $paper_size = "A4"){
         if(access_lavel(3, $this->session->userdata('role'))){
             redirect('/login');
         }
@@ -247,7 +248,7 @@ class Invoice extends CI_Controller {
         }else{
             $mode = "landscape";
         }
-        $data['link'] = 'createinvoicepdf/'.$id.'/'.$mode.'/'.$download;
+        $data['link'] = 'createinvoicepdf/'.$id.'/'.$mode.'/'.$download.'/'.$paper_size;
         $this->template->set('title', 'View Invoice PDF');
         $this->template->load('default_layout', 'contents' , 'invoice/pdfview', $data);
     }
