@@ -34,6 +34,12 @@ $invoiceTitle = "TAX INVOICE";
 if($globalInvoice_bill_include_tax == 'no'){
     $invoiceTitle = "RETAIL INVOICE";
 }
+$font_style = 'style="font:10px;"';
+$font_style_mob = 'style="font:10px;"';
+if($paper_size == 'A5'){
+    $font_style = 'style="font:12px;"';
+    $font_style_mob = 'style="font:11px;"';
+}
 ?>
 <body style="<?php echo $width; ?>" >
     <center>
@@ -44,12 +50,12 @@ if($globalInvoice_bill_include_tax == 'no'){
     <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
     <span style="font:10px; float:right; margin-right:10px;">ORIGINAL FOR RECIPIENT</span>
     <center style="margin-right:0px;">
-        <span style="font:10px; margin-right:0px;">MOB.NO.: <b><?php echo $owninvoicemobileno; ?></b></span>
+        <span style="font:10px; margin-right:0px;">MOB.NO.: <b><?php echo $owninvoicemobileno; echo $paper_size; ?></b></span>
     </center>
    
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
-        <div style="height:60px; font: 9px;">
-            <div style="width:50%; height: 60px; float:left;"> To,
+        <div style="height:64px; font: 9px;">
+            <div style="width:50%; height: 64px; float:left;"> To,
                 <div style="margin-right:10px;">
                     <span style="font:10px;"><b><?php echo $clientname; ?></b></span><br>
                     <span><?php echo $clintaddress; ?></span><br>
@@ -58,13 +64,13 @@ if($globalInvoice_bill_include_tax == 'no'){
                     <span>GSTIN : <?php echo $gstin; ?></span>
                 </div>
             </div>
-            <div style="width:50%; height: 60px; float:right;"> 
-                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <span style="font:10px;"><b><?php echo $invoicerefNumber; ?> / <?php echo financial_year($created_at); ?></b></span></span><br>
+            <div style="width:50%; height: 64px; float:right;"> 
+                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <span <?php echo $font_style; ?>><b><?php echo $invoicerefNumber; ?> / <?php echo financial_year($created_at); ?></b></span></span><br>
                     <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <span style="font:10px;"><b><?php echo date("d-m-Y H:i", strtotime($created_at)); ?></b></span></span><br>
                     <span>PAYMENT MODE &nbsp;&nbsp;: <?php echo $paymentmode; ?></span><br>
                     <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
                     <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
-                    <span>MOB NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <?php echo $mobilenumber; ?></span>
+                    <span>MOB NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <span <?php echo $font_style_mob; ?>><b><?php echo $mobilenumber; ?></b></span></span>
             </div>
         </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
