@@ -50,7 +50,7 @@ if($paper_size == 'A5'){
     <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
     <span style="font:10px; float:right; margin-right:10px;">ORIGINAL FOR RECIPIENT</span>
     <center style="margin-right:0px;">
-        <span style="font:10px; margin-right:0px;">MOB.NO.: <b><?php echo $owninvoicemobileno; echo $paper_size; ?></b></span>
+        <span style="font:10px; margin-right:0px;">MOB.NO.: <b><?php echo $owninvoicemobileno; ?></b></span>
     </center>
    
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
