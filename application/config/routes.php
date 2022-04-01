@@ -178,5 +178,7 @@ $route['assigntotag/(:any)'] = 'tags/assigntoTag/$1';
 $route['assigntagtoproduct'] = 'tags/assignTagtoProduct';
 $route['deleteassignitem'] = 'tags/deleteassignitem';
 
+$route['mailtest'] = 'welcome/mail_test';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
