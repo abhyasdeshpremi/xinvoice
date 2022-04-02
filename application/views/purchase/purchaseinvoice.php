@@ -65,7 +65,7 @@
                             <div class="form-row">
                                 <div class="col-md-2 mb-3">
                                     <label for="userStatus">Invoice Type</label>
-                                    <select class="form-control selectpicker" id="invoicetype" name="invoicetype" style="text-transform: capitalize;" data-live-search="true">
+                                    <select class="form-control selectpicker border" id="invoicetype" name="invoicetype" style="text-transform: capitalize;" data-live-search="true">
                                             <option value="">Select</option>
                                             <?php $count = 1; 
                                                 foreach($invoiceTypes as $invoice){ ?>
@@ -119,7 +119,7 @@
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                         <label for="userStatus">From Invoice Client Name &nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url('/createclient'); ?>">Add new Client</a></label>
-                                        <select class="form-control selectpicker" id="clientcode" name="clientcode" style="text-transform: capitalize;" data-live-search="true">
+                                        <select class="form-control selectpicker border" id="clientcode" name="clientcode" style="text-transform: capitalize;" data-live-search="true">
                                             <option value="">Select Invoice Client Name</option>
                                             <?php $count = 0; 
                                                 foreach($clients as $client){ ?>
