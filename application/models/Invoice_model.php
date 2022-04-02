@@ -127,14 +127,17 @@ class Invoice_model extends CI_Model {
 
             if (date('m') <= 3) {
                 $thisFYear = (date('Y')-1);
+                $thisFEndYear = date('Y');
             } else {
                 $thisFYear = date('Y');
+                $thisFEndYear = (date('Y')+1);
             }
     
             $thisSFinancialYear = $thisFYear.'-04-01 00:00:00'; 
-    
             $thisStartFinancial = date($thisSFinancialYear);
-            $thisEndFinancial = date('y-m-d 23:59:59');
+            
+            $thisEFinancialYear = $thisFEndYear.'-03-31 23:59:59';
+            $thisEndFinancial = date($thisEFinancialYear);
             
             $previous_invoice_ref_no = 1;
             $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
