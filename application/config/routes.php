@@ -169,6 +169,7 @@ $route['savepiggybankamount'] = 'piggyBank/savePiggyBankAmount';
 
 $route['getaccountholderhistory(/:num)?'] = 'piggyBank/getAccountHolderHistory$1';
 $route['getclientaccountholderhistory/:any(/:num)?'] = 'piggyBank/getClientAccountHolderHistory$1$2';
+$route['getclientaccountholderearnhistory/:any(/:num)?'] = 'piggyBank/getClientAccountHolderEarnHistory$1$2';
 
 $route['createtag'] = 'tags/createTag';
 $route['tagdetails(/:num)?'] = 'tags/tagdetails$1';

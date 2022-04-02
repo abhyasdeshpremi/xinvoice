@@ -150,7 +150,7 @@ class Piggybank_model extends CI_Model {
     }
 
     public function piggy_bank_account_list($limit, $start){
-        $this->db->select("Piggy_Account.pk_piggy_account_id, Piggy_Account.fk_piggy_account_code, Piggy_Account.fk_account_name, Piggy_Account.total_amount, Piggy_Bank_account.contact_number, Piggy_Bank_account.email, Piggy_Bank_account.address");
+        $this->db->select("Piggy_Account.pk_piggy_account_id, Piggy_Account.fk_piggy_account_code, Piggy_Account.fk_account_name, Piggy_Account.total_amount, Piggy_Account.total_save_amount, Piggy_Bank_account.contact_number, Piggy_Bank_account.email, Piggy_Bank_account.address");
         $this->db->limit($limit, $start);
         $this->db->where('Piggy_Account.fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->order_by("Piggy_Account.fk_account_name", "ASC");
@@ -243,5 +243,101 @@ class Piggybank_model extends CI_Model {
         $this->db->insert('Piggy_Account_Entry', $account_EntryList);
         $result['accountcode']  = ($this->db->affected_rows() == 1) ? true : false;
         return $result;
+    }
+
+    public function savedVendorAccount($data){
+        date_default_timezone_set('asia/kolkata');
+        $result = array();
+        $this->db->where('fk_piggy_account_code', $data['fk_client_code']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Piggy_Account');
+        if($query->num_rows() == 1){
+            $preTotalAccountAmount = 0;
+            foreach ($query->result() as $row)  
+            {  
+                $result['pk_piggy_account_id'] = $row->pk_piggy_account_id;
+                $preTotalAccountAmount = $row->total_save_amount;
+
+            }
+            $updateAmount = (int)$preTotalAccountAmount;
+            if($data['paymenttype'] == 'credit'){
+                $updateAmount = (int)$preTotalAccountAmount + (int)$data['amount'];
+            }elseif($data['paymenttype'] == 'debit'){
+                $updateAmount = (int)$preTotalAccountAmount - (int)$data['amount'];
+            }
+            $string = 'payment info paymenttype:'. $data['paymenttype'].' preTotalAccountAmount: '.$preTotalAccountAmount.' amount:  '.$data['amount'].' updateAmount: '.$updateAmount.' payment date'.date("Y-m-d H:i:s", strtotime($data['payment_date'])).' payment_date'.$data['payment_date'];
+            log_message("info", $string);
+
+            $dataList = array( 
+                'total_save_amount'=> $updateAmount,
+                'updated_at'=>date('Y-m-d H:i:s')
+            );
+            $this->db->where('pk_piggy_account_id', $result['pk_piggy_account_id']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('Piggy_Account', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['pk_piggy_account_id']  = $result['pk_piggy_account_id'];
+            $result['totalAmount'] = $updateAmount;
+        }else{
+            if($data['paymenttype'] == 'credit'){
+                $amount = (int)$data['amount'];
+            }elseif($data['paymenttype'] == 'debit'){
+                $amount = -(int)$data['amount'];
+            }
+            $dataList = array(
+                'fk_piggy_account_code'=>$data['fk_client_code'],
+                'fk_account_name'=>$data['fk_client_name'],
+                'total_save_amount'=> $amount,
+                'fk_username'=>$this->session->userdata('username'),
+                'fk_firm_code'=>$this->session->userdata('firmcode')
+            );
+            $this->db->insert('Piggy_Account', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['pk_piggy_account_id']  = $this->db->insert_id();
+            $result['totalAmount'] = $amount;
+        }
+        
+        $account_EntryList = array(
+            'fk_piggy_account_code'=>$data['fk_client_code'],
+            'fk_piggy_account_name'=>$data['fk_client_name'],
+            'amount'=>(int)$data['amount'],
+            'payment_mode'=>$data['payment_mode'],
+            'payment_type'=>$data['paymenttype'],
+            'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'] ." ".date("H:i:s") )),
+            'notes'=>$data['notes'],
+            'fk_username'=>$this->session->userdata('username'),
+            'fk_firm_code'=>$this->session->userdata('firmcode')
+        );
+        $this->db->insert('Piggy_Account_save_Entry', $account_EntryList);
+        $result['accountcode']  = ($this->db->affected_rows() == 1) ? true : false;
+        return $result;
+    }
+
+    public function get_earned_log_count($clientcode = NULL) {
+        $this->db->select('pk_piggy_account_save_entry_id');
+        $this->db->from('Piggy_Account_save_Entry');
+        if ($clientcode != NULL) {
+            $this->db->where('fk_piggy_account_code', $clientcode);
+        }
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        return $this->db->count_all_results();
+    }
+
+    public function account_earned_log_list($limit, $start, $clientcode = NULL){
+        $this->db->limit($limit, $start);
+        if ($clientcode != NULL) {
+            $this->db->where('fk_piggy_account_code', $clientcode);
+        }
+        $this->db->where('delete_flag', 'no');
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->order_by("payment_date", "DESC");
+        $query = $this->db->get('Piggy_Account_save_Entry');
+        if($query->num_rows() > 0){
+            $data['result'] = $query->result();
+        }else{
+            $data['result'] = array();
+        }
+        return $data;
     }
 }

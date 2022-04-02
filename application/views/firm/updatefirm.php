@@ -26,6 +26,7 @@
                 $firmbonus = $value->bonus_percent;
                 $firmbusiness_type = $value->business_type;
                 $feature_group_for_item = $value->feature_group_for_item;
+                $feature_capture_saved_amount = $value->feature_capture_saved_amount;
             }
         ?>
         <form class="updateFirm" action="" method="POST" id="updateFirm">
@@ -121,6 +122,13 @@
                 <div class="col-md-3 mb-3">
                     <label for="validationDefault05">Bonus % &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
                     <input type="number" class="form-control" id="firmbonus" name="firmbonus" placeholder="Bonus %" value="<?php echo isset($firmbonus)? $firmbonus : ''; ?>">
+                </div>
+                <div class="col-md-3 mb-3">
+                <label for="userStatus">Capture Saved Amount</label>
+                    <select class="form-control" id="feature_capture_saved_amount" name="feature_capture_saved_amount">
+                        <option value="yes" <?php if($feature_capture_saved_amount == 'yes'){ echo 'selected'; } ?>>Yes</option>
+                        <option value="no" <?php if($feature_capture_saved_amount == 'no'){ echo 'selected'; } ?>>No</option>
+                    </select>
                 </div>
             </div>
             <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Update Firm</button>
