@@ -39,7 +39,7 @@
                 <div class="col-md-6 mb-3">
                     <?php if (isset($firmData)) { ?>
                         <label for="firmCode">Firm permission</label>
-                        <select class="form-control" id="firmCode" name="firmCode">
+                        <select class="form-control selectpicker" id="firmCode" name="firmCode" data-live-search="true">
                             <option value="">Select firm</option>
                             <?php foreach($firmData as $value){ ?>
                                 <option value="<?php echo $value->firm_code; ?>" <?php if($value->firm_code == $firm_code){ echo 'selected'; } ?>><?php echo $value->name; ?></option>
