@@ -218,4 +218,25 @@ class Piggybank extends CI_Controller {
         $this->template->set('title', 'Account Holder ('.$clientCode.') History List');
         $this->template->load('default_layout', 'contents' , 'piggybank/accountHolderHistoy', $data);
     }
+
+    public function getClientAccountHolderEarnHistory(){
+        $data = array();
+        $clientCode = $this->uri->segment(2);
+        $config = array();
+        $config["base_url"] = base_url("getclientaccountholderhistory/".$clientCode);
+        $config["total_rows"] = $this->Piggybank_model->get_earned_log_count($clientCode);
+        $config["per_page"] = PAGE_PER_ITEM * 10;
+        $config["uri_segment"] = 3;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $data["links"] = $this->pagination->create_links();
+
+        $account_log_result = $this->Piggybank_model->account_earned_log_list($config["per_page"], $page, $clientCode);
+        $data['data'] = $account_log_result['result'];
+        $data['page'] = $page;
+        $this->template->set('buttonName', 'Account Holder Balance');
+        $this->template->set('buttonLink', base_url('/accountholderbalance'));
+        $this->template->set('title', 'Account Holder ('.$clientCode.') Earned History List');
+        $this->template->load('default_layout', 'contents' , 'piggybank/accountHolderHistoy', $data);
+    }
 }

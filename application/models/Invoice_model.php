@@ -135,7 +135,7 @@ class Invoice_model extends CI_Model {
     
             $thisSFinancialYear = $thisFYear.'-04-01 00:00:00'; 
             $thisStartFinancial = date($thisSFinancialYear);
-            
+
             $thisEFinancialYear = $thisFEndYear.'-03-31 23:59:59';
             $thisEndFinancial = date($thisEFinancialYear);
             
@@ -561,6 +561,43 @@ class Invoice_model extends CI_Model {
                             }
 
                         }
+                        
+                        if($this->session->userdata('feature_capture_saved_amount')){
+                            $save_amount = $total_mrp_value - $total_bill_value;
+                            if($save_amount > 0){
+                                $bonusamountdata = array();
+                                $bonusamountdata['uniqueCode'] = $amountdata['fk_client_code'];
+                                $bonusamountdata['clientName'] = $amountdata['fk_client_name'];
+                                $bonusamountdata['clientMobile'] = $clientInfo['mobile_no'];
+                                $bonusamountdata['accontemail'] = '';
+                                $bonusamountdata['clientAddress'] = $clientInfo['address'] ." ".$clientInfo['area'];
+
+                                $bonusDataUpdateToPiggybank = array();
+                                $bonusDataUpdateToPiggybank['fk_client_code'] = $amountdata['fk_client_code'];
+                                $bonusDataUpdateToPiggybank['fk_client_name'] = $amountdata['fk_client_name'];
+                                $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
+                                $bonusDataUpdateToPiggybank['amount'] = $save_amount;
+
+                                $bonusDataUpdateToPiggybank['payment_date'] = date('d-m-Y');
+
+                                $bonusDataUpdateToPiggybank['payment_mode'] = 'auto';
+                                
+                                if($data['statuscode'] === "completed") {
+                                    $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
+                                }else if($data['statuscode'] === "force_edit") {
+                                    $bonusDataUpdateToPiggybank['paymenttype'] = 'debit';
+                                }
+                                $bonusDataUpdateToPiggybank['notes'] = 'auto '.$bonusDataUpdateToPiggybank['paymenttype'].' #('.$amountdata['previous_invoice_ref_no'].') Saved!';
+                                $unique_client_code_verify = $this->Piggybank_model->unique_account_holder_code_check($amountdata['fk_client_code']);
+                                if($unique_client_code_verify){
+                                    $this->Piggybank_model->savedVendorAccount($bonusDataUpdateToPiggybank);
+                                }else{
+                                    $this->Piggybank_model->create_account_holder($bonusamountdata);
+                                    $this->Piggybank_model->savedVendorAccount($bonusDataUpdateToPiggybank);
+                                }
+                            }
+                        }
+
                     }
                 }
 

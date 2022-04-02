@@ -83,6 +83,7 @@ class Firm_model extends CI_Model {
             'state'=>$data['firmState'],
             'bill_include_tax'=>$data['billIncludeTax'],
             'feature_group_for_item'=>$data['feature_group_for_item'],
+            'feature_capture_saved_amount'=>$data['feature_capture_saved_amount'],
             'bonus_percent'=>$data['firmbonus'],
             'business_type'=>$data['business_type'],
             'pin_code'=>$data['firmZip'],
