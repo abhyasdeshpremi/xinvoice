@@ -121,25 +121,29 @@
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                         <label for="userStatus">To Invoice Client Name &nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url('/createclient'); ?>">Add new Client</a></label>
-                                        <select class="form-control" id="clientcode" name="clientcode" style="text-transform: capitalize;">
+                                        <select class="form-control selectpicker" id="clientcode" name="clientcode" style="text-transform: capitalize;" data-live-search="true">
                                             <option value="">Select Invoice Client Name</option>
                                             <?php $count = 0; 
                                                 foreach($clients as $client){ ?>
                                                     <option value="<?php echo $client->code; ?>" <?php if($client->code == $clientcode){ echo"selected"; } ?> ><?php echo $client->name;?></option>
                                             <?php $count++; } ?>
                                         </select>
-                                        <input type="hidden" name="clientname" id="clientname" value="<?php echo $clientname; ?>" />
+                                        <!-- <input type="hidden" name="clientname" id="clientname" value="<?php echo $clientname; ?>" /> -->
                                 </div>
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-6 mb-3">
+                                        <label for="userStatus">To Invoice Client Name</label>
+                                        <input class="form-control" type="text" name="clientname" id="clientname" value="<?php echo $clientname; ?>" />
+                                </div>
+                                <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">GST IN</label>
                                     <input class="form-control" id="gstin" name="gstin" type="text" placeholder="GST IN" value="<?php echo isset($gstin)? $gstin : ''; ?>" />
                                 </div>
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">PAN No.</label>
                                     <input class="form-control" id="pannumber" name="pannumber" type="text" placeholder="Pan No." value="<?php echo isset($pannumber)? $pannumber : ''; ?>" />
                                 </div>
                                 
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="validationDefault03">Mobile Number</label>
                                     <input class="form-control" id="mobilenumber" name="mobilenumber" type="text" placeholder="Mobile Number" value="<?php echo isset($mobilenumber)? $mobilenumber : ''; ?>" />
                                 </div>
