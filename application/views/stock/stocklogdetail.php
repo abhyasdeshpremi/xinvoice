@@ -16,18 +16,20 @@
             <tbody>
                 <?php $total_stock = 0;
                     foreach($data as $value){ 
-                    
+                    $classStyle = '';
                     if($value->invoice_type == "sell"){
                         $total_stock = (int)$total_stock - (int)$value->quantity;
+                        $classStyle = 'class="redtext"';
                     }else if($value->invoice_type == "purchase"){
                         $total_stock = (int)$total_stock + (int)$value->quantity;
+                        $classStyle = 'class="greentext"';
                     }
                     ?>
                     <tr>
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->fk_item_code; ?></td>
                         <td><?php echo $value->fk_item_name; ?></td>
-                        <td><?php echo $value->quantity; ?></td>
+                        <td <?= $classStyle; ?>><?php echo $value->quantity; ?></td>
                         <td><?php echo $value->invoice_type; ?></td>
                         <td><?php echo number_format($value->bill_value, 2); ?></td>
                         <td><?php echo date('d M Y h:i:s A', strtotime($value->created_at)); ?></td>

@@ -68,7 +68,7 @@ class Stock extends CI_Controller {
         $config = array();
         $config["base_url"] = base_url("getitemstocklog/".$itemCode);
         $config["total_rows"] = $this->Stock_model->get_log_count($itemCode);
-        $config["per_page"] = 100;//PAGE_PER_ITEM;
+        $config["per_page"] = PAGE_PER_ITEM * 15;
         $config["uri_segment"] = 3;
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
