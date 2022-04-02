@@ -67,7 +67,7 @@
                             <div class="form-row">
                                 <div class="col-md-2 mb-3">
                                     <label for="userStatus">Invoice Type</label>
-                                    <select class="form-control" id="invoicetype" name="invoicetype" style="text-transform: capitalize;">
+                                    <select class="form-control selectpicker" id="invoicetype" name="invoicetype" style="text-transform: capitalize;" data-live-search="true">
                                         <option value="">Select</option>
                                         <?php $count = 1; 
                                             foreach($invoiceTypes as $invoice){ ?>
