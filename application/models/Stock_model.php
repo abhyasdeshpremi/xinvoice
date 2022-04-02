@@ -138,10 +138,16 @@ class Stock_model extends CI_Model {
             $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
             $result['stockid']  = $result['stockid'];
         }else{
+            $updateStock = 0;
+            if($data['stocktype'] == 'buy'){
+                $updateStock = (int)$data['stockunit'];
+            }elseif($data['stocktype'] == 'sell'){
+                $updateStock =  - (int)$data['stockunit'];
+            }
             $dataList = array(
                 'item_code'=>$data['item_code'],
                 'item_name'=>$data['item_name'],
-                'item_total_count'=> (int)$data['stockunit'],
+                'item_total_count'=> $updateStock,
                 'fk_username'=>$this->session->userdata('username'),
                 'fk_firm_code'=>$this->session->userdata('firmcode')
             );
