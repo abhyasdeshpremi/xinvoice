@@ -13,20 +13,16 @@
                     <th>By</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>Sr.</th>
-                    <th>Item Code</th>
-                    <th>Item Name</th>
-                    <th>Total Stock</th>
-                    <th>Entry Type</th>
-                    <th>Bill Value(₹)</th>
-                    <th>Date&Time</th>
-                    <th>By</th>
-                </tr>
-            </tfoot>
             <tbody>
-                <?php foreach($data as $value){ ?>
+                <?php $total_stock = 0;
+                    foreach($data as $value){ 
+                    
+                    if($value->invoice_type == "sell"){
+                        $total_stock = (int)$total_stock - (int)$value->quantity;
+                    }else if($value->invoice_type == "purchase"){
+                        $total_stock = (int)$total_stock + (int)$value->quantity;
+                    }
+                    ?>
                     <tr>
                         <td><?php echo ($page + 1); ?></td>
                         <td><?php echo $value->fk_item_code; ?></td>
@@ -43,6 +39,18 @@
                     </tr>
                 <?php $page++; } ?>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>Sr.</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Total Stock(<?php echo $total_stock; ?>)</th>
+                    <th>Entry Type</th>
+                    <th>Bill Value(₹)</th>
+                    <th>Date&Time</th>
+                    <th>By</th>
+                </tr>
+            </tfoot>
         </table>
         <div class="pagelist"><center><?php echo $links; ?></center></div>
     </div>
