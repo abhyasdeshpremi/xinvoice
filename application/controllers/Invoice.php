@@ -15,12 +15,12 @@ class Invoice extends CI_Controller {
     }
 
     public function checkid(){
-        $getinvoiceDetails = $this->Invoice_model->invoice_list(300, 0, 'sell');
+        /*$getinvoiceDetails = $this->Invoice_model->invoice_list(300, 0, 'sell');
         print_r($getinvoiceDetails);
         /*
         *Auto saved Amount balance adjust
         */
-        foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
+        /*foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
             if(($getinvoiceDetail->status === "completed") || ($getinvoiceDetail->status === "partial_paid") || ($getinvoiceDetail->status === "paid")) {
                 $amountdata = array();
                 print($getinvoiceDetail->pk_invoice_id);
@@ -56,7 +56,7 @@ class Invoice extends CI_Controller {
                         /*
                         * Get total bill value
                         */
-                        $this->db->select_sum('bill_value');
+                        /*$this->db->select_sum('bill_value');
                         $this->db->from('invoice_item');
                         $this->db->where('delete_flag', 'NO');
                         $this->db->where('fk_unique_invioce_code', $amountdata['unique_invioce_code']);
@@ -104,7 +104,7 @@ class Invoice extends CI_Controller {
                 }
             }
              
-        }
+        }*/
         /*
         *Auto piggey balance adjust
         */
