@@ -672,6 +672,7 @@ class Invoice extends CI_Controller {
         $data = array();
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $data['updateCreated_at'] = $this->input->post('updateCreated_at');
+            $data['updateCreated_time_at'] = $this->input->post('updateCreated_time_at');
             $data['invoiceCode'] = $this->input->post('invoiceCode');
             $invoice_created_result = $this->Invoice_model->updateInvoiceCreatedDate($data);
             if($invoice_created_result){

@@ -663,7 +663,9 @@ class Invoice_model extends CI_Model {
         if($query->num_rows() == 1){
 
             $currentDate = date("Y-m-d H:i:s");
-            if(!empty($data['updateCreated_at'])){
+            if(!empty($data['updateCreated_at']) && !empty($data['updateCreated_time_at'])){
+                $currentDate = date("Y-m-d H:i:s", strtotime($data['updateCreated_at'] ." ".$data['updateCreated_time_at']));
+            }else if(!empty($data['updateCreated_at'])){
                 $currentDate = date("Y-m-d H:i:s", strtotime($data['updateCreated_at'] ." ".date("H:i:s")));
             }
             $dataList = array(
