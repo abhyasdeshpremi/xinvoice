@@ -149,6 +149,10 @@ $route['downloadinvoicepdf/:any/:any'] = 'ledger/getinvoicePDF/$1/$2';
 $route['salereport'] = 'ledger/saleReport';
 $route['downloadsalepdf/:any/:any(/:any)?'] = 'ledger/getSalePDF/$1/$2$3';
 
+$route['earnedvendor'] = 'ledger/earnedVendor';
+$route['earnedvendorreport'] = 'ledger/earnedvendorReport';
+$route['downloadearnedvendorpdf/:any/:any(/:any)?'] = 'ledger/getearnedvendorPDF/$1/$2$3';
+
 $route['getaccount(/:num)?'] = 'account/getAccount$1';
 $route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';
 $route['getclientaccounthistory/:any(/:num)?'] = 'account/getClientAccountHistory$1$2';

@@ -81,6 +81,7 @@ $(function() {
                         var total_sgst_amount = 0.0;
                         var total_round_off_amount = 0.0;
                         var total_lock_bill_amount = 0.0;
+                        var final_total_lock_bill_amount = 0.0;
 
                         var tmpBillDate = result[0]["bill_date"];
                         for(i=0;i<result.length; i++) {
@@ -110,9 +111,11 @@ $(function() {
                             total_sgst_amount = parseFloat(total_sgst_amount) + parseFloat(sgst_amount);
                             total_round_off_amount = parseFloat(total_round_off_amount) + parseFloat(round_off_amount);
                             total_lock_bill_amount = parseFloat(total_lock_bill_amount) + parseFloat(lock_bill_amount);
+                            final_total_lock_bill_amount = parseFloat(final_total_lock_bill_amount) + parseFloat(lock_bill_amount);
 
                         }
                         $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount));
+                        $('#ledgerreportBody').append(addFinalResultrow(final_total_lock_bill_amount));
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+salesearch;
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
@@ -202,6 +205,28 @@ $(function() {
                         +'<td colspan="4"></td>'
                         +'<td><b>TOTAL</b></td>'
                         +'<td><b>'+total_lock_bill_amount+'</b></td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal" >'
+                        +'<td colspan="11">&nbsp;</td>'
+                    +'</tr>';
+        }
+    }
+
+    function addFinalResultrow(final_total_lock_bill_amount){
+        if (globalInvoice_bill_include_tax === 'yes'){
+            return '<tr class="invoicecal" >'
+                        +'<td colspan="9"></td>'
+                        +'<td><b>TOTAL</b></td>'
+                        +'<td><b>'+final_total_lock_bill_amount+'</b></td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal" >'
+                        +'<td colspan="11">&nbsp;</td>'
+                    +'</tr>';
+        }else {
+            return '<tr class="invoicecal" >'
+                        +'<td colspan="4"></td>'
+                        +'<td><b>FINAL TOTAL</b></td>'
+                        +'<td><b>'+final_total_lock_bill_amount+'</b></td>'
                     +'</tr>'
                     +'<tr class="invoicecal" >'
                         +'<td colspan="11">&nbsp;</td>'
