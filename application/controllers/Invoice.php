@@ -15,7 +15,7 @@ class Invoice extends CI_Controller {
     }
 
     public function checkid(){
-        $getinvoiceDetails = $this->Invoice_model->invoice_list(100, 0, 'sell');
+        $getinvoiceDetails = $this->Invoice_model->invoice_list(300, 0, 'sell');
         print_r($getinvoiceDetails);
         /*
         *Auto saved Amount balance adjust
