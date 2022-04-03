@@ -263,4 +263,66 @@ class Ledger extends CI_Controller {
             }
         }
     }
+
+    /**
+     * For Vendor Eared report
+     */
+    public function earnedVendor(){
+        $data = array();
+
+        $this->template->set('title', 'Vendor Earned Report');
+        $this->template->load('default_layout', 'contents' , 'ledger/earnedvendorreport', $data);
+    }
+
+    public function earnedvendorReport(){
+        $data = array();
+        if($this->session->userdata('isUserLoggedIn') != TRUE){ 
+            $data['code'] = false;
+            $data['result'] = [];
+            $data["message"] = "Unable to serve because your session is expire!";
+        }else{
+            if ($this->input->server('REQUEST_METHOD') === 'POST') {
+                $data['start_date'] = $this->input->post('start_date');
+                $data['end_date'] = $this->input->post('end_date');
+                $data['stocksearch'] = urldecode($this->input->post('stocksearch'));
+                $data["message"] = "";
+                $stock_result = $this->Ledger_model->stock_list($data);
+                if($stock_result['code']){
+                    $data['code'] = $stock_result['code'];
+                    $data['result'] = $stock_result['result'];
+                    $data["message"] = "Successfully get stock!";
+                }else{
+                    $data['code'] = $stock_result['code'];
+                    $data['result'] = [];
+                    $data["message"] = "Unable to fetch Stock. Please try again!";
+                }
+            }else{
+                $data['code'] = false;
+                $data['result'] = [];
+                $data["message"] = "Unable to serve GET Request, Please try again!";
+            }
+        }
+        echo json_encode($data);
+    }
+
+    function getearnedvendorPDF(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['start_date'] = $this->uri->segment(2);
+            $data['end_date'] = $this->uri->segment(3);
+            $data['stocksearch'] = urldecode($this->uri->segment(4));
+            $stock_result = $this->Ledger_model->stock_list($data);
+            if($stock_result['code']){
+                $data['code'] = $stock_result['code'];
+                $data['result'] = $stock_result['result'];
+                $data["message"] = "Successfully get stock!";
+                $data['title'] = $this->session->userdata('firmname');
+                // $this->template->load('default_layout', 'contents' , 'ledger/stockreportpdf', $data);
+                $this->load->library('pdf');
+                $html = $this->load->view('ledger/stockreportpdf', $data, true);
+                $this->pdf->createPDF($html, "Stock Report".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
+            }
+        }
+    }
+
 }
