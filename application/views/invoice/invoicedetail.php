@@ -86,6 +86,10 @@
             <label for="recipient-name" class="col-form-label">Created Date:</label>
             <input type="date" class="form-control" id="createdDate" name="createdDate">
           </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Created Time:</label>
+            <input type="time" class="form-control" id="createdTime" name="createdTime">
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -100,6 +104,7 @@
     var updateinvoceref = '';
     var updateinvoicecode = '';
     var updateCreated_at = '';
+    var updateCreated_time_at = '';
     var selectedID = '';
     $(document).ready(function () {
         $('#invoicecreatedat').on('show.bs.modal', function (event) {
@@ -109,12 +114,14 @@
             updateCreated_at = button.data('created_at'); 
             selectedID = button.data('id');    
             $("#createdDate").attr("value", updateCreated_at.split(" ")[0]);
+            $("#createdTime").attr("value", updateCreated_at.split(" ")[1]);
             var modal = $(this);
             modal.find('.modal-title').text('Date Change #(' +updateinvoceref+ ')');
         });
         
         $('#changeDatebutton').click(function(){
             updateCreated_at = $("#createdDate").val();
+            updateCreated_time_at = $("#createdTime").val();
             if(updateCreated_at.length < 0){
                 $("#successfullyMessage").addClass('alert-danger');
                 $("#successfullyMessage").text("Please select created date.");
@@ -126,7 +133,7 @@
                     type: 'POST',
                     url: '<?php echo base_url('/updateinvoicecreatedDate'); ?>',
                     dataType  : 'json',
-                    data: {updateCreated_at: updateCreated_at, invoiceCode: updateinvoicecode},
+                    data: {updateCreated_at: updateCreated_at, updateCreated_time_at: updateCreated_time_at, invoiceCode: updateinvoicecode},
                     error: function() {
                         alert('Something is wrong');
                     },
