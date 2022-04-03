@@ -8,7 +8,7 @@
                     <th>Account Name</th>
                     <th>Mobile</th>
                     <th>Address</th>
-                    <th>Total Earned</th>
+                    <th>Saved Amount</th>
                     <th>Total Amount</th>
                 </tr>
             </thead>
@@ -19,7 +19,7 @@
                     <th>Account Name</th>
                     <th>Mobile</th>
                     <th>Address</th>
-                    <th>Total Earned</th>
+                    <th>Saved Amount</th>
                     <th>Total Amount</th>
                 </tr>
             </tfoot>
