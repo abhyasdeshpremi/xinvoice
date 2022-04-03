@@ -15,8 +15,99 @@ class Invoice extends CI_Controller {
     }
 
     public function checkid(){
-        //$getinvoiceDetails = $this->Invoice_model->invoice_list(100, 0, 'sell');
-        // print_r($getinvoiceDetails);
+        $getinvoiceDetails = $this->Invoice_model->invoice_list(100, 0, 'sell');
+        print_r($getinvoiceDetails);
+        /*
+        *Auto saved Amount balance adjust
+        */
+        foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
+            if(($getinvoiceDetail->status === "completed") || ($getinvoiceDetail->status === "partial_paid") || ($getinvoiceDetail->status === "paid")) {
+                $amountdata = array();
+                print($getinvoiceDetail->pk_invoice_id);
+                print($getinvoiceDetail->invoice_type);
+                print($getinvoiceDetail->status);
+                print($getinvoiceDetail->created_at);
+                print($getinvoiceDetail->unique_invioce_code);
+                echo date("d-m-Y", strtotime($getinvoiceDetail->created_at));
+                echo "<br>";
+                $amountdata['payment_date'] = date("d-m-Y", strtotime($getinvoiceDetail->created_at));
+                $amountdata['invoice_type'] = $getinvoiceDetail->invoice_type;
+                $amountdata['fk_client_code'] = $getinvoiceDetail->fk_client_code;
+                $amountdata['fk_client_name'] = $getinvoiceDetail->client_name;
+                $amountdata['unique_invioce_code'] = $getinvoiceDetail->unique_invioce_code;
+                $amountdata['previous_invoice_ref_no'] = $getinvoiceDetail->previous_invoice_ref_no;
+                
+                //Bonus deposit to piggy bank for every vendor
+                $bonus_percent = floatval($this->session->userdata('bonus_percent'));
+                if(($bonus_percent > 0) && ($amountdata['invoice_type'] === "sell")){
+                    log_message("info", "bonus percentage " . $bonus_percent);
+                    $clientInfo = $this->Client_model->client_by_id($amountdata['fk_client_code']);
+                    $clientType = $clientInfo['client_type'];
+                    if($clientType === "vendor"){
+                        $this->db->select_sum('mrp_value');
+                        $this->db->from('invoice_item');
+                        $this->db->where('delete_flag', 'NO');
+                        $this->db->where('fk_unique_invioce_code', $amountdata['unique_invioce_code']);
+                        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                        $mrpvaluequery = $this->db->get();
+                        $total_mrp_value = $mrpvaluequery->row()->mrp_value;
+                        $total_mrp_value = round($total_mrp_value);
+
+                        /*
+                        * Get total bill value
+                        */
+                        $this->db->select_sum('bill_value');
+                        $this->db->from('invoice_item');
+                        $this->db->where('delete_flag', 'NO');
+                        $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+                        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                        $billvaluequery = $this->db->get();
+                        $total_bill_value = $billvaluequery->row()->bill_value;
+                        $total_bill_value = round($total_bill_value);
+
+                        if($this->session->userdata('feature_capture_saved_amount')){
+                            $save_amount = $total_mrp_value - $total_bill_value;
+                            if($save_amount > 0){
+                                $bonusamountdata = array();
+                                $bonusamountdata['uniqueCode'] = $amountdata['fk_client_code'];
+                                $bonusamountdata['clientName'] = $amountdata['fk_client_name'];
+                                $bonusamountdata['clientMobile'] = $clientInfo['mobile_no'];
+                                $bonusamountdata['accontemail'] = '';
+                                $bonusamountdata['clientAddress'] = $clientInfo['address'] ." ".$clientInfo['area'];
+
+                                $bonusDataUpdateToPiggybank = array();
+                                $bonusDataUpdateToPiggybank['fk_client_code'] = $amountdata['fk_client_code'];
+                                $bonusDataUpdateToPiggybank['fk_client_name'] = $amountdata['fk_client_name'];
+                                $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
+                                $bonusDataUpdateToPiggybank['amount'] = $save_amount;
+
+                                $bonusDataUpdateToPiggybank['payment_date'] = $amountdata['payment_date']; //date('d-m-Y');
+
+                                $bonusDataUpdateToPiggybank['payment_mode'] = 'auto';
+                                
+                                if($data['statuscode'] === "completed") {
+                                    $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
+                                }else if($data['statuscode'] === "force_edit") {
+                                    $bonusDataUpdateToPiggybank['paymenttype'] = 'debit';
+                                }
+                                $bonusDataUpdateToPiggybank['notes'] = 'auto '.$bonusDataUpdateToPiggybank['paymenttype'].' #('.$amountdata['previous_invoice_ref_no'].') Saved!';
+                                $unique_client_code_verify = $this->Piggybank_model->unique_account_holder_code_check($amountdata['fk_client_code']);
+                                if($unique_client_code_verify){
+                                    $this->Piggybank_model->savedVendorAccount($bonusDataUpdateToPiggybank);
+                                }else{
+                                    $this->Piggybank_model->create_account_holder($bonusamountdata);
+                                    $this->Piggybank_model->savedVendorAccount($bonusDataUpdateToPiggybank);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+             
+        }
+        /*
+        *Auto piggey balance adjust
+        */
         /*foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
             if(($getinvoiceDetail->status === "completed") || ($getinvoiceDetail->status === "partial_paid") || ($getinvoiceDetail->status === "paid")) {
                 $amountdata = array();

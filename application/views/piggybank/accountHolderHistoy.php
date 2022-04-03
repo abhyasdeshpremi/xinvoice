@@ -13,20 +13,9 @@
                     <th>By</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>Sr.</th>
-                    <th>Account Code</th>
-                    <th>Account Name</th>
-                    <th>Total Amount</th>
-                    <th>Entry Type</th>
-                    <th>Notes</th>
-                    <th>Payment Date</th>
-                    <th>By</th>
-                </tr>
-            </tfoot>
             <tbody>
-                <?php foreach($data as $value){ ?>
+                <?php $total_amount = 0;
+                    foreach($data as $value){ ?>
                     <tr>
                         <td><?php echo ((int)$page + 1); ?></td>
                         <td><?php echo $value->fk_piggy_account_code; ?></td>
@@ -34,8 +23,10 @@
                         <td class="<?php 
                             if ($value->payment_type == "debit"){
                                 echo "redtext";
+                                $total_amount = $total_amount - (int)$value->amount;
                             }else if ($value->payment_type == "credit"){
                                 echo "greentext";
+                                $total_amount = $total_amount + (int)$value->amount;
                             }
                             ?>" >
                             <?php echo $value->amount; ?>
@@ -51,6 +42,18 @@
                     </tr>
                 <?php $page++; } ?>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>Sr.</th>
+                    <th>Account Code</th>
+                    <th>Account Name</th>
+                    <th>Total Amount(<?php echo $total_amount; ?>)</th>
+                    <th>Entry Type</th>
+                    <th>Notes</th>
+                    <th>Payment Date</th>
+                    <th>By</th>
+                </tr>
+            </tfoot>
         </table>
         <div class="pagelist"><center><?php echo $links; ?></center></div>
     </div>

@@ -236,7 +236,7 @@ class Piggybank extends CI_Controller {
         $data['page'] = $page;
         $this->template->set('buttonName', 'Account Holder Balance');
         $this->template->set('buttonLink', base_url('/accountholderbalance'));
-        $this->template->set('title', 'Account Holder ('.$clientCode.') Earned History List');
+        $this->template->set('title', 'Account Holder ('.$clientCode.') Saved History List');
         $this->template->load('default_layout', 'contents' , 'piggybank/accountHolderHistoy', $data);
     }
 }
