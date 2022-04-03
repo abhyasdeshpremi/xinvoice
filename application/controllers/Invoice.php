@@ -65,7 +65,7 @@ class Invoice extends CI_Controller {
                         $total_bill_value = $billvaluequery->row()->bill_value;
                         $total_bill_value = round($total_bill_value);
 
-                        if($this->session->userdata('feature_capture_saved_amount')){
+                        if($this->session->userdata('feature_capture_saved_amount') == 'yes'){
                             $save_amount = $total_mrp_value - $total_bill_value;
                             if($save_amount > 0){
                                 $bonusamountdata = array();

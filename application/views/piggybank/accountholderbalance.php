@@ -8,7 +8,9 @@
                     <th>Account Name</th>
                     <th>Mobile</th>
                     <th>Address</th>
-                    <th>Saved Amount</th>
+                    <?php if($this->session->userdata('feature_capture_saved_amount') == 'yes'){ ?>
+                        <th>Saved Amount</th>
+                    <?php } ?>
                     <th>Total Amount</th>
                 </tr>
             </thead>
@@ -19,7 +21,9 @@
                     <th>Account Name</th>
                     <th>Mobile</th>
                     <th>Address</th>
-                    <th>Saved Amount</th>
+                    <?php if($this->session->userdata('feature_capture_saved_amount') == 'yes'){ ?>
+                        <th>Saved Amount</th>
+                    <?php } ?>
                     <th>Total Amount</th>
                 </tr>
             </tfoot>
@@ -31,11 +35,13 @@
                         <td><?php echo $value->fk_account_name; ?></td>
                         <td><?php echo $value->contact_number; ?></td>
                         <td><?php echo $value->address; ?></td>
+                        <?php if($this->session->userdata('feature_capture_saved_amount') == 'yes'){ ?>
                         <td>
                             <a href="<?php echo base_url('/getclientaccountholderearnhistory'.'/'.$value->fk_piggy_account_code); ?>">
                                 <span id="<?php echo $value->fk_piggy_account_code; ?>"><?php echo $value->total_save_amount; ?></span>
                             </a>
                         </td>
+                        <?php } ?>
                         <td>
                             <a href="<?php echo base_url('/getclientaccountholderhistory'.'/'.$value->fk_piggy_account_code); ?>">
                                 <span id="<?php echo $value->fk_piggy_account_code; ?>"><?php echo $value->total_amount; ?></span>
