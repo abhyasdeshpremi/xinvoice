@@ -68,6 +68,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
     $total_sgst_amount = 0.0;
     $total_round_off_amount = 0.0;
     $total_lock_bill_amount = 0.0;
+    $final_total_lock_bill_amount = 0.0;
 
     $tmpBillDate = $result[0]["bill_date"];
     foreach($result as $value){
@@ -135,6 +136,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
         $total_sgst_amount = floatval($total_sgst_amount) + floatval($sgst_amount);
         $total_round_off_amount = floatval($total_round_off_amount) + floatval($round_off_amount);
         $total_lock_bill_amount = floatval($total_lock_bill_amount) + floatval($lock_bill_amount);
+        $final_total_lock_bill_amount = floatval($final_total_lock_bill_amount) + floatval($lock_bill_amount);
     ?>
         
     <?php $i++; } ?>
@@ -146,6 +148,11 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td><?php } ?>
             <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_round_off_amount, 2); ?></b></td><?php } ?>
             <td style="text-align:right;"><b><?php echo number_format($total_lock_bill_amount, 2); ?></b></td>
+        </tr>
+        <tr>
+            <td colspan="<?php echo ($colspan + (($tax) ? 4 : 0)); ?>"></td>
+            <td style="text-align:right;"><b>FINAL TOTAL</b></td>
+            <td style="text-align:right;"><b><?php echo number_format($final_total_lock_bill_amount, 2); ?></b></td>
         </tr>
 <tbody>
 </table>
