@@ -59,7 +59,7 @@ class Invoice extends CI_Controller {
                         $this->db->select_sum('bill_value');
                         $this->db->from('invoice_item');
                         $this->db->where('delete_flag', 'NO');
-                        $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+                        $this->db->where('fk_unique_invioce_code', $amountdata['unique_invioce_code']);
                         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
                         $billvaluequery = $this->db->get();
                         $total_bill_value = $billvaluequery->row()->bill_value;
