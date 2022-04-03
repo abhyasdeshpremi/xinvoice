@@ -137,6 +137,7 @@ class Home_model extends CI_Model {
         $this->db->select('Account_Entry.amount as amount, Account_Entry.payment_date as date');
         $this->db->where_in('Clients.client_type', $client_type);
         $this->db->where('Account_Entry.payment_type', 'credit');
+        $this->db->where('Account_Entry.delete_flag', 'no');
         $this->db->where("Account_Entry.payment_date BETWEEN '$last30day' AND '$today'");
         $this->db->where('Account_Entry.fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->from('Account_Entry');
