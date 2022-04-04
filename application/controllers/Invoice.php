@@ -15,27 +15,27 @@ class Invoice extends CI_Controller {
     }
 
     public function checkid(){
-        $getinvoiceDetails = $this->Invoice_model->invoice_list(300, 0, 'purchase');
-        print_r($getinvoiceDetails);
-        foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
-            if(($getinvoiceDetail->status === "completed") || ($getinvoiceDetail->status === "partial_paid") || ($getinvoiceDetail->status === "paid")) {
-                $this->db->select_sum('mrp_value');
-                $this->db->from('invoice_item');
-                $this->db->where('delete_flag', 'NO');
-                $this->db->where('fk_unique_invioce_code', $getinvoiceDetail->unique_invioce_code);
-                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-                $mrpvaluequery = $this->db->get();
-                $total_mrp_value = $mrpvaluequery->row()->mrp_value;
-                $total_mrp_value = round($total_mrp_value);
+        // $getinvoiceDetails = $this->Invoice_model->invoice_list(300, 0, 'purchase');
+        // print_r($getinvoiceDetails);
+        // foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
+        //     if(($getinvoiceDetail->status === "completed") || ($getinvoiceDetail->status === "partial_paid") || ($getinvoiceDetail->status === "paid")) {
+        //         $this->db->select_sum('mrp_value');
+        //         $this->db->from('invoice_item');
+        //         $this->db->where('delete_flag', 'NO');
+        //         $this->db->where('fk_unique_invioce_code', $getinvoiceDetail->unique_invioce_code);
+        //         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        //         $mrpvaluequery = $this->db->get();
+        //         $total_mrp_value = $mrpvaluequery->row()->mrp_value;
+        //         $total_mrp_value = round($total_mrp_value);
 
-                $dataList = array(
-                    'lock_mrp_amount'=> $total_mrp_value
-                );
-                $this->db->where('unique_invioce_code', $getinvoiceDetail->unique_invioce_code);
-                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-                $this->db->update('Invoices', $dataList);
-            }
-        }
+        //         $dataList = array(
+        //             'lock_mrp_amount'=> $total_mrp_value
+        //         );
+        //         $this->db->where('unique_invioce_code', $getinvoiceDetail->unique_invioce_code);
+        //         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        //         $this->db->update('Invoices', $dataList);
+        //     }
+        // }
         /*
         *Auto saved Amount balance adjust
         */
