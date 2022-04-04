@@ -470,6 +470,15 @@ class Invoice_model extends CI_Model {
                 $total_bill_value = $billvaluequery->row()->bill_value;
                 $total_bill_value = round($total_bill_value);
 
+                $this->db->select_sum('mrp_value');
+                $this->db->from('invoice_item');
+                $this->db->where('delete_flag', 'NO');
+                $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $mrpvaluequery = $this->db->get();
+                $total_mrp_value = $mrpvaluequery->row()->mrp_value;
+                $total_mrp_value = round($total_mrp_value);
+
                 /*
                 * payment value add/sub to account from invoice bill value when invoice status is completed(+) or force_edit(-)
                 */
@@ -518,15 +527,7 @@ class Invoice_model extends CI_Model {
                     $clientInfo = $this->Client_model->client_by_id($amountdata['fk_client_code']);
                     $clientType = $clientInfo['client_type'];
                     if($clientType === "vendor"){
-                        $this->db->select_sum('mrp_value');
-                        $this->db->from('invoice_item');
-                        $this->db->where('delete_flag', 'NO');
-                        $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
-                        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-                        $mrpvaluequery = $this->db->get();
-                        $total_mrp_value = $mrpvaluequery->row()->mrp_value;
-                        $total_mrp_value = round($total_mrp_value);
-
+                        
                         $percentage_value = round(($total_mrp_value * $bonus_percent) / 100);
                         if($percentage_value > 0){
                             $bonusamountdata = array();
@@ -604,6 +605,7 @@ class Invoice_model extends CI_Model {
                 $dataList = array(
                     'status'=> $data['statuscode'],
                     'lock_bill_amount'=> $total_bill_value,
+                    'lock_mrp_amount'=> $total_mrp_value,
                     'lock_bill_amount_date'=>date('Y-m-d H:i:s'),
                     'updated_at'=>date('Y-m-d H:i:s')
                 );

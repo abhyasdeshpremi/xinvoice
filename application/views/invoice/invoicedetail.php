@@ -7,10 +7,10 @@
                     <th>Client Name</th>
                     <th>Create Date</th>
                     <th>Status</th>
-                    <th>Paid Date</th>
                     <th>Mode</th>
                     <th>Area</th>
                     <th>#Inv.</th>
+                    <th>MRP(₹)</th>
                     <th>Amount(₹)</th>
                     <th>Actions</th>
                 </tr>
@@ -21,10 +21,10 @@
                     <th>Client Name</th>
                     <th>Create Date</th>
                     <th>Status</th>
-                    <th>Paid Date</th>
                     <th>Mode</th>
                     <th>Area</th>
                     <th>#Inv.</th>
+                    <th>MRP(₹)</th>
                     <th>Amount(₹)</th>
                     <th>Actions</th>
                 </tr>
@@ -52,10 +52,10 @@
                         <td class="<?php echo ($value->status === "completed") ? "yellowtext" : (( ($value->status === "paid") || ($value->status === "partial_paid"))? "greentext" : "redtext");?>">
                             <?php echo str_replace("_", " ", $value->status); ?>
                         </td>
-                        <td><?php echo $value->invoice_paid_date; ?></td>
                         <td><?php echo $value->payment_mode; ?></td>
                         <td><?php echo $value->area; ?></td>
                         <td><?php echo $value->previous_invoice_ref_no; ?></td>
+                        <td><?php echo (($value->status === "completed") || ($value->status === "paid") || ($value->status === "partial_paid") ) ? $value->lock_mrp_amount : 0; ?></td>
                         <td><?php echo (($value->status === "completed") || ($value->status === "paid") || ($value->status === "partial_paid") ) ? $value->lock_bill_amount : 0; ?></td>
                         <td>
                             <a class="btn btn-datatable btn-icon dropdown-item" href="<?php echo base_url('/createinvoice'."/".$value->unique_invioce_code.""); ?>">
