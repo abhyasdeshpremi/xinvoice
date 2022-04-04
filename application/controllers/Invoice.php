@@ -15,7 +15,7 @@ class Invoice extends CI_Controller {
     }
 
     public function checkid(){
-        $getinvoiceDetails = $this->Invoice_model->invoice_list(300, 0, 'sell');
+        $getinvoiceDetails = $this->Invoice_model->invoice_list(300, 0, 'purchase');
         print_r($getinvoiceDetails);
         foreach($getinvoiceDetails['result'] as $getinvoiceDetail){
             if(($getinvoiceDetail->status === "completed") || ($getinvoiceDetail->status === "partial_paid") || ($getinvoiceDetail->status === "paid")) {
