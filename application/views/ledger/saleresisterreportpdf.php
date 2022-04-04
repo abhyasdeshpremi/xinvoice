@@ -51,6 +51,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
         <th>PARTY NAME</th>
         <?php if($tax){ ?><th>GSTIN</th><?php } ?>
         <th style="text-align:left;">MODE</th>
+        <th style="text-align:right;">MRP</th>
         <?php if($tax){ ?><th style="text-align:right;">BASIC</th><?php } ?>
         <?php if($tax){ ?><th style="text-align:right;">CGST</th><?php } ?>
         <?php if($tax){ ?><th style="text-align:right;">SGST</th><?php } ?>
@@ -69,6 +70,8 @@ if($globalInvoice_bill_include_tax == 'yes'){
     $total_round_off_amount = 0.0;
     $total_lock_bill_amount = 0.0;
     $final_total_lock_bill_amount = 0.0;
+    $total_lock_mrp_amount = 0.0;
+    $final_total_lock_mrp_amount = 0.0;
 
     $tmpBillDate = $result[0]["bill_date"];
     foreach($result as $value){
@@ -78,6 +81,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
         $sgst_amount = floatval($value["sgst_amount"]);
         $round_off_amount = floatval($value["round_off_amount"]);
         $lock_bill_amount = floatval($value["lock_bill_amount"]);
+        $lock_mrp_amount = floatval($value["lock_mrp_amount"]);
 
         $currentBillDate = $value["bill_date"];
         if ($tmpBillDate == $currentBillDate){ ?>
@@ -88,6 +92,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
                 <td><?php echo $value["client_name"]; ?></td>
                 <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
                 <td><?php echo $value["payment_mode"]; ?></td>
+                <td style="text-align:right;"><?php echo number_format($value["lock_mrp_amount"], 2); ?></td>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td><?php } ?>
@@ -99,6 +104,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <tr>
                 <td colspan="<?php echo $colspan; ?>"></td>
                 <td style="text-align:right;"><b>TOTAL</b></td>
+                <td style="text-align:right;"><b><?php echo number_format($total_lock_mrp_amount, 2); ?></b></td>
                 <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_basic_value_amount, 2); ?></b></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_cgst_amount, 2); ?></b></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td><?php } ?>
@@ -115,6 +121,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
                 <td><?php echo $value["client_name"]; ?></td>
                 <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
                 <td><?php echo $value["payment_mode"]; ?></td>
+                <td style="text-align:right;"><?php echo number_format($value["lock_mrp_amount"], 2); ?></td>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td><?php } ?>
@@ -127,6 +134,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
             $total_sgst_amount = 0.0;
             $total_round_off_amount = 0.0;
             $total_lock_bill_amount = 0.0;
+            $total_lock_mrp_amount = 0.0;
             $tmpBillDate = $currentBillDate;
         }
 
@@ -137,12 +145,16 @@ if($globalInvoice_bill_include_tax == 'yes'){
         $total_round_off_amount = floatval($total_round_off_amount) + floatval($round_off_amount);
         $total_lock_bill_amount = floatval($total_lock_bill_amount) + floatval($lock_bill_amount);
         $final_total_lock_bill_amount = floatval($final_total_lock_bill_amount) + floatval($lock_bill_amount);
+
+        $total_lock_mrp_amount = floatval($total_lock_mrp_amount) + floatval($lock_mrp_amount);
+        $final_total_lock_mrp_amount = floatval($final_total_lock_mrp_amount) + floatval($lock_mrp_amount);
     ?>
         
     <?php $i++; } ?>
         <tr>
             <td colspan="<?php echo $colspan; ?>"></td>
             <td style="text-align:right;"><b>TOTAL</b></td>
+            <td style="text-align:right;"><b><?php echo number_format($total_lock_mrp_amount, 2); ?></b></td>
             <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_basic_value_amount, 2); ?></b></td><?php } ?>
             <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_cgst_amount, 2); ?></b></td><?php } ?>
             <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td><?php } ?>
@@ -150,8 +162,9 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <td style="text-align:right;"><b><?php echo number_format($total_lock_bill_amount, 2); ?></b></td>
         </tr>
         <tr>
-            <td colspan="<?php echo ($colspan + (($tax) ? 4 : 0)); ?>"></td>
-            <td style="text-align:right;"><b>FINAL TOTAL</b></td>
+            <td colspan="<?php echo ($colspan + 1); ?>" style="text-align:right;"><b>FINAL TOTAL</b></td>
+            <td style="text-align:right;"><b><?php echo number_format($final_total_lock_mrp_amount, 2); ?></b></td>
+            <?php if($tax){ ?> <td colspan="4"> <?php } ?>
             <td style="text-align:right;"><b><?php echo number_format($final_total_lock_bill_amount, 2); ?></b></td>
         </tr>
 <tbody>

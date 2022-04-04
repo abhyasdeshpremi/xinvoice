@@ -173,7 +173,7 @@ class Ledger_model extends CI_Model {
         $endDate = $arg['end_date']. " 23:59:59";
         // $endDateFormat = date('Y-m-d H:i:s', $endDate);
         $invoiceStatus = array('completed', 'partial_paid', 'paid');
-        $this->db->select('pk_invoice_id, unique_invioce_code, previous_invoice_ref_no, fk_client_code, client_name, gstnumber, payment_mode, lock_bill_amount, created_at');
+        $this->db->select('pk_invoice_id, unique_invioce_code, previous_invoice_ref_no, fk_client_code, client_name, gstnumber, payment_mode, lock_mrp_amount, lock_bill_amount, created_at');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('invoice_type', 'sell');
         $this->db->where_in('status', $invoiceStatus);
@@ -203,6 +203,7 @@ class Ledger_model extends CI_Model {
                 $tempData["gstnumber"] = $row->gstnumber;
                 $tempData["payment_mode"] = $row->payment_mode;
 
+                $tempData["lock_mrp_amount"] = $row->lock_mrp_amount;
                 $tempData["lock_bill_amount"] = $row->lock_bill_amount;
                 $tempData["created_at"] = $row->created_at;
 
