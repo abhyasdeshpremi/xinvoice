@@ -103,7 +103,7 @@ $(function() {
                             if (globalInvoice_bill_include_tax === 'yes'){
                                 oneRow["vendor_bonus_amount"] = 0;
                             }else{
-                                oneRow["vendor_bonus_amount"] = parseFloat(lock_mrp_amount/100);
+                                oneRow["vendor_bonus_amount"] = parseInt(lock_mrp_amount/100);
                             }
                             if (tmpBillDate == currentBillDate){
                                 $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
