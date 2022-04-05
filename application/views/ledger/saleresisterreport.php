@@ -84,6 +84,10 @@ $(function() {
                         var final_total_lock_mrp_amount = 0.0;
                         var total_lock_bill_amount = 0.0;
                         var final_total_lock_bill_amount = 0.0;
+                        var total_saving_amount = 0.0;
+                        var final_total_saving_amount = 0.0;
+                        var total_bonus_amount = 0.0;
+                        var final_total_bonus_amount = 0.0;
 
                         var tmpBillDate = result[0]["bill_date"];
                         for(i=0;i<result.length; i++) {
@@ -95,11 +99,16 @@ $(function() {
                             var lock_mrp_amount = parseFloat(oneRow["lock_mrp_amount"]);
                             var lock_bill_amount = parseFloat(oneRow["lock_bill_amount"]);
                             var currentBillDate = oneRow["bill_date"];
-
+                            oneRow["vendor_saving_amount"] = parseFloat(lock_mrp_amount - lock_bill_amount);
+                            if (globalInvoice_bill_include_tax === 'yes'){
+                                oneRow["vendor_bonus_amount"] = 0;
+                            }else{
+                                oneRow["vendor_bonus_amount"] = parseFloat(lock_mrp_amount/100);
+                            }
                             if (tmpBillDate == currentBillDate){
                                 $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
                             }else{
-                                $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount, total_lock_mrp_amount));
+                                $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount, total_lock_mrp_amount, total_saving_amount, total_bonus_amount));
                                 $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
                                 total_basic_value_amount = 0.0;
                                 total_cgst_amount = 0.0;
@@ -107,6 +116,8 @@ $(function() {
                                 total_round_off_amount = 0.0;
                                 total_lock_mrp_amount = 0.0;
                                 total_lock_bill_amount = 0.0;
+                                total_saving_amount = 0.0;
+                                total_bonus_amount = 0.0;
                                 tmpBillDate = currentBillDate;
                             }
                             
@@ -118,10 +129,14 @@ $(function() {
                             final_total_lock_mrp_amount = parseFloat(final_total_lock_mrp_amount) + parseFloat(lock_mrp_amount);
                             total_lock_bill_amount = parseFloat(total_lock_bill_amount) + parseFloat(lock_bill_amount);
                             final_total_lock_bill_amount = parseFloat(final_total_lock_bill_amount) + parseFloat(lock_bill_amount);
+                            total_saving_amount = parseFloat(total_saving_amount) + parseFloat(oneRow["vendor_saving_amount"]);
+                            final_total_saving_amount = parseFloat(final_total_saving_amount) + parseFloat(oneRow["vendor_saving_amount"]);
+                            total_bonus_amount = parseFloat(total_bonus_amount) + parseFloat(oneRow["vendor_bonus_amount"]);
+                            final_total_bonus_amount = parseFloat(final_total_bonus_amount) + parseFloat(oneRow["vendor_bonus_amount"]);
 
                         }
-                        $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount, total_lock_mrp_amount));
-                        $('#ledgerreportBody').append(addFinalResultrow(final_total_lock_bill_amount, final_total_lock_mrp_amount));
+                        $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount, total_lock_mrp_amount, total_saving_amount, total_bonus_amount));
+                        $('#ledgerreportBody').append(addFinalResultrow(final_total_lock_bill_amount, final_total_lock_mrp_amount, final_total_saving_amount, final_total_bonus_amount));
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+salesearch;
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
@@ -163,6 +178,8 @@ $(function() {
                         +'<th>MODE</th>'
                         +'<th>MRP</th>'
                         +'<th width="120px;">NET AMOUNT</th>'
+                        +'<th width="120px;">SAVING</th>'
+                        +'<th width="120px;">BONUS</th>'
                     +'</tr>';
         }
     }
@@ -192,11 +209,13 @@ $(function() {
                         +'<td>'+oneRow["payment_mode"]+'</td>'
                         +'<td>'+oneRow["lock_mrp_amount"]+'</td>'
                         +'<td>'+oneRow["lock_bill_amount"]+'</td>'
+                        +'<td>'+oneRow["vendor_saving_amount"]+'</td>'
+                        +'<td>'+oneRow["vendor_bonus_amount"]+'</td>'
                     +'</tr>';
         }
     }
 
-    function addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount, total_lock_mrp_amount){
+    function addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount, total_lock_mrp_amount, total_saving_amount, total_bonus_amount){
         if (globalInvoice_bill_include_tax === 'yes'){
             return '<tr class="invoicecal" >'
                         +'<td colspan="5"></td>'
@@ -217,6 +236,8 @@ $(function() {
                         +'<td><b>TOTAL</b></td>'
                         +'<td><b>'+total_lock_mrp_amount.toFixed(2)+'</b></td>'
                         +'<td><b>'+total_lock_bill_amount+'</b></td>'
+                        +'<td><b>'+total_saving_amount.toFixed(2)+'</b></td>'
+                        +'<td><b>'+total_bonus_amount.toFixed(2)+'</b></td>'
                     +'</tr>'
                     +'<tr class="invoicecal" >'
                         +'<td colspan="12">&nbsp;</td>'
@@ -224,7 +245,7 @@ $(function() {
         }
     }
 
-    function addFinalResultrow(final_total_lock_bill_amount, final_total_lock_mrp_amount){
+    function addFinalResultrow(final_total_lock_bill_amount, final_total_lock_mrp_amount, final_total_saving_amount, final_total_bonus_amount){
         if (globalInvoice_bill_include_tax === 'yes'){
             return '<tr class="invoicecal" >'
                         +'<td colspan="5"></td>'
@@ -243,6 +264,8 @@ $(function() {
                         +'<td><b>FINAL TOTAL</b></td>'
                         +'<td><b>'+final_total_lock_mrp_amount+'</b></td>'
                         +'<td><b>'+final_total_lock_bill_amount+'</b></td>'
+                        +'<td><b>'+final_total_saving_amount+'</b></td>'
+                        +'<td><b>'+final_total_bonus_amount+'</b></td>'
                     +'</tr>'
                     +'<tr class="invoicecal" >'
                         +'<td colspan="12">&nbsp;</td>'
