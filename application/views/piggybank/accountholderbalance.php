@@ -84,7 +84,7 @@
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client</button>
-                    <div class="dropdown-menu">
+                    <div id="myDropdown" class="dropdown-menu">
                         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" autocomplete="off">
                             <?php $count = 1;
                                 foreach($clientsList as $client){ ?>
