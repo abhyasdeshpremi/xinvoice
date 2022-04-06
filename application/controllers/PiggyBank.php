@@ -128,7 +128,7 @@ class Piggybank extends CI_Controller {
         $data = array();
 
         $config = array();
-        $config["base_url"] = base_url("getaccount");
+        $config["base_url"] = base_url("accountholderbalance");
         $config["total_rows"] = $this->Piggybank_model->get_piggy_bank_count();
         $config["per_page"] = PAGE_PER_ITEM;
         $config["uri_segment"] = 2;
