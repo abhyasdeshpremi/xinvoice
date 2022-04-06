@@ -99,7 +99,8 @@
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Item</button>
-                    <div class="dropdown-menu">
+                    <div id="myDropdown" class="dropdown-menu">
+                        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" autocomplete="off">
                             <?php $count = 1; 
                                 foreach($itemsList as $item){ ?>
                                     <a class="dropdown-item small select-dropdown-item" hreflang="<?php echo $item->item_code; ?>"><?php echo $item->name." <span style='font-size:50%;'>🍦 (".$item->item_code.") &copy; ".$item->company_code." ₹(".$item->mrp.")</span>";?></a>
@@ -282,6 +283,30 @@
                     }
                 }
             });
+        }
+    }
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+            } else {
+            a[i].style.display = "none";
+            }
+        }
+    }
+
+    function removefilterFunction() {
+        var a; 
+        div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            a[i].style.display = ""; 
         }
     }
 </script>
