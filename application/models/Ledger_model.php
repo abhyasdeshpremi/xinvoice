@@ -205,6 +205,15 @@ class Ledger_model extends CI_Model {
 
                 $tempData["lock_mrp_amount"] = $row->lock_mrp_amount;
                 $tempData["lock_bill_amount"] = $row->lock_bill_amount;
+                $tempData["vendor_saving_amount"] = $row->lock_mrp_amount - $row->lock_bill_amount;
+                $bonus_percent = floatval($this->session->userdata('bonus_percent'));
+                $tempData["vendor_bonus_amount"] = 0;
+                if($bonus_percent > 0){
+                    $percentage_value = round(($tempData["lock_mrp_amount"] * $bonus_percent) / 100);
+                    if($percentage_value > 0){
+                        $tempData["vendor_bonus_amount"] = $percentage_value;
+                    }
+                }
                 $tempData["created_at"] = $row->created_at;
 
                 $date = date_create($row->created_at);
