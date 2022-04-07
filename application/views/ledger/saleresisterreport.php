@@ -99,12 +99,6 @@ $(function() {
                             var lock_mrp_amount = parseFloat(oneRow["lock_mrp_amount"]);
                             var lock_bill_amount = parseFloat(oneRow["lock_bill_amount"]);
                             var currentBillDate = oneRow["bill_date"];
-                            oneRow["vendor_saving_amount"] = parseFloat(lock_mrp_amount - lock_bill_amount);
-                            if (globalInvoice_bill_include_tax === 'yes'){
-                                oneRow["vendor_bonus_amount"] = 0;
-                            }else{
-                                oneRow["vendor_bonus_amount"] = parseInt(lock_mrp_amount/100);
-                            }
                             if (tmpBillDate == currentBillDate){
                                 $('#ledgerreportBody').append(addInvoicerow(oneRow, (i + 1)) );
                             }else{
