@@ -56,6 +56,8 @@ if($globalInvoice_bill_include_tax == 'yes'){
         <?php if($tax){ ?><th style="text-align:right;">SGST</th><?php } ?>
         <?php if($tax){ ?><th style="text-align:right;">R.OFF</th><?php } ?>
         <th style="text-align:right;" width="70px;">NET AMOUNT</th>
+        <?php if(!$tax){ ?><th style="text-align:right;">SAVING</th><?php } ?>
+        <?php if(!$tax){ ?><th style="text-align:right;">BONUS</th><?php } ?>
     </tr>
 </thead>
 <tbody>
@@ -71,6 +73,10 @@ if($globalInvoice_bill_include_tax == 'yes'){
     $final_total_lock_bill_amount = 0.0;
     $total_lock_mrp_amount = 0.0;
     $final_total_lock_mrp_amount = 0.0;
+    $total_vendor_saving_amount = 0.0;
+    $final_vendor_saving_amount = 0.0;
+    $total_vendor_bonus_amount = 0.0;
+    $final_vendor_bonus_amount = 0.0;
 
     $tmpBillDate = $result[0]["bill_date"];
     foreach($result as $value){
@@ -81,6 +87,8 @@ if($globalInvoice_bill_include_tax == 'yes'){
         $round_off_amount = floatval($value["round_off_amount"]);
         $lock_bill_amount = floatval($value["lock_bill_amount"]);
         $lock_mrp_amount = floatval($value["lock_mrp_amount"]);
+        $vendor_saving_amount = floatval($value["vendor_saving_amount"]);
+        $vendor_bonus_amount = floatval($value["vendor_bonus_amount"]);
 
         $currentBillDate = $value["bill_date"];
         if ($tmpBillDate == $currentBillDate){ ?>
@@ -96,6 +104,8 @@ if($globalInvoice_bill_include_tax == 'yes'){
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["round_off_amount"], 2); ?></td><?php } ?>
                 <td style="text-align:right;"><?php echo number_format($value["lock_bill_amount"], 2); ?></td>
+                <?php if(!$tax){ ?><td style="text-align:right;"><?php echo number_format($value["vendor_saving_amount"], 2); ?></td><?php } ?>
+                <?php if(!$tax){ ?><td style="text-align:right;"><?php echo number_format($value["vendor_bonus_amount"], 2); ?></td><?php } ?>
             </tr>
         <?php 
         }else{ ?>
@@ -108,6 +118,8 @@ if($globalInvoice_bill_include_tax == 'yes'){
                 <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_round_off_amount, 2); ?></b></td><?php } ?>
                 <td style="text-align:right;"><b><?php echo number_format($total_lock_bill_amount, 2); ?></b></td>
+                <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_vendor_saving_amount, 2); ?></b></td><?php } ?>
+                <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_vendor_bonus_amount, 2); ?></b></td><?php } ?>
             </tr>
             <tr>
                 <td colspan="<?php echo $othercolspan; ?>">&nbsp;</td>
@@ -124,6 +136,8 @@ if($globalInvoice_bill_include_tax == 'yes'){
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["sgst_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["round_off_amount"], 2); ?></td><?php } ?>
                 <td style="text-align:right;"><?php echo number_format($value["lock_bill_amount"], 2); ?></td>
+                <?php if(!$tax){ ?><td style="text-align:right;"><?php echo number_format($value["vendor_saving_amount"], 2); ?></td><?php } ?>
+                <?php if(!$tax){ ?><td style="text-align:right;"><?php echo number_format($value["vendor_bonus_amount"], 2); ?></td><?php } ?>
             </tr>
         <?php
             $total_basic_value_amount = 0.0;
@@ -132,6 +146,8 @@ if($globalInvoice_bill_include_tax == 'yes'){
             $total_round_off_amount = 0.0;
             $total_lock_bill_amount = 0.0;
             $total_lock_mrp_amount = 0.0;
+            $total_vendor_saving_amount = 0.0;
+            $total_vendor_bonus_amount = 0.0;
             $tmpBillDate = $currentBillDate;
         }
 
@@ -142,9 +158,13 @@ if($globalInvoice_bill_include_tax == 'yes'){
         $total_round_off_amount = floatval($total_round_off_amount) + floatval($round_off_amount);
         $total_lock_bill_amount = floatval($total_lock_bill_amount) + floatval($lock_bill_amount);
         $final_total_lock_bill_amount = floatval($final_total_lock_bill_amount) + floatval($lock_bill_amount);
-
         $total_lock_mrp_amount = floatval($total_lock_mrp_amount) + floatval($lock_mrp_amount);
         $final_total_lock_mrp_amount = floatval($final_total_lock_mrp_amount) + floatval($lock_mrp_amount);
+        $total_vendor_saving_amount = floatval($total_vendor_saving_amount) + floatval($vendor_saving_amount);
+        $final_vendor_saving_amount = floatval($final_vendor_saving_amount) + floatval($vendor_saving_amount);
+
+        $total_vendor_bonus_amount = floatval($total_vendor_bonus_amount) + floatval($vendor_bonus_amount);
+        $final_vendor_bonus_amount = floatval($final_vendor_bonus_amount) + floatval($vendor_bonus_amount);
     ?>
         
     <?php $i++; } ?>
@@ -157,12 +177,16 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_sgst_amount, 2); ?></b></td><?php } ?>
             <?php if($tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_round_off_amount, 2); ?></b></td><?php } ?>
             <td style="text-align:right;"><b><?php echo number_format($total_lock_bill_amount, 2); ?></b></td>
+            <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_vendor_saving_amount, 2); ?></b></td><?php } ?>
+            <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_vendor_bonus_amount, 2); ?></b></td><?php } ?>
         </tr>
         <tr>
             <td colspan="<?php echo ($colspan + 1); ?>" style="text-align:right;"><b>FINAL TOTAL</b></td>
             <td style="text-align:right;"><b><?php echo number_format($final_total_lock_mrp_amount, 2); ?></b></td>
             <?php if($tax){ ?> <td colspan="4"> <?php } ?>
             <td style="text-align:right;"><b><?php echo number_format($final_total_lock_bill_amount, 2); ?></b></td>
+            <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($final_vendor_saving_amount, 2); ?></b></td><?php } ?>
+            <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($final_vendor_bonus_amount, 2); ?></b></td><?php } ?>
         </tr>
 <tbody>
 </table>
