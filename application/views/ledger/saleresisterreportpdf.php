@@ -26,11 +26,11 @@
 <?php 
 $globalInvoice_bill_include_tax = $this->session->userdata('bill_include_tax');
 $tax = false;
-$colspan = 4;
+$colspan = 3;
 $othercolspan = 5;
 if($globalInvoice_bill_include_tax == 'yes'){
     $tax = true;
-    $colspan = 5;
+    $colspan = 4;
     $othercolspan = 8;
 }
 ?>
@@ -50,7 +50,6 @@ if($globalInvoice_bill_include_tax == 'yes'){
         <th>INVNo.</th>
         <th>PARTY NAME</th>
         <?php if($tax){ ?><th>GSTIN</th><?php } ?>
-        <th style="text-align:left;">MODE</th>
         <th style="text-align:right;">MRP</th>
         <?php if($tax){ ?><th style="text-align:right;">BASIC</th><?php } ?>
         <?php if($tax){ ?><th style="text-align:right;">CGST</th><?php } ?>
@@ -91,7 +90,6 @@ if($globalInvoice_bill_include_tax == 'yes'){
                 <td><?php echo $value["previous_invoice_ref_no"]."/".$value["financial_year"]; ?></td>
                 <td><?php echo $value["client_name"]; ?></td>
                 <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
-                <td><?php echo $value["payment_mode"]; ?></td>
                 <td style="text-align:right;"><?php echo number_format($value["lock_mrp_amount"], 2); ?></td>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td><?php } ?>
@@ -120,7 +118,6 @@ if($globalInvoice_bill_include_tax == 'yes'){
                 <td><?php echo $value["previous_invoice_ref_no"]."/".$value["financial_year"]; ?></td>
                 <td><?php echo $value["client_name"]; ?></td>
                 <?php if($tax){ ?><td><?php echo $value["gstnumber"]; ?></td><?php } ?>
-                <td><?php echo $value["payment_mode"]; ?></td>
                 <td style="text-align:right;"><?php echo number_format($value["lock_mrp_amount"], 2); ?></td>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["basic_value_amount"], 2); ?></td><?php } ?>
                 <?php if($tax){ ?><td style="text-align:right;"><?php echo number_format($value["cgst_amount"], 2); ?></td><?php } ?>
