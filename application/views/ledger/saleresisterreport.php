@@ -1,7 +1,8 @@
 <div class="datatable">
     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4 pt-3">
         <div class="row">
-            <div class="col-md-4">
+            
+            <div class="col-md-3">
                 <input class="form-control border-end-0 border rounded-pill" type="text" placeholder="search" id="salesearch">
             </div>
             <div class="clearfix"></div>
@@ -12,6 +13,14 @@
             <div class="col-md-3 col-xs-12"> 
                 <input type="date" id="endDate" name="endDate" class="form-control">
             </div>
+            <div class="clearfix"></div>
+            <div class="col-md-1">
+                <label class="switch">
+                    <input type="checkbox" name="savepaper" id="savepaper" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="clearfix"></div>
             <div class="col-md-1 col-xs-12">
                 <button type="button" class="btn btn-outline-warning" id="applySearch">Search</button>
             </div>
@@ -50,15 +59,18 @@ $(function() {
     var year = date.getFullYear();
     if (month < 10) month = "0" + month;
     if (day < 10) day = "0" + day;
-
+    
     var today = year + "-" + month + "-" + day;       
     $("#startDate").attr("value", today);
     $("#endDate").attr("value", today);
     $("#startDate").focus();
+
+    var printUrlString = '';
     $("#applySearch").click(function(){
         var startDate = $('#startDate').val();
         var endDate = $('#endDate').val();
         var salesearch = $('#salesearch').val();
+        printUrlString = '';
         if((startDate.length > 0) && (endDate.length > 0) ){ 
             $('#ledgerreporthead').html('');
             $('#ledgerreportBody').html('');
@@ -131,7 +143,9 @@ $(function() {
                         }
                         $('#ledgerreportBody').append(addResultrow(total_basic_value_amount, total_cgst_amount, total_sgst_amount, total_round_off_amount, total_lock_bill_amount, total_lock_mrp_amount, total_saving_amount, total_bonus_amount));
                         $('#ledgerreportBody').append(addFinalResultrow(final_total_lock_bill_amount, final_total_lock_mrp_amount, final_total_saving_amount, final_total_bonus_amount));
-                        var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+salesearch;
+                        var savepaper = $("#savepaper").is(':checked');
+                        printUrlString = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val();
+                        var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+savepaper+"/"+salesearch;
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
                     }else{
@@ -146,6 +160,12 @@ $(function() {
         }
     });
 
+    $('#savepaper').on('change', function() {
+        var checked = this.checked
+        if(printUrlString.length > 0){
+            $("#printStockReport").attr("href", printUrlString+"/"+checked+"/"+$('#salesearch').val()); 
+        }
+    });
     
     function addHeader(){
         if (globalInvoice_bill_include_tax === 'yes'){

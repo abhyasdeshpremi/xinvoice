@@ -109,6 +109,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
             </tr>
         <?php 
         }else{ ?>
+            <?php if($save_paper){ ?>
             <tr>
                 <td colspan="<?php echo $colspan; ?>"></td>
                 <td style="text-align:right;"><b>TOTAL</b></td>
@@ -124,6 +125,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <tr>
                 <td colspan="<?php echo $othercolspan; ?>">&nbsp;</td>
             </tr>
+            <?php } ?>
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $value["bill_date"]; ?></td>
@@ -168,6 +170,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
     ?>
         
     <?php $i++; } ?>
+    <?php if($save_paper){ ?>
         <tr>
             <td colspan="<?php echo $colspan; ?>"></td>
             <td style="text-align:right;"><b>TOTAL</b></td>
@@ -180,6 +183,7 @@ if($globalInvoice_bill_include_tax == 'yes'){
             <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_vendor_saving_amount, 2); ?></b></td><?php } ?>
             <?php if(!$tax){ ?><td style="text-align:right;"><b><?php echo number_format($total_vendor_bonus_amount, 2); ?></b></td><?php } ?>
         </tr>
+        <?php } ?>
         <tr>
             <td colspan="<?php echo ($colspan + 1); ?>" style="text-align:right;"><b>FINAL TOTAL</b></td>
             <td style="text-align:right;"><b><?php echo number_format($final_total_lock_mrp_amount, 2); ?></b></td>

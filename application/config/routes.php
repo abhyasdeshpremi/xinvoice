@@ -147,7 +147,7 @@ $route['invoicereport'] = 'ledger/invoiceReport';
 $route['downloadinvoicepdf/:any/:any'] = 'ledger/getinvoicePDF/$1/$2';
 
 $route['salereport'] = 'ledger/saleReport';
-$route['downloadsalepdf/:any/:any(/:any)?'] = 'ledger/getSalePDF/$1/$2$3';
+$route['downloadsalepdf/:any/:any/:any(/:any)?'] = 'ledger/getSalePDF/$1/$2/$3$4';
 
 $route['earnedvendor'] = 'ledger/earnedVendor';
 $route['earnedvendorreport'] = 'ledger/earnedvendorReport';
