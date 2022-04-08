@@ -17,23 +17,44 @@ class Account extends CI_Controller {
     }
     
     public function getAccount(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
+        $page_seg = 2;
+        $search_seg = 3;
+        $searchurl = '';
+        if (!empty($this->uri->segment(2)) && !empty($this->uri->segment(3)) ) {
+            $page_seg = 3;
+            $search_seg = 2;
+            $searchurl = "/";
+        }else if (!empty($this->uri->segment(2)) && ($this->uri->segment(3) == 0) ) {
+            if (!is_numeric($this->uri->segment(2))){
+                $page_seg = 3;
+                $search_seg = 2;
+                $searchurl = "/";
+            }
+        }
 
+        $globalsearchtext = ($this->uri->segment($search_seg)) ? $this->uri->segment($search_seg) : '';
+        $data["base_url"] = base_url("getaccount");
         $config = array();
-        $config["base_url"] = base_url("getaccount");
-        $config["total_rows"] = $this->Account_model->get_count();
+        $config["base_url"] = base_url("getaccount".$searchurl."".$globalsearchtext);
+        $config["total_rows"] = $this->Account_model->get_count(urldecode($globalsearchtext));
         $config["per_page"] = PAGE_PER_ITEM;
-        $config["uri_segment"] = 2;
+        $config["uri_segment"] = $page_seg;
         $this->pagination->initialize($config);
-        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $page = ($this->uri->segment($page_seg)) ? $this->uri->segment($page_seg) : 0;
         $data["links"] = $this->pagination->create_links();
 
-        $account_result = $this->Account_model->account_list($config["per_page"], $page);
+        $account_result = $this->Account_model->account_list($config["per_page"], $page, urldecode($globalsearchtext));
         $data['clientsList'] = $this->Client_model->clients_list();
         $data['data'] = $account_result['result'];
         $data['page'] = $page;
         $this->template->set('buttonName', 'Account history List');
         $this->template->set('buttonLink', base_url('/getaccounthistory'));
+        $this->template->set('globalsearch', TRUE);
+        $this->template->set('globalsearchtext', urldecode($globalsearchtext));
         $this->template->set('title', 'Account List');
         $this->template->load('default_layout', 'contents' , 'account/accountdetail', $data);
     }

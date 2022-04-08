@@ -7,10 +7,23 @@ class Client_model extends CI_Model {
         parent::__construct();
     }  
 
-    public function get_count() {
+    public function get_count($globalsearchtext = '') {
         $this->db->select('pk_client_id');
         $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('name', $globalsearchtext, "both");
+            $this->db->or_like('mobile_no', $globalsearchtext, "both");
+            $this->db->or_like('client_type', $globalsearchtext, "both");
+            $this->db->or_like('address', $globalsearchtext, "both");
+            $this->db->or_like('city', $globalsearchtext, "both");
+            $this->db->or_like('district', $globalsearchtext, "both");
+            $this->db->or_like('area', $globalsearchtext, "both");
+            $this->db->or_like('state', $globalsearchtext, "both");
+            $this->db->or_like('pin_code', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
@@ -90,10 +103,23 @@ class Client_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function client_list($limit, $start){
+    public function client_list($limit, $start, $globalsearchtext = ''){
         $this->db->limit($limit, $start);
         $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('name', $globalsearchtext, "both");
+            $this->db->or_like('mobile_no', $globalsearchtext, "both");
+            $this->db->or_like('client_type', $globalsearchtext, "both");
+            $this->db->or_like('address', $globalsearchtext, "both");
+            $this->db->or_like('city', $globalsearchtext, "both");
+            $this->db->or_like('district', $globalsearchtext, "both");
+            $this->db->or_like('area', $globalsearchtext, "both");
+            $this->db->or_like('state', $globalsearchtext, "both");
+            $this->db->or_like('pin_code', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("name", "ASC");
         $query = $this->db->get('Clients');
         if($query->num_rows() > 0){

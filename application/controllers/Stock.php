@@ -18,18 +18,37 @@ class Stock extends CI_Controller {
     }
     
     public function getStock(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
         $data = array();
+        $page_seg = 2;
+        $search_seg = 3;
+        $searchurl = '';
+        if (!empty($this->uri->segment(2)) && !empty($this->uri->segment(3)) ) {
+            $page_seg = 3;
+            $search_seg = 2;
+            $searchurl = "/";
+        }else if (!empty($this->uri->segment(2)) && ($this->uri->segment(3) == 0) ) {
+            if (!is_numeric($this->uri->segment(2))){
+                $page_seg = 3;
+                $search_seg = 2;
+                $searchurl = "/";
+            }
+        }
+        $globalsearchtext = ($this->uri->segment($search_seg)) ? $this->uri->segment($search_seg) : '';
+        $data["base_url"] = base_url("getstock");
 
         $config = array();
-        $config["base_url"] = base_url("getstock");
-        $config["total_rows"] = $this->Stock_model->get_count();
+        $config["base_url"] = base_url("getstock".$searchurl."".$globalsearchtext);
+        $config["total_rows"] = $this->Stock_model->get_count(urldecode($globalsearchtext));
         $config["per_page"] = PAGE_PER_ITEM;
-        $config["uri_segment"] = 2;
+        $config["uri_segment"] = $page_seg;
         $this->pagination->initialize($config);
-        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $page = ($this->uri->segment($page_seg)) ? $this->uri->segment($page_seg) : 0;
         $data["links"] = $this->pagination->create_links();
 
-        $firm_result = $this->Stock_model->stock_list($config["per_page"], $page);
+        $firm_result = $this->Stock_model->stock_list($config["per_page"], $page, urldecode($globalsearchtext));
         $itemstag = $this->Tags_model->assigned_tag_detail('', array('product'));
         $data['itemstag'] = $itemstag["result"];
         $data['itemsList'] = $this->Invoice_model->items_list();
@@ -37,6 +56,8 @@ class Stock extends CI_Controller {
         $data['page'] = $page;
         $this->template->set('buttonName', 'Stock Log List');
         $this->template->set('buttonLink', base_url('/getstocklog'));
+        $this->template->set('globalsearch', TRUE);
+        $this->template->set('globalsearchtext', urldecode($globalsearchtext));
         $this->template->set('title', 'Stock List');
         $this->template->load('default_layout', 'contents' , 'stock/stockdetail', $data);
     }

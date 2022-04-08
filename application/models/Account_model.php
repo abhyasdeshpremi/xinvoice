@@ -8,17 +8,27 @@ class Account_model extends CI_Model {
         parent::__construct();
     }  
 
-    public function get_count() {
+    public function get_count($globalsearchtext = '') {
         $this->db->select('pk_account_id');
         $this->db->from($this->table);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('fk_client_name', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         return $this->db->count_all_results();
     }
 
-    public function account_list($limit, $start){
+    public function account_list($limit, $start, $globalsearchtext = ''){
         $this->db->select("Account.pk_account_id, Account.fk_client_code, Account.total_amount, Clients.code, Clients.name, Clients.client_type, Clients.district");
         $this->db->limit($limit, $start);
         $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('Account.fk_client_name', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("Account.fk_client_name, Clients.client_type", "ASC");
         $this->db->from($this->table);
         $this->db->join('Clients', 'Account.fk_client_code = Clients.code');

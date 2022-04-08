@@ -9,16 +9,26 @@ class Stock_model extends CI_Model {
         parent::__construct();
     }  
 
-    public function get_count() {
+    public function get_count($globalsearchtext = '') {
         $this->db->select('item_code');
         $this->db->from($this->table);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('item_name', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         return $this->db->count_all_results();
     }
 
-    public function stock_list($limit, $start){
+    public function stock_list($limit, $start, $globalsearchtext = ''){
         $this->db->limit($limit, $start);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('item_name', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("item_name", "ASC");
         $query = $this->db->get('Stocks');
         if($query->num_rows() > 0){
