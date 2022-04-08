@@ -52,6 +52,31 @@
 </div>
 
 <script>
+    $(document).ready(function(){
+        $('#globalsearchbutton').click(function(){
+            var globalsearch = $('#globalsearch').val();
+            if(globalsearch.length > 2){
+                var link = '<?php echo $base_url; ?>';
+                var url = link + "/" +globalsearch;
+                location.replace(url);
+            }
+        });
+
+        $('#globalclearhbutton').click(function(){
+            var link = '<?php echo $base_url; ?>';
+            location.replace(link);
+        });
+
+    });
+
+    var input = document.getElementById("globalsearch");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("globalsearchbutton").click();
+        }
+    });
+    
     function deleteItem(itemCode) {
         if(confirm("Are you sure you want to delete this?")){
         $.ajax({

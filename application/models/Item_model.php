@@ -9,11 +9,17 @@ class Item_model extends CI_Model {
         parent::__construct();
     }  
 
-    public function get_count() {
+    public function get_count($globalsearchtext = '') {
         $this->db->select('pk_item_id');
         $this->db->from($this->table);
         $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('name', $globalsearchtext, "both");
+            $this->db->or_like('company_code', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         return $this->db->count_all_results();
     }
 
@@ -77,10 +83,16 @@ class Item_model extends CI_Model {
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function item_list($limit, $start){
+    public function item_list($limit, $start, $globalsearchtext = ''){
         $this->db->limit($limit, $start);
         $this->db->where('delete_flag', 'NO');
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        if ($globalsearchtext != ''){
+            $this->db->group_start();
+            $this->db->or_like('name', $globalsearchtext, "both");
+            $this->db->or_like('company_code', $globalsearchtext, "both");
+            $this->db->group_end();
+        }
         $this->db->order_by("name", "ASC");
         $query = $this->db->get('Items');
         if($query->num_rows() > 0){
