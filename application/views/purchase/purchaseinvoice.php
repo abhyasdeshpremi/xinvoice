@@ -672,7 +672,11 @@
             var discountrs = (mrpvalue * itemdiscount) / 100;
             var itembillvalue = mrpvalue - discountrs;
             var totalunitcasevalue = parseFloat(quatity / defineuintcase).toFixed(2);
-            $('#itemcaseunit').val(totalunitcasevalue);
+            if(totalunitcasevalue == "0.00"){
+                $('#itemcaseunit').val('');
+            }else{
+                $('#itemcaseunit').val(totalunitcasevalue);
+            }
             $("#itemmrpvalue").val(mrpvalue);
             $("#itembillValue").val(itembillvalue);
         }
