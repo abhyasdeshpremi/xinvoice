@@ -498,19 +498,19 @@ class Invoice_model extends CI_Model {
                 if($data['statuscode'] === "completed") {
                     $amountdata['amount'] = $total_bill_value;
                     if ($amountdata['invoice_type'] === "sell"){
-                        $amountdata['notes'] = "sell invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "debit";
                     }else if ($amountdata['invoice_type'] === "purchase"){
-                        $amountdata['notes'] = "purchase invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "credit";
                     }
                 }else if($data['statuscode'] === "force_edit") {
                     $amountdata['amount'] = $amountdata['lock_bill_amount'];
                     if ($amountdata['invoice_type'] === "sell"){
-                        $amountdata['notes'] = "sell invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "credit";
                     }else if ($amountdata['invoice_type'] === "purchase"){
-                        $amountdata['notes'] = "purchase invoice(#".$amountdata['pk_invoice_id'].")";
+                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "debit";
                     }
                     $account_entry_id = $this->Account_model->find_id($amountdata);
