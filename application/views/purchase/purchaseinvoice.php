@@ -937,8 +937,8 @@
         if (globalInvoice_bill_include_tax === 'yes'){
             return '<tr class="invoicecal">'
                     +'<th width="60px;">#</th>'
-                    +'<th width="100px;">Item Code</th>'
                     +'<th>Name</th>'
+                    +'<th width="30px;">C/S</th>'
                     +'<th width="70px;">QTY</th>'
                     +'<th width="70px;">MRP</th>'
                     +'<th width="100px;">MRP Value</th>'
@@ -950,8 +950,8 @@
         }else{
             return '<tr class="invoicecal">'
                     +'<th width="60px;">#</th>'
-                    +'<th width="100px;">Item Code</th>'
                     +'<th>Name</th>'
+                    +'<th width="30px;">C/S</th>'
                     +'<th width="70px;">QTY</th>'
                     +'<th width="70px;">MRP</th>'
                     +'<th width="100px;">MRP Value</th>'
@@ -968,8 +968,8 @@
             var basicValue = ((parseFloat(oneRow["bill_value"]) * 100) / 118).toFixed(2);
             return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
                         +'<td>'+numberOne+'</td>'
-                        +'<td>'+oneRow["fk_item_code"]+'</td>'
                         +'<td>'+oneRow["fk_item_name"]+'</td>'
+                        +'<td>'+oneRow["case_unit"]+'</td>'
                         +'<td>'+oneRow["quantity"]+'</td>'
                         +'<td>'+oneRow["mrp"]+'</td>'
                         +'<td>'+oneRow["mrp_value"]+'</td>'
@@ -984,8 +984,8 @@
         }else{
             return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
                         +'<td>'+numberOne+'</td>'
-                        +'<td>'+oneRow["fk_item_code"]+'</td>'
                         +'<td>'+oneRow["fk_item_name"]+'</td>'
+                        +'<td>'+oneRow["case_unit"]+'</td>'
                         +'<td>'+oneRow["quantity"]+'</td>'
                         +'<td>'+oneRow["mrp"]+'</td>'
                         +'<td>'+oneRow["mrp_value"]+'</td>'
