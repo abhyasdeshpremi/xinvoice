@@ -121,7 +121,7 @@ $(function() {
     function addHeader(){
         return '<tr class="invoicecal">'
                     +'<th width="60px;">#</th>'
-                    +'<th width="175px;">DATE</th>'
+                    +'<th width="130px;">DATE</th>'
                     +'<th>NOTES</th>'
                     +'<th width="110px;">DEBIT</th>'
                     +'<th width="110px;">CREDIT</th>'
@@ -137,7 +137,7 @@ $(function() {
         }
         return '<tr class="invoicecal" id="'+oneRow["fk_client_code"]+'">'
                     +'<td>'+countNumber+'</td>'
-                    +'<td>'+moment(oneRow["payment_date"]).format('DD-MM-YYYY h:mm A')+'</td>'
+                    +'<td>'+moment(oneRow["payment_date"]).format('DD-MM-YYYY')+'</td>'
                     +'<td>'+oneRow["notes"]+'</td>'
                     +'<td>'+debitAmount+'</td>'
                     +'<td>'+creditAmount+'</td>'
