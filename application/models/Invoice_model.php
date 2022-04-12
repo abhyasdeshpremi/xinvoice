@@ -502,7 +502,7 @@ class Invoice_model extends CI_Model {
                         $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "debit";
                     }else if ($amountdata['invoice_type'] === "purchase"){
-                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
+                        $amountdata['notes'] = "PURCHASE INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "credit";
                     }
                 }else if($data['statuscode'] === "force_edit") {
@@ -511,7 +511,7 @@ class Invoice_model extends CI_Model {
                         $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "credit";
                     }else if ($amountdata['invoice_type'] === "purchase"){
-                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
+                        $amountdata['notes'] = "PURCHASE INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
                         $amountdata['paymenttype'] = "debit";
                     }
                     $account_entry_id = $this->Account_model->find_id($amountdata);
