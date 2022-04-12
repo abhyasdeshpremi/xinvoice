@@ -30,11 +30,11 @@
     <br>  
     </center>
     <p>NAME: <b><?php echo $result[0]["fk_client_name"]; ?></b>, &nbsp; DISTRICT: <?php echo $result[0]["district"]; ?></p>
-<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:11px;" width="99%">
+<table class="table table-bordered" id="dataTable" cellspacing="0" style="font:14px;" width="99%">
 <thead >
     <tr>
         <th width="8px;">#</th>
-        <th width="110px;" style="text-align:left;">DATE</th>
+        <th width="90px;" style="text-align:left;">DATE</th>
         <th>NOTES</th>
         <th width="80px;" style="text-align:right;">DEBIT</th>
         <th width="80px;" style="text-align:right;">CREDIT</th>
@@ -84,7 +84,7 @@
 
                 <tr>
                     <td><?php echo $j; ?></td>
-                    <td><?php echo date("d-m-Y H:i:s", strtotime($history->payment_date)); ?></td>
+                    <td><?php echo date("d-m-Y", strtotime($history->payment_date)); ?></td>
                     <td><?php echo $history->notes; ?></td>
                     <td style="text-align:right;"><?php echo $debitAmount; ?></td>
                     <td style="text-align:right;"><?php echo $creditAmount; ?></td>
