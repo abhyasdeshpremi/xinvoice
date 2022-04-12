@@ -50,7 +50,7 @@
 <script type="text/javascript">
 $(function() {
 
-    var base_url = "<?php echo base_url('/downloadclientpdf'); ?>";
+    var base_url = "<?php echo base_url('/downloadpartyledgerpdf'); ?>";
     var date = new Date();
     var day = date.getDate();
     var month = date.getMonth() + 1;
@@ -82,30 +82,25 @@ $(function() {
                         $('#stockreporthead').append(addHeader());
                         console.log(data);
                         var result = data.result;
-                        var total_opening_amount = 0.0;
-                        var total_credit_count_value = 0.0;
-                        var total_debit_count_value = 0.0;
-                        var total_amount_value = 0.0;
-                        var tmpDistrict = result[0]["district"];
                         for(i=0;i<result.length; i++) {
-                            var oneRow = result[i];
-                            var debit_count_value = parseFloat(oneRow["debit_count_value"]);
-                            var credit_count_value = parseFloat(oneRow["credit_count_value"]);
-                            var total_amount = parseFloat(oneRow["total_amount"]);
-                            var opening_amount = (total_amount + debit_count_value - credit_count_value);
-
-                            var currentDistrict = oneRow["district"]; 
+                            var oneRow = result[i];  
                             var result_account_history = oneRow["accounthistory"];
-                            for(j=0;j<result_account_history.length; i++) {
-                                $('#stockreportBody').append(addInvoicerow(result_account_history[j], opening_amount, (i + 1)) );
+                            var opening_balance = oneRow["opening_balace_value"];
+                            $('#stockreportBody').append(addInvoiceOpenrow(opening_balance));
+                            for(j=0;j<result_account_history.length; j++) {
+                                var paymenttype = result_account_history[j]["payment_type"];
+                                var amount = result_account_history[j]["amount"];
+                                var creditAmount = '';
+                                var debitAmount = '';
+                                if(paymenttype === "debit"){
+                                    debitAmount = parseFloat(amount);
+                                    opening_balance = parseFloat(opening_balance) - parseFloat(amount);
+                                }else if(paymenttype === "credit"){
+                                    creditAmount = parseFloat(amount);
+                                    opening_balance = parseFloat(opening_balance) + parseFloat(amount);
+                                }
+                                $('#stockreportBody').append(addInvoicerow(result_account_history[j], debitAmount, creditAmount, opening_balance, (j + 2)) );
                             }
-
-                            total_opening_amount = parseFloat(total_opening_amount) + parseFloat(opening_amount);
-                            total_credit_count_value = parseFloat(total_credit_count_value) + parseFloat(credit_count_value);
-                            total_debit_count_value = parseFloat(total_debit_count_value) + parseFloat(debit_count_value);
-                            total_amount_value = parseFloat(total_amount_value) + parseFloat(total_amount);
-                            
-                            
                         }
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+ledgerearch;
                         $("#printStockReport").attr("href", printurl);
@@ -126,42 +121,45 @@ $(function() {
     function addHeader(){
         return '<tr class="invoicecal">'
                     +'<th width="60px;">#</th>'
-                    +'<th>DATE</th>'
-                    +'<th width="150px;">NOTES</th>'
-                    +'<th width="100px;">DEBIT</th>'
-                    +'<th width="100px;">CREDIT</th>'
-                    +'<th width="70px;">BALANCE</th>'
+                    +'<th width="175px;">DATE</th>'
+                    +'<th>NOTES</th>'
+                    +'<th width="110px;">DEBIT</th>'
+                    +'<th width="110px;">CREDIT</th>'
+                    +'<th width="120px;">BALANCE</th>'
                 +'</tr>';
     }
 
-    function addInvoicerow(oneRow, opening_amount, countNumber){
-        
+    function addInvoicerow(oneRow, debitAmount, creditAmount, opening_balance,  countNumber){
+        var symbol = "CR";
+        if(opening_balance < 0){
+            symbol = "DR";
+            opening_balance = -(opening_balance);
+        }
         return '<tr class="invoicecal" id="'+oneRow["fk_client_code"]+'">'
                     +'<td>'+countNumber+'</td>'
-                    +'<td>'+oneRow["payment_date"]+'</td>'
+                    +'<td>'+moment(oneRow["payment_date"]).format('DD-MM-YYYY h:mm A')+'</td>'
                     +'<td>'+oneRow["notes"]+'</td>'
-                    +'<td>'+oneRow["district"]+'</td>'
-                    +'<td>'+opening_amount+'</td>'
-                    +'<td>'+oneRow["credit_count_value"]+'</td>'
-                    +'<td>'+oneRow["debit_count_value"]+'</td>'
-                    +'<td>'+oneRow["total_amount"]+'</td>'
+                    +'<td>'+debitAmount+'</td>'
+                    +'<td>'+creditAmount+'</td>'
+                    +'<td style="text-align: right;">'+opening_balance+' '+symbol+'</td>'
                 +'</tr>';
     }
 
-    function addResultrow(total_opening_amount, total_credit_count_value, total_debit_count_value, total_amount_value){
-        return '<tr class="invoicecal" >'
-                    +'<td colspan="3"></td>'
-                    +'<td><b>TOTAL</b></td>'
-                    +'<td><b>'+total_opening_amount+'</b></td>'
-                    +'<td><b>'+total_credit_count_value+'</b></td>'
-                    +'<td><b>'+total_debit_count_value+'</b></td>'
-                    +'<td><b>'+total_amount_value+'</b></td>'
-                +'</tr>'
-                +'<tr class="invoicecal" >'
-                    +'<td colspan="8">&nbsp;</td>'
+    function addInvoiceOpenrow(opening_balance){
+        var symbol = "CR";
+        if(opening_balance < 0){
+            symbol = "DR";
+            opening_balance = -(opening_balance);
+        }
+        return '<tr class="invoicecal">'
+                    +'<td>1</td>'
+                    +'<td></td>'
+                    +'<td>OPENING BALANCE</td>'
+                    +'<td></td>'
+                    +'<td></td>'
+                    +'<td style="text-align: right;">'+opening_balance+' '+symbol+'</td>'
                 +'</tr>';
     }
-
 });
 </script>
 <script>
