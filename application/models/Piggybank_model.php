@@ -202,7 +202,7 @@ class Piggybank_model extends CI_Model {
 
             $dataList = array( 
                 'total_amount'=> $updateAmount,
-                'updated_at'=>date('Y-m-d H:i:s')
+                'updated_at'=>date("Y-m-d H:i:s", strtotime($data['payment_date']))
             );
             $this->db->where('pk_piggy_account_id', $result['pk_piggy_account_id']);
             $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
@@ -235,7 +235,7 @@ class Piggybank_model extends CI_Model {
             'amount'=>(int)$data['amount'],
             'payment_mode'=>$data['payment_mode'],
             'payment_type'=>$data['paymenttype'],
-            'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'] ." ".date("H:i:s") )),
+            'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'])),
             'notes'=>$data['notes'],
             'fk_username'=>$this->session->userdata('username'),
             'fk_firm_code'=>$this->session->userdata('firmcode')
@@ -270,7 +270,7 @@ class Piggybank_model extends CI_Model {
 
             $dataList = array( 
                 'total_save_amount'=> $updateAmount,
-                'updated_at'=>date('Y-m-d H:i:s')
+                'updated_at'=>date("Y-m-d H:i:s", strtotime($data['payment_date']))
             );
             $this->db->where('pk_piggy_account_id', $result['pk_piggy_account_id']);
             $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
@@ -303,7 +303,7 @@ class Piggybank_model extends CI_Model {
             'amount'=>(int)$data['amount'],
             'payment_mode'=>$data['payment_mode'],
             'payment_type'=>$data['paymenttype'],
-            'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'] ." ".date("H:i:s") )),
+            'payment_date'=>date("Y-m-d H:i:s", strtotime($data['payment_date'])),
             'notes'=>$data['notes'],
             'fk_username'=>$this->session->userdata('username'),
             'fk_firm_code'=>$this->session->userdata('firmcode')

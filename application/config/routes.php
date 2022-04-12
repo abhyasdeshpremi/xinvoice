@@ -153,6 +153,10 @@ $route['earnedvendor'] = 'ledger/earnedVendor';
 $route['earnedvendorreport'] = 'ledger/earnedvendorReport';
 $route['downloadearnedvendorpdf/:any/:any(/:any)?'] = 'ledger/getearnedvendorPDF/$1/$2$3';
 
+$route['partyledger'] = 'ledger/getPartyLedger';
+$route['partyledgerreport'] = 'ledger/partyLedgerReport';
+$route['downloadpartyledgerpdf/:any/:any(/:any)?'] = 'ledger/getPartyLedgerPDF/$1/$2$3';
+
 $route['getaccount(/:any)?(/:num)?'] = 'account/getAccount$1$2';
 $route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';
 $route['getclientaccounthistory/:any(/:num)?'] = 'account/getClientAccountHistory$1$2';
