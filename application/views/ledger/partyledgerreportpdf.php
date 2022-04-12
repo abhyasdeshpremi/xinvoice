@@ -84,7 +84,7 @@
 
                 <tr>
                     <td><?php echo $j; ?></td>
-                    <td><?php echo $history->payment_date; ?></td>
+                    <td><?php echo date("d-m-Y H:i:s", strtotime($history->payment_date)); ?></td>
                     <td><?php echo $history->notes; ?></td>
                     <td style="text-align:right;"><?php echo $debitAmount; ?></td>
                     <td style="text-align:right;"><?php echo $creditAmount; ?></td>
