@@ -340,15 +340,17 @@ class Ledger_model extends CI_Model {
                 /*
                 * Get history item count
                 */
-                $this->db->select('*');
-                $this->db->from('Account_Entry');
-                $this->db->where('fk_client_code', $row->fk_client_code);
-                $this->db->where('delete_flag', "no");
+                $this->db->where('fk_client_code', $tempData["fk_client_code"]);
+                $this->db->where('delete_flag', 'no');
                 $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
                 $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
                 $this->db->order_by("payment_date", "ASC");
-                $account_history_Query = $this->db->get();
-                $tempData["accounthistory"] = $account_history_Query->result();
+                $account_history_Query = $this->db->get("Account_Entry");
+                if($account_history_Query->num_rows() > 0){
+                    $tempData["accounthistory"] = $account_history_Query->result();
+                }else{
+                    $tempData["accounthistory"] = array();
+                }
 
                 /*
                 * Get total debit item count
@@ -359,7 +361,7 @@ class Ledger_model extends CI_Model {
                 $this->db->where('payment_type', "debit");
                 $this->db->where('delete_flag', "no");
                 $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-                $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
+                $this->db->where("payment_date <", $startDate);
                 $itemSellCountQuery = $this->db->get();
                 $sell_count_value = $itemSellCountQuery->row()->amount;
                 $sell_count_value = round($sell_count_value);
@@ -374,12 +376,12 @@ class Ledger_model extends CI_Model {
                 $this->db->where('payment_type', "credit");
                 $this->db->where('delete_flag', "no");
                 $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
-                $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
+                $this->db->where("payment_date <", $startDate);
                 $itemBuyCountQuery = $this->db->get();
                 $buy_count_value = $itemBuyCountQuery->row()->amount;
                 $buy_count_value = round($buy_count_value);
                 $tempData["credit_count_value"] = $buy_count_value;
-                
+                $tempData["opening_balace_value"] = ($tempData["credit_count_value"] - $tempData["debit_count_value"]);
                 $data['result'][] = $tempData;
             }
             $data['code'] = true;

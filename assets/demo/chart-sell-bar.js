@@ -29,7 +29,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 var sell_30graph = JSON.parse(sessionStorage.getItem('sell_30graph'));
-// if (Array.isArray(sell_30graph)){
+if (sell_30graph != null && sell_30graph.length > 0) {
     for (i = 0; i < sell_30graph.length; i++) {
         var temp_sell = sell_30graph[i];
         var tempdate = temp_sell["date"];
@@ -243,4 +243,5 @@ if (ctx != null){
             }
         }
     });
+}
 }

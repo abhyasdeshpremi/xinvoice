@@ -376,16 +376,16 @@ class Ledger extends CI_Controller {
             $data['start_date'] = $this->uri->segment(2);
             $data['end_date'] = $this->uri->segment(3);
             $data['ledgerearch'] = urldecode($this->uri->segment(4));
-            $client_result = $this->Ledger_model->sale_list($data);
+            $client_result = $this->Ledger_model->party_ledger_list($data);
             if($client_result['code']){
                 $data['code'] = $client_result['code'];
                 $data['result'] = $client_result['result'];
                 $data["message"] = "Successfully get client!";
                 $data['title'] = $this->session->userdata('firmname');
-                // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
+                // $this->template->load('default_layout', 'contents' , 'ledger/partyledgerreportpdf', $data);
                 $this->load->library('pdf');
                 $html = $this->load->view('ledger/partyledgerreportpdf', $data, true);
-                $this->pdf->createPDF($html, "Ledger Report ".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
+                $this->pdf->createPDF($html, "Party Ledger Report ".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
             }
         }
     }

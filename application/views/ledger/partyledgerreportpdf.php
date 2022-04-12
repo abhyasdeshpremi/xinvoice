@@ -24,101 +24,76 @@
 </head> 
 <body style="width : 100%;" >
     <center>
-        <span style="font:12px; text-transform: uppercase;">Ledger Report</span><br>
+        <span style="font:12px; text-transform: uppercase;">Party Ledger Report</span><br>
         <span style="font:14px; font-style:bold; text-transform: uppercase;"><?php echo isset($title) ? $title : '';?></span><br>
         <span style="font:10px; text-transform: uppercase;">Date From:- <?php echo date("d-m-Y", strtotime($start_date)); ?> To:- <?php echo date("d-m-Y", strtotime($end_date)); ?></span><br><br>
     <br>  
     </center>
-
+    <p>NAME: <b><?php echo $result[0]["fk_client_name"]; ?></b>, &nbsp; DISTRICT: <?php echo $result[0]["district"]; ?></p>
 <table class="table table-bordered" id="dataTable" cellspacing="0" style="font:11px;" width="99%">
 <thead >
     <tr>
-        <th width="8px;">SN</th>
-        <th width="195px;" style="text-align:left;">NAME</th>
-        <th>TYPE</th>
-        <th style="text-align:right;" >DISTRICT</th>
-        <th style="text-align:right;">OP. BAL</th>
-        <th width="55px;" style="text-align:right;">TTL CR.</th>
-        <th width="55px;" style="text-align:right;">TTL DR.</th>
-        <th width="90px;" style="text-align:right;">CL. BAL</th>
+        <th width="8px;">#</th>
+        <th width="110px;" style="text-align:left;">DATE</th>
+        <th>NOTES</th>
+        <th width="80px;" style="text-align:right;">DEBIT</th>
+        <th width="80px;" style="text-align:right;">CREDIT</th>
+        <th width="100px;" style="text-align:right;">BALANCE</th>
     </tr>
 </thead>
 <tbody>
-    <?php 
     
-    $i = 1;
-    
-    $total_opening_amount = 0.0;
-    $total_credit_count_value = 0.0;
-    $total_debit_count_value = 0.0;
-    $total_amount_value = 0.0;
-    $tmpDistrict = $result[0]["district"];
-    foreach($result as $value){
-        $credit_count_value = floatval($value["credit_count_value"]);
-        $debit_count_value = floatval($value["debit_count_value"]);
-        $total_amount = floatval($value["total_amount"]);
-        $opening_amount = ($total_amount + $debit_count_value - $credit_count_value);
-
-
-        $currentDistrict = $value["district"];
-        if ($tmpDistrict == $currentDistrict){ ?>
-            <tr>
-                <td><?php echo $i; ?></td>
-                <td style="text-align:left;"><?php echo $value["fk_client_name"]; ?></td>
-                <td ><?php echo $value["client_type"]; ?></td>
-                <td style="text-align:left;"><?php echo $value["district"]; ?></td>
-                <td style="text-align:right;"><?php echo $opening_amount; ?></td>
-                <td style="text-align:right;"><?php echo $credit_count_value; ?></td>
-                <td style="text-align:right;"><?php echo $debit_count_value; ?></td>
-                <td style="text-align:right;"><?php echo number_format($total_amount, 2); ?></td>
-            </tr>
-        <?php 
-        }else{ ?>
-            <tr>
-                <td colspan="3"></td>
-                <td style="text-align:right;"><b>TOTAL</b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_opening_amount, 2); ?></b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_credit_count_value, 2); ?></b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_debit_count_value, 2); ?></b></td>
-                <td style="text-align:right;"><b><?php echo number_format($total_amount_value, 2); ?></b></td>
-            </tr>
-            <tr>
-                <td colspan="8">&nbsp;</td>
-            </tr>
-            <tr>
-                <td><?php echo $i; ?></td>
-                <td style="text-align:left;"><?php echo $value["fk_client_name"]; ?></td>
-                <td ><?php echo $value["client_type"]; ?></td>
-                <td style="text-align:left;"><?php echo $value["district"]; ?></td>
-                <td style="text-align:right;"><?php echo $opening_amount; ?></td>
-                <td style="text-align:right;"><?php echo $credit_count_value; ?></td>
-                <td style="text-align:right;"><?php echo $debit_count_value; ?></td>
-                <td style="text-align:right;"><?php echo number_format($total_amount, 2); ?></td>
-            </tr>
-        <?php
-            $total_opening_amount = 0.0;
-            $total_credit_count_value = 0.0;
-            $total_debit_count_value = 0.0;
-            $total_amount_value = 0.0;
-            $tmpDistrict = $currentDistrict;
+    <?php  $i = 1;
+    foreach($result as $value){ 
+        $result_account_history = $value["accounthistory"];
+        $opening_balance = $value["opening_balace_value"];
+        $symbol = "CR";
+        if($opening_balance < 0){
+            $symbol = "DR";
+            $tmpopening_balance = -($opening_balance);
         }
-
-
-        $total_opening_amount = floatval($total_opening_amount) + floatval($opening_amount);
-        $total_credit_count_value = floatval($total_credit_count_value) + floatval($credit_count_value);
-        $total_debit_count_value = floatval($total_debit_count_value) + floatval($debit_count_value);
-        $total_amount_value = floatval($total_amount_value) + floatval($total_amount);
     ?>
-        
-    <?php $i++; } ?>
         <tr>
-            <td colspan="3"></td>
-            <td style="text-align:right;"><b>TOTAL</b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_opening_amount, 2); ?></b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_credit_count_value, 2); ?></b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_debit_count_value, 2); ?></b></td>
-            <td style="text-align:right;"><b><?php echo number_format($total_amount_value, 2); ?></b></td>
+            <td>1</td>
+            <td></td>
+            <td>OPENING BALANCE</td>
+            <td></td>
+            <td></td>
+            <td style="text-align:right;"><b><?php echo number_format($tmpopening_balance, 2); echo " ".$symbol;?></b></td>
         </tr>
+
+        <?php $j = 2;
+            foreach($result_account_history as $history){ 
+                $paymenttype = $history->payment_type;
+                $amount = $history->amount;
+                $creditAmount = '';
+                $debitAmount = '';
+                if($paymenttype === "debit"){
+                    $debitAmount = floatval($amount);
+                    $opening_balance = floatval($opening_balance) - floatval($amount);
+                }else if($paymenttype === "credit"){
+                    $creditAmount = floatval($amount);
+                    $opening_balance = floatval($opening_balance) + floatval($amount);
+                } 
+                $symbol = "CR";
+                if($opening_balance < 0){
+                    $symbol = "DR";
+                    $tmpopening_balance = -($opening_balance);
+                }
+                ?>
+
+                <tr>
+                    <td><?php echo $j; ?></td>
+                    <td><?php echo $history->payment_date; ?></td>
+                    <td><?php echo $history->notes; ?></td>
+                    <td style="text-align:right;"><?php echo $debitAmount; ?></td>
+                    <td style="text-align:right;"><?php echo $creditAmount; ?></td>
+                    <td style="text-align:right;"><b><?php echo number_format($tmpopening_balance, 2); echo " ".$symbol;?></b></td>
+                </tr>
+        <?php $j++; } ?>
+
+    <?php $i++; } ?>
+
 <tbody>
 </table>
 
