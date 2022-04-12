@@ -12,6 +12,7 @@ class Ledger extends CI_Controller {
             redirect('/login');
         }
         $this->load->model('Ledger_model', '', TRUE);
+        $this->load->model('Invoice_model', '', TRUE);
     }
 
 	public function index()
@@ -323,6 +324,68 @@ class Ledger extends CI_Controller {
                 $this->load->library('pdf');
                 $html = $this->load->view('ledger/stockreportpdf', $data, true);
                 $this->pdf->createPDF($html, "Stock Report".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
+            }
+        }
+    }
+
+    /**
+     * For party ledger report
+     */
+
+    public function getPartyLedger(){
+        $data = array();
+        $data['clients'] = $this->Invoice_model->client_list();
+        $this->template->set('title', 'Party Ledger Report');
+        $this->template->load('default_layout', 'contents' , 'ledger/partyledgerreport', $data);
+    }
+
+    public function partyLedgerReport(){
+        $data = array();
+        if($this->session->userdata('isUserLoggedIn') != TRUE){ 
+            $data['code'] = false;
+            $data['result'] = [];
+            $data["message"] = "Unable to serve because your session is expire!";
+        }else{
+            if ($this->input->server('REQUEST_METHOD') === 'POST') {
+                $data['start_date'] = $this->input->post('start_date');
+                $data['end_date'] = $this->input->post('end_date');
+                $data['ledgerearch'] = urldecode($this->input->post('ledgerearch'));
+                $data["message"] = "";
+                $client_result = $this->Ledger_model->party_ledger_list($data);
+                if($client_result['code']){
+                    $data['code'] = $client_result['code'];
+                    $data['result'] = $client_result['result'];
+                    $data["message"] = "Successfully get Ledger report!";
+                }else{
+                    $data['code'] = $client_result['code'];
+                    $data['result'] = [];
+                    $data["message"] = "No Ledger report according to search string";
+                }
+            }else{
+                $data['code'] = false;
+                $data['result'] = [];
+                $data["message"] = "Unable to serve GET Request, Please try again!";
+            }
+        }
+        echo json_encode($data);
+    }
+
+    function getPartyLedgerPDF(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['start_date'] = $this->uri->segment(2);
+            $data['end_date'] = $this->uri->segment(3);
+            $data['ledgerearch'] = urldecode($this->uri->segment(4));
+            $client_result = $this->Ledger_model->sale_list($data);
+            if($client_result['code']){
+                $data['code'] = $client_result['code'];
+                $data['result'] = $client_result['result'];
+                $data["message"] = "Successfully get client!";
+                $data['title'] = $this->session->userdata('firmname');
+                // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
+                $this->load->library('pdf');
+                $html = $this->load->view('ledger/partyledgerreportpdf', $data, true);
+                $this->pdf->createPDF($html, "Ledger Report ".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
             }
         }
     }

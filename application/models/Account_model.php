@@ -128,7 +128,7 @@ class Account_model extends CI_Model {
         }
         $currentDate = date("Y-m-d H:i:s");
         if(!empty($data['payment_date'])){
-            $currentDate = date("Y-m-d H:i:s", strtotime($data['payment_date'] ." ".date("H:i:s")));
+            $currentDate = date("Y-m-d H:i:s", strtotime($data['payment_date']));
         }
         if($data['statuscode'] === "force_edit") {
             $account_EntryList = array(

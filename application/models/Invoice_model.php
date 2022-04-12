@@ -492,8 +492,9 @@ class Invoice_model extends CI_Model {
                     $amountdata['invoice_type'] = $row->invoice_type;
                     $amountdata['pk_invoice_id'] = $row->pk_invoice_id;
                     $amountdata['previous_invoice_ref_no'] = $row->previous_invoice_ref_no;
+                    $amountdata['created_at'] = $row->created_at;
                 }
-                $amountdata['payment_date'] = date('d-m-Y');
+                $amountdata['payment_date'] = $amountdata['created_at'];
                 $amountdata['statuscode'] = $data['statuscode'];
                 if($data['statuscode'] === "completed") {
                     $amountdata['amount'] = $total_bill_value;
@@ -543,7 +544,7 @@ class Invoice_model extends CI_Model {
                             $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
                             $bonusDataUpdateToPiggybank['amount'] = $percentage_value;
 
-                            $bonusDataUpdateToPiggybank['payment_date'] = date('d-m-Y');
+                            $bonusDataUpdateToPiggybank['payment_date'] = $amountdata['created_at'];
 
                             $bonusDataUpdateToPiggybank['payment_mode'] = 'auto';
                             
@@ -579,7 +580,7 @@ class Invoice_model extends CI_Model {
                                 $bonusDataUpdateToPiggybank['paymenttype'] = 'credit';
                                 $bonusDataUpdateToPiggybank['amount'] = $save_amount;
 
-                                $bonusDataUpdateToPiggybank['payment_date'] = date('d-m-Y');
+                                $bonusDataUpdateToPiggybank['payment_date'] = $amountdata['created_at'];
 
                                 $bonusDataUpdateToPiggybank['payment_mode'] = 'auto';
                                 

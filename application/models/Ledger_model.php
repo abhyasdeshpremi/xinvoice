@@ -312,5 +312,83 @@ class Ledger_model extends CI_Model {
         return $data;
     }
 
+    public function party_ledger_list($arg){
+        $startDate = $arg['start_date']." 00:00:00";
+        // $startDateFormat = date('Y-m-d H:i:s', $startDate);
+        $endDate = $arg['end_date']. " 23:59:59";
+        // $endDateFormat = date('Y-m-d H:i:s', $endDate);
+        $this->db->select('Account.fk_client_code, Account.fk_client_name, Clients.client_type, Account.total_amount, Clients.district');
+        $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where_not_in('Clients.client_type', 'mine');
+        $ledgerearch = trim($arg['ledgerearch']);
+        $this->db->where('Account.fk_client_code', $ledgerearch);
+        $this->db->order_by("Clients.district", "ASC");
+        $this->db->from('Account');
+        $this->db->join('Clients', 'Account.fk_client_code = Clients.code');
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            
+            foreach ($query->result() as $row)  
+            {  
+                $tempData = array();
+                $tempData["fk_client_code"] = $row->fk_client_code;
+                $tempData["fk_client_name"] = strtoupper($row->fk_client_name);
+                $tempData["client_type"] = strtoupper($row->client_type);
+                $tempData["district"] = strtoupper($row->district);
+                $tempData["total_amount"] = $row->total_amount;
+
+                /*
+                * Get history item count
+                */
+                $this->db->select('*');
+                $this->db->from('Account_Entry');
+                $this->db->where('fk_client_code', $row->fk_client_code);
+                $this->db->where('delete_flag', "no");
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
+                $this->db->order_by("payment_date", "ASC");
+                $account_history_Query = $this->db->get();
+                $tempData["accounthistory"] = $account_history_Query->result();
+
+                /*
+                * Get total debit item count
+                */
+                $this->db->select_sum('amount');
+                $this->db->from('Account_Entry');
+                $this->db->where('fk_client_code', $row->fk_client_code);
+                $this->db->where('payment_type', "debit");
+                $this->db->where('delete_flag', "no");
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
+                $itemSellCountQuery = $this->db->get();
+                $sell_count_value = $itemSellCountQuery->row()->amount;
+                $sell_count_value = round($sell_count_value);
+                $tempData["debit_count_value"] = $sell_count_value;
+
+                /*
+                * Get total credit item count
+                */
+                $this->db->select_sum('amount');
+                $this->db->from('Account_Entry');
+                $this->db->where('fk_client_code', $row->fk_client_code);
+                $this->db->where('payment_type', "credit");
+                $this->db->where('delete_flag', "no");
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where("payment_date BETWEEN '$startDate' AND '$endDate'");
+                $itemBuyCountQuery = $this->db->get();
+                $buy_count_value = $itemBuyCountQuery->row()->amount;
+                $buy_count_value = round($buy_count_value);
+                $tempData["credit_count_value"] = $buy_count_value;
+                
+                $data['result'][] = $tempData;
+            }
+            $data['code'] = true;
+            // $data['result'] = $query->result();
+        }else{
+            $data['code'] = false;
+            $data['result'] = array();
+        }
+        return $data;
+    }
 }
 ?>
