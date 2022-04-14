@@ -46,7 +46,14 @@
     $i = 1;
     
     $total_debit_count_value = 0.0;
-    $tmpDistrict = $result[0]["district"];
+    $tmpDistrict = $result[0]["district"]; ?>
+
+        <tr>
+            <td></td>
+            <td><b><?php echo $tmpDistrict; ?></b></td>
+            <td colspan="3"></td>
+        </tr>
+    <?php 
     foreach($result as $value){
         $debit_count_value = floatval($value["debit_count_value"]);
         $currentDistrict = $value["district"];
@@ -59,7 +66,7 @@
                 <td style="text-align:right;"><?php echo $debit_count_value; ?></td>
             </tr>
         <?php 
-        }else{ ?>
+        }else{ $i = 1; ?>
             <tr>
                 <td colspan="3"></td>
                 <td style="text-align:right;"><b>TOTAL</b></td>
@@ -67,6 +74,11 @@
             </tr>
             <tr>
                 <td colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><b><?php echo $currentDistrict; ?></b></td>
+                <td colspan="3"></td>
             </tr>
             <tr>
                 <td><?php echo $i; ?></td>
