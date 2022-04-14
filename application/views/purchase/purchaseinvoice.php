@@ -659,8 +659,6 @@
             $("#itemquantity").val(quatity);
             $("#itemmrpvalue").val(mrpvalue);
             $("#itembillValue").val(mrpvalue);
-            $("#itemdiscount").val(0);
-            
         });
 
         function invoiceCalculation(){
