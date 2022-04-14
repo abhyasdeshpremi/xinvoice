@@ -380,6 +380,7 @@
                                     <a class="nav-link" href="<?php echo base_url('/stock'); ?>">Stock</a>
                                     <a class="nav-link" href="<?php echo base_url('/ledger'); ?>">Ledger</a>
                                     <a class="nav-link" href="<?php echo base_url('/partyledger'); ?>">Party Ledger</a>
+                                    <a class="nav-link" href="<?php echo base_url('/allzonesale'); ?>">All Zone Sale</a>
                                     <a class="nav-link" href="<?php echo base_url('/sales'); ?>">Sales</a>
                                     <a class="nav-link" href="<?php echo base_url('/invoice'); ?>">Invoice</a>
                                 </nav>

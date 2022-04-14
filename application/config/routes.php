@@ -157,6 +157,9 @@ $route['partyledger'] = 'ledger/getPartyLedger';
 $route['partyledgerreport'] = 'ledger/partyLedgerReport';
 $route['downloadpartyledgerpdf/:any/:any(/:any)?'] = 'ledger/getPartyLedgerPDF/$1/$2$3';
 
+$route['allzonesale'] = 'ledger/allZoneSale';
+$route['downloadallzonesalepdf/:any/:any(/:any)?'] = 'ledger/getallZoneSalePDF/$1/$2$3';
+
 $route['getaccount(/:any)?(/:num)?'] = 'account/getAccount$1$2';
 $route['getaccounthistory(/:num)?'] = 'account/getAccountHistory$1';
 $route['getclientaccounthistory/:any(/:num)?'] = 'account/getClientAccountHistory$1$2';

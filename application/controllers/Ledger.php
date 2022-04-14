@@ -390,4 +390,33 @@ class Ledger extends CI_Controller {
         }
     }
 
+    /****
+     * All Zone sale
+     */
+    public function allZoneSale(){
+        $data = array();
+
+        $this->template->set('title', 'All Zone Sale Report');
+        $this->template->load('default_layout', 'contents' , 'ledger/allzonesalereport', $data);
+    }
+
+    function getallZoneSalePDF(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $data['start_date'] = $this->uri->segment(2);
+            $data['end_date'] = $this->uri->segment(3);
+            $data['ledgerearch'] = urldecode($this->uri->segment(4));
+            $client_result = $this->Ledger_model->sale_list($data);
+            if($client_result['code']){
+                $data['code'] = $client_result['code'];
+                $data['result'] = $client_result['result'];
+                $data["message"] = "Successfully get all zone sale!";
+                $data['title'] = $this->session->userdata('firmname');
+                // $this->template->load('default_layout', 'contents' , 'ledger/ledgerreportpdf', $data);
+                $this->load->library('pdf');
+                $html = $this->load->view('ledger/allzonesalereportpdf', $data, true);
+                $this->pdf->createPDF($html, "All Zone Sale Report ".$data['start_date']."_".$data['end_date'] , true, 'A4', "portrait");
+            }
+        }
+    }
 }
