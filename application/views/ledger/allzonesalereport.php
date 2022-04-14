@@ -78,20 +78,25 @@ $(function() {
                         var result = data.result;
                         var total_debit_count_value = 0.0;
                         var tmpDistrict = result[0]["district"];
+                        var j = 1;
+                        $('#stockreportBody').append(addDHeader(tmpDistrict));
                         for(i=0;i<result.length; i++) {
                             var oneRow = result[i];
                             var debit_count_value = parseFloat(oneRow["debit_count_value"]);
 
                             var currentDistrict = oneRow["district"];
                             if (tmpDistrict == currentDistrict){
-                                $('#stockreportBody').append(addInvoicerow(oneRow, (i + 1)) );
+                                $('#stockreportBody').append(addInvoicerow(oneRow, j) );
                             }else{
+                                j = 1;
                                 $('#stockreportBody').append(addResultrow(total_debit_count_value));
-                                $('#stockreportBody').append(addInvoicerow(oneRow, (i + 1)) );
+                                $('#stockreportBody').append(addDHeader(currentDistrict));
+                                $('#stockreportBody').append(addInvoicerow(oneRow, j) );
                                 total_debit_count_value = 0.0;
                                 tmpDistrict = currentDistrict;
                             }
                             total_debit_count_value = parseFloat(total_debit_count_value) + parseFloat(debit_count_value);
+                            j = j + 1;
                         }
                         $('#stockreportBody').append(addResultrow(total_debit_count_value));
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+ledgerearch;
@@ -117,6 +122,14 @@ $(function() {
                     +'<th width="100px;">TYPE</th>'
                     +'<th>GSTIN</th>'
                     +'<th width="150px;">SALE AMOUNT</th>'
+                +'</tr>';
+    }
+
+    function addDHeader(dis){
+        return '<tr class="invoicecal">'
+                    +'<td>#</td>'
+                    +'<td><b>'+dis+'</b></td>'
+                    +'<td colspan="3"></td>'
                 +'</tr>';
     }
 
