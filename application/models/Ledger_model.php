@@ -101,7 +101,7 @@ class Ledger_model extends CI_Model {
         // $startDateFormat = date('Y-m-d H:i:s', $startDate);
         $endDate = $arg['end_date']. " 23:59:59";
         // $endDateFormat = date('Y-m-d H:i:s', $endDate);
-        $this->db->select('Account.fk_client_code, Account.fk_client_name, Clients.client_type, Account.total_amount, Clients.district');
+        $this->db->select('Account.fk_client_code, Account.fk_client_name, Clients.client_type, Clients.gst_no, Account.total_amount, Clients.district');
         $this->db->where('Account.fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where_not_in('Clients.client_type', 'mine');
         $ledgerearch = trim($arg['ledgerearch']);
@@ -125,6 +125,7 @@ class Ledger_model extends CI_Model {
                 $tempData["fk_client_name"] = strtoupper($row->fk_client_name);
                 $tempData["client_type"] = strtoupper($row->client_type);
                 $tempData["district"] = strtoupper($row->district);
+                $tempData["gst_no"] = strtoupper($row->gst_no);
                 $tempData["total_amount"] = $row->total_amount;
                 /*
                 * Get total debit item count
