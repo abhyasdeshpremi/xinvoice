@@ -46,6 +46,7 @@
     $i = 1;
     
     $total_debit_count_value = 0.0;
+    $final_total_debit_count_value = 0.0;
     $tmpDistrict = $result[0]["district"]; ?>
 
         <tr>
@@ -93,6 +94,7 @@
         }
 
         $total_debit_count_value = floatval($total_debit_count_value) + floatval($debit_count_value);
+        $final_total_debit_count_value = floatval($final_total_debit_count_value) + floatval($debit_count_value);
     ?>
         
     <?php $i++; } ?>
@@ -100,6 +102,11 @@
             <td colspan="3"></td>
             <td style="text-align:right;"><b>TOTAL</b></td>
             <td style="text-align:right;"><b><?php echo number_format($total_debit_count_value, 2); ?></b></td>
+        </tr>
+        <tr>
+            <td colspan="3"></td>
+            <td style="text-align:right;"><b>FINAL TOTAL</b></td>
+            <td style="text-align:right;"><b><?php echo number_format($final_total_debit_count_value, 2); ?></b></td>
         </tr>
 <tbody>
 </table>
