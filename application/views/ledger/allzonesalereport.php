@@ -77,6 +77,7 @@ $(function() {
                         console.log(data);
                         var result = data.result;
                         var total_debit_count_value = 0.0;
+                        var final_total_debit_count_value = 0.0;
                         var tmpDistrict = result[0]["district"];
                         var j = 1;
                         $('#stockreportBody').append(addDHeader(tmpDistrict));
@@ -96,9 +97,11 @@ $(function() {
                                 tmpDistrict = currentDistrict;
                             }
                             total_debit_count_value = parseFloat(total_debit_count_value) + parseFloat(debit_count_value);
+                            final_total_debit_count_value = parseFloat(final_total_debit_count_value) + parseFloat(debit_count_value);
                             j = j + 1;
                         }
                         $('#stockreportBody').append(addResultrow(total_debit_count_value));
+                        $('#stockreportBody').append(addFinalResultrow(final_total_debit_count_value));
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+ledgerearch;
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
@@ -149,6 +152,17 @@ $(function() {
                     +'<td colspan="3"></td>'
                     +'<td><b>TOTAL</b></td>'
                     +'<td><b>'+total_debit_count_value+'</b></td>'
+                +'</tr>'
+                +'<tr class="invoicecal" >'
+                    +'<td colspan="5">&nbsp;</td>'
+                +'</tr>';
+    }
+
+    function addFinalResultrow(final_total_debit_count_value){
+        return '<tr class="invoicecal" >'
+                    +'<td colspan="3"></td>'
+                    +'<td><b>FINAL TOTAL</b></td>'
+                    +'<td><b>'+final_total_debit_count_value+'</b></td>'
                 +'</tr>'
                 +'<tr class="invoicecal" >'
                     +'<td colspan="5">&nbsp;</td>'
