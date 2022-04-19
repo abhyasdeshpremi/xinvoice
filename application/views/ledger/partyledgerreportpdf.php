@@ -64,8 +64,8 @@
 
         <?php $j = 2;
             foreach($result_account_history as $history){ 
-                $paymenttype = $history->payment_type;
-                $amount = $history->amount;
+                $paymenttype = $history["payment_type"];
+                $amount = $history["amount"];
                 $creditAmount = '';
                 $debitAmount = '';
                 if($paymenttype === "debit"){
@@ -84,8 +84,8 @@
 
                 <tr>
                     <td><?php echo $j; ?></td>
-                    <td><?php echo date("d-m-Y", strtotime($history->payment_date)); ?></td>
-                    <td><?php echo $history->notes; ?></td>
+                    <td><?php echo date("d-m-Y", strtotime($history["payment_date"])); ?></td>
+                    <td><?php echo $history["notes"]; ?></td>
                     <td style="text-align:right;"><?php echo $debitAmount; ?></td>
                     <td style="text-align:right;"><?php echo $creditAmount; ?></td>
                     <td style="text-align:right;"><b><?php echo number_format($tmpopening_balance, 2); echo " ".$symbol;?></b></td>

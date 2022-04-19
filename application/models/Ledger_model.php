@@ -348,7 +348,34 @@ class Ledger_model extends CI_Model {
                 $this->db->order_by("payment_date", "ASC");
                 $account_history_Query = $this->db->get("Account_Entry");
                 if($account_history_Query->num_rows() > 0){
-                    $tempData["accounthistory"] = $account_history_Query->result();
+                    $partyLedgerResult = [];
+                    foreach ($account_history_Query->result() as $historyrow)  
+                    {
+                        $accounthistory = [];
+                        $accounthistory["account_entry_id"] = $historyrow->account_entry_id;
+                        $accounthistory["amount"] = $historyrow->amount;
+                        $accounthistory["created_at"] = $historyrow->created_at;
+                        $accounthistory["fk_client_code"] = $historyrow->fk_client_code;
+                        $accounthistory["fk_client_name"] = $historyrow->fk_client_name;
+                        $accounthistory["fk_invoice_id"] = $historyrow->fk_invoice_id;
+                        $accounthistory["notes"] = $historyrow->notes;
+                        $accounthistory["payment_date"] = $historyrow->payment_date;
+                        $accounthistory["payment_mode"] = $historyrow->payment_mode;
+                        $accounthistory["payment_type"] = $historyrow->payment_type;
+                        $accounthistory["remarks"] = $historyrow->remarks;
+                        $partyLedgerResult[] = $accounthistory;
+                    }
+                    usort($partyLedgerResult, function ($x, $y) {
+                        $xDate = date("d-m-Y", strtotime($x["payment_date"]));
+                        $yDate = date("d-m-Y", strtotime($y["payment_date"]));
+                        if($xDate == $yDate){
+                            $xpaymentType = $x["payment_type"];
+                            $ypaymentType = $y["payment_type"];
+                            return (($xpaymentType == 'credit') && ($ypaymentType == 'debit')) ? 1 : -1;
+                        }
+                        return 0;
+                    });
+                    $tempData["accounthistory"] = $partyLedgerResult;
                 }else{
                     $tempData["accounthistory"] = array();
                 }
