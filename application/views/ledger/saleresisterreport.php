@@ -180,7 +180,7 @@ $(function() {
                         +'<th>BASIC</th>'
                         +'<th>CGST</th>'
                         +'<th>SGST</th>'
-                        +'<th>R.OFF</th>'
+                        +'<th width="60px;">R.OFF</th>'
                         +'<th width="70px;">NET AMOUNT</th>'
                     +'</tr>';
         }else {
