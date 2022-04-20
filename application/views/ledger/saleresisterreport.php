@@ -238,7 +238,7 @@ $(function() {
                         +'<td><b>'+total_basic_value_amount.toFixed(2)+'</b></td>'
                         +'<td><b>'+total_cgst_amount.toFixed(2)+'</b></td>'
                         +'<td><b>'+total_sgst_amount.toFixed(2)+'</b></td>'
-                        +'<td><b>'+total_round_off_amount+'</b></td>'
+                        +'<td><b>'+total_round_off_amount.toFixed(2)+'</b></td>'
                         +'<td><b>'+total_lock_bill_amount+'</b></td>'
                     +'</tr>'
                     +'<tr class="invoicecal" >'
