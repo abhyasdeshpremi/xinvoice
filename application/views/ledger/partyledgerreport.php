@@ -63,6 +63,7 @@ $(function() {
     $("#endDate").attr("value", today);
     $("#startDate").focus();
     $("#applySearch").click(function(){
+        showloader();
         var startDate = $('#startDate').val();
         var endDate = $('#endDate').val();
         var ledgerearch = $('#ledgerearch').val();
@@ -75,6 +76,7 @@ $(function() {
                 dataType  : 'json',
                 data: {start_date: $('#startDate').val(), end_date: $('#endDate').val(), ledgerearch: ledgerearch},
                 error: function() {
+                    hideloader();
                     alert('Something is wrong');
                 },
                 success: function (data) {
@@ -105,15 +107,18 @@ $(function() {
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+ledgerearch;
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
+                        hideloader();
                     }else{
                         $('#stockreporthead').html('');
                         $('#stockreportBody').html("<h1>"+data.message+"</h1>");
+                        hideloader();
                     }
                 }
             });
         }else{
             $('#stockreporthead').html('');
             $('#stockreportBody').html("<center><h1>Please select party name, start and end date.</h1></center>");
+            hideloader();
         }
     });
 
