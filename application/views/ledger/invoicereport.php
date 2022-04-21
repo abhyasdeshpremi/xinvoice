@@ -55,6 +55,7 @@ $(function() {
     $("#endDate").attr("value", today);
     $("#startDate").focus();
     $("#applySearch").click(function(){
+        showloader();
         var startDate = $('#startDate').val();
         var endDate = $('#endDate').val();
         if((startDate.length > 0) && (endDate.length > 0) ){ 
@@ -66,6 +67,7 @@ $(function() {
                 dataType  : 'json',
                 data: {start_date: $('#startDate').val(), end_date: $('#endDate').val()},
                 error: function() {
+                    hideloader();
                     alert('Something is wrong');
                 },
                 success: function (data) {
@@ -128,15 +130,18 @@ $(function() {
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val();
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
+                        hideloader();
                     }else{
                         $('#ledgerreporthead').html('');
                         $('#ledgerreportBody').html("<center><h1>"+data.message+"</h1></center>");
+                        hideloader();
                     }
                 }
             });
         }else{
             $('#ledgerreporthead').html('');
             $('#ledgerreportBody').html("<center><h1>Please select start and end date.</h1></center>");
+            hideloader();
         }
     });
 

@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
     </head>
     <body class="nav-fixed">
+        <div id="globalloading"><div class="loading">Loading&#8230;</div></div>
         <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light brand-background" id="sidenavAccordion">
             <!-- Navbar Brand-->
             <!-- * * Tip * * You can use text or an image for your navbar brand.-->
@@ -565,6 +566,14 @@
                 var yy=d.getFullYear();
                 return mm+"/"+dd+"/"+yy;
             }
+
+            function showloader(){
+                $("#globalloading").html('<div class="loading">Loading&#8230;</div>');
+            }
+            function hideloader(){
+                $("#globalloading").html('').delay(5000);
+            }
+            hideloader();
         </script>
     </body>
 </html>

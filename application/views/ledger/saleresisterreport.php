@@ -67,6 +67,7 @@ $(function() {
 
     var printUrlString = '';
     $("#applySearch").click(function(){
+        showloader();
         var startDate = $('#startDate').val();
         var endDate = $('#endDate').val();
         var salesearch = $('#salesearch').val();
@@ -80,6 +81,7 @@ $(function() {
                 dataType  : 'json',
                 data: {start_date: $('#startDate').val(), end_date: $('#endDate').val(), salesearch: salesearch},
                 error: function() {
+                    hideloader();
                     alert('Something is wrong');
                 },
                 success: function (data) {
@@ -148,13 +150,16 @@ $(function() {
                         var printurl = base_url + "/" +$('#startDate').val()+"/"+$('#endDate').val()+"/"+savepaper+"/"+salesearch;
                         $("#printStockReport").attr("href", printurl);
                         console.log(printurl);
+                        hideloader();
                     }else{
+                        hideloader();
                         $('#ledgerreporthead').html('');
                         $('#ledgerreportBody').html("<center><h1>"+data.message+"</h1></center>");
                     }
                 }
             });
         }else{
+            hideloader();
             $('#ledgerreporthead').html('');
             $('#ledgerreportBody').html("<center><h1>Please select start and end date.</h1></center>");
         }
