@@ -379,7 +379,7 @@ class Ledger_model extends CI_Model {
                 }else{
                     $tempData["accounthistory"] = array();
                 }
-
+                $tempData['accounthistoryquery'] = $this->db->last_query();
                 /*
                 * Get total debit item count
                 */
