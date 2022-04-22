@@ -371,7 +371,7 @@ class Ledger_model extends CI_Model {
                         if($xDate == $yDate){
                             $xpaymentType = $x["payment_type"];
                             $ypaymentType = $y["payment_type"];
-                            return (($xpaymentType == 'credit') && ($ypaymentType == 'debit')) ? 1 : -1;
+                            return (($xpaymentType == 'credit') && ($ypaymentType == 'debit')) ? 1 : 0;
                         }
                         return 0;
                     });
