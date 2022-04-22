@@ -365,6 +365,7 @@ class Ledger_model extends CI_Model {
                         $accounthistory["remarks"] = $historyrow->remarks;
                         $partyLedgerResult[] = $accounthistory;
                     }
+                    $tempData['beforeaccounthistory'] = $partyLedgerResult;
                     usort($partyLedgerResult, function ($x, $y) {
                         $xDate = date("d-m-Y", strtotime($x["payment_date"]));
                         $yDate = date("d-m-Y", strtotime($y["payment_date"]));
