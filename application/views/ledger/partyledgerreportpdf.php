@@ -48,6 +48,7 @@
         $result_account_history = $value["accounthistory"];
         $opening_balance = $value["opening_balace_value"];
         $symbol = "CR";
+        $tmpopening_balance = 0;
         if($opening_balance < 0){
             $symbol = "DR";
             $tmpopening_balance = -($opening_balance);
