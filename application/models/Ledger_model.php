@@ -366,17 +366,74 @@ class Ledger_model extends CI_Model {
                         $partyLedgerResult[] = $accounthistory;
                     }
                     $tempData['beforeaccounthistory'] = $partyLedgerResult;
-                    usort($partyLedgerResult, function ($x, $y) {
-                        $xDate = date("d-m-Y", strtotime($x["payment_date"]));
-                        $yDate = date("d-m-Y", strtotime($y["payment_date"]));
-                        if($xDate == $yDate){
-                            $xpaymentType = $x["payment_type"];
-                            $ypaymentType = $y["payment_type"];
-                            return (($xpaymentType == 'credit') && ($ypaymentType == 'debit')) ? 1 : 0;
+                    // usort($partyLedgerResult, function ($x, $y) {
+                    //     $xDate = date("d-m-Y", strtotime($x["payment_date"]));
+                    //     $yDate = date("d-m-Y", strtotime($y["payment_date"]));
+                    //     if($xDate == $yDate){
+                    //         $xpaymentType = $x["payment_type"];
+                    //         $ypaymentType = $y["payment_type"];
+                    //         return (($xpaymentType == 'credit') && ($ypaymentType == 'debit')) ? 1 : 0;
+                    //     }
+                    //     return 0;
+                    // });
+                    $finalResult = [];
+                    if(count($partyLedgerResult) >= 1 ){
+                        $firstRow = $partyLedgerResult[0];
+                        if(count($partyLedgerResult) == 1){
+                            $finalResult[] = $firstRow;
+                        }else{
+                            $debit = [];
+                            $credit = [];
+                            for ($x = 1; $x < count($partyLedgerResult); $x++) {
+                                $secondRow = $partyLedgerResult[$x];
+                                $firstRowDate = date("dmY", strtotime($firstRow["payment_date"]));
+                                $secondRowDate = date("dmY", strtotime($secondRow["payment_date"]));
+                                $firstRowType = $firstRow["payment_type"];
+                                $secondRowType = $secondRow["payment_type"];
+                                if($firstRowDate === $secondRowDate){
+                                    if($firstRowType === "credit"){
+                                        $credit[] = $firstRow;
+                                    }
+                                    if($firstRowType === "debit"){
+                                        $debit[] = $firstRow;
+                                    }
+                                }else{
+                                    if($firstRowType === "credit"){
+                                        $credit[] = $firstRow;
+                                    }
+                                    if($firstRowType === "debit"){
+                                        $debit[] = $firstRow;
+                                    }
+                                    foreach ($debit as $temp){
+                                        $finalResult[] = $temp;
+                                    }
+                                    foreach ($credit as $temp){
+                                        $finalResult[] = $temp;
+                                    }
+                                    $debit = [];
+                                    $credit = [];
+                                }
+                                if((count($partyLedgerResult) - 1) === $x){
+                                    if($secondRowType === "credit"){
+                                        $credit[] = $secondRow;
+                                    }
+                                    if($secondRowType === "debit"){
+                                        $debit[] = $secondRow;
+                                    }
+                                    foreach ($debit as $temp){
+                                        $finalResult[] = $temp;
+                                    }
+                                    foreach ($credit as $temp){
+                                        $finalResult[] = $temp;
+                                    }
+                                }else{
+                                    $firstRow = $secondRow;
+                                }
+                                
+                            }
                         }
-                        return 0;
-                    });
-                    $tempData["accounthistory"] = $partyLedgerResult;
+                    }
+                    $tempData["accounthistory"] = $finalResult;
                 }else{
                     $tempData["accounthistory"] = array();
                 }
