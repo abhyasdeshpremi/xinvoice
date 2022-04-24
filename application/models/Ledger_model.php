@@ -365,17 +365,6 @@ class Ledger_model extends CI_Model {
                         $accounthistory["remarks"] = $historyrow->remarks;
                         $partyLedgerResult[] = $accounthistory;
                     }
-                    $tempData['beforeaccounthistory'] = $partyLedgerResult;
-                    // usort($partyLedgerResult, function ($x, $y) {
-                    //     $xDate = date("d-m-Y", strtotime($x["payment_date"]));
-                    //     $yDate = date("d-m-Y", strtotime($y["payment_date"]));
-                    //     if($xDate == $yDate){
-                    //         $xpaymentType = $x["payment_type"];
-                    //         $ypaymentType = $y["payment_type"];
-                    //         return (($xpaymentType == 'credit') && ($ypaymentType == 'debit')) ? 1 : 0;
-                    //     }
-                    //     return 0;
-                    // });
                     $finalResult = [];
                     if(count($partyLedgerResult) >= 1 ){
                         $firstRow = $partyLedgerResult[0];
@@ -437,7 +426,6 @@ class Ledger_model extends CI_Model {
                 }else{
                     $tempData["accounthistory"] = array();
                 }
-                $tempData['accounthistoryquery'] = $this->db->last_query();
                 /*
                 * Get total debit item count
                 */
