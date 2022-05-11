@@ -44,7 +44,9 @@
 <tbody>
     
     <?php  $i = 1;
+    // print_r(json_encode($result));
     foreach($result as $value){ 
+        print_r(json_encode($value["opening_balace_value"]));
         $result_account_history = $value["accounthistory"];
         $opening_balance = $value["opening_balace_value"];
         $symbol = "CR";
@@ -52,6 +54,8 @@
         if($opening_balance < 0){
             $symbol = "DR";
             $tmpopening_balance = -($opening_balance);
+        }else{
+            $tmpopening_balance = $opening_balance;
         }
     ?>
         <tr>
@@ -80,6 +84,8 @@
                 if($opening_balance < 0){
                     $symbol = "DR";
                     $tmpopening_balance = -($opening_balance);
+                }else{
+                    $tmpopening_balance = $opening_balance;
                 }
                 ?>
 
