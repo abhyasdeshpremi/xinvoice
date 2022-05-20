@@ -22,9 +22,9 @@ class Order_model extends CI_Model {
 
     public function order_list($limit, $start, $order_type = 'sell'){
         $this->db->limit($limit, $start);
-        if (($this->session->userdata('role') != "superadmin") || ($this->session->userdata('role') != "admin") ){
-            $this->db->where('fk_username', $this->session->userdata('username'));
-        }
+        // if (($this->session->userdata('role') != "superadmin") || ($this->session->userdata('role') != "admin") ){
+        //     $this->db->where('fk_username', $this->session->userdata('username'));
+        // }
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $this->db->where('order_type', $order_type);
         $this->db->order_by("created_at", "DESC");
