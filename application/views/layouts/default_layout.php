@@ -417,7 +417,7 @@
                                     <a class="nav-link" href="<?php echo base_url('/termconditions'); ?>">Term & Conditions</a>
                                 </nav>
                             </div>
-
+                            <?php if(!(access_lavel(3, $this->session->userdata('role') ))){ ?>
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsPiggy" aria-expanded="false" aria-controls="collapseDashboards">
                                 <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
                                 Expenses
@@ -430,7 +430,7 @@
                                     <a class="nav-link" href="<?php echo base_url('/newaccountholder'); ?>">New Account Holder</a>
                                 </nav>
                             </div>
-
+                            <?php } ?>
                             <?php if(!(access_lavel(5, $this->session->userdata('role') ))){ ?>
 							<!-- Sidenav Accordion (Users)-->
                             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboardsFirm" aria-expanded="false" aria-controls="collapseDashboards">
