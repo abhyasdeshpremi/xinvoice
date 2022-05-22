@@ -20,8 +20,16 @@
                         <div class="col-md-3 mb-3">
                             
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-1 mb-3">
                              
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <button type="button" class="btn btn-info make-invoice-button <?php echo ($fk_invioce_id > 0) ? 'd-none' : ''; ?>" id="convertToInvoice">Invoice</button>
+
+                            <a class="btn btn-outline-warning btn-icon <?php echo ($fk_invioce_id > 0) ? '' : 'd-none'; ?>" id="convertedToInvoicelink" href="<?php echo ($fk_invioce_id > 0) ? base_url('/createinvoice'."/".$fk_unique_invioce_code."") : ""; ?>">
+                                <?php echo ($fk_invioce_id > 0) ? $fk_invioce_id : ''; ?>
+                            </a>
+
                         </div>
                         <div class="col-md-2 mb-3">
                             <div class="btn-group">
@@ -250,6 +258,7 @@
     var orderData = <?php echo json_encode($orderitemsList); ?>;
     var globalOrderStatus = "<?php echo $orderstatus; ?>";
     var globalInvoice_bill_include_tax = "no";
+    var base_url = "<?php echo base_url('/createinvoice'); ?>";
     $(document).ready(function(){
         
         $("#clientcode").change(function(){
@@ -689,6 +698,35 @@
                 }
             }
         });
+
+        //Make invoice button action
+        $('.make-invoice-button').click(function(){
+            if((globalOrderStatus === "completed") || (globalOrderStatus === "paid") || (globalOrderStatus === "partial_paid")){
+                var defaultorderID = $("#defaultorderID").val();
+                showloader();
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url('/makeitordertoinvoice'); ?>',
+                    dataType  : 'json',
+                    data: {defaultorderID: defaultorderID},
+                    error: function() {
+                        hideloader();
+                        alert('Something is wrong');
+                    },
+                    success: function (data) {
+                        $("#convertToInvoice").addClass("d-none");
+                        var printurl = base_url + "/"+data.fk_unique_invioce_code;
+                        $("#convertedToInvoicelink").attr("href", printurl);
+                        $("#convertedToInvoicelink").text(data.fk_invioce_id);
+                        $("#convertedToInvoicelink").removeClass("d-none");
+                        hideloader();
+                    }
+                });
+            }else{
+                alert("Make it status "+ globalOrderStatus +" to Completed");
+            }
+        });
+
     });
 </script>
 <script>

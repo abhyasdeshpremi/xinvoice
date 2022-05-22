@@ -130,6 +130,8 @@ $route['saveitemorder'] = 'order/saveItemInOrder';
 $route['updateitemorder'] = 'order/updateItemInOrder';
 $route['deleteorderitem'] = 'order/deleteOrderItem';
 $route['createorderpdf/(:any)/(:any)/(:num)'] = 'order/createOrderPDF/$1/$2/$3';
+$route['makeitordertoinvoice'] = 'order/makeitordertoinvoice';
+
 
 $route['purchase'] = 'purchase_invoice/purchaseInvoice';
 

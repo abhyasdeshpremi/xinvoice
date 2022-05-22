@@ -126,6 +126,9 @@ class Order_model extends CI_Model {
                 $data['city'] = $row->city;
                 $data['area'] = $row->area;
                 $data['pincode'] = $row->pincode;
+
+                $data['fk_unique_invioce_code'] = $row->fk_unique_invioce_code;
+                $data['fk_invioce_id'] = $row->fk_invioce_id;
             }
         }
         return $data;
@@ -292,5 +295,108 @@ class Order_model extends CI_Model {
         }
         return $result;
     }
+    
+    public function makeitordertoinvoice($data){
+        $result = array();
+        $this->db->where('unique_order_code', $data['defaultorderID']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get($this->table);
+        if($query->num_rows() == 1){
+            foreach ($query->result() as $row)  
+            {  
+                $result['statuscode'] = $row->status;
+                $result['fk_invioce_id'] = $row->fk_invioce_id;
+                $result['fk_unique_invioce_code'] = $row->fk_unique_invioce_code;
 
+            }
+            if (($result['statuscode'] === "completed") || ($result['statuscode'] === "paid") || ($result['statuscode'] === "partial_paid")){
+                if($result['fk_invioce_id'] > 0){
+                    $result['code']  = false;
+                }else{
+                    $getInvoiceId = false;
+                    $getUniqueInvoiceID = "";
+                    $getInvoiceNumber;
+                    $this->load->model('Invoice_model', '', TRUE);
+                    $this->load->model('Stock_model', '', TRUE);
+                    $invoice = $this->Invoice_model->invoice_id();
+                    if(count($invoice) == 0){
+                    $invoiceNewID = invoiceIDCreation();
+                    $newInvoiceResult = $this->Invoice_model->invoiceInitial($invoiceNewID);
+                        if($newInvoiceResult){
+                            $getInvoiceId = true;
+                            $getUniqueInvoiceID = $invoiceNewID;
+                            $InvoiceResultlist = $this->Invoice_model->getinvoiceid($invoiceNewID);
+                            $getInvoiceNumber = $InvoiceResultlist["invoice_reference_id"];
+                        }else{
+                            $getInvoiceId = false;
+                        }
+                    }else{
+                        $getInvoiceId = true;
+                        $getUniqueInvoiceID = $invoice[0]->unique_invioce_code;
+                        $getInvoiceNumber = $invoice[0]->previous_invoice_ref_no;
+                    }
+
+                    if($getInvoiceId){
+                        $order_item_list = $this->order_items_list($data['defaultorderID']);
+                        foreach($order_item_list as $order_item){
+                            $tmpdata = array();
+                            $tmpdata['itemID'] = '';
+                            $tmpdata['invoiceID'] = $getUniqueInvoiceID;
+                            $tmpdata['itemcode'] = strtoupper($order_item->fk_item_code);
+                            $tmpdata['itemname'] = strtoupper($order_item->fk_item_name);
+                            $tmpdata['quatity'] = $order_item->quantity;
+                            $tmpdata['itemunitcase'] = $order_item->case_unit;
+                            $tmpdata['itemmrp'] = $order_item->mrp;
+                            $tmpdata['itemdiscount'] = $order_item->discount;
+                            $tmpdata['itemdmrpvalue'] = $order_item->mrp_value;
+                            $tmpdata['itembillValue'] = $order_item->bill_value;
+
+                            $invoice_item_save_result = $this->Invoice_model->saveInvoiceItem($tmpdata);
+                            if($invoice_item_save_result['code']){
+                                /***
+                                 * Sell:- Adjust item stock when sell item
+                                 */
+                                $tmpdata['item_code'] = $tmpdata['itemcode'];
+                                $tmpdata['item_name'] = $tmpdata['itemname'];
+                                $tmpdata['stocktype'] = "sell";
+                                $tmpdata['stockunit'] = $tmpdata['quatity'];
+                                $tmpdata['stockcomment'] = "Deducted items stock when invoice generated from order";
+                                $this->Stock_model->saveStock($tmpdata);
+                            }
+
+                        }
+                        $dataList = array(
+                            'fk_unique_invioce_code'=> $getUniqueInvoiceID,
+                            'fk_invioce_id'=> $getInvoiceNumber,
+                            'updated_at'=>date('Y-m-d H:i:s')
+                        );
+                        $this->db->where('unique_order_code', $data['defaultorderID']);
+                        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                        $this->db->update($this->table, $dataList);
+
+                        $invoicedata = array(
+                            'status'=> 'pending',
+                            'updated_at'=>date('Y-m-d H:i:s')
+                        );
+                        $this->db->where('unique_invioce_code', $getUniqueInvoiceID);
+                        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                        $this->db->update('Invoices', $invoicedata);
+
+
+                        $result['fk_unique_invioce_code']  = $getUniqueInvoiceID;
+                        $result['fk_invioce_id']  = $getInvoiceNumber;
+                        $result['code']  = true;
+                    }else{
+                        $result['code']  = false;
+                    }
+                }
+            }else{
+                $result['code']  = false;
+            }
+        }else{
+            $result['code']  = false;
+        }
+
+        return $result;
+    }
 }

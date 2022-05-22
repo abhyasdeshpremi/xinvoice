@@ -94,6 +94,9 @@ class Order extends CI_Controller {
             $data['clientcity'] = $orderDetail['city'];
             $data['clientarea'] = $orderDetail['area'];
             $data['clientpincode'] = $orderDetail['pincode'];
+
+            $data['fk_unique_invioce_code'] = $orderDetail['fk_unique_invioce_code'];
+            $data['fk_invioce_id'] = $orderDetail['fk_invioce_id'];
          } 
         $this->template->set('buttonName', 'Orders List');
         $this->template->set('buttonLink', base_url('/orders'));
@@ -321,6 +324,24 @@ class Order extends CI_Controller {
         $html = $this->load->view('order/createorderpdf', $data, true);
         $this->pdf->createPDF($html, $orderDetail['ordertitle']."".date('Y-m-d H:i:s'), $download, 'A4', $mode);
 
+    }
+
+    function makeitordertoinvoice(){
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['defaultorderID'] = $this->input->post('defaultorderID');
+            $makeitordertoinvoice = $this->Order_model->makeitordertoinvoice($data);
+            if($makeitordertoinvoice){
+                $data["code"] = $makeitordertoinvoice["code"];
+                $data["fk_unique_invioce_code"] = $makeitordertoinvoice["fk_unique_invioce_code"];
+                $data["fk_invioce_id"] = $makeitordertoinvoice["fk_invioce_id"];
+                $data["message"] = "Generated New invoice.";
+            }else{
+                $data["code"] = $makeitordertoinvoice["code"];
+                $data["message"] = "Unable to generated new invoice.";
+            }
+        }
+        echo json_encode($data);
     }
 
 }

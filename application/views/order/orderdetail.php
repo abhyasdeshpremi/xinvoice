@@ -9,6 +9,7 @@
                     <th>Status</th>
                     <th>Area</th>
                     <th>Created by</th>
+                    <th>#OID</th>
                     <th>#Inv.</th>
                     <th>Amount(₹)</th>
                     <th>Actions</th>
@@ -22,6 +23,7 @@
                     <th>Status</th>
                     <th>Area</th>
                     <th>Created by</th>
+                    <th>#OID</th>
                     <th>#Inv.</th>
                     <th>Amount(₹)</th>
                     <th>Actions</th>
@@ -43,6 +45,11 @@
                             </a>
                         </td>
                         <td><?php echo $value->previous_order_ref_no; ?></td>
+                        <td>
+                            <a class="btn btn-datatable btn-icon dropdown-item" href="<?php echo ($value->fk_invioce_id > 0) ? base_url('/createinvoice'."/".$value->fk_unique_invioce_code."") : ""; ?>">
+                                <?php echo ($value->fk_invioce_id > 0) ? $value->fk_invioce_id : ''; ?>
+                            </a>
+                        </td>
                         <td><?php echo (($value->status === "completed") || ($value->status === "paid") || ($value->status === "partial_paid") ) ? $value->lock_bill_amount : 0; ?></td>
                         <td>
                             <a class="btn btn-datatable btn-icon dropdown-item" href="<?php echo base_url('/createorder'."/".$value->unique_order_code.""); ?>">
