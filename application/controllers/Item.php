@@ -33,6 +33,8 @@ class Item extends CI_Controller {
             $data['itemcostprice'] = $this->input->post('itemcostprice');
             $data['itemopbalanceinquantity'] = $this->input->post('itemopbalanceinquantity');
             $data['itemCompanyCode'] = $this->input->post('itemCompanyCode');
+            $data['HSN_Code'] = $this->input->post('HSN_Code');
+            $data['Style_No'] = $this->input->post('Style_No');
             $uniqueCodeVerify = $this->Item_model->unique_item_code_verify($this->input->post('uniqueItemCode'));
             if($uniqueCodeVerify){
                 $createItem = $this->Item_model->create_item($data);
@@ -46,6 +48,8 @@ class Item extends CI_Controller {
                     $data['itemcostprice'] = '';
                     $data['itemopbalanceinquantity'] = '';
                     $data['itemCompanyCode'] = '';
+                    $data['HSN_Code'] = '';
+                    $data['Style_No'] = '';
                     $data['successMessage'] = "Successfully Product Created.";
                 }else{
                     $data['errorMessage'] = 'Unable to save Product information. Please contact your Administrator.';
@@ -121,6 +125,8 @@ class Item extends CI_Controller {
             $data['itemcostprice'] = $this->input->post('itemcostprice');
             $data['itemopbalanceinquantity'] = $this->input->post('itemopbalanceinquantity');
             $data['itemCompanyCode'] = $this->input->post('itemCompanyCode');
+            $data['HSN_Code'] = $this->input->post('HSN_Code');
+            $data['Style_No'] = $this->input->post('Style_No');
             $uniqueCodeVerify = $this->Item_model->unique_item_code_check($this->input->post('uniqueItemCode'));
             if($uniqueCodeVerify){
                 $createItem = $this->Item_model->update_item($data);

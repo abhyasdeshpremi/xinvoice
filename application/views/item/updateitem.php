@@ -16,6 +16,8 @@
                 $itemcostprice = $value->cost_price;
                 $itemmrp = $value->mrp;
                 $itemopbalanceinquantity = $value->op_balance_in_qty;
+                $HSN_Code = $value->HSN_Code;
+                $Style_No = $value->Style_No;
             }
         ?>
 
@@ -68,6 +70,17 @@
                 <div class="col-md-3 mb-3">
                     <label for="validationDefault05">Op. Balance in Quantity</label>
                     <input type="number" class="form-control" id="itemopbalanceinquantity" name="itemopbalanceinquantity" placeholder="Op. Balance in Quantity" value="<?php echo isset($itemopbalanceinquantity)? $itemopbalanceinquantity : ''; ?>" min="0" max="100000" step="any" />
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault03">HSN Code</label>
+                    <input type="text" class="form-control" id="HSN_Code" name="HSN_Code" placeholder="HSN Code" value="<?php echo isset($HSN_Code)? $HSN_Code : ''; ?>"/>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault04">Style No</label>
+                    <input type="text" class="form-control" id="Style_No" name="Style_No" placeholder="Style No" value="<?php echo isset($Style_No)? $Style_No : ''; ?>"/>
                 </div>
             </div>
 
