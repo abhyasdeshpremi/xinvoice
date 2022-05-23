@@ -89,6 +89,11 @@ class Firm_model extends CI_Model {
             'pin_code'=>$data['firmZip'],
             'mobile_number'=>$data['firmMobile'],
             'status'=>$data['firmstatus'],
+            'invoice_format'=>$data['invoice_format'],
+            'invoice_pdf_format'=>$data['invoice_pdf_format'],
+            'cgstrate'=>$data['cgstrate'],
+            'sgstrate'=>$data['sgstrate'],
+            'igstrate'=>$data['igstrate'],
             'updated_at'=>date('Y-m-d H:i:s')
             
         ); 
