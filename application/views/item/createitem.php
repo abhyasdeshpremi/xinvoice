@@ -59,6 +59,17 @@
                 </div>
             </div>
 
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault03">HSN Code</label>
+                    <input type="text" class="form-control" id="HSN_Code" name="HSN_Code" placeholder="HSN Code" value="<?php echo isset($HSN_Code)? $HSN_Code : ''; ?>"/>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault04">Style No</label>
+                    <input type="text" class="form-control" id="Style_No" name="Style_No" placeholder="Style No" value="<?php echo isset($Style_No)? $Style_No : ''; ?>"/>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Create Product</button>
         </form>
     </div>

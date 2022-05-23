@@ -56,6 +56,8 @@ class Item_model extends CI_Model {
             'mrp'=>$data['itemmrp'],
             'cost_price'=>$data['itemcostprice'],
             'op_balance_in_qty'=>$data['itemopbalanceinquantity'],
+            'HSN_Code'=>$data['HSN_Code'],
+            'Style_No'=>$data['Style_No'],
             'company_code'=>$data['itemCompanyCode'],
             'fk_firm_code'=> $this->session->userdata('firmcode'),
             'fk_username'=> $this->session->userdata('username')
@@ -73,6 +75,8 @@ class Item_model extends CI_Model {
             'mrp'=>$data['itemmrp'],
             'cost_price'=>$data['itemcostprice'],
             'op_balance_in_qty'=>$data['itemopbalanceinquantity'],
+            'HSN_Code'=>$data['HSN_Code'],
+            'Style_No'=>$data['Style_No'],
             'company_code'=>$data['itemCompanyCode'],
             'fk_firm_code'=> $this->session->userdata('firmcode'),
             'fk_username'=> $this->session->userdata('username')
