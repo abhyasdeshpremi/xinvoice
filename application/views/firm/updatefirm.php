@@ -27,6 +27,11 @@
                 $firmbusiness_type = $value->business_type;
                 $feature_group_for_item = $value->feature_group_for_item;
                 $feature_capture_saved_amount = $value->feature_capture_saved_amount;
+                $invoice_format = $value->invoice_format;
+                $invoice_pdf_format = $value->invoice_pdf_format;
+                $cgstrate = $value->cgstrate;
+                $sgstrate = $value->sgstrate;
+                $igstrate = $value->igstrate;
             }
         ?>
         <form class="updateFirm" action="" method="POST" id="updateFirm">
@@ -113,22 +118,50 @@
                     </select>
                 </div>
                 <div class="col-md-3 mb-3">
-                <label for="userStatus">Bill Include Tax</label>
+                    <label for="validationDefault05">Bonus % &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
+                    <input type="number" class="form-control" id="firmbonus" name="firmbonus" placeholder="Bonus %" value="<?php echo isset($firmbonus)? $firmbonus : ''; ?>">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="userStatus">Capture Saved Amount</label>
+                    <select class="form-control" id="feature_capture_saved_amount" name="feature_capture_saved_amount">
+                        <option value="yes" <?php if($feature_capture_saved_amount == 'yes'){ echo 'selected'; } ?>>Yes</option>
+                        <option value="no" <?php if($feature_capture_saved_amount == 'no'){ echo 'selected'; } ?>>No</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="userStatus">Invoice Format</label>
+                    <select class="form-control" id="invoice_format" name="invoice_format">
+                        <option value="standard" <?php if($invoice_format == 'standard'){ echo 'selected'; } ?>>Standard</option>
+                        <option value="compact" <?php if($invoice_format == 'compact'){ echo 'selected'; } ?>>Compact</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="userStatus">Invoice Pdf Format</label>
+                    <select class="form-control" id="invoice_pdf_format" name="invoice_pdf_format">
+                        <option value="standard" <?php if($invoice_pdf_format == 'standard'){ echo 'selected'; } ?>>Standard</option>
+                        <option value="compact" <?php if($invoice_pdf_format == 'compact'){ echo 'selected'; } ?>>Compact</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="userStatus">Bill Include Tax</label>
                     <select class="form-control" id="billIncludeTax" name="billIncludeTax">
                         <option value="yes" <?php if($billIncludeTax == 'yes'){ echo 'selected'; } ?>>Yes</option>
                         <option value="no" <?php if($billIncludeTax == 'no'){ echo 'selected'; } ?>>No</option>
                     </select>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label for="validationDefault05">Bonus % &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
-                    <input type="number" class="form-control" id="firmbonus" name="firmbonus" placeholder="Bonus %" value="<?php echo isset($firmbonus)? $firmbonus : ''; ?>">
+                    <label for="validationDefault05">CGST Rate (%) &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
+                    <input type="text" class="form-control" id="cgstrate" name="cgstrate" placeholder="CGST Rate (%)" value="<?php echo isset($cgstrate)? ( ($cgstrate > 0) ? $cgstrate : '' ) : ''; ?>">
                 </div>
                 <div class="col-md-3 mb-3">
-                <label for="userStatus">Capture Saved Amount</label>
-                    <select class="form-control" id="feature_capture_saved_amount" name="feature_capture_saved_amount">
-                        <option value="yes" <?php if($feature_capture_saved_amount == 'yes'){ echo 'selected'; } ?>>Yes</option>
-                        <option value="no" <?php if($feature_capture_saved_amount == 'no'){ echo 'selected'; } ?>>No</option>
-                    </select>
+                    <label for="validationDefault05">SGST / UTGST Rate (%) &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
+                    <input type="text" class="form-control" id="sgstrate" name="sgstrate" placeholder="SGST / UTGST Rate (%)" value="<?php echo isset($sgstrate)? ( ($sgstrate > 0) ? $sgstrate : '' ) : ''; ?>">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault05">IGST Rate (%) &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
+                    <input type="text" class="form-control" id="igstrate" name="igstrate" placeholder="IGST Rate (%)" value="<?php echo isset($igstrate)? ( ($igstrate > 0) ? $igstrate : '' ) : ''; ?>">
                 </div>
             </div>
             <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Update Firm</button>

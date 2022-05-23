@@ -120,6 +120,11 @@ class Firm extends CI_Controller {
             $data['feature_capture_saved_amount'] = $this->input->post('feature_capture_saved_amount');
             $data['firmbonus'] = $this->input->post('firmbonus');
             $data['business_type'] = $this->input->post('business_type');
+            $data['invoice_format'] = $this->input->post('invoice_format');
+            $data['invoice_pdf_format'] = $this->input->post('invoice_pdf_format');
+            $data['cgstrate'] = $this->input->post('cgstrate');
+            $data['sgstrate'] = $this->input->post('sgstrate');
+            $data['igstrate'] = $this->input->post('igstrate');
             $uniqueCodecheck = $this->Firm_model->unique_firm_code_check($this->input->post('uniqueCode'));
             if($uniqueCodecheck){
                 $updateFirm = $this->Firm_model->update_firm($data);
