@@ -75,7 +75,7 @@
             
             <div class="form-row">
                 <div class="col-md-3 mb-3">
-                    <label for="validationDefault03">HSN Code</label>
+                    <label for="validationDefault03"><a target="_blank" href="https://cbic-gst.gov.in/gst-goods-services-rates.html">HSN Code</a></label>
                     <input type="text" class="form-control" id="HSN_Code" name="HSN_Code" placeholder="HSN Code" value="<?php echo isset($HSN_Code)? $HSN_Code : ''; ?>"/>
                 </div>
                 <div class="col-md-3 mb-3">

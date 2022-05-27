@@ -853,6 +853,7 @@
 
 
         $('.select-dropdown-status').click(function(){
+            showloader();
             var invoiceStatus = $(this).attr("hreflang");
             var invoice_id = $("#defaultinvoiceID").val();
             console.log(invoiceStatus);
@@ -863,6 +864,7 @@
                 dataType  : 'json',
                 data: {invoiceid: invoice_id, invoiceStatus: invoiceStatus },
                 error: function() {
+                    hideloader();
                     alert('Something is wrong');
                 },
                 success: function (data) {
@@ -871,6 +873,7 @@
                         globalInvoiceStatus = invoiceStatus;
                         setInvoiceStatus(invoiceStatus);
                     }
+                    hideloader();
                 }
             });
         });
