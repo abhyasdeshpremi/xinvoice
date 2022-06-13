@@ -262,6 +262,7 @@ class Invoice extends CI_Controller {
             $data['gstin'] = $invoiceDetail['gstnumber'];
             $data['pannumber'] = $invoiceDetail['pannumber'];
             $data['mobilenumber'] = $invoiceDetail['mobilenumber'];
+            $data['aadharnumber'] = $invoiceDetail['aadharnumber'];
 
             $data['clintaddress'] = $invoiceDetail['address'];
             $data['clientState'] = $invoiceDetail['state'];
@@ -273,7 +274,7 @@ class Invoice extends CI_Controller {
         $this->template->set('buttonName', 'Sell Invoices List');
         $this->template->set('buttonLink', base_url('/invoicedetail'));
         $this->template->set('title', 'Create Sell Invoice');
-        $this->template->load('default_layout', 'contents' , 'invoice/createinvoice', $data);
+        $this->template->load('default_layout', 'contents' , 'invoice/'.htmlinvoicetemplate(), $data);
     }
 
     public function createInvoicePDF($id = null, $mode = "landscape", $download = false, $paper_size = "A4"){
@@ -329,12 +330,19 @@ class Invoice extends CI_Controller {
             $data['clientarea'] = $invoiceDetail['area'];
             $data['clientpincode'] = $invoiceDetail['pincode'];
             $data['bonus_percent'] = floatval($this->session->userdata('bonus_percent'));
+            $clientInfo = $this->Client_model->client_by_id($invoiceDetail['fk_client_code']);
+            $clientType = $clientInfo['client_type'];
+            $data['show_bonus'] = false;
+            $data['client_type'] = $clientType;
+            if($clientType === "vendor"){
+                $data['show_bonus'] = true;
+            }
         }
         // $this->template->set('title', 'Create Invoice PDF');
         // $this->template->load('default_layout', 'contents' , 'invoice/createinvoicepdf', $data);
         //landscape portrait
         $this->load->library('pdf');
-        $html = $this->load->view('invoice/createinvoicepdf', $data, true);
+        $html = $this->load->view('invoice/'.htmlinvoicepdftemplate(), $data, true);
         $this->pdf->createPDF($html, $invoiceDetail['invoicetitle']."".date('Y-m-d H:i:s'), $download, 'A4', $mode);
 
     }
@@ -589,6 +597,8 @@ class Invoice extends CI_Controller {
             $data['gstin'] = $this->input->post('gstin');
             $data['pannumber'] = $this->input->post('pannumber');
             $data['mobilenumber'] = $this->input->post('mobilenumber');
+            $data['aadharnumber'] = $this->input->post('aadharnumber'); 
+            
             $data['clintaddress'] = $this->input->post('clintaddress');
             $data['clientState'] = $this->input->post('clientState');
             $data['clientDistrict'] = $this->input->post('clientDistrict');

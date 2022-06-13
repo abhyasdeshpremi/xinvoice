@@ -157,6 +157,7 @@ class Client_model extends CI_Model {
                 $data['gst_no'] = $row->gst_no;
                 $data['pan_no'] = $row->pan_no;
                 $data['mobile_no'] = $row->mobile_no;
+                $data['aadhar_no'] = $row->aadhar_no;
                 $data['address'] = $row->address;
                 $data['city'] = $row->city;
                 $data['district'] = $row->district;

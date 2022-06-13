@@ -42,35 +42,73 @@ if($paper_size == 'A5'){
 }
 ?>
 <body style="<?php echo $width; ?>" >
+    <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
+    <span style="font:10px; float:right; margin-right:10px;"><i>Original Copy</i></span>
     <center>
         <span style="font:12px;"><?php echo $invoiceTitle; ?></span><br>
         <span style="font:16px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
-        <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br><br>
+        <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br>
+        <span style="font:10px;"><?php echo "PAN : HGTY456OKJ";?></span>
     </center>
-    <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
-    <span style="font:10px; float:right; margin-right:10px;">ORIGINAL FOR RECIPIENT</span>
+    
     <center style="margin-right:0px;">
-        <span style="font:10px; margin-right:0px;">MOB.NO.: <b><?php echo $owninvoicemobileno; ?></b></span>
+        <span style="font:10px; margin-right:0px;"><i><b>Tel. : <?php echo $owninvoicemobileno; ?> 
+        <?php 
+            if($this->session->userdata('firm_email') == '') { 
+                echo "";
+            }else{
+                echo "&nbsp; &nbsp;&nbsp; Email : ".$this->session->userdata('firm_email');
+            }
+        ?>
+    </b></i></span>
     </center>
+   
    
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
         <div style="height:64px; font: 9px;">
-            <div style="width:50%; height: 64px; float:left;"> To,
+            <div style="width:50%; height: 64px; float:left;">
+                <div style="margin-right:10px;">
+                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <span <?php echo $font_style; ?>><b><?php echo $invoicerefNumber; ?> / <?php echo financial_year($created_at); ?></b></span></span><br>
+                    <span>DATE OF INVOICE &nbsp; &nbsp; : <span style="font:10px;"><b><?php echo date("d-m-Y H:i", strtotime($created_at)); ?></b></span></span><br>
+                    <span>PLACE OF SUPPLY &nbsp; : <?php echo "BIHAR (10)"; ?></span><br>
+                    <span>REVERSE CHARGE &nbsp;: <?php echo "N"; ?></span><br>
+                    <span>GR/RR NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo ""; ?></span><br>
+                </div>
+            </div>
+            <div style="width:50%; height: 64px; float:right;"> 
+                    <span>TRANSPORT &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo "JHARKHAND BENGAL FREIGHT CARRI"; ?></span><br>
+                    <span>VAHICLE NO.&nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
+                    <span>STATION &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo "BIHAR SHARIF"; ?></span><br>
+                    <span>E-WAY BILL NO. &nbsp; &nbsp; &nbsp; : <?php echo ""; ?></span>
+            </div>
+        </div>
+    <hr style="text-align:left;margin-left:0; margin-top:1px; margin-right:10px;">
+        <div style="height:108px; font: 9px;">
+            <div style="width:50%; height: 64px; float:left;"><i><b>Billed To,</b></i>
                 <div style="margin-right:10px;">
                     <span style="font:10px;"><b><?php echo $clientname; ?></b></span><br>
                     <span><?php echo $clintaddress; ?></span><br>
                     <span><?php echo $clientcity." ".$clientarea; ?></span><br>
-                    <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br>
-                    <span>GSTIN : <?php echo $gstin; ?></span>
+                    <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br><br>
+
+                    <span>Party PAN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
+                    <span>Party Mobile No. &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
+                    <span>Party Aadhaar No. &nbsp;: <?php echo $gstin; ?></span><br>
+                    <span>GSTIN / UIN  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span>
                 </div>
             </div>
-            <div style="width:50%; height: 64px; float:right;"> 
-                    <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : <span <?php echo $font_style; ?>><b><?php echo $invoicerefNumber; ?> / <?php echo financial_year($created_at); ?></b></span></span><br>
-                    <span>DATE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <span style="font:10px;"><b><?php echo date("d-m-Y H:i", strtotime($created_at)); ?></b></span></span><br>
-                    <span>PAYMENT MODE &nbsp;&nbsp;: <?php echo $paymentmode; ?></span><br>
-                    <span>VAHICLE NO. &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
-                    <span>PAN NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
-                    <span>MOB NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <span <?php echo $font_style_mob; ?>><b><?php echo $mobilenumber; ?></b></span></span>
+            <div style="width:50%; height: 64px; float:right;"> <i><b>Shipped To,</b></i>
+                <div style="margin-right:10px;">
+                    <span style="font:10px;"><b><?php echo $clientname; ?></b></span><br>
+                    <span><?php echo $clintaddress; ?></span><br>
+                    <span><?php echo $clientcity." ".$clientarea; ?></span><br>
+                    <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br><br>
+
+                    <span>Party PAN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
+                    <span>Party Mobile No. &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
+                    <span>Party Aadhaar No. &nbsp;: <?php echo $gstin; ?></span><br>
+                    <span>GSTIN / UIN  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span>
+                </div>
             </div>
         </div>
     <hr style="text-align:left;margin-left:0; margin-right:10px;">
@@ -147,9 +185,7 @@ if($paper_size == 'A5'){
                     if($bonus_percent > 0){
                         $percentage_value = round(($mrp_value * $bonus_percent) / 100);
                         if($percentage_value > 0){
-                            if($show_bonus){
-                                $bonusString = "BONUS AMOUNT: " .number_format($percentage_value, 2);
-                            }
+                            $bonusString = "BONUS AMOUNT: " .number_format($percentage_value, 2);
                         }
                     }
                 }
@@ -197,7 +233,9 @@ if($paper_size == 'A5'){
     <tbody>
 </table>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
-    <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
+        <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
+    <hr style="text-align:left;margin-left:0; margin-right:12px;">
+        <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
     <spna style="font:10px;"><?php echo $this->session->userdata('tc_title'); ?></span>
     <div style="margin-top:10px; height: 60px;">

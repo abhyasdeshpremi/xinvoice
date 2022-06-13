@@ -299,6 +299,7 @@ class Invoice_model extends CI_Model {
                 $data['gstnumber'] = $row->gstnumber;
                 $data['pannumber'] = $row->pannumber;
                 $data['mobilenumber'] = $row->mobilenumber;
+                $data['aadharnumber'] = $row->aadharnumber;
 
                 $data['address'] = $row->address;
                 $data['state'] = $row->state;
@@ -329,6 +330,7 @@ class Invoice_model extends CI_Model {
                 'gstnumber'=>$data['gstin'],
                 'pannumber'=>$data['pannumber'],
                 'mobilenumber'=>$data['mobilenumber'],
+                'aadharnumber'=>$data['aadharnumber'],
                 'address'=>$data['clintaddress'],
                 'state'=>$data['clientState'],
                 'district'=>$data['clientDistrict'],

@@ -33,11 +33,20 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('lastname', $queryResult['result'][0]->last_name);
                 $this->session->set_userdata('firmcode', $queryResult['result'][0]->fk_firm_code);
                 $this->session->set_userdata('firmname', $firmResult['result'][0]->name);
+                $this->session->set_userdata('firm_mobile_number', $firmResult['result'][0]->mobile_number);
+                $this->session->set_userdata('firm_email', $firmResult['result'][0]->firm_email);
                 $this->session->set_userdata('bill_include_tax', $firmResult['result'][0]->bill_include_tax);
                 $this->session->set_userdata('feature_group_for_item', $firmResult['result'][0]->feature_group_for_item);
                 $this->session->set_userdata('feature_capture_saved_amount', $firmResult['result'][0]->feature_capture_saved_amount);
                 $this->session->set_userdata('bonus_percent', $firmResult['result'][0]->bonus_percent);
                 $this->session->set_userdata('pk_firm_id', $firmResult['result'][0]->pk_firm_id);
+
+                $this->session->set_userdata('invoice_format', $firmResult['result'][0]->invoice_format);
+                $this->session->set_userdata('invoice_pdf_format', $firmResult['result'][0]->invoice_pdf_format);
+                $this->session->set_userdata('cgstrate', $firmResult['result'][0]->cgstrate);
+                $this->session->set_userdata('sgstrate', $firmResult['result'][0]->sgstrate);
+                $this->session->set_userdata('igstrate', $firmResult['result'][0]->igstrate);
+
                 $this->session->set_userdata('role', $queryResult['result'][0]->role);
                 $termcondition = $this->Profile_model->gettermcondition();
                 if(count($termcondition['result']) > 0){
