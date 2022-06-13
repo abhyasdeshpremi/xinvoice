@@ -170,3 +170,37 @@ function debug_function(){
         }
         return $startfyear.'-'.$endfyear;
     }
+
+    function htmlinvoicetemplate(){
+        $ci = &get_instance();
+        $ci->load->library('session');
+        $invoice_format = $ci->session->userdata('invoice_format');
+        switch($invoice_format){
+            case "standard":
+                return "createinvoicestandard";
+                break;
+            case "compact":
+                return "createinvoice";
+                break;
+            default:
+                return "createinvoice";
+                break;
+        }
+    }
+
+    function htmlinvoicepdftemplate(){
+        $ci = &get_instance();
+        $ci->load->library('session');
+        $invoice_format = $ci->session->userdata('invoice_format');
+        switch($invoice_format){
+            case "standard":
+                return "createinvoicestandardpdf";
+                break;
+            case "compact":
+                return "createinvoicepdf";
+                break;
+            default:
+                return "createinvoicepdf";
+                break;
+        }
+    }
