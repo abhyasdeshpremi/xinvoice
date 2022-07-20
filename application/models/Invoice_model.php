@@ -371,6 +371,8 @@ class Invoice_model extends CI_Model {
                 'mrp_value'=>$data['itemdmrpvalue'],
                 'discount'=>$data['itemdiscount'],
                 'bill_value'=>$data['itembillValue'],
+                'HSN_Code'=>$data['item_hsncode'],
+                'Style_No'=>$data['item_styleno'],
                 'updated_at'=>date('Y-m-d H:i:s')
             );
             $this->db->where('pk_invoice_item_id', $data['itemID']);
@@ -390,6 +392,8 @@ class Invoice_model extends CI_Model {
                 'mrp_value'=>$data['itemdmrpvalue'],
                 'discount'=>$data['itemdiscount'],
                 'bill_value'=>$data['itembillValue'],
+                'HSN_Code'=>$data['item_hsncode'],
+                'Style_No'=>$data['item_styleno'],
                 'fk_username'=>$this->session->userdata('username'),
                 'fk_firm_code'=>$this->session->userdata('firmcode')
             );

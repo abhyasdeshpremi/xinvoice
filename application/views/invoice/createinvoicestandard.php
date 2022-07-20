@@ -276,7 +276,7 @@
                             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" autocomplete="off">
                             <?php $count = 1; 
                                 foreach($itemsList as $item){ ?>
-                                    <a class="dropdown-item small select-dropdown-item" hreflang="<?php echo $item->item_code; ?>"><?php echo $item->name." <span style='font-size:50%;'>🍦 (".$item->item_code.") &copy; ".$item->company_code." ₹(".$item->mrp.")</span>";?></a>
+                                    <a class="dropdown-item small select-dropdown-item" hreflang="<?php echo $item->item_code; ?>"><?php echo $item->name." <span style='font-size:50%;'> (".$item->item_code.") &copy; ".$item->company_code." ₹(".$item->mrp.") ".$item->Style_No." ".$item->HSN_Code."</span>";?></a>
                             <?php $count++; } ?>
                     </div>
                 </div>
@@ -284,6 +284,18 @@
                 <input type="hidden" class="form-control"  id="defineunitcase" name="defineunitcase" value="">
                 <input type="hidden" class="form-control"  id="updateItemID" name="updateItemID" value="">
                 <input type="text" class="form-control" aria-label="Text input with dropdown button" id="itemdescription" name="itemdescription" value="" readonly>
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">HSN Code</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itemhsncode" name="itemhsncode" value="" readonly>
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Style No.</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="itemstyleno" name="itemstyleno" value="" readonly>
             </div>
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
@@ -498,6 +510,8 @@
                 success: function (data) {
                     $('#selectitemcode').val(data[0].item_code);
                     $('#itemdescription').val(data[0].name);
+                    $('#itemhsncode').val(data[0].HSN_Code);
+                    $('#itemstyleno').val(data[0].Style_No);
                     $('#itemmrp').val(data[0].mrp);
                     $('#defineunitcase').val(data[0].unit_case);
                     invoiceCalculation();
@@ -513,6 +527,8 @@
             if (modelbutton === "Add Item"){
                 var item_code = $("#selectitemcode").val();
                 var item_name = $("#itemdescription").val();
+                var item_hsncode = $("#itemhsncode").val();
+                var item_styleno = $("#itemstyleno").val();
                 var invoice_id = $("#defaultinvoiceID").val();
                 var quatity = $("#itemquantity").val();
                 var itemunitcase = $("#itemcaseunit").val();
@@ -542,7 +558,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo base_url('/saveitemininvoce'); ?>',
-                    data: {invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
+                    data: {invoiceid: invoice_id, itemcode: item_code, itemname: item_name, item_hsncode: item_hsncode, item_styleno: item_styleno, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
                     error: function(request, error) {
                         console.log(arguments);
                         $("#successfullyMessage").addClass('alert-danger');
@@ -556,6 +572,8 @@
                         $("#selectitemcode").val('');
                         $("#itemdescription").val('');
                         $("#itemquantity").val('');
+                        $("#itemhsncode").val('');
+                        $("#itemstyleno").val('');
                         $("#itemmrp").val('');
                         $("#itemdiscount").val('');
                         $("#itemmrpvalue").val('');
@@ -579,6 +597,8 @@
                 var itemID = $("#updateItemID").val();
                 var item_code = $("#selectitemcode").val();
                 var item_name = $("#itemdescription").val();
+                var item_hsncode = $("#itemhsncode").val();
+                var item_styleno = $("#itemstyleno").val();
                 var invoice_id = $("#defaultinvoiceID").val();
                 var quatity = $("#itemquantity").val();
                 var itemunitcase = $("#itemcaseunit").val();
@@ -610,7 +630,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo base_url('/updateitemininvoce'); ?>',
-                    data: {itemID: itemID, invoiceid: invoice_id, itemcode: item_code, itemname: item_name, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
+                    data: {itemID: itemID, invoiceid: invoice_id, itemcode: item_code, itemname: item_name, item_hsncode: item_hsncode, item_styleno: item_styleno, quatity: quatity, itemunitcase: itemunitcase, itemmrp: itemmrp, itemdiscount: itemdiscount, itemdmrpvalue: itemdmrpvalue, itembillValue: itembillValue},
                     error: function(request, error) {
                         console.log(arguments);
                         $("#successfullyMessage").addClass('alert-danger');
@@ -625,6 +645,8 @@
                         $("#selectitemcode").val('');
                         $("#itemdescription").val('');
                         $("#itemquantity").val('');
+                        $("#itemhsncode").val('');
+                        $("#itemstyleno").val('');
                         $("#itemmrp").val('');
                         $("#itemdiscount").val('');
                         $("#itemmrpvalue").val('');
@@ -1063,6 +1085,8 @@
             $("#itemdiscount").val(editPreviewData["discount"]);
             $("#itemmrpvalue").val(editPreviewData["mrp_value"]);
             $("#itembillValue").val(editPreviewData["bill_value"]);
+            $("#itemhsncode").val(editPreviewData["HSN_Code"]);
+            $("#itemstyleno").val(editPreviewData["Style_No"]);
             $("#add_item_to_invoice").text("Update Item");
         }else{
             alert("Something went wrong")
@@ -1091,9 +1115,9 @@
             return '<tr class="invoicecal">'
                         +'<th width="60px;">#</th>'
                         +'<th>Name</th>'
-                        +'<th width="30px;">C/S</th>'
+                        +'<th width="30px;">HSN</th>'
+                        +'<th width="70px;">STYLE#</th>'
                         +'<th width="70px;">QTY</th>'
-                        +'<th width="70px;">MRP</th>'
                         +'<th width="100px;">MRP Value</th>'
                         +'<th width="70px;">DS%</th>'
                         +'<th width="100px;">Bas. Val</th>'
@@ -1104,9 +1128,9 @@
             return '<tr class="invoicecal">'
                         +'<th width="60px;">#</th>'
                         +'<th>Name</th>'
-                        +'<th width="30px;">C/S</th>'
+                        +'<th width="30px;">HSN</th>'
+                        +'<th width="70px;">STYLE#</th>'
                         +'<th width="70px;">QTY</th>'
-                        +'<th width="70px;">MRP</th>'
                         +'<th width="100px;">MRP Value</th>'
                         +'<th width="70px;">DS%</th>'
                         +'<th width="100px;">Bill Value</th>'
@@ -1121,9 +1145,9 @@
             return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
                         +'<td>'+numberOne+'</td>'
                         +'<td>'+oneRow["fk_item_name"]+'</td>'
-                        +'<td>'+oneRow["case_unit"]+'</td>'
+                        +'<td>'+oneRow["HSN_Code"]+'</td>'
+                        +'<td>'+oneRow["Style_No"]+'</td>'
                         +'<td>'+oneRow["quantity"]+'</td>'
-                        +'<td>'+oneRow["mrp"]+'</td>'
                         +'<td>'+oneRow["mrp_value"]+'</td>'
                         +'<td>'+oneRow["discount"]+'</td>'
                         +'<td>'+basicValue+'</td>'
@@ -1137,9 +1161,9 @@
             return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
                         +'<td>'+numberOne+'</td>'
                         +'<td>'+oneRow["fk_item_name"]+'</td>'
-                        +'<td>'+oneRow["case_unit"]+'</td>'
+                        +'<td>'+oneRow["HSN_Code"]+'</td>'
+                        +'<td>'+oneRow["Style_No"]+'</td>'
                         +'<td>'+oneRow["quantity"]+'</td>'
-                        +'<td>'+oneRow["mrp"]+'</td>'
                         +'<td>'+oneRow["mrp_value"]+'</td>'
                         +'<td>'+oneRow["discount"]+'</td>'
                         +'<td>'+parseFloat(oneRow["bill_value"]).toFixed(2)+'</td>'
