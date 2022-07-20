@@ -381,6 +381,8 @@ class Invoice extends CI_Controller {
             $data['invoiceID'] = $this->input->post('invoiceid');
             $data['itemcode'] = strtoupper($this->input->post('itemcode'));
             $data['itemname'] = strtoupper($this->input->post('itemname'));
+            $data['item_hsncode'] = $this->input->post('item_hsncode');
+            $data['item_styleno'] = $this->input->post('item_styleno');
             $data['quatity'] = $this->input->post('quatity');
             $data['itemunitcase'] = $this->input->post('itemunitcase');
             $data['itemmrp'] = $this->input->post('itemmrp');
@@ -413,7 +415,9 @@ class Invoice extends CI_Controller {
                                         "mrp" => $data['itemmrp'], 
                                         "mrp_value" => $data['itemdmrpvalue'], 
                                         "discount" => $data['itemdiscount'], 
-                                        "bill_value" => $data['itembillValue'], 
+                                        "bill_value" => $data['itembillValue'],
+                                        "HSN_Code" => $data['item_hsncode'], 
+                                        "Style_No" => $data['item_styleno'], 
                                         "updated_at" => date('Y-m-d H:i:s'), 
                                         "fk_firm_code" => $this->session->userdata('firmcode')
                                         );
@@ -439,6 +443,8 @@ class Invoice extends CI_Controller {
             $data['invoiceID'] = $this->input->post('invoiceid');
             $data['itemcode'] = strtoupper($this->input->post('itemcode'));
             $data['itemname'] = strtoupper($this->input->post('itemname'));
+            $data['item_hsncode'] = $this->input->post('item_hsncode');
+            $data['item_styleno'] = $this->input->post('item_styleno');
             $data['quatity'] = $this->input->post('quatity');
             $data['itemunitcase'] = $this->input->post('itemunitcase');
             $data['itemmrp'] = $this->input->post('itemmrp');
@@ -490,7 +496,9 @@ class Invoice extends CI_Controller {
                                         "mrp" => $data['itemmrp'], 
                                         "mrp_value" => $data['itemdmrpvalue'], 
                                         "discount" => $data['itemdiscount'], 
-                                        "bill_value" => $data['itembillValue'], 
+                                        "bill_value" => $data['itembillValue'],
+                                        "HSN_Code" => $data['item_hsncode'], 
+                                        "Style_No" => $data['item_styleno'],
                                         "updated_at" => date('Y-m-d H:i:s'), 
                                         "fk_firm_code" => $this->session->userdata('firmcode')
                                         );

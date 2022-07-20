@@ -127,6 +127,47 @@ class Ledger_model extends CI_Model {
                 $tempData["district"] = strtoupper($row->district);
                 $tempData["gst_no"] = strtoupper($row->gst_no);
                 $tempData["total_amount"] = $row->total_amount;
+
+                /**
+                 * Start get opening value get
+                */
+
+                /*
+                * Get total debit item count
+                */
+                $this->db->select_sum('amount');
+                $this->db->from('Account_Entry');
+                $this->db->where('fk_client_code', $row->fk_client_code);
+                $this->db->where('payment_type', "debit");
+                $this->db->where('delete_flag', "no");
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where("payment_date >", $endDate);
+                $itemSellCountQuery = $this->db->get();
+                $sell_count_value = $itemSellCountQuery->row()->amount;
+                $sell_count_value = round($sell_count_value);
+                $tempData["temp_debit_count_value"] = $sell_count_value;
+
+                /*
+                * Get total credit item count
+                */
+                $this->db->select_sum('amount');
+                $this->db->from('Account_Entry');
+                $this->db->where('fk_client_code', $row->fk_client_code);
+                $this->db->where('payment_type', "credit");
+                $this->db->where('delete_flag', "no");
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->where("payment_date >", $endDate);
+                $itemBuyCountQuery = $this->db->get();
+                $buy_count_value = $itemBuyCountQuery->row()->amount;
+                $buy_count_value = round($buy_count_value);
+                $tempData["temp_credit_count_value"] = $buy_count_value;
+                $tempData["opening_balace_value"] = ($tempData["temp_credit_count_value"] - $tempData["temp_debit_count_value"]);
+
+                /**
+                 * End get opening value get
+                */
+                $tempData["total_amount"] = ($tempData["total_amount"] - $tempData["opening_balace_value"]);
+
                 /*
                 * Get total debit item count
                 */
