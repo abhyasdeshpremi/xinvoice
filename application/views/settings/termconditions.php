@@ -48,7 +48,7 @@
 <script>
     $(document).ready(function(){ 
         $('#title, #line1, #line2, #line3, #line4').keypress(function(e) {
-            if ($(this).val().length >= 80) {
+            if ($(this).val().length >= 90) {
                 return false;
             }
             return true;

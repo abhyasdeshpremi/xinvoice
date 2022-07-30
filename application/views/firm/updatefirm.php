@@ -32,6 +32,8 @@
                 $cgstrate = $value->cgstrate;
                 $sgstrate = $value->sgstrate;
                 $igstrate = $value->igstrate;
+                $pan_number = $value->pan_number;
+                $gst_number = $value->gst_number;
             }
         ?>
         <form class="updateFirm" action="" method="POST" id="updateFirm">
@@ -162,6 +164,16 @@
                 <div class="col-md-3 mb-3">
                     <label for="validationDefault05">IGST Rate (%) &nbsp;&nbsp;<i class="fa fa-info" data-toggle="tooltip" title="Bonus for vendor as per sell invoice"></i></label>
                     <input type="text" class="form-control" id="igstrate" name="igstrate" placeholder="IGST Rate (%)" value="<?php echo isset($igstrate)? ( ($igstrate > 0) ? $igstrate : '' ) : ''; ?>">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault03">Pan Number</label>
+                    <input type="text" class="form-control uppercase" id="pan_number" name="pan_number" placeholder="Pan Number" value="<?php echo isset($pan_number)? $pan_number : ''; ?>" />
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationDefault04">GST Number</label>
+                    <input type="text" class="form-control uppercase" id="gst_number" name="gst_number" placeholder="GST Number" value="<?php echo isset($gst_number)? $gst_number : ''; ?>" >
                 </div>
             </div>
             <button type="submit" class="btn btn-warning mr-2 my-1" type="button">Update Firm</button>

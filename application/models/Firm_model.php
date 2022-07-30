@@ -94,6 +94,8 @@ class Firm_model extends CI_Model {
             'cgstrate'=>$data['cgstrate'],
             'sgstrate'=>$data['sgstrate'],
             'igstrate'=>$data['igstrate'],
+            'pan_number'=>$data['pan_number'],
+            'gst_number'=>$data['gst_number'],
             'updated_at'=>date('Y-m-d H:i:s')
             
         ); 

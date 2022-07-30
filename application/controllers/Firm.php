@@ -125,6 +125,8 @@ class Firm extends CI_Controller {
             $data['cgstrate'] = $this->input->post('cgstrate');
             $data['sgstrate'] = $this->input->post('sgstrate');
             $data['igstrate'] = $this->input->post('igstrate');
+            $data['pan_number'] = $this->input->post('pan_number');
+            $data['gst_number'] = $this->input->post('gst_number');
             $uniqueCodecheck = $this->Firm_model->unique_firm_code_check($this->input->post('uniqueCode'));
             if($uniqueCodecheck){
                 $updateFirm = $this->Firm_model->update_firm($data);

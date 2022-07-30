@@ -270,6 +270,34 @@ class Invoice extends CI_Controller {
             $data['clientcity'] = $invoiceDetail['city'];
             $data['clientarea'] = $invoiceDetail['area'];
             $data['clientpincode'] = $invoiceDetail['pincode'];
+
+            $data['clientcodes'] = $invoiceDetail['fk_client_codes'];
+            $data['clientnames'] = $invoiceDetail['client_names'];
+            $data['gstins'] = $invoiceDetail['gstnumbers'];
+            $data['pannumbers'] = $invoiceDetail['pannumbers'];
+            $data['mobilenumbers'] = $invoiceDetail['mobilenumbers'];
+            $data['aadharnumbers'] = $invoiceDetail['aadharnumbers'];
+
+            $data['clintaddresss'] = $invoiceDetail['addresss'];
+            $data['clientStates'] = $invoiceDetail['states'];
+            $data['clientDistricts'] = $invoiceDetail['districts'];
+            $data['clientcitys'] = $invoiceDetail['citys'];
+            $data['clientareas'] = $invoiceDetail['areas'];
+            $data['clientpincodes'] = $invoiceDetail['pincodes'];
+
+            $data['bank_name'] = $invoiceDetail['bank_name'];
+            $data['branch_name'] = $invoiceDetail['branch_name'];
+            $data['bank_address'] = $invoiceDetail['bank_address'];
+            $data['account_number'] = $invoiceDetail['account_number'];
+            $data['ifsc_code'] = $invoiceDetail['ifsc_code'];
+            $data['UPI_ID'] = $invoiceDetail['UPI_ID'];
+            //Extra header information
+            $data['reversecharge'] = $invoiceDetail['reversecharge'];
+            $data['placeofsupply'] = $invoiceDetail['placeofsupply'];
+            $data['GGRRNo'] = $invoiceDetail['GGRRNo'];
+            $data['transport'] = $invoiceDetail['transport'];
+            $data['station'] = $invoiceDetail['station'];
+            $data['ewaybillno'] = $invoiceDetail['ewaybillno'];
          } 
         $this->template->set('buttonName', 'Sell Invoices List');
         $this->template->set('buttonLink', base_url('/invoicedetail'));
@@ -322,6 +350,7 @@ class Invoice extends CI_Controller {
             $data['gstin'] = $invoiceDetail['gstnumber'];
             $data['pannumber'] = $invoiceDetail['pannumber'];
             $data['mobilenumber'] = $invoiceDetail['mobilenumber'];
+            $data['aadharnumber'] = $invoiceDetail['aadharnumber'];
 
             $data['clintaddress'] = $invoiceDetail['address'];
             $data['clientState'] = $invoiceDetail['state'];
@@ -329,6 +358,36 @@ class Invoice extends CI_Controller {
             $data['clientcity'] = $invoiceDetail['city'];
             $data['clientarea'] = $invoiceDetail['area'];
             $data['clientpincode'] = $invoiceDetail['pincode'];
+
+            $data['clientcodes'] = $invoiceDetail['fk_client_codes'];
+            $data['clientnames'] = $invoiceDetail['client_names'];
+            $data['gstins'] = $invoiceDetail['gstnumbers'];
+            $data['pannumbers'] = $invoiceDetail['pannumbers'];
+            $data['mobilenumbers'] = $invoiceDetail['mobilenumbers'];
+            $data['aadharnumbers'] = $invoiceDetail['aadharnumbers'];
+
+            $data['clintaddresss'] = $invoiceDetail['addresss'];
+            $data['clientStates'] = $invoiceDetail['states'];
+            $data['clientDistricts'] = $invoiceDetail['districts'];
+            $data['clientcitys'] = $invoiceDetail['citys'];
+            $data['clientareas'] = $invoiceDetail['areas'];
+            $data['clientpincodes'] = $invoiceDetail['pincodes'];
+
+            $data['bank_name'] = $invoiceDetail['bank_name'];
+            $data['branch_name'] = $invoiceDetail['branch_name'];
+            $data['address'] = $invoiceDetail['address'];
+            $data['account_number'] = $invoiceDetail['account_number'];
+            $data['ifsc_code'] = $invoiceDetail['ifsc_code'];
+            $data['UPI_ID'] = $invoiceDetail['UPI_ID'];
+
+            //Extra header information
+            $data['reversecharge'] = $invoiceDetail['reversecharge'];
+            $data['placeofsupply'] = $invoiceDetail['placeofsupply'];
+            $data['GGRRNo'] = $invoiceDetail['GGRRNo'];
+            $data['transport'] = $invoiceDetail['transport'];
+            $data['station'] = $invoiceDetail['station'];
+            $data['ewaybillno'] = $invoiceDetail['ewaybillno'];
+
             $data['bonus_percent'] = floatval($this->session->userdata('bonus_percent'));
             $clientInfo = $this->Client_model->client_by_id($invoiceDetail['fk_client_code']);
             $clientType = $clientInfo['client_type'];
@@ -613,6 +672,28 @@ class Invoice extends CI_Controller {
             $data['clientcity'] = $this->input->post('clientcity');
             $data['clientarea'] = $this->input->post('clientarea');
             $data['clientpincode'] = $this->input->post('clientpincode');
+
+            $data['clientcodes'] = $this->input->post('clientcodes');
+            $data['clientnames'] = $this->input->post('clientnames');
+            $data['gstins'] = $this->input->post('gstins');
+            $data['pannumbers'] = $this->input->post('pannumbers');
+            $data['mobilenumbers'] = $this->input->post('mobilenumbers');
+            $data['aadharnumbers'] = $this->input->post('aadharnumbers'); 
+            
+            $data['clintaddresss'] = $this->input->post('clintaddresss');
+            $data['clientStates'] = $this->input->post('clientStates');
+            $data['clientDistricts'] = $this->input->post('clientDistricts');
+            $data['clientcitys'] = $this->input->post('clientcitys');
+            $data['clientareas'] = $this->input->post('clientareas');
+            $data['clientpincodes'] = $this->input->post('clientpincodes');
+
+            $data['reversecharge'] = $this->input->post('reversecharge');
+            $data['placeofsupply'] = $this->input->post('placeofsupply');
+            $data['GGRRNo'] = $this->input->post('GGRRNo');
+            $data['transport'] = $this->input->post('transport');
+            $data['station'] = $this->input->post('station');
+            $data['ewaybillno'] = $this->input->post('ewaybillno');
+
             if($this->input->post('saveinvoice') === 'saveinvoice'){
                 $this->Invoice_model->saveInvoiceRef($data);
             }
