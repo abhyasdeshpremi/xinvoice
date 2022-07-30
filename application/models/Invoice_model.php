@@ -309,10 +309,168 @@ class Invoice_model extends CI_Model {
                 $data['pincode'] = $row->pincode;
             }
         }
+
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('fk_unique_invioce_code', $invoiceid);
+        $query = $this->db->get('Invoice_shipped_address');
+        if($query->num_rows() >= 1){
+            foreach ($query->result() as $row)  
+            {   
+
+                $data['fk_client_codes'] = $row->fk_client_code;
+                $data['client_names'] = $row->client_name;
+                $data['gstnumbers'] = $row->gstnumber;
+                $data['pannumbers'] = $row->pannumber;
+                $data['mobilenumbers'] = $row->mobilenumber;
+                $data['aadharnumbers'] = $row->aadharnumber;
+
+                $data['addresss'] = $row->address;
+                $data['states'] = $row->state;
+                $data['districts'] = $row->district;
+                $data['citys'] = $row->city;
+                $data['areas'] = $row->area;
+                $data['pincodes'] = $row->pincode;
+            }
+        }else{
+            $data['fk_client_codes'] = '';
+            $data['client_names'] = '';
+            $data['gstnumbers'] = '';
+            $data['pannumbers'] = '';
+            $data['mobilenumbers'] = '';
+            $data['aadharnumbers'] = '';
+
+            $data['addresss'] = '';
+            $data['states'] = '';
+            $data['districts'] = '';
+            $data['citys'] = '';
+            $data['areas'] = '';
+            $data['pincodes'] = '';
+        }
+
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('is_primary', 'yes');
+        $query = $this->db->get('Frim_bank_details');
+        if($query->num_rows() >= 1){
+            foreach ($query->result() as $row)  
+            {   
+                $data['bank_name'] = $row->bank_name;
+                $data['branch_name'] = $row->branch_name;
+                $data['bank_address'] = $row->address;
+                $data['account_number'] = $row->account_number;
+                $data['ifsc_code'] = $row->ifsc_code;
+                $data['UPI_ID'] = $row->UPI_ID;
+            }
+        }else{
+            $data['bank_name'] = '';
+            $data['branch_name'] = '';
+            $data['bank_address'] = '';
+            $data['account_number'] = '';
+            $data['ifsc_code'] = '';
+            $data['UPI_ID'] = '';
+        }
+
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $this->db->where('fk_unique_invioce_code', $invoiceid);
+        $this->db->limit(1);  
+        $query = $this->db->get('invoice_header_details');
+        if($query->num_rows() >= 1){
+            foreach ($query->result() as $row)  
+            {   
+                $data['reversecharge'] = $row->reverse_charge;
+                $data['placeofsupply'] = $row->place_of_supply;
+                $data['GGRRNo'] = $row->GR_RR_NO;
+                $data['transport'] = $row->transport;
+                $data['station'] = $row->station;
+                $data['ewaybillno'] = $row->e_way_bill_number;
+            }
+        }else{
+            $data['reversecharge'] = 'N';
+            $data['placeofsupply'] = '';
+            $data['GGRRNo'] = '';
+            $data['transport'] = '';
+            $data['station'] = '';
+            $data['ewaybillno'] = '';
+        }
+
         return $data;
     }
     public function updateInvoice($data){
 
+        if($data['clientcodes']){
+            $this->db->where('fk_unique_invioce_code', $data['defaultinvoiceID']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $query = $this->db->get('Invoice_shipped_address');
+            if($query->num_rows() == 1){
+                $dataList = array( 
+                    'fk_client_code'=>$data['clientcodes'],
+                    'client_name'=>$data['clientnames'],
+                    'gstnumber'=>$data['gstins'],
+                    'pannumber'=>$data['pannumbers'],
+                    'mobilenumber'=>$data['mobilenumbers'],
+                    'aadharnumber'=>$data['aadharnumbers'],
+                    'address'=>$data['clintaddresss'],
+                    'state'=>$data['clientStates'],
+                    'district'=>$data['clientDistricts'],
+                    'city'=>$data['clientcitys'],
+                    'area'=>$data['clientareas'],
+                    'pincode'=>$data['clientpincodes']
+                );
+                $this->db->where('fk_unique_invioce_code', $data['defaultinvoiceID']);
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->update('Invoice_shipped_address', $dataList);
+            }else{
+                $dataList = array(
+                    'fk_unique_invioce_code'=>$data['defaultinvoiceID'],
+                    'fk_client_code'=>$data['clientcodes'],
+                    'client_name'=>$data['clientnames'],
+                    'gstnumber'=>$data['gstins'],
+                    'pannumber'=>$data['pannumbers'],
+                    'mobilenumber'=>$data['mobilenumbers'],
+                    'aadharnumber'=>$data['aadharnumbers'],
+                    'address'=>$data['clintaddresss'],
+                    'state'=>$data['clientStates'],
+                    'district'=>$data['clientDistricts'],
+                    'city'=>$data['clientcitys'],
+                    'area'=>$data['clientareas'],
+                    'pincode'=>$data['clientpincodes'],
+                    'fk_username'=>$this->session->userdata('username'),
+                    'fk_firm_code'=>$this->session->userdata('firmcode')
+                );
+                $this->db->insert('Invoice_shipped_address', $dataList);
+            }
+        }
+        //Extra header
+        if($data['placeofsupply']){
+            $this->db->where('fk_unique_invioce_code', $data['defaultinvoiceID']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $query = $this->db->get('invoice_header_details');
+            if($query->num_rows() == 1){
+                $extradataList = array( 
+                    'place_of_supply'=>$data['placeofsupply'],
+                    'reverse_charge'=>$data['reversecharge'],
+                    'GR_RR_NO'=>$data['GGRRNo'],
+                    'transport'=>$data['transport'],
+                    'station'=>$data['station'],
+                    'e_way_bill_number'=>$data['ewaybillno']
+                );
+                $this->db->where('fk_unique_invioce_code', $data['defaultinvoiceID']);
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $this->db->update('invoice_header_details', $extradataList);
+            }else{
+                $extradataList = array(
+                    'fk_unique_invioce_code'=>$data['defaultinvoiceID'],
+                    'place_of_supply'=>$data['placeofsupply'],
+                    'reverse_charge'=>$data['reversecharge'],
+                    'GR_RR_NO'=>$data['GGRRNo'],
+                    'transport'=>$data['transport'],
+                    'station'=>$data['station'],
+                    'e_way_bill_number'=>$data['ewaybillno'],
+                    'fk_username'=>$this->session->userdata('username'),
+                    'fk_firm_code'=>$this->session->userdata('firmcode')
+                );
+                $this->db->insert('invoice_header_details', $extradataList);
+            }
+        }
         $this->db->where('unique_invioce_code', $data['defaultinvoiceID']);
         $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
         $query = $this->db->get('Invoices');

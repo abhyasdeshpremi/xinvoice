@@ -111,6 +111,38 @@
                                     <input class="form-control" id="invoicerefNumber" name="invoicerefNumber" type="text" placeholder="Invoice Reference Number" value="<?php echo isset($invoicerefNumber)? $invoicerefNumber : ''; ?>" readonly/>
                                 </div>
                             </div>
+
+                            <div class="form-row">
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">Reverse Charge</label>
+                                    <select class="form-control" id="reversecharge" name="reversecharge" style="text-transform: capitalize;">
+                                        <option value="N" <?php if($reversecharge == "N") { echo 'selected="selected"'; }?>>No</option>
+                                        <option value="Y" <?php if($reversecharge == "Y") { echo 'selected="selected"'; }?>>Yes</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">Place of supply</label>
+                                    <input class="form-control" id="placeofsupply" name="placeofsupply" type="text" placeholder="Place of supply" value="<?php echo isset($placeofsupply)? $placeofsupply : ''; ?>"/>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">GG/RR No.</label>
+                                    <input class="form-control" id="GGRRNo" name="GGRRNo" type="text" placeholder="GG/RR No." value="<?php echo isset($GGRRNo)? $GGRRNo : ''; ?>" />
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">Transport</label>
+                                    <input class="form-control" id="transport" name="transport" type="text" placeholder="Transport" value="<?php echo isset($transport)? $transport : ''; ?>"/>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">Station</label>
+                                    <input class="form-control" id="station" name="station" type="text" placeholder="Station" value="<?php echo isset($station)? $station : ''; ?>"/>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationDefault03">E-Way Bill no.</label>
+                                    <input class="form-control" id="ewaybillno" name="ewaybillno" type="text" placeholder="E-Way Bill no." value="<?php echo isset($ewaybillno)? $ewaybillno : ''; ?>"/>
+                                </div>
+                            </div>
+
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="saveinvoice" id="saveinvoice" name="saveinvoice"  />
                                 <label class="form-check-label text-primary" for="saveinvoice">
@@ -183,6 +215,73 @@
                                     <input class="form-control" id="clientpincode" name="clientpincode" type="number" placeholder="Pin Code" value="<?php echo isset($clientpincode)? $clientpincode : ''; ?>" />
                                 </div>
                             </div>
+                            <!--------Shipped address-Start--------->
+                            <hr>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                        <label for="userStatus">Shipped Invoice Client Name</label>
+                                        <select class="form-control selectpicker border" id="clientcodes" name="clientcodes" style="text-transform: capitalize;" data-live-search="true">
+                                            <option value="">Select Invoice Client Name</option>
+                                            <?php $count = 0; 
+                                                foreach($clients as $client){ ?>
+                                                    <option value="<?php echo $client->code; ?>" <?php if($client->code == $clientcodes){ echo"selected"; } ?> ><?php echo $client->name;?></option>
+                                            <?php $count++; } ?>
+                                        </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                        <label for="userStatus">Shipped Invoice Client Name</label>
+                                        <input class="form-control" type="text" name="clientnames" id="clientnames" value="<?php echo isset($clientnames)? $clientnames : ''; ?>" />
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationDefault03">GST IN</label>
+                                    <input class="form-control" id="gstins" name="gstins" type="text" placeholder="GST IN" value="<?php echo isset($gstins)? $gstins : ''; ?>" />
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationDefault03">PAN No.</label>
+                                    <input class="form-control" id="pannumbers" name="pannumbers" type="text" placeholder="Pan No." value="<?php echo isset($pannumbers)? $pannumbers : ''; ?>" />
+                                </div>
+                                
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationDefault03">Mobile Number</label>
+                                    <input class="form-control" id="mobilenumbers" name="mobilenumbers" type="text" placeholder="Mobile Number" value="<?php echo isset($mobilenumbers)? $mobilenumbers : ''; ?>" />
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationDefault03">Aadhar Number</label>
+                                    <input class="form-control" id="aadharnumbers" name="aadharnumbers" type="text" placeholder="Aadhar Number" value="<?php echo isset($aadharnumbers)? $aadharnumbers : ''; ?>" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault03">Address</label>
+                                    <input class="form-control" id="clintaddresss" name="clintaddresss" type="text" placeholder="Address" style="text-transform:uppercase" value="<?php echo isset($clintaddresss)? $clintaddresss : ''; ?>" required/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault03">State</label>
+                                    <input class="form-control uppercase" id="clientStates" name="clientStates" type="text" placeholder="State" value="<?php echo isset($clientStates)? $clientStates : ''; ?>" required/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault03">District</label>
+                                    <input class="form-control uppercase" id="clientDistricts" name="clientDistricts" type="text" placeholder="District" value="<?php echo isset($clientDistricts)? $clientDistricts : ''; ?>" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault03">City</label>
+                                    <input class="form-control uppercase" id="clientcitys" name="clientcitys" type="text" placeholder="City" style="text-transform:uppercase" value="<?php echo isset($clientcitys)? $clientcitys : ''; ?>" required/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault03">Area</label>
+                                    <input class="form-control uppercase" id="clientareas" name="clientareas" type="text" placeholder="Area" value="<?php echo isset($clientareas)? $clientareas : ''; ?>" required/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationDefault03">Pin Code</label>
+                                    <input class="form-control" id="clientpincodes" name="clientpincodes" type="number" placeholder="Pin Code" value="<?php echo isset($clientpincodes)? $clientpincodes : ''; ?>" />
+                                </div>
+                            </div>
+                            <!-------------Shipped address-end-------------------->
                             <button type="submit" class="btn btn-warning mr-2 my-1 save-item-button" type="button">Save invoice</button>
                         </form>
                     </div>
@@ -427,6 +526,36 @@
                 });
             }
         });
+        //Shipped address
+        $("#clientcodes").change(function(){
+            var selectedClientCode = $(this).children("option:selected").val();
+            if( selectedClientCode.length > 0){
+                $.ajax({
+                url: '<?php echo base_url('/getclientid'); ?>',
+                type: 'POST',
+                dataType  : 'json',
+                data: {uniqueCode: selectedClientCode},
+                error: function() {
+                    alert('Something is wrong');
+                },
+                success: function(data) {
+                    $('#gstins').val(data.gst_no);
+                    $('#pannumbers').val(data.pan_no);
+                    $('#mobilenumbers').val(data.mobile_no);
+                    $('#aadharnumbers').val(data.aadhar_no);
+                    $('#clientnames').val(data.name);
+                    $('#clintaddresss').val(data.address);
+                    $('#clientcitys').val(data.city);
+                    $('#clientDistricts').val(data.district);
+                    $('#clientStates').val(data.state);
+                    $('#clientareas').val(data.area);
+                    $('#clientpincodes').val(data.pin_code);
+                    // alert("Record added successfully"+ data.name);  
+                }
+                });
+            }
+        });
+
         //Invoice type select
         $("#invoicetype").change(function(){
             var selectedInvoiceType = $('#invoicetype').val();
@@ -474,6 +603,28 @@
             var clientcity = $('#clientcity').val();
             var clientarea = $('#clientarea').val();
             var clientpincode = $('#clientpincode').val();
+
+            var clientcodes = $('#clientcodes').val();
+            var clientnames = $('#clientnames').val();
+            var gstins = $('#gstins').val();
+            var pannumbers = $('#pannumbers').val();
+            var mobilenumbers = $('#mobilenumbers').val();
+            var aadharnumbers = $('#aadharnumbers').val();
+            
+            var clintaddresss = $('#clintaddresss').val();
+            var clientStates = $('#clientStates').val();
+            var clientDistricts = $('#clientDistricts').val();
+            var clientcitys = $('#clientcitys').val();
+            var clientareas = $('#clientareas').val();
+            var clientpincodes = $('#clientpincodes').val();
+
+            var reversecharge = $('#reversecharge').val();
+            var placeofsupply = $('#placeofsupply').val();
+            var GGRRNo = $('#GGRRNo').val();
+            var transport = $('#transport').val();
+            var station = $('#station').val();
+            var ewaybillno = $('#ewaybillno').val();
+
             var saveinvoice = "NOTSELECTED";
             $('input[name="saveinvoice"]:checked').each(function() {
                 saveinvoice = "saveinvoice";
@@ -487,8 +638,11 @@
                     vehicleno: vehicleno, owninvoicegstin: owninvoicegstin, owninvoicemobileno: owninvoicemobileno, invoicerefNumber: invoicerefNumber,
                     clientcode:  clientcode, clientname: clientname, gstin: gstin, pannumber: pannumber, mobilenumber: mobilenumber, aadharnumber: aadharnumber,
                     clintaddress: clintaddress, clientState: clientState, clientDistrict: clientDistrict, clientcity: clientcity, 
-                    clientarea: clientarea, clientpincode: clientpincode, saveinvoice: saveinvoice},
-                error: function() {
+                    clientarea: clientarea, clientpincode: clientpincode, clientcodes:  clientcodes, clientnames: clientnames, gstins: gstins, pannumbers: pannumbers, mobilenumbers: mobilenumbers, aadharnumbers: aadharnumbers,
+                    clintaddresss: clintaddresss, clientStates: clientStates, clientDistricts: clientDistricts, clientcitys: clientcitys, 
+                    clientareas: clientareas, clientpincodes: clientpincodes, reversecharge: reversecharge, placeofsupply: placeofsupply, GGRRNo: GGRRNo, transport: transport, 
+                    station: station, ewaybillno: ewaybillno, saveinvoice: saveinvoice},
+                error: function(error) {
                     alert('Something is wrong');
                 },
                 success: function (data) {

@@ -48,7 +48,7 @@ if($paper_size == 'A5'){
         <span style="font:12px;"><?php echo $invoiceTitle; ?></span><br>
         <span style="font:16px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
         <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br>
-        <span style="font:10px;"><?php echo "PAN : HGTY456OKJ";?></span>
+        <span style="font:10px;"><?php echo ($this->session->userdata('pan_number')) ? "PAN : ".$this->session->userdata('pan_number') : ''; ?></span>
     </center>
     
     <center style="margin-right:0px;">
@@ -70,16 +70,16 @@ if($paper_size == 'A5'){
                 <div style="margin-right:10px;">
                     <span>INVOICE NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; : <span <?php echo $font_style; ?>><b><?php echo $invoicerefNumber; ?> / <?php echo financial_year($created_at); ?></b></span></span><br>
                     <span>DATE OF INVOICE &nbsp; &nbsp; : <span style="font:10px;"><b><?php echo date("d-m-Y H:i", strtotime($created_at)); ?></b></span></span><br>
-                    <span>PLACE OF SUPPLY &nbsp; : <?php echo "BIHAR (10)"; ?></span><br>
-                    <span>REVERSE CHARGE &nbsp;: <?php echo "N"; ?></span><br>
-                    <span>GR/RR NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo ""; ?></span><br>
+                    <span>PLACE OF SUPPLY &nbsp; : <?php echo $placeofsupply; ?></span><br>
+                    <span>REVERSE CHARGE &nbsp;: <?php echo $reversecharge; ?></span><br>
+                    <span>GR/RR NO. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $GGRRNo; ?></span><br>
                 </div>
             </div>
             <div style="width:50%; height: 64px; float:right;"> 
-                    <span>TRANSPORT &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo "JHARKHAND BENGAL FREIGHT CARRI"; ?></span><br>
+                    <span>TRANSPORT &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $transport; ?></span><br>
                     <span>VAHICLE NO.&nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $vehicleno; ?></span><br>
-                    <span>STATION &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo "BIHAR SHARIF"; ?></span><br>
-                    <span>E-WAY BILL NO. &nbsp; &nbsp; &nbsp; : <?php echo ""; ?></span>
+                    <span>STATION &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $station; ?></span><br>
+                    <span>E-WAY BILL NO. &nbsp; &nbsp; &nbsp; : <?php echo $ewaybillno; ?></span>
             </div>
         </div>
     <hr style="text-align:left;margin-left:0; margin-top:1px; margin-right:10px;">
@@ -91,23 +91,23 @@ if($paper_size == 'A5'){
                     <span><?php echo $clientcity." ".$clientarea; ?></span><br>
                     <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br><br>
 
-                    <span>Party PAN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
-                    <span>Party Mobile No. &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
-                    <span>Party Aadhaar No. &nbsp;: <?php echo $gstin; ?></span><br>
+                    <span>Party PAN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumber; ?></span><br>
+                    <span>Party Mobile No. &nbsp; &nbsp; : <?php echo $mobilenumber; ?></span><br>
+                    <span>Party Aadhaar No. &nbsp;: <?php echo $aadharnumber; ?></span><br>
                     <span>GSTIN / UIN  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span>
                 </div>
             </div>
             <div style="width:50%; height: 64px; float:right;"> <i><b>Shipped To,</b></i>
                 <div style="margin-right:10px;">
-                    <span style="font:10px;"><b><?php echo $clientname; ?></b></span><br>
-                    <span><?php echo $clintaddress; ?></span><br>
-                    <span><?php echo $clientcity." ".$clientarea; ?></span><br>
-                    <span><?php echo $clientDistrict. " ".$clientpincode; ?></span><br><br>
+                    <span style="font:10px;"><b><?php echo $clientnames; ?></b></span><br>
+                    <span><?php echo $clintaddresss; ?></span><br>
+                    <span><?php echo $clientcitys." ".$clientareas; ?></span><br>
+                    <span><?php echo $clientDistricts. " ".$clientpincodes; ?></span><br><br>
 
-                    <span>Party PAN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
-                    <span>Party Mobile No. &nbsp; &nbsp; : <?php echo $gstin; ?></span><br>
-                    <span>Party Aadhaar No. &nbsp;: <?php echo $gstin; ?></span><br>
-                    <span>GSTIN / UIN  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstin; ?></span>
+                    <span>Party PAN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $pannumbers; ?></span><br>
+                    <span>Party Mobile No. &nbsp; &nbsp; : <?php echo $mobilenumbers; ?></span><br>
+                    <span>Party Aadhaar No. &nbsp;: <?php echo $aadharnumbers; ?></span><br>
+                    <span>GSTIN / UIN  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $gstins; ?></span>
                 </div>
             </div>
         </div>
@@ -119,8 +119,8 @@ if($paper_size == 'A5'){
             <th width="190px;">Name</th>
             <th style="text-align:right;">C/S</th>
             <th style="text-align:right;" >QTY</th>
-            <th style="text-align:right;">MRP</th>
-            <th style="text-align:right;" width="50px;">MRP VAL</th>
+            <th style="text-align:right;">RATE</th>
+            <th style="text-align:right;" width="50px;">RATE VAL</th>
             <th style="text-align:right;">DS%</th>
             <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <th style="text-align:right;">Bas. Val</th> <?php } ?>
             <th width="60px;" style="text-align:right;">Bill Value</th>
@@ -235,18 +235,23 @@ if($paper_size == 'A5'){
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
         <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
-        <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
+    <span style="font:12px;">Bank Details :
+        <span> <?php echo $bank_name.", ".$branch_name.", ";?> 
+             A/C No.: <?php echo $account_number; ?>, IFSC CODE: <?php echo $ifsc_code; ?>
+             <br><?php echo ($UPI_ID) ? "UPI Details: ".$UPI_ID : "";  ?>
+        </span>
+    </span>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
-    <spna style="font:10px;"><?php echo $this->session->userdata('tc_title'); ?></span>
-    <div style="margin-top:10px; height: 60px;">
-        <div style="width:50%; height: 60px; float:left;">
+    <div style="margin-top:10px; height: 90px;">
+        <div style="width:50%; height: 90px; float:left;">
             <span style="font:10px;"><?php echo ($this->session->userdata('line1')) ? 'Term & Conditions :-': ''; ?></span><br>
+            <span style="font:8px;"><?php echo ($this->session->userdata('tc_title')) ? $this->session->userdata('tc_title') : ''; ?></span><br>
             <span style="font:8px;"><?php echo ($this->session->userdata('line1')) ? '1. '.$this->session->userdata('line1') : ''; ?></span><br>
             <span style="font:8px;"><?php echo ($this->session->userdata('line2')) ? '2. '.$this->session->userdata('line2') : ''; ?></span><br>
             <span style="font:8px;"><?php echo ($this->session->userdata('line3')) ? '3. '.$this->session->userdata('line3') : ''; ?></span><br>
             <span style="font:8px;"><?php echo ($this->session->userdata('line4')) ? '4. '.$this->session->userdata('line4') : ''; ?></span><br>
         </div>
-        <div style="width:50%; height: 60px; float:right;">
+        <div style="width:50%; height: 90px; float:right;">
             <center>
                 <span style="font:12px; margin:20px;">For <?php echo $invoicetitle;?></span><br><br><br>
                 <span style="font:12px;">AUTHORIZED SIGNATORY</span>
