@@ -48,6 +48,7 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('igstrate', $firmResult['result'][0]->igstrate);
                 $this->session->set_userdata('pan_number', $firmResult['result'][0]->pan_number);
                 $this->session->set_userdata('gst_number', $firmResult['result'][0]->gst_number);
+                $this->session->set_userdata('firm_state', $firmResult['result'][0]->state);
 
                 $this->session->set_userdata('role', $queryResult['result'][0]->role);
                 $termcondition = $this->Profile_model->gettermcondition();
