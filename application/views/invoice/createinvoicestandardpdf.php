@@ -54,10 +54,11 @@ if($paper_size == 'A5'){
 }
 ?>
 <body style="<?php echo $width; ?>" >
+    <center><div style="<?php echo $width; ?>" ><span style="font:12px;"><?php echo $invoiceTitle; ?></span></div></center>
     <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
     <span style="font:10px; float:right; margin-right:10px;"><i>Original Copy</i></span>
+    
     <center>
-        <span style="font:12px;"><?php echo $invoiceTitle; ?></span><br>
         <span style="font:16px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
         <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br>
         <span style="font:10px;"><?php echo ($this->session->userdata('pan_number')) ? "PAN : ".$this->session->userdata('pan_number') : ''; ?></span>
