@@ -496,6 +496,17 @@
     var invoiceData = <?php echo json_encode($invoiceitemsList); ?>;
     var globalInvoiceStatus = "<?php echo $invoicestatus; ?>";
     var globalInvoice_bill_include_tax = "<?php echo $this->session->userdata('bill_include_tax'); ?>";
+    var cgstrate = "<?php echo $this->session->userdata('cgstrate'); ?>";
+    var sgstrate = "<?php echo $this->session->userdata('sgstrate'); ?>";
+    var igstrate = "<?php echo $this->session->userdata('igstrate'); ?>";
+    var applyedSameStateGST = true;
+    var clientState = "<?php echo $clientState; ?>";
+    var firmState = "<?php echo $this->session->userdata('firm_state'); ?>";
+    
+    if(clientState.toLowerCase() !== firmState.toLowerCase()){
+        applyedSameStateGST = false;
+    }
+
     $(document).ready(function(){
         //Client type auto fill
         $("#clientcode").change(function(){
@@ -1272,10 +1283,10 @@
                         +'<th width="30px;">HSN</th>'
                         +'<th width="70px;">STYLE#</th>'
                         +'<th width="70px;">QTY</th>'
-                        +'<th width="100px;">MRP Value</th>'
+                        +'<th width="100px;">RATE</th>'
+                        +'<th width="100px;">RATE Val.</th>'
                         +'<th width="70px;">DS%</th>'
-                        +'<th width="100px;">Bas. Val</th>'
-                        +'<th width="100px;">Bill Value</th>'
+                        +'<th width="100px;">Amount</th>'
                         +'<th width="80px;">Actions</th>'
                     +'</tr>';
         }else{
@@ -1285,9 +1296,10 @@
                         +'<th width="30px;">HSN</th>'
                         +'<th width="70px;">STYLE#</th>'
                         +'<th width="70px;">QTY</th>'
-                        +'<th width="100px;">MRP Value</th>'
+                        +'<th width="100px;">RATE</th>'
+                        +'<th width="100px;">RATE Val.</th>'
                         +'<th width="70px;">DS%</th>'
-                        +'<th width="100px;">Bill Value</th>'
+                        +'<th width="100px;">Amount</th>'
                         +'<th width="80px;">Actions</th>'
                     +'</tr>';
         }
@@ -1295,16 +1307,15 @@
 
     function addInvoicerow(oneRow, numberOne){
         if (globalInvoice_bill_include_tax === 'yes'){
-            var basicValue = ((parseFloat(oneRow["bill_value"]) * 100) / 118).toFixed(2);
             return '<tr class="invoicecal" id="'+oneRow["pk_invoice_item_id"]+'">'
                         +'<td>'+numberOne+'</td>'
                         +'<td>'+oneRow["fk_item_name"]+'</td>'
                         +'<td>'+oneRow["HSN_Code"]+'</td>'
                         +'<td>'+oneRow["Style_No"]+'</td>'
                         +'<td>'+oneRow["quantity"]+'</td>'
+                        +'<td>'+oneRow["mrp"]+'</td>'
                         +'<td>'+oneRow["mrp_value"]+'</td>'
                         +'<td>'+oneRow["discount"]+'</td>'
-                        +'<td>'+basicValue+'</td>'
                         +'<td>'+parseFloat(oneRow["bill_value"]).toFixed(2)+'</td>'
                         +'<td>'
                             +'<button type="button" onclick="editInvoiceItem('+oneRow["pk_invoice_item_id"]+')" class="btn btn-datatable btn-icon editItemButton" data-toggle="modal" data-target="#addItemInput" data-whatever="@mdo" data-backdrop="static" data-keyboard="false"><i data-feather="more-vertical"></i></button>&nbsp;&nbsp;'
@@ -1318,6 +1329,7 @@
                         +'<td>'+oneRow["HSN_Code"]+'</td>'
                         +'<td>'+oneRow["Style_No"]+'</td>'
                         +'<td>'+oneRow["quantity"]+'</td>'
+                        +'<td>'+oneRow["mrp"]+'</td>'
                         +'<td>'+oneRow["mrp_value"]+'</td>'
                         +'<td>'+oneRow["discount"]+'</td>'
                         +'<td>'+parseFloat(oneRow["bill_value"]).toFixed(2)+'</td>'
@@ -1331,43 +1343,40 @@
 
     function addInvoiceCalculation(bill_value, mrp_value, basic_value){
         var basic_value = parseFloat(basic_value).toFixed(2);
-        var basicValue = ((parseFloat(bill_value) * 100) / 118).toFixed(2);
-        var cgstValue = ((parseFloat(basicValue) * 9) / 100).toFixed(2);
-        var total_cgst_value = (parseFloat(basic_value) + parseFloat(cgstValue)).toFixed(2);
-        var sgstValue = cgstValue;
-        var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
-        var bill_amount = Math.round(parseFloat(bill_value).toFixed(2));
+        if (globalInvoice_bill_include_tax === 'yes'){
+            if(applyedSameStateGST){
+                var cgstValue = ((parseFloat(bill_value) * parseFloat(cgstrate)) / 100).toFixed(2);
+                var total_cgst_value = (parseFloat(bill_value) + parseFloat(cgstValue)).toFixed(2);
+                var sgstValue = ((parseFloat(bill_value) * parseFloat(sgstrate)) / 100).toFixed(2);
+                var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
+            }else{
+                var igstValue = ((parseFloat(bill_value) * parseFloat(igstrate)) / 100).toFixed(2);
+                var total_cgst_sgst_value = (parseFloat(bill_value) + parseFloat(igstValue)).toFixed(2);
+            }
+            var bill_amount = Math.round(parseFloat(total_cgst_sgst_value).toFixed(2));
+        }else{
+            var bill_amount = Math.round(parseFloat(bill_value).toFixed(2));
+        }
         var round_off = (parseFloat(bill_amount) - parseFloat(total_cgst_sgst_value)).toFixed(2);
         var round_off_without_gst = (parseFloat(bill_amount) - parseFloat(bill_value)).toFixed(2);
         var total_saving = parseFloat(mrp_value) - parseFloat(bill_amount);
+
         if (globalInvoice_bill_include_tax === 'yes'){
-            return  '<tr class="invoicecal">'
-                        +'<td colspan="5"></td>'
+            if(applyedSameStateGST){
+                return  '<tr class="invoicecal">'
+                        +'<td colspan="6"></td>'
                         +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
                         +'<td></td>'
-                        +'<td><b>'+parseFloat(basic_value).toFixed(2)+'</b></td>'
                         +'<td><b>'+parseFloat(bill_value).toFixed(2)+'</b></td>'
                     +'</tr>'
                     +'<tr class="invoicecal">'
                         +'<td colspan="5" rowspan="7"></td>'
-                        +'<td colspan="3">BASIC VALUE RS.</td>'
-                        +'<td>'+basic_value+'</td>'
-                    +'</tr>'
-                    +'<tr class="invoicecal">'
-                        +'<td colspan="3">CGST 9.00%</td>'
+                        +'<td colspan="3">CGST 2.50%</td>'
                         +'<td>'+cgstValue+'</td>'
                     +'</tr>'
                     +'<tr class="invoicecal">'
-                        +'<td colspan="3">TOTAL RS.</td>'
-                        +'<td>'+total_cgst_value+'</td>'
-                    +'</tr>'
-                    +'<tr class="invoicecal">'
-                        +'<td colspan="3">SGST 9.00%</td>'
+                        +'<td colspan="3">SGST 2.50%</td>'
                         +'<td>'+sgstValue+'</td>'
-                    +'</tr>'
-                    +'<tr class="invoicecal">'
-                        +'<td colspan="3">TOTAL RS.</td>'
-                        +'<td>'+total_cgst_sgst_value+'</td>'
                     +'</tr>'
                     +'<tr class="invoicecal">'
                         +'<td colspan="3">ROUND OFF</td>'
@@ -1375,24 +1384,50 @@
                     +'</tr>'
                     +'<tr class="invoicecal">'
                         +'<td colspan="3">BILL AMOUNT</td>'
-                        +'<td>'+bill_amount+'</td>'
+                        +'<td>'+bill_amount.toFixed(2)+'</td>'
                     +'</tr>';
-        }else{
-            return  '<tr class="invoicecal">'
-                        +'<td colspan="5"></td>'
+            }else{
+                return  '<tr class="invoicecal">'
+                        +'<td colspan="6"></td>'
                         +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
                         +'<td></td>'
                         +'<td><b>'+parseFloat(bill_value).toFixed(2)+'</b></td>'
                     +'</tr>'
                     +'<tr class="invoicecal">'
-                        +'<td colspan="5"></td>'
+                        +'<td colspan="5" rowspan="7"></td>'
+                        +'<td colspan="3">IGST 5.00%</td>'
+                        +'<td>'+igstValue+'</td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal">'
+                        +'<td colspan="3">ROUND OFF</td>'
+                        +'<td>'+round_off+'</td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal">'
+                        +'<td colspan="3">BILL AMOUNT</td>'
+                        +'<td>'+bill_amount.toFixed(2)+'</td>'
+                    +'</tr>';
+            }
+            
+        }else{
+            var totalsaving = "";
+            if(total_saving > 0){
+                totalsaving = "TOTAL SAVING: "+total_saving;
+            }
+            return  '<tr class="invoicecal">'
+                        +'<td colspan="6"></td>'
+                        +'<td><b>'+parseFloat(mrp_value).toFixed(2)+'</b></td>'
+                        +'<td></td>'
+                        +'<td><b>'+parseFloat(bill_value).toFixed(2)+'</b></td>'
+                    +'</tr>'
+                    +'<tr class="invoicecal">'
+                        +'<td colspan="6"></td>'
                         +'<td colspan="2">ROUND OFF</td>'
                         +'<td>'+round_off_without_gst+'</td>'
                     +'</tr>'
                     +'<tr class="invoicecal">'
-                        +'<td colspan="5"><center><b>TOTAL SAVING: '+total_saving+'</b></center></td>'
+                        +'<td colspan="6"><center><b>'+totalsaving+'</b></center></td>'
                         +'<td colspan="2">BILL AMOUNT</td>'
-                        +'<td><b>'+bill_amount+'</b></td>'
+                        +'<td><b>'+bill_amount.toFixed(2)+'</b></td>'
                     +'</tr>';
         }
     }
