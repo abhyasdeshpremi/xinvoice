@@ -34,6 +34,18 @@ $invoiceTitle = "TAX INVOICE";
 if($globalInvoice_bill_include_tax == 'no'){
     $invoiceTitle = "RETAIL INVOICE";
 }
+
+$cgstrate = $this->session->userdata('cgstrate');
+$sgstrate = $this->session->userdata('sgstrate');
+$igstrate = $this->session->userdata('igstrate');
+$applyedSameStateGST = true;
+$clientState = $clientState;
+$firmState = $this->session->userdata('firm_state');
+
+if(strtolower($clientState) !== strtolower($firmState)){
+    $applyedSameStateGST = false;
+}
+
 $font_style = 'style="font:10px;"';
 $font_style_mob = 'style="font:10px;"';
 if($paper_size == 'A5'){
@@ -117,13 +129,14 @@ if($paper_size == 'A5'){
         <tr>
             <th width="8px;">SN</th>
             <th width="190px;">Name</th>
+            <th style="text-align:right;">HSN</th>
+            <th style="text-align:right;" >STYLE#</th>
             <th style="text-align:right;">C/S</th>
             <th style="text-align:right;" >QTY</th>
             <th style="text-align:right;">RATE</th>
             <th style="text-align:right;" width="50px;">RATE VAL</th>
             <th style="text-align:right;">DS%</th>
-            <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <th style="text-align:right;">Bas. Val</th> <?php } ?>
-            <th width="60px;" style="text-align:right;">Bill Value</th>
+            <th width="60px;" style="text-align:right;">AMOUNT</th>
         </tr>
     </thead>
     <tbody>
@@ -145,32 +158,36 @@ if($paper_size == 'A5'){
             <tr>
                 <td style="text-align:initial;"><?php echo $i; ?></td>
                 <td><?php echo $value->fk_item_name; ?></td>
+                <td><?php echo $value->HSN_Code; ?></td>
+                <td><?php echo $value->Style_No; ?></td>
                 <td style="text-align:right;"><b><?php echo $value->case_unit; ?></b></td>
                 <td style="text-align:right;"><?php echo $value->quantity; ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp, 2); ?></td>
                 <td style="text-align:right;"><?php echo number_format($value->mrp_value, 2); ?></td>
                 <td style="text-align:right;"><?php echo $discount_num; ?></td>
-                <?php if($globalInvoice_bill_include_tax == 'yes'){ ?> <td style="text-align:right;"><?php echo number_format($basicItemValue, 2); ?></td> <?php } ?>
                 <td style="text-align:right;"><b><?php echo number_format($value->bill_value, 2); ?></b></td>
             </tr>
         <?php $i++; } ?>
             <tr>
-                <td colspan="2"></td>
+                <td colspan="4"></td>
                 <td style="text-align:right;"><hr><b><?php echo $case_unit_value; ?></b></td>
                 <td style="text-align:right;"><hr><b><?php echo $qty_value; ?></b></td>
                 <td></td>
                 <td style="text-align:right;"><hr><b><?php echo number_format($mrp_value, 2); ?></b></td>
                 <td></td>
-                <?php if($globalInvoice_bill_include_tax == 'yes'){ ?><td style="text-align:right;"><hr><b><?php echo number_format($basicItemsValue, 2); ?></b></td> <?php } ?>
                 <td style="text-align:right;"><hr><b><?php echo number_format($bill_value, 2); ?></b></td>
             </tr>
             <?php 
-                $basic_value = number_format($basicItemsValue, 2);
-                $basicValue = round((($bill_value * 100) / 118), 2);
-                $cgstValue = round((($basicValue * 9) / 100), 2);
-                $total_cgst_value = filter_var($basic_value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) + $cgstValue;
-                $sgstValue = $cgstValue;
-                $total_cgst_sgst_value = ($total_cgst_value + $sgstValue);
+                if($applyedSameStateGST){ 
+                    $cgstValue = round((($bill_value * $cgstrate) / 100), 2);
+                    $total_cgst_value = filter_var($bill_value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) + $cgstValue;
+                    $sgstValue = round((($bill_value * $sgstrate) / 100), 2);
+                    $total_cgst_sgst_value = ($total_cgst_value + $sgstValue);
+                }else{
+                    $igstValue = round((($bill_value * $igstrate) / 100), 2);
+                    $total_cgst_sgst_value = filter_var($bill_value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) + $igstValue;
+                }
+
                 $bill_amount = round($total_cgst_sgst_value, 0);
                 $round_off = round(($bill_amount - $total_cgst_sgst_value), 2);
 
@@ -192,23 +209,23 @@ if($paper_size == 'A5'){
             ?>
 
             <?php if($globalInvoice_bill_include_tax == 'yes'){ ?>
-            <tr style="border-right-style:none;">
-                <td colspan="5" rowspan="6" ></td>
-                <td colspan="3">BASIC VALUE RS.</td>
-                <td style="text-align:right;"><?php echo $basic_value; ?></td>
-            </tr>
-            <tr>
-                <td colspan="3">CGST 9.00%</td>
-                <td style="text-align:right;"><?php echo number_format($cgstValue, 2); ?></td>
-            </tr>
-            <tr>
-                <td colspan="3">SGST 9.00%</td>
-                <td style="text-align:right;"><?php echo number_format($sgstValue, 2); ?></td>
-            </tr>
-            <tr>
-                <td colspan="3">TOTAL RS.</td>
-                <td style="text-align:right;"><?php echo number_format($total_cgst_sgst_value, 2); ?></td>
-            </tr>
+                <?php if($applyedSameStateGST){ ?>
+                    <tr>
+                        <td colspan="6" rowspan="6" ></td>
+                        <td colspan="3">CGST <?php echo $cgstrate;?>%</td>
+                        <td style="text-align:right;"><?php echo number_format($cgstValue, 2); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">SGST <?php echo $sgstrate; ?>%</td>
+                        <td style="text-align:right;"><?php echo number_format($sgstValue, 2); ?></td>
+                    </tr>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="6" rowspan="6" ></td>
+                        <td colspan="3">IGST <?php echo $igstrate;?>%</td>
+                        <td style="text-align:right;"><?php echo number_format($igstValue, 2); ?></td>
+                    </tr>
+                <?php } ?>
             <tr>
                 <td colspan="3">ROUND OFF</td>
                 <td style="text-align:right;"><?php echo $round_off; ?></td>
@@ -219,13 +236,13 @@ if($paper_size == 'A5'){
             </tr>
             <?php } else { ?>
                 <tr style="border-right-style:none;">
-                    <td colspan="6" ></td>
-                    <td>ROUND OFF</td>
+                    <td colspan="7" ></td>
+                    <td colspan="2">ROUND OFF</td>
                     <td style="text-align:right;"><?php echo $round_off_without_gst; ?></td>
                 </tr>
                 <tr style="border-right-style:none; font:13px;">
-                    <td colspan="6" > <center><b>TOTAL SAVING: <?php echo $savingAmount; ?> &nbsp;&nbsp; <?php echo $bonusString; ?></b></center></td>
-                    <td><b>BILL AMOUNT</b></td>
+                    <td colspan="7" > <center><b> <?php echo ($savingAmount !== "0.00")? "TOTAL SAVING: ".$savingAmount : "";  ?> &nbsp;&nbsp; <?php echo $bonusString; ?></b></center></td>
+                    <td colspan="2"><b>BILL AMOUNT</b></td>
                     <td style="text-align:right;"><b> <?php echo number_format($bill_amout, 2); ?></b></td>
                 </tr>
             <?php } ?>
@@ -233,7 +250,7 @@ if($paper_size == 'A5'){
     <tbody>
 </table>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
-        <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency($bill_amount));?> </span>
+        <spna style="font:12px;">RS. (IN WORDS) : <?php echo ucwords(getIndianCurrency(($globalInvoice_bill_include_tax == 'yes')? $bill_amount : $bill_amout));?> </span>
     <hr style="text-align:left;margin-left:0; margin-right:12px;">
     <span style="font:12px;">Bank Details :
         <span> <?php echo $bank_name.", ".$branch_name.", ";?> 
