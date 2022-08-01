@@ -54,19 +54,22 @@ if($paper_size == 'A5'){
 }
 ?>
 <body style="<?php echo $width; ?>" >
-    <div style="<?php echo $width; ?> height: 10px; margin-left:0; margin-right:10px;" >
+    <div style="<?php echo $width; ?> height: 10px; margin-left:0; margin-right:14px; border: 1px solid white;" >
         <span style="font:10px; float:left;">GSTIN : <b><?php echo isset($owninvoicegstin) ? $owninvoicegstin : ''; ?></b></span>
         <span style="font:10px; float:right; margin-right:10px;"><i>Original Copy</i></span>
     </div>
-    <center><div style="<?php echo $width; ?> margin-left:0; margin-right:10px; margin-bottom:2px; height: 10px;" ><span style="font:12px;"><?php echo $invoiceTitle; ?></span></div></center>
     
-    <center>
-        <div style="<?php echo $width; ?> margin-left:0; margin-right:10px;" >
-            <span style="font:16px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
-            <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br>
-            <span style="font:10px;"><?php echo ($this->session->userdata('pan_number')) ? "PAN : ".$this->session->userdata('pan_number') : ''; ?></span>
-        </div>
-    </center>
+    <div style="<?php echo $width; ?> margin-left:0; margin-right:10px; margin-bottom:2px;  font:12px; text-align: center; border: 1px solid white;" >
+        <p style="margin:0px; padding: 1px;"><?php echo $invoiceTitle; ?></p>
+    </div>
+    
+    
+    <div style="<?php echo $width; ?> margin-left:0; margin-right:10px; text-align: center; border: 1px solid white;" >
+        <span style="font:16px; font-style:bold;"><?php echo isset($invoicetitle) ? $invoicetitle : '';?></span><br>
+        <span style="font:10px;"><?php echo $invoicesubtitle;?></span><br>
+        <span style="font:10px;"><?php echo ($this->session->userdata('pan_number')) ? "PAN : ".$this->session->userdata('pan_number') : ''; ?></span>
+    </div>
+    
     
     <center style="margin-right:0px;">
         <span style="font:10px; margin-right:0px;"><i><b>Tel. : <?php echo $owninvoicemobileno; ?> 
