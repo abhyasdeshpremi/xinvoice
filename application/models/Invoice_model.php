@@ -791,6 +791,121 @@ class Invoice_model extends CI_Model {
 
         return $result;
     }
+    /**
+     * Update invoice status model version 2 function
+     */
+    public function updateInvoiceStatusv2($data){
+        $result = array();
+        $this->db->where('unique_invioce_code', $data['invoiceid']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('Invoices');
+        if($query->num_rows() == 1){
+            if (($data['statuscode'] === "completed") || ($data['statuscode'] === "force_edit")){
+                
+                $this->db->select_sum('mrp_value');
+                $this->db->from('invoice_item');
+                $this->db->where('delete_flag', 'NO');
+                $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+                $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                $mrpvaluequery = $this->db->get();
+                $total_mrp_value = $mrpvaluequery->row()->mrp_value;
+                $total_mrp_value = round($total_mrp_value);
+                
+                /***
+                 * invoice_amount_details flag
+                 */
+                $invoice_amount_details = false;
+                /*
+                * payment value add/sub to account from invoice bill value when invoice status is completed(+) or force_edit(-)
+                */
+                $amountdata = array();
+                foreach ($query->result() as $row)  
+                {  
+                    $amountdata['fk_client_code'] = $row->fk_client_code;
+                    $amountdata['fk_client_name'] = $row->client_name;
+                    $amountdata['payment_mode'] = $row->payment_mode;
+                    $amountdata['lock_bill_amount'] = $row->lock_bill_amount;
+                    $amountdata['invoice_type'] = $row->invoice_type;
+                    $amountdata['pk_invoice_id'] = $row->pk_invoice_id;
+                    $amountdata['previous_invoice_ref_no'] = $row->previous_invoice_ref_no;
+                    $amountdata['created_at'] = $row->created_at;
+                }
+
+                /*
+                * Get total bill value
+                */
+                if ($amountdata['invoice_type'] === "sell"){
+                    $total_bill_value = $data['netAmount'];
+                }else if ($amountdata['invoice_type'] === "purchase"){
+                    $this->db->select_sum('bill_value');
+                    $this->db->from('invoice_item');
+                    $this->db->where('delete_flag', 'NO');
+                    $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+                    $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+                    $billvaluequery = $this->db->get();
+                    $total_bill_value = $billvaluequery->row()->bill_value;
+                    $total_bill_value = round($total_bill_value);
+                }
+
+                $amountdata['payment_date'] = $amountdata['created_at'];
+                $amountdata['statuscode'] = $data['statuscode'];
+                if($data['statuscode'] === "completed") {
+                    $amountdata['amount'] = $total_bill_value;
+                    if ($amountdata['invoice_type'] === "sell"){
+                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
+                        $amountdata['paymenttype'] = "debit";
+                        $invoice_amount_details = true;
+                    }else if ($amountdata['invoice_type'] === "purchase"){
+                        $amountdata['notes'] = "PURCHASE INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
+                        $amountdata['paymenttype'] = "credit";
+                    }
+                }else if($data['statuscode'] === "force_edit") {
+                    $amountdata['amount'] = $amountdata['lock_bill_amount'];
+                    if ($amountdata['invoice_type'] === "sell"){
+                        $amountdata['notes'] = "INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
+                        $amountdata['paymenttype'] = "credit";
+                    }else if ($amountdata['invoice_type'] === "purchase"){
+                        $amountdata['notes'] = "PURCHASE INVOICE NO(#".$amountdata['previous_invoice_ref_no'].")";
+                        $amountdata['paymenttype'] = "debit";
+                    }
+                    $account_entry_id = $this->Account_model->find_id($amountdata);
+                    $deleteAccountEntry = $this->Account_model->delete_account_entry($account_entry_id);
+                }
+                
+                $account_model_saveAccount = $this->Account_model->saveAccount($amountdata);
+                log_message("info", "payment debit automatically more info.: ");
+                /**
+                 * save invoice about with GST percentage and amount 
+                 */
+                if($invoice_amount_details){
+                    $invoice_amount_details = $this->saveInvoiceAmountDetails($data);
+                }
+
+
+                $dataList = array(
+                    'status'=> $data['statuscode'],
+                    'lock_bill_amount'=> $total_bill_value,
+                    'lock_mrp_amount'=> $total_mrp_value,
+                    'lock_bill_amount_date'=>date('Y-m-d H:i:s'),
+                    'updated_at'=>date('Y-m-d H:i:s')
+                );
+            }else{
+                $dataList = array(
+                    'status'=> $data['statuscode'],
+                    'updated_at'=>date('Y-m-d H:i:s')
+                );
+            }
+            $this->db->where('unique_invioce_code', $data['invoiceid']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('Invoices', $dataList);
+
+            $result['code']  = true;
+        }else{
+            $result['code']  = false;
+        }
+
+        return $result;
+    }
 
 
     public function delete_invoice_item($invoice_Item){
@@ -936,6 +1051,57 @@ class Invoice_model extends CI_Model {
             $result['itemdmrpvalue'] = $final_mrpvalue;
             $result['itemdiscount'] = $final_discount;
             $result['itembillValue'] = $final_bill_value;
+        }
+        return $result;
+    }
+
+    public function saveInvoiceAmountDetails($data){
+        $result = array();
+        $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+        $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+        $query = $this->db->get('invoice_amount_details');
+        if($query->num_rows() == 1){
+            foreach ($query->result() as $row)  
+            {  
+                $result['pk_invoice_amount_id'] = $row->pk_invoice_amount_id;
+            }
+
+            $dataList = array(
+                'taxable_amount'=>$data['taxable_amount'],
+                'cgst_percentage'=>$data['cgstrate'],
+                'cgst_amount'=>$data['cgstrateAmount'],
+                'sgst_percentage'=>$data['sgstrate'],
+                'sgst_amount'=>$data['sgstrateAmount'],
+                'igst_percentage'=>$data['igstrate'],
+                'igst_amount'=>$data['igstrateAmount'],
+                'round_off_amount'=>$data['roundoffAmount'],
+                'bill_amount'=>$data['netAmount'],
+                'tax_applied'=>$data['globalInvoice_bill_include_tax'],
+                'fk_username'=>$this->session->userdata('username')
+            );
+            $this->db->where('fk_unique_invioce_code', $data['invoiceid']);
+            $this->db->where('fk_firm_code', $this->session->userdata('firmcode'));
+            $this->db->update('invoice_amount_details', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+        }else{
+            $dataList = array(
+                'fk_unique_invioce_code'=>$data['invoiceid'],
+                'taxable_amount'=>$data['taxable_amount'],
+                'cgst_percentage'=>$data['cgstrate'],
+                'cgst_amount'=>$data['cgstrateAmount'],
+                'sgst_percentage'=>$data['sgstrate'],
+                'sgst_amount'=>$data['sgstrateAmount'],
+                'igst_percentage'=>$data['igstrate'],
+                'igst_amount'=>$data['igstrateAmount'],
+                'round_off_amount'=>$data['roundoffAmount'],
+                'bill_amount'=>$data['netAmount'],
+                'tax_applied'=>$data['globalInvoice_bill_include_tax'],
+                'fk_username'=>$this->session->userdata('username'),
+                'fk_firm_code'=>$this->session->userdata('firmcode')
+            );
+            $this->db->insert('invoice_amount_details', $dataList);
+            $result['code']  = ($this->db->affected_rows() == 1) ? true : false;
+            $result['pk_invoice_amount_id']  = $this->db->insert_id();
         }
         return $result;
     }

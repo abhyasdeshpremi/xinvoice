@@ -782,6 +782,39 @@ class Invoice extends CI_Controller {
         }
         echo json_encode($data);
     }
+    /**
+     * Invoice status change version 2 method
+     */
+    function updateInvoiceStatusv2(){
+        if(access_lavel(3, $this->session->userdata('role'))){
+            redirect('/login');
+        }
+        $data = array();
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $data['invoiceid'] = $this->input->post('invoiceid');
+            $data['statuscode'] = $this->input->post('invoiceStatus');
+            $data['taxable_amount'] = $this->input->post('taxable_amount');
+            $data['globalInvoice_bill_include_tax'] = $this->input->post('globalInvoice_bill_include_tax');
+            $data['cgstrate'] = $this->input->post('cgstrate');
+            $data['cgstrateAmount'] = $this->input->post('cgstrateAmount');
+            $data['sgstrate'] = $this->input->post('sgstrate');
+            $data['sgstrateAmount'] = $this->input->post('sgstrateAmount');
+            $data['igstrate'] = $this->input->post('igstrate');
+            $data['igstrateAmount'] = $this->input->post('igstrateAmount');
+            $data['roundoffAmount'] = $this->input->post('roundoffAmount');
+            $data['netAmount'] = $this->input->post('netAmount');
+
+            $invoice_status_result = $this->Invoice_model->updateInvoiceStatusv2($data);
+            if($invoice_status_result){
+                $data["code"] = $invoice_status_result["code"];
+                $data["message"] = "Invoice status updated.";
+            }else{
+                $data["code"] = $invoice_status_result["code"];
+                $data["message"] = "Invoice status unable to update.";
+            }
+        }
+        echo json_encode($data);
+    }
 
     function updateInvoiceCreatedDate(){
         if(access_lavel(3, $this->session->userdata('role'))){

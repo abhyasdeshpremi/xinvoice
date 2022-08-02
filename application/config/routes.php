@@ -102,6 +102,7 @@ $route['saveitemininvoce'] = 'invoice/saveItemInInvoice';
 $route['updateitemininvoce'] = 'invoice/updateItemInInvoice';
 $route['getstockquantity'] = 'invoice/getStockQuantity';
 $route['updateinvoicestatus'] = 'invoice/updateInvoiceStatus';
+$route['updateinvoicestatusv2'] = 'invoice/updateInvoiceStatusv2';
 $route['updateinvoicecreatedDate'] = 'invoice/updateInvoiceCreatedDate';
 
 $route['createpurchaseinvoice'] = 'purchase/createinvoiceID';
