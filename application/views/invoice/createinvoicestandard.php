@@ -506,7 +506,12 @@
     if(clientState.toLowerCase() !== firmState.toLowerCase()){
         applyedSameStateGST = false;
     }
-
+    var taxable_amount = 0.0;
+    var cgstrateAmount = 0.0;
+    var sgstrateAmount = 0.0;
+    var igstrateAmount = 0.0;
+    var roundoffAmount = 0.0;
+    var netAmount = 0.0;
     $(document).ready(function(){
         //Client type auto fill
         $("#clientcode").change(function(){
@@ -1054,10 +1059,23 @@
             
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url('/updateinvoicestatus'); ?>',
+                url: '<?php echo base_url('/updateinvoicestatusv2'); ?>',
                 dataType  : 'json',
-                data: {invoiceid: invoice_id, invoiceStatus: invoiceStatus },
-                error: function() {
+                data: { invoiceid: invoice_id,
+                        invoiceStatus: invoiceStatus,
+                        taxable_amount: taxable_amount, 
+                        globalInvoice_bill_include_tax: globalInvoice_bill_include_tax,
+                        cgstrate: cgstrate,
+                        cgstrateAmount: cgstrateAmount, 
+                        sgstrate: sgstrate,
+                        sgstrateAmount: sgstrateAmount,
+                        igstrate: igstrate,
+                        igstrateAmount: igstrateAmount,
+                        roundoffAmount: roundoffAmount,
+                        netAmount: netAmount
+                },
+                error: function(error) {
+                    console.log(error);
                     hideloader();
                     alert('Something is wrong');
                 },
@@ -1345,21 +1363,23 @@
         var basic_value = parseFloat(basic_value).toFixed(2);
         if (globalInvoice_bill_include_tax === 'yes'){
             if(applyedSameStateGST){
-                var cgstValue = ((parseFloat(bill_value) * parseFloat(cgstrate)) / 100).toFixed(2);
+                var cgstValue = cgstrateAmount = ((parseFloat(bill_value) * parseFloat(cgstrate)) / 100).toFixed(2);
                 var total_cgst_value = (parseFloat(bill_value) + parseFloat(cgstValue)).toFixed(2);
-                var sgstValue = ((parseFloat(bill_value) * parseFloat(sgstrate)) / 100).toFixed(2);
+                var sgstValue = sgstrateAmount = ((parseFloat(bill_value) * parseFloat(sgstrate)) / 100).toFixed(2);
                 var total_cgst_sgst_value = (parseFloat(total_cgst_value) + parseFloat(sgstValue)).toFixed(2);
             }else{
-                var igstValue = ((parseFloat(bill_value) * parseFloat(igstrate)) / 100).toFixed(2);
+                var igstValue = igstrateAmount = ((parseFloat(bill_value) * parseFloat(igstrate)) / 100).toFixed(2);
                 var total_cgst_sgst_value = (parseFloat(bill_value) + parseFloat(igstValue)).toFixed(2);
             }
             var bill_amount = Math.round(parseFloat(total_cgst_sgst_value).toFixed(2));
+            var round_off = roundoffAmount = (parseFloat(bill_amount) - parseFloat(total_cgst_sgst_value)).toFixed(2);
         }else{
             var bill_amount = Math.round(parseFloat(bill_value).toFixed(2));
+            var round_off_without_gst = roundoffAmount = (parseFloat(bill_amount) - parseFloat(bill_value)).toFixed(2);
         }
-        var round_off = (parseFloat(bill_amount) - parseFloat(total_cgst_sgst_value)).toFixed(2);
-        var round_off_without_gst = (parseFloat(bill_amount) - parseFloat(bill_value)).toFixed(2);
         var total_saving = parseFloat(mrp_value) - parseFloat(bill_amount);
+        taxable_amount = bill_value.toFixed(2);
+        netAmount = bill_amount.toFixed(2);
 
         if (globalInvoice_bill_include_tax === 'yes'){
             if(applyedSameStateGST){
